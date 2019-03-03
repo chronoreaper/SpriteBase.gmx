@@ -217,7 +217,6 @@ globalvar debugging;
 debugging=0
 debugObj=0
 debug1=0;
-global.loopNum=0
 </string>
           </argument>
         </arguments>
