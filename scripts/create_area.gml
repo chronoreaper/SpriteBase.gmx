@@ -2,6 +2,7 @@ var arg_type=argument0
 var arg_dir=argument1
 var arg_x=argument2
 var arg_y=argument3
+
 switch arg_dir{
     case 0://top left corner
         tile_add(tilesprite2,15*5,15*1,30,30,arg_x+15*0,arg_y+15*0,100000)

@@ -70,6 +70,7 @@
     <sprites name="eff">
       <sprite>sprites\spawn_eff</sprite>
       <sprite>sprites\slash</sprite>
+      <sprite>sprites\stab</sprite>
       <sprite>sprites\bite</sprite>
       <sprite>sprites\water_breath</sprite>
       <sprite>sprites\laser_beam</sprite>

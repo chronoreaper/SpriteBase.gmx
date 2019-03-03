@@ -237,6 +237,61 @@ if path_position=1||path_position=0
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///visibility
+if x&gt;=view_xview
+&amp;&amp; x&lt;=view_xview+view_wview
+&amp;&amp; y&gt;=view_yview
+&amp;&amp; y&lt;=view_yview+view_hview
+{
+var cx=x
+var cy=y
+var d=1
+with oControler
+if ds_grid_get(gridF1,cx/15,cy/15)&lt;0
+    d=0
+draw=d
+visible=true
+
+//idle movement
+if !object_is_ancestor(object_index,oObj)
+{
+//c=ch
+c+=0.01*ud
+if c&gt;=0.15
+    ud=-1
+else if c&lt;0
+    ud=1
+}
+if object_is_ancestor(object_index,oNature)
+{
+wave+=lr*0.1
+if wave&gt;=wm
+    lr=-1
+else if wave&lt;=0
+    lr=1
+}
+
+}else visible=false
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="0">
       <action>
@@ -347,13 +402,12 @@ if oControler.phase&lt;3||oControler.currentTurn&lt;0{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///player marker
-if x&gt;=view_xview
-if x&lt;=view_xview+view_wview
-if y&gt;=view_yview
-if y&lt;=view_yview+view_hview
+            <string>///draw
+if visible
 {
+
 if draw&gt;0
+||debugging=1{
 if !object_is_ancestor(object_index,oObj){//draw curr turn
     //if oControler.phase=0
     if oControler.currentTurn=team
@@ -368,39 +422,13 @@ if !object_is_ancestor(object_index,oObj){//draw curr turn
         round(x/15)*15+13+7*(size-1),round(y/15)*15+13+7*(size-1),false)
     }
 }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw_health bars
+
+//draw health bars
 var colour=oControler.playerColour[team+1];
 if object_is_ancestor(object_index,oObj)
     colour=oControler.playerColour[10];
-if draw&gt;0{
-if !object_is_ancestor(object_index,oObj)
+else
     draw_sprite_ext(healthBar+1,0,x-7*(size-1),y-7*(size-1),size,size,0,colour,1-wait)
-if dmg!=hp{
-   if image_blend!=c_red{
-      alpha=5
-   }
-}
 if dmg!=hp{
    if image_blend!=c_red{
       alpha=5
@@ -435,37 +463,8 @@ if alpha&gt;0
    //if alarm_get(6)&lt;=0
       alpha-=0.1
 }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw_unit
-//check in view
-if x&gt;=view_xview
-if x&lt;=view_xview+view_wview
-if y&gt;=view_yview
-if y&lt;=view_yview+view_hview
-{
-if draw&gt;0
-||debugging=1
-{
+
+//draw unit
 draw_set_colour(c_black)
 draw_set_alpha(0.5)
 draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
@@ -489,28 +488,10 @@ if dir2=4
 if dir2=1||dir2=2
     draw_weapon()
 draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
-if dir2!=1&amp;&amp;dir2!=2
+if dir2!=1
+if dir2!=2
     draw_weapon()
-
-}
-}
-//draw idle movement
-if !object_is_ancestor(object_index,oObj)
-{
-//c=ch
-c+=0.01*ud
-if c&gt;=0.15
-    ud=-1
-else if c&lt;=0
-    ud=1
-}
-if object_is_ancestor(object_index,oNature)
-{
-wave+=lr*0.1
-if wave&gt;=wm
-    lr=-1
-else if wave&lt;=0
-    lr=1
+}//end draw
 }
 </string>
           </argument>

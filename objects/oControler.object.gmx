@@ -795,6 +795,7 @@ if calculate_damage(c,target,dmg,acc,0,3,multi)&gt;0{
     &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2){
         var eff=instance_create(target.x+7,target.y+7,oEff);
         eff.sprite_index=return_wep_sprite_eff(c.item[c.wep])
+        eff.image_angle=point_direction(c.x,c.y,target.x,target.y)
     }
     return_stat_gain(c.item[c.wep],c)
     return_wep_dur(c,1)
@@ -1410,8 +1411,9 @@ for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15+1);j++){
         {
           draw_sprite_ext(hitbox,0,fx*15+(i-vx)*15,fy*15+(j-vy)*15,1,1,0,0,0.5-ds_grid_get(gridF1,i,j))
         }
-        if ds_grid_get(gridF1,i,j)&gt;0
+        if ds_grid_get(gridF1,i,j)&gt;0{
            ds_grid_multiply(gridF1,i,j,0.70)
+           }
         else{
             //mp_grid_add_cell(grid,i,j)
         }

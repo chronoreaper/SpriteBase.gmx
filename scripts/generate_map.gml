@@ -134,7 +134,8 @@ var ry=irandom(room_height/30)//room_height/15);
         ||ds_grid_get(gridMap,rx,ry+1)=1
         ||ds_grid_get(gridMap,rx,ry-1)=1
         ||ds_grid_get(gridMap,rx-1,ry)=1*/
-        instance_create(rx*30+rx2*15,ry*30+ry2*15,choose(oTree))
+        var inst=instance_create(rx*30+rx2*15,ry*30+ry2*15,choose(oTree));
+        inst.visible=false
     }
 }
 ds_grid_destroy(map)
