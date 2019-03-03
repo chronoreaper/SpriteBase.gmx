@@ -64,6 +64,7 @@
       <sprite>sprites\firstAid</sprite>
       <sprite>sprites\screwdriver</sprite>
       <sprite>sprites\hotdog</sprite>
+      <sprite>sprites\bow</sprite>
       <sprite>sprites\rock</sprite>
     </sprites>
     <sprites name="eff">
@@ -125,6 +126,7 @@
     <script>scripts\add_all_to_map.gml</script>
     <script>scripts\return_dmg.gml</script>
     <script>scripts\return_wep_range.gml</script>
+    <script>scripts\return_item_range.gml</script>
     <script>scripts\return_wep_dmg.gml</script>
     <script>scripts\return_stat_gain.gml</script>
     <script>scripts\return_multi_atk.gml</script>
@@ -134,7 +136,6 @@
     <script>scripts\return_item_name.gml</script>
     <script>scripts\return_item_wt.gml</script>
     <script>scripts\return_item_usage.gml</script>
-    <script>scripts\return_item_range.gml</script>
     <script>scripts\return_item_targ_type.gml</script>
     <script>scripts\return_item_eff.gml</script>
     <script>scripts\return_wep_dur.gml</script>

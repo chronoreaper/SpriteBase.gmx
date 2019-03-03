@@ -6,5 +6,6 @@ switch floor(arg_item){
     case 4: return "screwdriver "+string(round(frac(arg_item)*100))+"" 
     case 5: return "hotdog "+string(round(frac(arg_item)*100))+"" 
     case 6: return "rock "+string(round(frac(arg_item)*100))+"" 
+    case 7: return "bow "+string(round(frac(arg_item)*100))+"" 
     default:return""
 }

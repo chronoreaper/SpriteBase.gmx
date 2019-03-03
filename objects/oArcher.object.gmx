@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
+item[0]=7+return_item_usage_default(7)
+wep=0
 
 hp=12
 mhp=hp

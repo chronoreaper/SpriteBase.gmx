@@ -8,6 +8,7 @@ switch floor(item[wep]){
     case 2:wepSprite=dagger break;
     case 4:wepSprite=screwdriver break;
     case 6:wepSprite=rock break;
+    case 7:wepSprite=bow break;
 }
 draw_sprite_ext(wepSprite,0,ax+x+7+2*dsin(dir2*90-view_angle)-3*dsin(-view_angle)
         ,ay+y+7+2*dcos(dir2*90-view_angle)-3*dcos(-view_angle)

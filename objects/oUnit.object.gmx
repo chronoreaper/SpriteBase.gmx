@@ -99,7 +99,7 @@ for (var i=0;i&lt;10;i++)
 }
 item[10]=0//weapon default
 if !object_is_ancestor(object_index,oObj){
-var rand=irandom(5)+1;
+var rand=irandom(6)+1;
 item[0]=rand+return_item_usage_default(rand)
 skill[0]=3
 skill[1]=1

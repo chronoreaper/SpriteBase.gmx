@@ -6,5 +6,6 @@ switch floor(arg_item){
     case 4:return 0.05;
     case 5:return 0.02;
     case 6:return 0.02;
+    case 7:return 0.15;
     default: return 0.01
 }

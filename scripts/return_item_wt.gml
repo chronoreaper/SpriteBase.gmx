@@ -6,5 +6,6 @@ switch floor(arg_item){
     case 4: return 3
     case 5: return 2
     case 6: return 8
+    case 7: return 5
     default:return 0
 }
