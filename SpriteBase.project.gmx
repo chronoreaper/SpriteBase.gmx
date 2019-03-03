@@ -202,6 +202,7 @@
     </objects>
     <objects name="units">
       <object>objects\oFighter</object>
+      <object>objects\oArcher</object>
       <object>objects\oSlime</object>
       <object>objects\oBoar</object>
       <object>objects\oFrog</object>
