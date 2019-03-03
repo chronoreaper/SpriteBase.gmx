@@ -1,4 +1,5 @@
 var arg_unit=argument0
+var arg_target=argument1
 var arg_slot=menuSel
 var arg_item=arg_unit.item[arg_slot]
 switch floor(arg_item){
@@ -20,13 +21,14 @@ switch floor(arg_item){
             arg_unit.wep=10
         break;
     case 3: 
-        with arg_unit{
+        with arg_target{
         hp+=10
         if hp>mhp
             hp=mhp
-        item[arg_slot]-=0.01
         }
-        var txt=instance_create(arg_unit.x+7,arg_unit.y-11,DmgWord);
+        with arg_unit
+            item[arg_slot]-=0.01
+        var txt=instance_create(arg_target.x+7,arg_target.y-11,DmgWord);
         txt.text=10
         txt.colour=c_lime
         break;

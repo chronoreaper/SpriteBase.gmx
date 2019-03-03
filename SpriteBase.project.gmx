@@ -134,6 +134,8 @@
     <script>scripts\return_item_name.gml</script>
     <script>scripts\return_item_wt.gml</script>
     <script>scripts\return_item_usage.gml</script>
+    <script>scripts\return_item_range.gml</script>
+    <script>scripts\return_item_targ_type.gml</script>
     <script>scripts\return_item_eff.gml</script>
     <script>scripts\return_wep_dur.gml</script>
     <script>scripts\return_item_obj.gml</script>

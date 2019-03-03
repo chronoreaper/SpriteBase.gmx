@@ -665,11 +665,32 @@ if currentTurn&gt;=0{
         }else message_create("Not in raNge")
     }
     else if phase=9{//use/equip item
-        return_item_eff(c)
-        menuSel2=-1
-        menuSel=0
-        phase=8
-        alarm[3]=20
+        var item_range=return_item_range(c.item[menuSel]);
+        if item_range=0{
+            alarm[3]=30
+            return_item_eff(c,c)
+            menuSel2=-1
+            menuSel=0
+            phase=8
+        }
+        var inst=instance_place(xx,yy,oUnit)
+        var targType=return_item_targ_type(c.item[menuSel])
+        if mouse_check_button_pressed(mb_left)
+        ||keyboard_check_pressed(keys[4])
+        if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=item_range
+            {
+            if return_check_skill_target(c,inst,targType){
+                if (targType==0){
+                    inst=instance_create(xx,yy,oTempTarg);
+                }
+                alarm[3]=20
+                return_item_eff(c,inst)
+                menuSel2=-1
+                menuSel=0
+                phase=8
+                 //skill usage range stuff   
+            }else message_create("No valid target")
+        }else message_create("Not in raNge")
     }
     else if phase=10{//use skill
         if menuSel2=-1{//before use skill
@@ -821,6 +842,7 @@ if phase&lt;=0
 ||phase=3
 ||phase=7
 ||phase=11
+||phase=9
 if currentTurn&gt;=0{
 xx=clamp(xx,0,room_width-15)
 yy=clamp(yy,0,room_height-15)
@@ -2350,6 +2372,50 @@ switch area_type{
         }break;
     }//end switch
     draw_skill_area_type(c.skill[menuSel],xx,yy,c)
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw where you can use item
+if selected!=noone
+if phase=9
+if currentTurn&gt;=0{
+var c=selected
+var range = return_item_range(c.item[menuSel])
+var area_type= 0
+switch area_type{
+    case 0: 
+            for (var i=-range*15;i&lt;=range*15;i+=15){
+                for (var j=-range*15;j&lt;=range*15;j+=15){
+                if abs(i/15)+abs(j/15)&lt;=range
+                if i!=round(xx/15)*15&amp;&amp;j!=round(yy/15)*15{
+                    draw_set_colour(c_orange)
+                    draw_set_alpha(0.7)
+                    draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
+                    draw_set_alpha(1)
+                    }
+                }
+            }break;
+    }//end switch
+    //draw_skill_area_type(1,xx,yy,c)
 }
 
 </string>
