@@ -101,6 +101,8 @@ yy=inst.yy
 view_xview=inst.xx-view_wview/2
 view_yview=inst.yy-view_hview/2
 }
+inst=instance_create(x+15,y,oArcher);
+ds_list_add(unitList,inst)
 var temp=instance_create(xx,yy,oEff);
 temp.sprite_index=spawn_eff   
 inst=instance_create(x+15*15,y+15*15,oDragon1)
@@ -381,8 +383,8 @@ if loop&gt;0
 else if selected!=noone{
     with selected{
     wait=1
-    hpg+=(abs(xx-x)+abs(yy-y))
-    spg+=(abs(xx-x)+abs(yy-y))
+    hpg+=(abs(xx-x)+abs(yy-y))*0.1
+    spg+=(abs(xx-x)+abs(yy-y))*0.1
     //xp+=ceil((abs(xx-x)+abs(yy-y))/10)
     xx=x
     yy=y
