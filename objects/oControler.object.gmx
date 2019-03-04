@@ -44,6 +44,7 @@ timePhase2=0
 timePhase3=0
 timePhase4=0
 timePhase5=0
+currentNumber=0
 globalvar pixelFont,pixelBlock;
 pixelFont=font_add_sprite_ext(letters,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,1)
 pixelBlock=font_add_sprite_ext(lettersBlock,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,1)
@@ -126,6 +127,7 @@ add_all_to_map()
 show_debug_overlay(true)
 update_fog()
 generate_map()
+//alarm[9]=1//activation cycle
 //update_view_zone()
 </string>
           </argument>
@@ -224,6 +226,68 @@ debug1=0;
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="9">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if selected=noone{
+instance_deactivate_all(true)
+instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
+}
+alarm[9]=2
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check turn end
+with selected{
+wait=1
+xx=x
+yy=y
+if xp&gt;=mxp
+    levelup()
+}
+phase=0
+selected=noone
+update_fog()
+check_turn_end()
+add_all_to_map()
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="3">
       <action>
         <libid>1</libid>
@@ -276,7 +340,7 @@ add_all_to_map()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///end turn pick up item
+            <string>//end turn pick up item
 if selected!=noone{
 var inst=instance_place(selected.x,selected.y,oItem)
 if inst!=noone
@@ -338,7 +402,7 @@ else{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///end item throw
+            <string>//end item throw
 with selected{
 wait=1
 tecg+=1
@@ -377,10 +441,38 @@ add_all_to_map()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>loop--
+            <string>///end turn
+if phase=5{
+loop--
 if loop&gt;0
     phase=4
-else if selected!=noone{
+}
+if phase!=4
+if selected!=noone{
+    var inst=instance_place(selected.x,selected.y,oItem)
+    if inst!=noone
+    {
+    var space=0
+    while space&lt;10{
+        if selected.item[space]=0{
+        with selected{
+                item[space]=inst.item
+                item[space]+=inst.use
+            }
+            if currentTurn&gt;=0
+            message_create("obtaiN "+return_item_name(inst.item+inst.use))
+            alarm[2]=15
+            with inst
+                instance_destroy()
+            break;
+        }
+        else space++
+    }
+    if space=10
+        alarm[3]=10
+
+    }
+    else{
     with selected{
     wait=1
     hpg+=(abs(xx-x)+abs(yy-y))*0.1
@@ -396,6 +488,7 @@ else if selected!=noone{
     update_fog()
     check_turn_end()
     add_all_to_map()
+    }
 }
 </string>
           </argument>
@@ -424,6 +517,9 @@ if selected!=noone
 if menu=-1
 {
 if currentTurn&gt;=0{
+    //instance_deactivate_all(true)
+    //instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
+    //instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
     var c=selected
     //movement
     if mouse_check_button_pressed(mb_left)
@@ -542,6 +638,8 @@ if currentTurn&gt;=0{
         else if mouse_wheel_down()
         ||keyboard_check_pressed(keys[2])
             menuSel++
+        //show_debug_message("mouse") 
+        //show_debug_message(window_mouse_get_y()/display_get_height())
         //change base menu selection
         if mouse_x-view_xview&gt;270
         &amp;&amp; mouse_y-view_yview&gt;150
@@ -667,14 +765,14 @@ if currentTurn&gt;=0{
             menuSel2=-1
             menuSel=0
             phase=8
-            alarm[1]=30
+            alarm[0]=30
         }else message_create("caNNot throw there")
         }else message_create("Not in raNge")
     }
     else if phase=9{//use/equip item
         var item_range=return_item_range(c.item[menuSel]);
         if item_range=0{
-            alarm[3]=30
+            alarm[0]=30
             return_item_eff(c,c)
             menuSel2=-1
             menuSel=0
@@ -690,7 +788,7 @@ if currentTurn&gt;=0{
                 if (targType==0){
                     inst=instance_create(xx,yy,oTempTarg);
                 }
-                alarm[3]=20
+                alarm[0]=20
                 return_item_eff(c,inst)
                 menuSel2=-1
                 menuSel=0
@@ -744,7 +842,7 @@ if currentTurn&gt;=0{
     {
         var skill_range=return_skill_range(c.skill[menuSel]);
         if skill_range=0{
-            alarm[3]=30
+            alarm[0]=30
             return_skill_eff(c,c)
             menuSel2=-1
             menuSel=0
@@ -762,7 +860,7 @@ if currentTurn&gt;=0{
                 if (targType==0){
                     inst=instance_create(xx,yy,oTempTarg);
                 }
-                alarm[3]=30
+                alarm[0]=30
                 return_skill_eff(c,inst)
                 menuSel2=-1
                 menuSel=0
@@ -1007,25 +1105,37 @@ else if ch&lt;=0
             <kind>1</kind>
             <string>///#4 ai
 if menu=-1
-if currentTurn=-1
+if currentTurn&lt;0
 {
-    if selected=noone{
-        var ct=currentTurn
-        var c=noone
-        with oChar{
+    if selected=noone
+    if alarm_get(4)&lt;=0{
+        //var ct=currentTurn
+        //var c=noone
+        for (var i=0;i&lt;ds_list_size(unitList);i++){
+           var char=ds_list_find_value(unitList,i)
+           if char!=noone
+           if instance_exists(char)
+           if char.wait=0{
+                selected=char
+                break
+           }
+        }
+        /*with oChar{
             if team=ct
             if wait=0{
                 c=id
                 break
                 }
-        }
-        selected=c
+        }*/
+        //selected=c
         if selected!=noone
             phase=0
         else
             currentTurn++
     }
-    if selected!=noone{
+    if selected!=noone
+    if alarm_get(0)&lt;=0
+    if alarm_get(3)&lt;=0{
     /*
     phase
     1
@@ -1085,7 +1195,7 @@ if currentTurn=-1
             }else phase=3
              
         
-        }else alarm[3]=1
+        }else alarm[0]=1
     }//end phase 0
     if phase=1{
         var c=selected
@@ -1124,7 +1234,7 @@ if currentTurn=-1
                 }//end loop
                 if close=noone
                 ||selected.ai=-1 {//no target
-                    alarm[3]=1
+                    alarm[0]=1
                 }
                 else{
                     loop=return_multi_atk(selected.item[selected.wep])
@@ -1155,13 +1265,13 @@ if currentTurn=-1
                     if (targType==0){
                         inst=instance_create(c.x+dcos(c.dir*90),c.y-dsin(c.dir*90),oTempTarg);
                     }
-                    alarm[3]=30
+                    alarm[0]=30
                     return_skill_eff(c,inst)
                     menuSel=0
                     phase=8
                      //skill usage range stuff   
-                }else alarm[3]=1//else no valid targ
-            }else alarm[3]=1//else not in range
+                }else alarm[0]=1//else no valid targ
+            }else alarm[0]=1//else not in range
         }
     }
 }
@@ -1192,7 +1302,28 @@ if selected=noone
 if mouse_check_button_pressed(mb_right)
 ||keyboard_check_pressed(keys[5]){
     if !ds_list_empty(unitList){
-        var inst=ds_list_find_value(unitList,0)
+        var inst=ds_list_find_value(unitList,currentNumber)
+        if xx=inst.x
+        &amp;&amp; yy=inst.y{
+            currentNumber++
+            if currentNumber&gt;=ds_list_size(unitList)
+                currentNumber=0
+            inst=ds_list_find_value(unitList,currentNumber)
+            x=inst.xx
+            y=inst.yy
+            xx=x
+            yy=y
+            view_xview=inst.xx-view_wview/2
+            view_yview=inst.yy-view_hview/2
+        }else{
+            x=inst.xx
+            y=inst.yy
+            xx=x
+            yy=y
+            view_xview=inst.xx-view_wview/2
+            view_yview=inst.yy-view_hview/2
+        }
+        /*var inst=ds_list_find_value(unitList,0)
         while(i&lt;ds_list_size(unitList)&amp;&amp;inst.wait!=0){
             i++
             inst=ds_list_find_value(unitList,i)
@@ -1204,7 +1335,7 @@ if mouse_check_button_pressed(mb_right)
             yy=y
             view_xview=inst.xx-view_wview/2
             view_yview=inst.yy-view_hview/2
-        }
+        }*/
     }
 }
 </string>
@@ -2154,10 +2285,12 @@ if menu=0{
 draw_set_colour(c_black)
 draw_set_alpha(0.5)
 with (oUnit)
+{
     if draw&gt;0
     if visible
         draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
         ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
+}
 draw_set_alpha(1)
 </string>
           </argument>
@@ -2235,6 +2368,7 @@ path_delete(path)
             <kind>1</kind>
             <string>///draw move dist over unit when not selecting any
 if menu=-1
+if currentTurn&gt;=0
 if selected=noone{
     add_all_to_map()
     selected=instance_place(xx,yy,oUnit);

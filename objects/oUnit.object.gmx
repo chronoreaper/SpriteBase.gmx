@@ -265,7 +265,7 @@ if object_is_ancestor(object_index,oObj){
     var cy=y
     var d=1
     with oControler
-    if ds_grid_get(gridF1,cx/15,cy/15)&lt;0
+    if ds_grid_get(gridF1,cx/15,cy/15)&lt;0.2//0
         d=0
     draw=d
 }
@@ -290,7 +290,9 @@ else if wave&lt;=0
     lr=1
 }
 
-}else visible=false
+}else{ visible=false
+//instance_deactivate_object(id)
+}
 </string>
           </argument>
         </arguments>

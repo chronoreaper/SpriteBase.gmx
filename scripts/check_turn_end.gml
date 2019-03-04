@@ -1,7 +1,15 @@
 var fin=1
 var ct=currentTurn
 var list=ds_list_create()
-with (oChar)
+for (var i=0;i<ds_list_size(unitList);i++){
+    var char=ds_list_find_value(unitList,i)
+        if char.hp>0{
+        if char.wait=0
+            fin=0
+        ds_list_add(list,char)
+        }
+}
+/*with (oChar)
 {
     if team=ct
     if hp>0{
@@ -9,9 +17,10 @@ with (oChar)
             fin=0
         ds_list_add(list,id)
     }
-}
+}*/
 if fin=1{
     turnTime=0
+    currentNumber=0
     if currentTurn>=0{
     timePhase0=0
     timePhase1=0
@@ -63,7 +72,7 @@ if fin=1{
     var turn=currentTurn
     //add units to list
     with(oChar){
-        if team=turn{
+        if round(team)=turn{
             var unit=id
             with (oControler)
                 ds_list_add(unitList,unit)
@@ -73,21 +82,23 @@ if fin=1{
                 sp=msp
         }
     }
-    if currentTurn>=0{
-    var inst=ds_list_find_value(unitList,0)
     if ds_list_size(unitList)>0{
-        if inst!=noone
-        if instance_exists(inst){
-            x=inst.xx
-            y=inst.yy
-            xx=x
-            yy=y
-            view_xview=inst.xx-view_wview/2
-            view_yview=inst.yy-view_hview/2
+        if currentTurn>=0
+        {
+            var inst=ds_list_find_value(unitList,0)
+            if inst!=noone
+            if instance_exists(inst){
+                x=inst.xx
+                y=inst.yy
+                xx=x
+                yy=y
+                view_xview=inst.xx-view_wview/2
+                view_yview=inst.yy-view_hview/2
             }
-        }else{
-            //next turn
         }
+    }
+    else{
+         currentTurn++;//next turn
     }
 }
 ds_list_destroy(list)
