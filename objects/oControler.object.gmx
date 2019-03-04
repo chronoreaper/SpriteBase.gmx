@@ -308,6 +308,8 @@ add_all_to_map()
             <string>///end normal
 with selected{
 wait=1
+hpg+=(abs(xx-x)+abs(yy-y))*0.05
+spg+=(abs(xx-x)+abs(yy-y))*0.05
 xx=x
 yy=y
 if xp&gt;=mxp
@@ -475,8 +477,8 @@ if selected!=noone{
     else{
     with selected{
     wait=1
-    hpg+=(abs(xx-x)+abs(yy-y))*0.1
-    spg+=(abs(xx-x)+abs(yy-y))*0.1
+    hpg+=(abs(xx-x)+abs(yy-y))*0.05
+    spg+=(abs(xx-x)+abs(yy-y))*0.05
     //xp+=ceil((abs(xx-x)+abs(yy-y))/10)
     xx=x
     yy=y
@@ -757,7 +759,7 @@ if currentTurn&gt;=0{
             inst.use=frac(c.item[menuSel])
             inst.source=c
             c.item[menuSel]=0
-            c.tecg+=0.2
+            c.tecg+=1
             c.xp+=4
             //turn on for no glich
             if c.wep=menuSel
