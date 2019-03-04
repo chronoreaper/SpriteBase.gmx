@@ -56,14 +56,12 @@ mov=0
             <string>if visible
 if draw&gt;0
 ||debugging=1{
-draw_set_colour(c_black)
-draw_set_alpha(0.5)
-draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
-ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
-draw_set_alpha(1)
-if (object_is_ancestor(object_index,oObj)
-||ai=-1)
-&amp;&amp;!object_is_ancestor(object_index,oDeco4){
+//draw_set_colour(c_black)
+//draw_set_alpha(0.5)
+//draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
+//ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
+//draw_set_alpha(1)
+if !object_is_ancestor(object_index,oDeco4){
 var viewSprite=dir
 }
 else{

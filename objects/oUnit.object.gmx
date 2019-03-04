@@ -365,6 +365,7 @@ if hp=0{
           <argument>
             <kind>1</kind>
             <string>///draw markers
+if visible
 if draw&gt;0
 if marker&gt;0
 if oControler.phase&lt;3||oControler.currentTurn&lt;0{
@@ -411,7 +412,8 @@ if visible
 
 if draw&gt;0
 ||debugging=1{
-if !object_is_ancestor(object_index,oObj){//draw curr turn
+//if !object_is_ancestor(object_index,oObj)
+{//draw curr turn
     //if oControler.phase=0
     if oControler.currentTurn=team
     if oControler.currentTurn&gt;=0
@@ -456,23 +458,23 @@ if alpha&gt;0
    draw_sprite_ext(healthBar,58*(dmg/mhp),x-7*(size-1),y-7*(size-1),size,size,0,colour,alpha)
    }
    
-    /*if hp&lt;dmg{
-   draw_sprite_ext(hpBar,0,x,y-11,(dmg/mhp)*13,1,0,c_red,alpha)
-   draw_sprite_ext(hpBar,0,x,y-11,(hp/mhp)*13,1,0,c_lime,alpha)}
-   else{
-   draw_sprite_ext(hpBar,0,x,y-11,(hp/mhp)*13,1,0,c_green,alpha)
-   draw_sprite_ext(hpBar,0,x,y-11,(dmg/mhp)*13,1,0,c_lime,alpha)}
-   */
+    //if hp&lt;dmg{
+   //draw_sprite_ext(hpBar,0,x,y-11,(dmg/mhp)*13,1,0,c_red,alpha)
+  // draw_sprite_ext(hpBar,0,x,y-11,(hp/mhp)*13,1,0,c_lime,alpha)}
+   //else{
+   //draw_sprite_ext(hpBar,0,x,y-11,(hp/mhp)*13,1,0,c_green,alpha)
+   //draw_sprite_ext(hpBar,0,x,y-11,(dmg/mhp)*13,1,0,c_lime,alpha)}
+   
    //if alarm_get(6)&lt;=0
       alpha-=0.1
 }
 
 //draw unit
-draw_set_colour(c_black)
-draw_set_alpha(0.5)
-draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
-ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
-draw_set_alpha(1)
+//draw_set_colour(c_black)
+//draw_set_alpha(0.5)
+//draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
+//ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
+//draw_set_alpha(1)
 if (object_is_ancestor(object_index,oObj)
 ||ai=-1)
 &amp;&amp;!object_is_ancestor(object_index,oDeco4){

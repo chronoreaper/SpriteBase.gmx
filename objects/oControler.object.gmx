@@ -2142,6 +2142,33 @@ if menu=0{
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///unit shadow
+draw_set_colour(c_black)
+draw_set_alpha(0.5)
+with (oUnit)
+    draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
+    ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
+draw_set_alpha(1)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///#2 draw tile and grid
 draw_set_alpha(gridAlpha)
 draw_set_colour(c_black)
