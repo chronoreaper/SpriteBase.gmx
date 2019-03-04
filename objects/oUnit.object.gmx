@@ -41,7 +41,7 @@ xp=0
 mxp=15
 lv=1
 alpha=0
-draw=1
+draw=0
 
 name=""
 
@@ -49,6 +49,7 @@ hp=1
 mhp=1
 sp=1
 msp=1
+slowHP=0
 
 /*
 0 - TOTAL
@@ -259,13 +260,15 @@ if x&gt;=view_xview
 &amp;&amp; y&gt;=view_yview
 &amp;&amp; y&lt;=view_yview+view_hview
 {
-var cx=x
-var cy=y
-var d=1
-with oControler
-if ds_grid_get(gridF1,cx/15,cy/15)&lt;0
-    d=0
-draw=d
+if object_is_ancestor(object_index,oObj){
+    var cx=x
+    var cy=y
+    var d=1
+    with oControler
+    if ds_grid_get(gridF1,cx/15,cy/15)&lt;0
+        d=0
+    draw=d
+}
 visible=true
 
 //idle movement

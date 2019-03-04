@@ -36,6 +36,49 @@ mov=0
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if visible
+if draw&gt;0
+||debugging=1{
+draw_set_colour(c_black)
+draw_set_alpha(0.5)
+draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
+ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
+draw_set_alpha(1)
+if (object_is_ancestor(object_index,oObj)
+||ai=-1)
+&amp;&amp;!object_is_ancestor(object_index,oDeco4){
+var viewSprite=dir
+}
+else{
+var viewSprite=dir+round(view_angle/90)
+if viewSprite&lt;0
+    viewSprite+=4
+viewSprite=viewSprite%4
+}
+draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1-c,-view_angle+wave,image_blend,1)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
   </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
