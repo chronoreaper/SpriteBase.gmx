@@ -51,7 +51,7 @@ switch floor(arg_item){
         txt.text=5
         txt.colour=c_lime
         break;
-    case 6:
+    case 7:
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else

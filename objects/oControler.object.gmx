@@ -497,6 +497,13 @@ if currentTurn&gt;=0{
             yy=c.y
             phase=6
         }
+        else if phase=9{
+            phase=6
+            xx=c.x
+            yy=c.y
+            view_xview=c.x-view_wview/2
+            view_yview=c.y-view_hview/2
+        }
         else if phase=10{
             if menuSel2=-1{
                 phase=2
@@ -1444,6 +1451,7 @@ if ds_grid_get(gridF1,round(xx/15),round(yy/15))&lt;=0
           <argument>
             <kind>1</kind>
             <string>///#2 draw info over unit
+draw_set_alpha(1)
 if selected!=noone
 if currentTurn&gt;=0{
 if phase=3{
@@ -2236,17 +2244,19 @@ if selected=noone{
         var path=path_add()
         mp_grid_clear_cell(grid,c.x/15,c.y/15)
         //show where you can move
-        for (var i=-c.mov*15;i&lt;=c.mov*15;i+=15){
-            for (var j=-c.mov*15;j&lt;=c.mov*15;j+=15){
+        //draw_set_colour(c_teal)
+        //draw_set_alpha(0.5)
+        var range=c.mov
+        for (var i=-range*15;i&lt;=range*15;i+=15){
+            for (var j=-range*15;j&lt;=range*15;j+=15){
             if mp_grid_path(grid,path,c.x+7.5,c.y+7.5,c.x+i+7.5,c.y+j+7.5,false)
             if path_get_number(path)-1&lt;=c.mov{
-                draw_set_colour(c_teal)
-                draw_set_alpha(0.5)
-                draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
-                draw_set_alpha(1)
+                draw_sprite_ext(box14x14,0,i+c.x,j+c.y,1,1,0,c_teal,0.5)
+                //draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
                 }
             }
         }
+        //draw_set_alpha(1)
     
         path_delete(path)
     }

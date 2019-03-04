@@ -112,7 +112,7 @@
     <sprite>sprites\atkInfo</sprite>
     <sprite>sprites\unit_marker</sprite>
     <sprite>sprites\hitbox2</sprite>
-    <sprite>sprites\sprite46</sprite>
+    <sprite>sprites\box14x14</sprite>
     <sprite>sprites\sprite47</sprite>
   </sprites>
   <backgrounds name="background">
@@ -194,6 +194,7 @@
       <object>objects\oScrewDriver</object>
       <object>objects\oHotDog</object>
       <object>objects\oRock</object>
+      <object>objects\oBow</object>
     </objects>
     <objects name="objects">
       <object>objects\oBuilding</object>
