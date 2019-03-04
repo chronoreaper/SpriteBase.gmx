@@ -2146,8 +2146,10 @@ if menu=0{
 draw_set_colour(c_black)
 draw_set_alpha(0.5)
 with (oUnit)
-    draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
-    ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
+    if draw&gt;0
+    if visible
+        draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
+        ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
 draw_set_alpha(1)
 </string>
           </argument>
