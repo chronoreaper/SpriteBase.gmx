@@ -100,7 +100,7 @@ if fin=1{
             sp+=1
             if sp>msp
                 sp=msp
-            //wait=0
+            wait=0
         }
     }
     ds_list_sort(unitList,false)
@@ -120,7 +120,7 @@ if fin=1{
         }
     }
     else{
-         currentTurn++;//next turn
+         alarm[10]=2//currentTurn++;//next turn
     }
 }
 ds_list_destroy(list)

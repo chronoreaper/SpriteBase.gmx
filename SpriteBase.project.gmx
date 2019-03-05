@@ -43,6 +43,12 @@
         <sprite>sprites\sprite49</sprite>
         <sprite>sprites\turt001_3</sprite>
       </sprites>
+      <sprites name="Hero">
+        <sprite>sprites\hero001_0</sprite>
+        <sprite>sprites\hero001_1</sprite>
+        <sprite>sprites\hero001_2</sprite>
+        <sprite>sprites\hero001_3</sprite>
+      </sprites>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
@@ -69,15 +75,19 @@
       <sprite>sprites\screwdriver</sprite>
       <sprite>sprites\hotdog</sprite>
       <sprite>sprites\bow</sprite>
+      <sprite>sprites\xcalabur</sprite>
+      <sprite>sprites\aegis</sprite>
       <sprite>sprites\rock</sprite>
     </sprites>
     <sprites name="eff">
       <sprite>sprites\spawn_eff</sprite>
       <sprite>sprites\slash</sprite>
       <sprite>sprites\stab</sprite>
+      <sprite>sprites\windSlash</sprite>
       <sprite>sprites\bite</sprite>
       <sprite>sprites\water_breath</sprite>
       <sprite>sprites\laser_beam</sprite>
+      <sprite>sprites\angelic</sprite>
     </sprites>
     <sprites name="in game menu">
       <sprite>sprites\miniselectmenu</sprite>
@@ -96,6 +106,9 @@
         <sprite>sprites\Dragon001_2</sprite>
         <sprite>sprites\Dragon001_3</sprite>
       </sprites>
+    </sprites>
+    <sprites name="area of effect">
+      <sprite>sprites\AOE_range2</sprite>
     </sprites>
     <sprite>sprites\blank</sprite>
     <sprite>sprites\cruser</sprite>
@@ -146,6 +159,7 @@
     <script>scripts\return_wep_dur.gml</script>
     <script>scripts\return_item_obj.gml</script>
     <script>scripts\return_item_usage_default.gml</script>
+    <script>scripts\return_arm_reduction.gml</script>
     <script>scripts\draw_weapon.gml</script>
     <script>scripts\return_skill_range.gml</script>
     <script>scripts\return_skill_name.gml</script>
@@ -213,6 +227,7 @@
     <objects name="units">
       <object>objects\oFighter</object>
       <object>objects\oArcher</object>
+      <object>objects\oHero</object>
       <object>objects\oSlime</object>
       <object>objects\oBoar</object>
       <object>objects\oFrog</object>

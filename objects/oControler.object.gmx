@@ -96,7 +96,7 @@ udg=1
 ch=0
 var inst,inst2;
 repeat(1){
-inst=instance_create(x,y,oFighter);
+inst=instance_create(x,y,oHero);
 ds_list_add(unitList,inst)
 //inst=instance_create(x+15,y,oFighter);
 //ds_list_add(unitList,inst)
@@ -105,20 +105,21 @@ yy=inst.yy
 view_xview=inst.xx-view_wview/2
 view_yview=inst.yy-view_hview/2
 }
-inst=instance_create(x+15,y,oArcher);
-ds_list_add(unitList,inst)
-var temp=instance_create(xx,yy,oEff);
-temp.sprite_index=spawn_eff   
+//inst=instance_create(x+15,y,oArcher);
+//ds_list_add(unitList,inst)
+//inst=instance_create(x-15*15,y+15*15,oHero)
+//ds_list_add(unitList,inst)
+//inst.team=-1
+//inst.ai=0 
 inst=instance_create(x+15*15,y+15*15,oDragon1)
 inst.team=-1
-inst.ai=0
 inst.marker=1
 
-inst=instance_create(x-10*15,y-10*15,oWurm)
+inst=instance_create(x-15*15,y-15*15,oWurm)
 inst.team=-1
 inst.ai=-1
 for(var i=1;i&lt;10;i++){
-inst2=instance_create(x-(10-i)*15,y-10*15,oWurm)
+inst2=instance_create(x-(15-i)*15,y-15*15,oWurm)
 inst2.team=-1
 inst2.ai=-1
 inst.link=inst2
@@ -351,8 +352,8 @@ with selected{
 //instance_activate_all()
 with selected{
 wait=1
-hpg+=(abs(xx-x)+abs(yy-y))*0.05
-spg+=(abs(xx-x)+abs(yy-y))*0.05
+hpg+=(abs(xx-x)+abs(yy-y))*0.01
+spg+=(abs(xx-x)+abs(yy-y))*0.01
 xx=x
 yy=y
 if xp&gt;=mxp
@@ -523,8 +524,8 @@ if selected!=noone{
     //alarm[4]=2
     with selected{
     wait=1
-    hpg+=(abs(xx-x)+abs(yy-y))*0.05
-    spg+=(abs(xx-x)+abs(yy-y))*0.05
+    hpg+=(abs(xx-x)+abs(yy-y))*0.01
+    spg+=(abs(xx-x)+abs(yy-y))*0.01
     //xp+=ceil((abs(xx-x)+abs(yy-y))/10)
     xx=x
     yy=y
@@ -1990,6 +1991,10 @@ var c=selected
                 {
                     draw_text(354,221-i*7,"E")
                 }
+                if selected.arm=i
+                {
+                    draw_text(354,221-i*7,"E")
+                }
             }
             draw_set_colour(c_dkgray)
             draw_rectangle(270,140,359,153,false)
@@ -2603,7 +2608,19 @@ switch area_type{
                 }
             }
         }break;
-    }//end switch
+    case 3: 
+            for (var i=-range*15;i&lt;=range*15;i+=15){
+                for (var j=-range*15;j&lt;=range*15;j+=15){
+                if abs(i/15)+abs(j/15)&lt;=range
+                if i!=round(xx/15)*15&amp;&amp;j!=round(yy/15)*15{
+                    draw_set_colour(c_orange)
+                    draw_set_alpha(0.7)
+                    draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
+                    draw_set_alpha(1)
+                    }
+                }
+            }break;
+        }//end switch
     draw_skill_area_type(c.skill[menuSel],xx,yy,c)
 }
 

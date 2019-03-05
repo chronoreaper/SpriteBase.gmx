@@ -5,11 +5,13 @@ options
 1 - ally
 2 - enemy
 3 - all
+4 - no target
 */
 switch floor(arg_skill){
     case 1: return 1
     case 2: return 0
     case 3: return 0
     case 4: return 2
+    case 5: return 1
     default:return 0
 }

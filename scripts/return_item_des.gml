@@ -57,5 +57,23 @@ switch floor(arg_item){
         draw_text_ext(ex,ey-16,"wt: 5",0,100)
         draw_text_ext(ex,ey-9,"raNge 3",0,100)
         break;
+    case 50://excalabur
+        draw_set_colour(c_olive)
+        draw_rectangle(ex-2,ey-17-7*3,340,ey-4,false)
+        draw_set_colour(c_black)
+        draw_text_ext(ex,ey-37,"LegeNdary Sword",0,100)
+        draw_text_ext(ex,ey-30,"wielded by the hero",0,100)
+        draw_text_ext(ex,ey-23,"mt: ???",0,100)
+        draw_text_ext(ex,ey-16,"wt: ???",0,100)
+        draw_text_ext(ex,ey-9,"raNge 2",0,100)
+        break;
+    case 51://aegis
+        draw_set_colour(c_olive)
+        draw_rectangle(ex-2,ey-17-7*1,340,ey-4,false)
+        draw_set_colour(c_black)
+        draw_text_ext(ex,ey-23,"LegeNdary Shield",0,100)
+        draw_text_ext(ex,ey-16,"reduce dmg by 50%",0,100)
+        draw_text_ext(ex,ey-9,"wt: ???",0,100)
+        break;
     default:return""
 }

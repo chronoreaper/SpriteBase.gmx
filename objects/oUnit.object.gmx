@@ -101,6 +101,7 @@ for (var i=0;i&lt;10;i++)
 item[10]=0//weapon default
 if !object_is_ancestor(object_index,oObj){
 var rand=irandom(6)+1;
+if irandom(3)=0
 item[0]=rand+return_item_usage_default(rand)
 skill[0]=3
 skill[1]=1
@@ -344,6 +345,14 @@ if hp=0{
     inst.sprite_index=sprite_index
     instance_destroy()
 }
+if dmg!=hp{
+   if image_blend!=c_red{
+      alpha=5
+   if abs(dmg-hp)&gt;0.5
+      dmg+=sign(hp-dmg)/2//5//round(((mhp/2)/(hp-dmg)))
+   else dmg=hp
+   }
+}
 </string>
           </argument>
         </arguments>
@@ -434,14 +443,14 @@ if object_is_ancestor(object_index,oObj)
     colour=oControler.playerColour[10];
 else
     draw_sprite_ext(marker1,0,x-7*(size-1),y-7*(size-1),size,size,0,colour,1-wait)
-if dmg!=hp{
+/*if dmg!=hp{
    if image_blend!=c_red{
       alpha=5
    if abs(dmg-hp)&gt;0.5
       dmg+=sign(hp-dmg)/2//5//round(((mhp/2)/(hp-dmg)))
    else dmg=hp
    }
-}
+}*/
 if floor(hp)&lt;floor(mhp){
     alpha=5
 if wait!=0

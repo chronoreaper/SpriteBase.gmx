@@ -113,5 +113,26 @@ switch arg_skill{
             draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"attack",1,1,-view_angle)
             draw_set_halign(fa_left)
         }
+    case 5:
+        if abs(xx-arg_source.x)+abs(yy-arg_source.y)<=1
+            draw_sprite_ext(AOE_range2,0,xx,yy,1,1,0,c_lime,1)
+        /*var inst=instance_place(xx,yy,oUnit)
+        if inst!=noone
+        if (inst.draw>0)
+        if return_check_skill_target(arg_source,inst,return_skill_targ_type(arg_skill))
+        {
+            var c=arg_source
+            var targ=inst
+            draw_sprite_ext(atkInfo,0,xx+7+10*dsin(view_angle),yy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
+            draw_set_colour(c_black)
+            draw_set_halign(fa_center)
+            draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y)))+"%",1,1,-view_angle)
+            draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle),c.lv,1,1,-view_angle)
+            draw_set_font(pixelBlock)
+            draw_set_colour(c_lime)
+            draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"heal",1,1,-view_angle)
+            draw_set_halign(fa_left)
+        }*/
+    break;
     break;
 }

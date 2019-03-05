@@ -107,5 +107,44 @@ switch floor(arg_skill){
         return 1
         }
         return 0
+    case 5:
+        if arg_source.sp>=15 {
+        if arg_targ!=noone{
+            //arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            if arg_source.dir>3
+                arg_source.dir=0
+            arg_source.sp-=15
+            arg_source.spg+=1
+            var inst=instance_create(arg_source.x+7,arg_source.y+7,oEff);
+            inst.sprite_index=angelic
+            inst.image_speed=0.5
+            inst=instance_create(arg_source.x,arg_source.y,oEff);
+            inst.sprite_index=AOE_range2
+            inst.visible=false
+            //inst.image_angle=point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)
+            inst.rotate=0
+            with inst{
+                var cinst=instance_place(x,y,oChar);
+                while cinst!=noone{
+                    if (cinst.team==arg_source.team){
+                        var txt=instance_create(cinst.x+7,cinst.y-11,DmgWord);
+                        txt.text=arg_source.lv*2+5
+                        txt.colour=c_lime   
+                        
+                        cinst.hp+=arg_source.lv*2+5
+                        with cinst{
+                        if hp>mhp
+                            hp=mhp
+                        } 
+                    }
+                    instance_deactivate_object(cinst);
+                    cinst=instance_place(x,y,oChar);
+                    } 
+                    instance_activate_all()               
+                }
+            }
+        return 1
+        }
+        return 0
     default:return 0
 }

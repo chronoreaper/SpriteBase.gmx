@@ -29,5 +29,12 @@ switch floor(arg_item){
         draw_text_ext(ex,ey-9-7*1,"bites and heals",0,100)
         draw_text_ext(ex,ey-9-7*0,"raNge 1",0,100)
         break;
+    case 5:
+        draw_set_colour(c_olive)
+        draw_rectangle(ex-2,ey-17+7*0,365,ey-4,false)
+        draw_set_colour(c_black)
+        draw_text_ext(ex,ey-9-7*1,"heals all in a large area",0,100)
+        draw_text_ext(ex,ey-9-7*0,"raNge 1",0,100)
+        break;
     default:return""
 }
