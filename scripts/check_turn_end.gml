@@ -1,12 +1,17 @@
+instance_activate_all()
+//show_debug_message("char"+string(instance_number(oChar)))
 var fin=1
 var ct=currentTurn
 var list=ds_list_create()
 for (var i=0;i<ds_list_size(unitList);i++){
     var char=ds_list_find_value(unitList,i)
+        if instance_exists(char){
+        instance_activate_object(char)
         if char.hp>0{
         if char.wait=0
             fin=0
         ds_list_add(list,char)
+        }
         }
 }
 /*with (oChar)
@@ -28,6 +33,8 @@ if fin=1{
     timePhase3=0
     timePhase4=0
     timePhase5=0}
+    if currentTurn=0
+    //show_debug_message(ds_list_size(list))
     for(i=0;i<ds_list_size(list);i++){
         var inst=ds_list_find_value(list,i);
         inst.wait=0
@@ -70,8 +77,14 @@ if fin=1{
     //clear old units
     ds_list_clear(unitList)
     var turn=currentTurn
+    //show_debug_message("unit")
+    //show_debug_message(ds_list_size(allUnits))
     //add units to list
-    with(oChar){
+    //with(oChar)
+    for(var i=0;i<ds_list_size(allUnits);i++){
+        var c=ds_list_find_value(allUnits,i);
+        instance_activate_object(c)
+        with c
         if round(team)=turn{
             var unit=id
             with (oControler)
@@ -80,8 +93,10 @@ if fin=1{
             sp+=1
             if sp>msp
                 sp=msp
+            wait=0
         }
     }
+    ds_list_sort(unitList,false)
     if ds_list_size(unitList)>0{
         if currentTurn>=0
         {

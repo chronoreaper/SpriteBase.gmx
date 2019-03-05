@@ -49,6 +49,7 @@ globalvar pixelFont,pixelBlock;
 pixelFont=font_add_sprite_ext(letters,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,1)
 pixelBlock=font_add_sprite_ext(lettersBlock,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,1)
 unitList=ds_list_create()
+allUnits=ds_list_create()
 xx=x
 yy=y
 controler=0
@@ -127,7 +128,7 @@ add_all_to_map()
 show_debug_overlay(true)
 update_fog()
 generate_map()
-//alarm[9]=1//activation cycle
+alarm[9]=1//activation cycle
 //update_view_zone()
 </string>
           </argument>
@@ -226,6 +227,34 @@ debug1=0;
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>    phase=0
+    selected=noone
+    update_fog()
+    check_turn_end()
+    add_all_to_map()
+    alarm[10]=30
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="9">
       <action>
         <libid>1</libid>
@@ -243,10 +272,12 @@ debug1=0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if selected=noone{
-instance_deactivate_all(true)
+            <string>instance_deactivate_all(true)
 instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
-}
+instance_activate_region(xx-view_wview/2,yy-view_hview/2,xx+view_wview,yy+view_hview,true)
+if selected!=noone
+    instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,selected.x+view_wview,selected.y+view_hview,true)
+
 alarm[9]=2
 </string>
           </argument>
@@ -272,17 +303,20 @@ alarm[9]=2
             <kind>1</kind>
             <string>///check turn end
 with selected{
-wait=1
-xx=x
-yy=y
-if xp&gt;=mxp
-    levelup()
-}
-phase=0
-selected=noone
-update_fog()
-check_turn_end()
-add_all_to_map()
+    wait=1
+    hpg+=(abs(xx-x)+abs(yy-y))*0.05
+    spg+=(abs(xx-x)+abs(yy-y))*0.05
+    //xp+=ceil((abs(xx-x)+abs(yy-y))/10)
+    xx=x
+    yy=y
+    if xp&gt;=mxp
+        levelup()
+    }
+    phase=0
+    selected=noone
+    update_fog()
+    check_turn_end()
+    add_all_to_map()
 </string>
           </argument>
         </arguments>
@@ -306,6 +340,10 @@ add_all_to_map()
           <argument>
             <kind>1</kind>
             <string>///end normal
+/*instance_activate_all()
+    alarm[9]=3
+    alarm[4]=2*/
+//instance_activate_all()
 with selected{
 wait=1
 hpg+=(abs(xx-x)+abs(yy-y))*0.05
@@ -475,6 +513,9 @@ if selected!=noone{
 
     }
     else{
+    //instance_activate_all()
+    //alarm[9]=3
+    //alarm[4]=2
     with selected{
     wait=1
     hpg+=(abs(xx-x)+abs(yy-y))*0.05
@@ -487,6 +528,7 @@ if selected!=noone{
     }
     phase=0
     selected=noone
+    //instance_activate_all()
     update_fog()
     check_turn_end()
     add_all_to_map()
@@ -666,7 +708,7 @@ if currentTurn&gt;=0{
                 case 3:phase=6 menuSel=0 break;
                 case 4:
                     phase=2.1
-                    alarm[2]=5
+                    alarm[0]=5
                     break;
             }        
         }
@@ -1110,11 +1152,13 @@ if menu=-1
 if currentTurn&lt;0
 {
     if selected=noone
-    if alarm_get(4)&lt;=0{
+    {
         //var ct=currentTurn
         //var c=noone
+        //show_debug_message(ds_list_size(unitList))
         for (var i=0;i&lt;ds_list_size(unitList);i++){
            var char=ds_list_find_value(unitList,i)
+           //show_debug_message(char.wait)
            if char!=noone
            if instance_exists(char)
            if char.wait=0{
@@ -1130,14 +1174,18 @@ if currentTurn&lt;0
                 }
         }*/
         //selected=c
-        if selected!=noone
+        if selected!=noone{
             phase=0
-        else
-            currentTurn++
+            instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,selected.x+view_wview,selected.y+view_hview,true)
+            }
+        else{
+            check_turn_end()
+            }
     }
     if selected!=noone
     if alarm_get(0)&lt;=0
-    if alarm_get(3)&lt;=0{
+    if alarm_get(3)&lt;=0
+    {
     /*
     phase
     1
@@ -1465,6 +1513,7 @@ if camTurnDir!=0
           <argument>
             <kind>1</kind>
             <string>ds_list_destroy(unitList)
+ds_list_destroy(allUnits)
 mp_grid_destroy(grid)
 ds_grid_destroy(gridF1)
 </string>
@@ -1857,6 +1906,7 @@ draw_text(2,60,"Phase SelectiNg: "+string(timePhase0/30))
 draw_text(2,70,"Phase MoviNg: "+string(timePhase1/30))
 draw_text(2,80,"Phase AttackiNg: "+string(timePhase3/30))
 draw_text(2,90,"Phase skill: "+string(timePhase5/30))
+draw_text(2,100,"Phase : "+string(phase))
 //draw_sprite(sprite_index,image_index,x-view_xview,y-view_yview)
 if selected!=noone{
 var c=selected
@@ -2657,7 +2707,7 @@ if keyboard_check(vk_left)//||keyboard_check(keys[6])
 var obj=noone
 switch debugObj{
     case 1:
-        obj=oBuilding
+        obj=oSlime
         break
     case 2:
         obj=oLamppost

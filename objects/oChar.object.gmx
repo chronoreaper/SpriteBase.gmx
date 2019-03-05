@@ -8,7 +8,61 @@
   <parentName>oUnit</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="8" enumb="72">
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_inherited()
+var i=id
+with oControler{
+    ds_list_add(allUnits,i)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_inherited()
+var i=id
+with oControler{
+    ds_list_delete(allUnits,ds_list_find_index(allUnits,i) )
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -27,6 +81,7 @@
             <kind>1</kind>
             <string>///fog
 //if draw&gt;0
+event_inherited()
 if view&gt;0
 if team&gt;=0
 {
@@ -34,6 +89,9 @@ if team&gt;=0
 var v=view+round(-2*cos((hour*6+minu)*pi/(12*6))+2)
 var arx=round(xx/15),ary=round(yy/15);
 with oControler{
+    ds_grid_add_disk(gridF1,arx,ary,v,0.2)
+}
+/*with oControler{
 for (var i=-v;i&lt;=v;i+=1){
     for (var j=-v;j&lt;=v;j+=1){
         if abs(i)+abs(j)&lt;=v{
@@ -59,7 +117,7 @@ for (var i=-v;i&lt;=v;i+=1){
             }
         }
     }
-}
+}*/
 }
 var cx=x
 var cy=y

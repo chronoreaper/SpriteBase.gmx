@@ -265,7 +265,7 @@ if object_is_ancestor(object_index,oObj){
     var cy=y
     var d=1
     with oControler
-    if ds_grid_get(gridF1,cx/15,cy/15)&lt;0.2//0
+    if ds_grid_get(gridF1,cx/15,cy/15)&lt;0
         d=0
     draw=d
 }
@@ -421,7 +421,7 @@ if draw&gt;0
     if oControler.currentTurn&gt;=0
     if oControler.selected!=noone
     if oControler.selected=id
-    if oControler.phase!=1
+    if oControler.phase=0
     {
         draw_set_colour(c_yellow)
         draw_set_alpha(0.5)
