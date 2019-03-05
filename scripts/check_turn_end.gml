@@ -40,10 +40,12 @@ if fin=1{
         instance_activate_object(inst)
         inst.wait=0
         }
+    if currentTurn=-1{
+         ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
+        }
     currentTurn++
-    if currentTurn=0
-        turnsSurvive++
     if currentTurn>0{//end of round
+        turnsSurvive++
         currentTurn=-1
         //add time
         minu+=1;
@@ -88,8 +90,12 @@ if fin=1{
         with c
         if round(team)=turn{
             var unit=id
-            with (oControler)
+            with (oControler){
                 ds_list_add(unitList,unit)
+                selected=unit
+                update_fog()
+                selected=noone
+                }
             //start of every turn action
             sp+=1
             if sp>msp

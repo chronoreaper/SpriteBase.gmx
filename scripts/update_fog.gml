@@ -28,7 +28,8 @@ for (var i=-v;i<=v;i+=1){
             if ary+j<ds_grid_height(gridF1)-1
             {
                      if ds_grid_get(gridF1,arx+i,ary+j)<1
-                        ds_grid_add(gridF1,arx+i,ary+j,2)//0.2
+                        ds_grid_set(gridF1,arx+i,ary+j,1)//0.2
+                     ds_grid_set(gridF2,arx+i,ary+j,0)
                 }
             }
         }

@@ -75,6 +75,8 @@ currentTurn=0
 turnsSurvive=0
 gridF1= ds_grid_create((room_width)/15+1,(room_height)/15+1);
 ds_grid_clear(gridF1,-1)
+gridF2= ds_grid_create((room_width)/15+1,(room_height)/15+1);
+ds_grid_clear(gridF2,-1)
 message=""
 messTimer=0
 infoTime=0
@@ -1519,6 +1521,7 @@ if camTurnDir!=0
 ds_list_destroy(allUnits)
 mp_grid_destroy(grid)
 ds_grid_destroy(gridF1)
+ds_grid_destroy(gridF2)
 </string>
           </argument>
         </arguments>
