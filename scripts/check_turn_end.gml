@@ -10,8 +10,8 @@ for (var i=0;i<ds_list_size(unitList);i++){
         if char.hp>0{
         if char.wait=0
             fin=0
-        ds_list_add(list,char)
         }
+        ds_list_add(list,char)
         }
 }
 /*with (oChar)
@@ -33,10 +33,11 @@ if fin=1{
     timePhase3=0
     timePhase4=0
     timePhase5=0}
-    if currentTurn=0
+    //if currentTurn=0
     //show_debug_message(ds_list_size(list))
     for(i=0;i<ds_list_size(list);i++){
         var inst=ds_list_find_value(list,i);
+        instance_activate_object(inst)
         inst.wait=0
         }
     currentTurn++
@@ -93,7 +94,7 @@ if fin=1{
             sp+=1
             if sp>msp
                 sp=msp
-            wait=0
+            //wait=0
         }
     }
     ds_list_sort(unitList,false)

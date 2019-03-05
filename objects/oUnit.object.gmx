@@ -433,7 +433,7 @@ var colour=oControler.playerColour[team+1];
 if object_is_ancestor(object_index,oObj)
     colour=oControler.playerColour[10];
 else
-    draw_sprite_ext(healthBar+1,0,x-7*(size-1),y-7*(size-1),size,size,0,colour,1-wait)
+    draw_sprite_ext(marker1,0,x-7*(size-1),y-7*(size-1),size,size,0,colour,1-wait)
 if dmg!=hp{
    if image_blend!=c_red{
       alpha=5
