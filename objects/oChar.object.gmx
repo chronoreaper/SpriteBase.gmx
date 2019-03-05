@@ -82,7 +82,7 @@ with oControler{
             <string>///fog
 //if draw&gt;0
 event_inherited()
-if view&gt;0
+/*if view&gt;0
 if team&gt;=0
 {
 //fog
@@ -117,8 +117,8 @@ for (var i=-v;i&lt;=v;i+=1){
             }
         }
     }
-}*/
 }
+}*/
 var cx=x
 var cy=y
 var d=1

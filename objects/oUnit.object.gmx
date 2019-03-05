@@ -419,14 +419,12 @@ if draw&gt;0
     //if oControler.phase=0
     if oControler.currentTurn=team
     if oControler.currentTurn&gt;=0
-    if oControler.selected!=noone
-    if oControler.selected=id
-    if oControler.phase=0
+    if wait=0
+    if oControler.selected=noone
+    //if oControler.selected=id
+    //if oControler.phase=0
     {
-        draw_set_colour(c_yellow)
-        draw_set_alpha(0.5)
-        draw_rectangle(round(x/15)*15-7*(size-1),round(y/15)*15-7*(size-1),
-        round(x/15)*15+13+7*(size-1),round(y/15)*15+13+7*(size-1),false)
+        draw_sprite_ext(box14x14,0,x,y,1,1,0,c_yellow,0.5)
     }
 }
 

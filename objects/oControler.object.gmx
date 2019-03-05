@@ -126,8 +126,11 @@ inst.ai=0
 inst.marker=1
 add_all_to_map()
 show_debug_overlay(true)
-update_fog()
 generate_map()
+for (var i=0;i&lt;ds_list_size(unitList);i++){
+    selected=ds_list_find_value(unitList,i)
+    update_fog()
+}selected=noone
 alarm[9]=1//activation cycle
 //update_view_zone()
 </string>
@@ -354,8 +357,8 @@ if xp&gt;=mxp
     levelup()
 }
 phase=0
-selected=noone
 update_fog()
+selected=noone
 check_turn_end()
 add_all_to_map()
 </string>
@@ -527,9 +530,9 @@ if selected!=noone{
         levelup()
     }
     phase=0
-    selected=noone
     //instance_activate_all()
     update_fog()
+    selected=noone
     check_turn_end()
     add_all_to_map()
     }
@@ -1600,12 +1603,12 @@ for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15+1);j++){
         {
           draw_sprite_ext(hitbox,0,fx*15+(i-vx)*15,fy*15+(j-vy)*15,1,1,0,0,0.5-ds_grid_get(gridF1,i,j))
         }
-        if ds_grid_get(gridF1,i,j)&gt;0{
+        /*if ds_grid_get(gridF1,i,j)&gt;0{
            ds_grid_multiply(gridF1,i,j,0.70)
            }
         else{
             //mp_grid_add_cell(grid,i,j)
-        }
+        }*/
 
 //ds_grid_multiply_region(gridF1,0,0,100,100,min(-1,0.95))
 }
