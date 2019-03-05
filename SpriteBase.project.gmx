@@ -57,6 +57,10 @@
       <sprite>sprites\bench_l</sprite>
       <sprite>sprites\bench_d</sprite>
       <sprite>sprites\tree</sprite>
+      <sprite>sprites\chest_r</sprite>
+      <sprite>sprites\chest_u</sprite>
+      <sprite>sprites\chest_l</sprite>
+      <sprite>sprites\chest_d</sprite>
     </sprites>
     <sprites name="items">
       <sprite>sprites\juicebox</sprite>
@@ -204,6 +208,7 @@
       <object>objects\oTree</object>
       <object>objects\oRecyclingBin</object>
       <object>objects\oBench</object>
+      <object>objects\oChest</object>
     </objects>
     <objects name="units">
       <object>objects\oFighter</object>
