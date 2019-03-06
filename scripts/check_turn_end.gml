@@ -1,4 +1,4 @@
-instance_activate_all()
+//instance_activate_all()
 //show_debug_message("char"+string(instance_number(oChar)))
 var fin=1
 var ct=currentTurn

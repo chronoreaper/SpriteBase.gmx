@@ -287,7 +287,7 @@ alarm[10]=30
 instance_activate_region(xx-view_wview/2,yy-view_hview/2,view_wview,view_hview,true)
 instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
 if selected!=noone
-    instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,selected.x+view_wview,selected.y+view_hview,true)
+    instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
 
 //alarm[8]=1
 alarm[9]=2
@@ -377,7 +377,7 @@ with selected{
 /*instance_activate_all()
     alarm[9]=3
     alarm[4]=2*/
-//instance_activate_all()
+instance_activate_all()
 with selected{
 wait=1
 hpg+=(abs(xx-x)+abs(yy-y))*0.01
@@ -561,7 +561,7 @@ if selected!=noone{
         levelup()
     }
     phase=0
-    //instance_activate_all()
+    instance_activate_all()
     update_fog()
     selected=noone
     check_turn_end()
@@ -1214,7 +1214,7 @@ if currentTurn&lt;0
         //selected=c
         if selected!=noone{
             phase=0
-            instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,selected.x+view_wview,selected.y+view_hview,true)
+            instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
             }
         else{
             check_turn_end()
@@ -1370,8 +1370,8 @@ if currentTurn&lt;0
                     menuSel=0
                     phase=8
                      //skill usage range stuff   
-                }else alarm[0]=1//else no valid targ
-            }else alarm[0]=1//else not in range
+                }else phase=3//alarm[0]=1//else no valid targ
+            }else phase=3//alarm[0]=1//else not in range
         menuSel=0
         }//end phase 11
     }

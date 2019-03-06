@@ -241,6 +241,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
+    <room>rooms\testRoom</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
