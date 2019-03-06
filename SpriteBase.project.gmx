@@ -142,6 +142,7 @@
   </paths>
   <scripts name="scripts">
     <script>scripts\add_all_to_map.gml</script>
+    <script>scripts\return_priority.gml</script>
     <script>scripts\return_dmg.gml</script>
     <script>scripts\return_wep_range.gml</script>
     <script>scripts\return_item_range.gml</script>

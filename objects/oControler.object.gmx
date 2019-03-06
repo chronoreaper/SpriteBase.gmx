@@ -71,6 +71,10 @@ phase=0
 menuSel=0
 menuSel2=-1
 loop=0
+//ai
+priorityLimit=-1
+option=0
+
 currentTurn=0
 turnsSurvive=0
 gridF1= ds_grid_create((room_width)/15+1,(room_height)/15+1);
@@ -250,12 +254,13 @@ debug1=0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>    phase=0
-    selected=noone
-    update_fog()
-    check_turn_end()
-    add_all_to_map()
-    alarm[10]=30
+            <string>///check end turn
+phase=0
+selected=noone
+update_fog()
+check_turn_end()
+add_all_to_map()
+alarm[10]=30
 </string>
           </argument>
         </arguments>
@@ -279,13 +284,36 @@ debug1=0;
           <argument>
             <kind>1</kind>
             <string>instance_deactivate_all(true)
+instance_activate_region(xx-view_wview/2,yy-view_hview/2,view_wview,view_hview,true)
 instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
-instance_activate_region(xx-view_wview/2,yy-view_hview/2,xx+view_wview,yy+view_hview,true)
 if selected!=noone
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,selected.x+view_wview,selected.y+view_hview,true)
 
+//alarm[8]=1
 alarm[9]=2
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="8">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -540,6 +568,9 @@ if selected!=noone{
     add_all_to_map()
     }
 }
+//for ai
+priorityLimit=-1
+option=0
 </string>
           </argument>
         </arguments>
@@ -568,8 +599,8 @@ if menu=-1
 {
 if currentTurn&gt;=0{
     //instance_deactivate_all(true)
-    //instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
-    //instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
+    instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
+    instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
     var c=selected
     //movement
     if mouse_check_button_pressed(mb_left)
@@ -1193,6 +1224,9 @@ if currentTurn&lt;0
     if alarm_get(0)&lt;=0
     if alarm_get(3)&lt;=0
     {
+    instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
+    instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
+   
     /*
     phase
     1
@@ -1266,9 +1300,14 @@ if currentTurn&lt;0
     }
     else if phase=3{
         var c=selected
-        if (c.sp&gt;=10)
+        option=return_priority(c,priorityLimit)
+        /*
+        0 - attack
+        1-10 - item
+        11-20 - skill
+        */
+        if (option&gt;10)
         &amp;&amp;!instance_exists(c.link)
-        &amp;&amp;irandom(1)=0
             phase=11
         else
         {//continue attack
@@ -1312,12 +1351,15 @@ if currentTurn&lt;0
         if phase=11//use skill
         {
             var c=selected
-            menuSel=0
+            menuSel=option-11
             var inst=instance_place(xx,yy,oUnit)
             var targType=return_skill_targ_type(c.skill[menuSel])
-            if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_skill_range(c.skill[menuSel])
-            ||(abs(xx-c.x)/15&lt;=abs(return_skill_range(c.skill[menuSel]))&amp;&amp;abs(yy-c.y)==0)
-            ||(abs(yy-c.y)/15&lt;=abs(return_skill_range(c.skill[menuSel]))&amp;&amp;abs(xx-c.x)==0)
+            var range=return_skill_range(c.skill[menuSel])
+            
+            
+            if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=range
+            ||(abs(xx-c.x)/15&lt;=abs(range)&amp;&amp;abs(yy-c.y)==0)
+            ||(abs(yy-c.y)/15&lt;=abs(range)&amp;&amp;abs(xx-c.x)==0)
                 {
                 if return_check_skill_target(c,inst,targType){
                     if (targType==0){
@@ -1330,7 +1372,8 @@ if currentTurn&lt;0
                      //skill usage range stuff   
                 }else alarm[0]=1//else no valid targ
             }else alarm[0]=1//else not in range
-        }
+        menuSel=0
+        }//end phase 11
     }
 }
 </string>
@@ -1916,6 +1959,7 @@ draw_text(2,70,"Phase MoviNg: "+string(timePhase1/30))
 draw_text(2,80,"Phase AttackiNg: "+string(timePhase3/30))
 draw_text(2,90,"Phase skill: "+string(timePhase5/30))
 draw_text(2,100,"Phase : "+string(phase))
+draw_text(2,110,"Units : "+string(instance_number(oUnit)))
 //draw_sprite(sprite_index,image_index,x-view_xview,y-view_yview)
 if selected!=noone{
 var c=selected

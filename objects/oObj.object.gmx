@@ -53,7 +53,7 @@ mov=0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if visible
+            <string>if visible||debugging=1
 if draw&gt;0
 ||debugging=1{
 //draw_set_colour(c_black)

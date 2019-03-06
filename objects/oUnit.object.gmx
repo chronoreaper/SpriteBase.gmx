@@ -418,7 +418,7 @@ if oControler.phase&lt;3||oControler.currentTurn&lt;0{
           <argument>
             <kind>1</kind>
             <string>///draw
-if visible
+if visible||debugging=1
 {
 
 if draw&gt;0
