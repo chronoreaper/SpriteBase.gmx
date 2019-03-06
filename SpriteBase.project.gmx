@@ -161,8 +161,8 @@
     <script>scripts\return_item_usage_default.gml</script>
     <script>scripts\return_arm_reduction.gml</script>
     <script>scripts\draw_weapon.gml</script>
-    <script>scripts\return_skill_range.gml</script>
     <script>scripts\return_skill_name.gml</script>
+    <script>scripts\return_skill_range.gml</script>
     <script>scripts\return_skill_cost.gml</script>
     <script>scripts\return_skill_targ_type.gml</script>
     <script>scripts\return_skill_acc.gml</script>

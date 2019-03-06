@@ -34,7 +34,7 @@ sp=10
 msp=sp
 stats[2,0]=5
 stats[2,1]=1
-stats[2,2]=1
+stats[2,2]=3
 stats[2,3]=0
 stats[2,4]=0
 //per level

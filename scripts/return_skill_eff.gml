@@ -146,5 +146,43 @@ switch floor(arg_skill){
         return 1
         }
         return 0
+    case 6:
+        if arg_source.sp>=4 
+        &&arg_source.hp>1{
+        if arg_targ!=noone{
+                arg_source.sp-=4
+                var total_sp=arg_source.sp
+                var total_hp=arg_source.hp;
+                arg_source.hp=ceil(total_hp/2)
+                 arg_source.sp=ceil(total_sp/2)
+                var temp=instance_create(arg_source.x,arg_source.y,arg_source.object_index);
+                temp.hp=floor(total_hp/2)
+                temp.sp=floor(total_sp/2)
+                temp.mhp=arg_source.mhp
+                temp.msp=arg_source.msp
+                temp.lv=arg_source.lv
+                temp.mov=arg_source.mov
+                temp.xx=arg_targ.x
+                temp.yy=arg_targ.y
+                //so it cant move the same turn
+                temp.wait=1
+                //add it to the list of current units
+                with oControler
+                    ds_list_add(unitList,temp)
+                for (var i=0;i<10;i++)
+                {
+                    temp.skill[i]=arg_source.skill[i]
+                }
+                for (var j=0;j<=4;j++)
+                    temp.stats[2,j]=arg_source.stats[2,j]
+                mp_grid_clear_all(grid)
+                mp_grid_path(grid,temp.path,temp.x+7.5,temp.y+7.5,arg_targ.x+7.5,arg_targ.y+7.5,false)
+                with temp{
+                   path_start(path,3,path_action_stop,false)
+                }
+            }
+        return 1
+        }
+        return 0
     default:return 0
 }

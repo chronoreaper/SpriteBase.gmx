@@ -5,5 +5,6 @@ switch floor(arg_skill){
     case 3: return "water breath" 
     case 4: return "bite" 
     case 5: return "redemptioN"
+    case 6: return "split"
     default:return""
 }

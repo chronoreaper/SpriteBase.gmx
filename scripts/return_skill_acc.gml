@@ -6,6 +6,7 @@ switch floor(arg_skill){
     case 3:return 101;//water breath
     case 4:return 80;//bite
     case 5:return 100;//redemption
+    case 6:return 100;//redemption
     default: return 0
 }
 

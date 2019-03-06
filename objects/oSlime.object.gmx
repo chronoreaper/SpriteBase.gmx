@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
+skill[0]=6
 
 hp=9
 mhp=hp

@@ -69,7 +69,7 @@ if fin=1{
         inst.view=0
         inst.draw=0
         //stats
-        inst.xp+=turnsSurvive
+        inst.xp+=irandom(turnsSurvive*2)+turnsSurvive*2
         inst.hpg+=random(turnsSurvive*0.1)
         inst.spg+=random(turnsSurvive*0.1)
         inst.strg+=random(turnsSurvive*0.1)

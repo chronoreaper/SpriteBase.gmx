@@ -907,7 +907,8 @@ if currentTurn&gt;=0{
         ||(abs(yy-c.y)/15&lt;=abs(skill_range)&amp;&amp;abs(xx-c.x)==0)
             {
             if return_check_skill_target(c,inst,targType){
-                if (targType==0){
+                if (targType==0)
+                ||targType==4{
                     inst=instance_create(xx,yy,oTempTarg);
                 }
                 alarm[0]=30
@@ -1267,6 +1268,7 @@ if currentTurn&lt;0
         var c=selected
         if (c.sp&gt;=10)
         &amp;&amp;!instance_exists(c.link)
+        &amp;&amp;irandom(1)=0
             phase=11
         else
         {//continue attack
@@ -2011,7 +2013,7 @@ var c=selected
                     draw_set_colour(c_dkgray)
                     draw_rectangle(230,219-menuSel*7-7,266,226-menuSel*7-7,false)
                     draw_set_colour(c_orange)
-                    draw_text(231,220-menuSel*7-7,return_item_usage(selected.item[menuSel],menuSel=selected.wep))
+                    draw_text(231,220-menuSel*7-7,return_item_usage(selected.item[menuSel],menuSel=selected.wep||menuSel=selected.arm))
                     draw_set_colour(c_dkgray)
                     draw_text(231,221-menuSel*7,"THROW")
                 }
