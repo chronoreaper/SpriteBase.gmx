@@ -170,6 +170,7 @@
     <script>scripts\return_skill_des.gml</script>
     <script>scripts\return_skill_eff.gml</script>
     <script>scripts\return_skill_area_type.gml</script>
+    <script>scripts\return_skill_has_target.gml</script>
     <script>scripts\draw_skill_area_type.gml</script>
     <script>scripts\return_check_skill_target.gml</script>
     <script>scripts\return_power.gml</script>

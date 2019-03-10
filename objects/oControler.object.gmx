@@ -283,7 +283,8 @@ alarm[10]=30
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_deactivate_all(true)
+            <string>//activate things
+instance_deactivate_all(true)
 instance_activate_region(xx-view_wview/2,yy-view_hview/2,view_wview,view_hview,true)
 instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
 if selected!=noone
@@ -972,7 +973,7 @@ alarm[0]=max(13)
 //calculate dmg
 var acc=return_wep_acc(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y));
 var multi=1;
-if (get_random()&lt;100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(250)))
+if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(250))))
     multi*=2+(c.stats[2,3])*0.02*0.8
 var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],target.stats[2,2]);
 var xpgain=3
@@ -1194,16 +1195,21 @@ if currentTurn&lt;0
         //var ct=currentTurn
         //var c=noone
         //show_debug_message(ds_list_size(unitList))
+        instance_activate_all()
         for (var i=0;i&lt;ds_list_size(unitList);i++){
            var char=ds_list_find_value(unitList,i)
            //show_debug_message(char.wait)
-           if char!=noone
+           if char!=noone{
            if instance_exists(char)
            if char.wait=0{
+           // show_debug_message(object_get_name(char.object_index))
                 selected=char
                 break
            }
+           }
         }
+        instance_deactivate_all(true)
+        alarm[9]=1
         /*with oChar{
             if team=ct
             if wait=0{
@@ -1214,6 +1220,7 @@ if currentTurn&lt;0
         //selected=c
         if selected!=noone{
             phase=0
+            instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
             instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
             }
         else{
@@ -1221,8 +1228,8 @@ if currentTurn&lt;0
             }
     }
     if selected!=noone
-    if alarm_get(0)&lt;=0
-    if alarm_get(3)&lt;=0
+    //if alarm_get(0)&lt;=0
+    if alarm_get(9)=2
     {
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
@@ -1245,8 +1252,12 @@ if currentTurn&lt;0
         //following ai
         if c.ai=-1
             if instance_exists(c.link)
-                close=c.link
-                
+                close=c.link  
+            else{
+                c.link=noone
+                c.ai=0
+                c.marker=1
+            }  
         if close!=noone{
             //move towards it
              add_all_to_map()
@@ -1352,26 +1363,31 @@ if currentTurn&lt;0
         {
             var c=selected
             menuSel=option-11
-            var inst=instance_place(xx,yy,oUnit)
-            var targType=return_skill_targ_type(c.skill[menuSel])
-            var range=return_skill_range(c.skill[menuSel])
-            
-            
-            if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=range
-            ||(abs(xx-c.x)/15&lt;=abs(range)&amp;&amp;abs(yy-c.y)==0)
-            ||(abs(yy-c.y)/15&lt;=abs(range)&amp;&amp;abs(xx-c.x)==0)
-                {
-                if return_check_skill_target(c,inst,targType){
-                    if (targType==0){
-                        inst=instance_create(c.x+dcos(c.dir*90),c.y-dsin(c.dir*90),oTempTarg);
-                    }
-                    alarm[0]=30
-                    return_skill_eff(c,inst)
-                    menuSel=0
-                    phase=8
-                     //skill usage range stuff   
-                }else phase=3//alarm[0]=1//else no valid targ
-            }else phase=3//alarm[0]=1//else not in range
+            if return_skill_eff(c,noone)//if you can use skill
+            {
+                var inst=noone//=instance_place(xx,yy,oUnit)
+                var targType=return_skill_targ_type(c.skill[menuSel])
+                var range=return_skill_range(c.skill[menuSel])
+                var temp=return_skill_has_target(c.skill[menuSel],c)&gt;0
+                if temp&gt;0
+                     inst=temp
+                if inst!=noone
+                //if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=range
+                //||(abs(xx-c.x)/15&lt;=abs(range)&amp;&amp;abs(yy-c.y)==0)
+                //||(abs(yy-c.y)/15&lt;=abs(range)&amp;&amp;abs(xx-c.x)==0)
+                    {
+                    if return_check_skill_target(c,inst,targType){
+                        //if (targType==0){
+                            //inst=instance_create(c.x+dcos(c.dir*90),c.y-dsin(c.dir*90),oTempTarg);
+                        //}
+                        alarm[0]=30
+                        return_skill_eff(c,inst)
+                        menuSel=0
+                        phase=8
+                         //skill usage range stuff   
+                    }else phase=3//alarm[0]=1//else no valid targ
+                }else phase=3//alarm[0]=1//else not in range
+            }else phase=3
         menuSel=0
         }//end phase 11
     }
@@ -1467,7 +1483,7 @@ else if phase=1
 timePhase1++
 else if phase=3
 timePhase3++
-else if phase=11
+else if phase=8
 timePhase5++
 }
 </string>

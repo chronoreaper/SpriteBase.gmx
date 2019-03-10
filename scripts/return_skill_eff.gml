@@ -35,7 +35,7 @@ switch floor(arg_skill){
             var inst=instance_create(arg_source.x+7,arg_source.y+7,oEff);
             inst.sprite_index=laser_beam
             inst.image_blend=c_aqua
-            inst.image_angle=point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)
+            inst.image_angle=arg_source.dir*90
             inst.rotate=0
             with inst{
                 var cinst=instance_place(x,y,oUnit);
@@ -63,7 +63,7 @@ switch floor(arg_skill){
             arg_source.spg+=0.1
             var inst=instance_create(arg_source.x+7,arg_source.y+7,oEff);
             inst.sprite_index=water_breath
-            inst.image_angle=point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)
+            inst.image_angle=arg_source.dir*90
             inst.rotate=0
             with inst{
                 var cinst=instance_place(x,y,oUnit);

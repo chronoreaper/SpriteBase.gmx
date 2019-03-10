@@ -78,11 +78,6 @@ skill[0]=2
             <string>event_inherited()
 if ai=-1
     dir=4
-if !instance_exists(link){
-    link=noone
-    ai=0
-    marker=1
-}
 </string>
           </argument>
         </arguments>
