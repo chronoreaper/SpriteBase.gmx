@@ -1,54 +1,36 @@
-var arg_item=argument0
+var arg_skill=argument0
 var ex=argument1
 var ey=argument2
-switch floor(arg_item){
+var str_sep=6
+var str=""
+var htg=0
+switch floor(arg_skill){
     case 1:
-        draw_set_colour(c_olive)
-        draw_rectangle(ex-2,ey-17+7*1,365,ey-4,false)
-        draw_set_colour(c_black)
-        draw_text_ext(ex,ey-9-7*0,"heals very little hp",0,100)
+        str="heals very little hp"
         break;
     case 2:
-        draw_set_colour(c_olive)
-        draw_rectangle(ex-2,ey-17+7*0,365,ey-4,false)
-        draw_set_colour(c_black)
-        draw_text_ext(ex,ey-9-7*1,"shoots a laser beam",0,100)
-        draw_text_ext(ex,ey-9-7*0,"raNge 0-5",0,100)
+        str="shoots a laser beam#raNge 0-5"
         break;
     case 3:
-        draw_set_colour(c_olive)
-        draw_rectangle(ex-2,ey-17+7*0,365,ey-4,false)
-        draw_set_colour(c_black)
-        draw_text_ext(ex,ey-9-7*1,"sprays water",0,100)
-        draw_text_ext(ex,ey-9-7*0,"raNge 0-2",0,100)
+        str="sprays water#raNge 0-2"
         break;
     case 4:
-        draw_set_colour(c_olive)
-        draw_rectangle(ex-2,ey-17+7*0,365,ey-4,false)
-        draw_set_colour(c_black)
-        draw_text_ext(ex,ey-9-7*1,"bites and heals",0,100)
-        draw_text_ext(ex,ey-9-7*0,"raNge 1",0,100)
+        str="bites and heals#raNge 1"
         break;
     case 5:
-        draw_set_colour(c_olive)
-        draw_rectangle(ex-2,ey-17+7*0,365,ey-4,false)
-        draw_set_colour(c_black)
-        draw_text_ext(ex,ey-9-7*1,"heals all in a large area",0,100)
-        draw_text_ext(ex,ey-9-7*0,"raNge 1",0,100)
+        str="heals all in a large area#raNge 1#AOE 3"
         break;
     case 6:
-        draw_set_colour(c_olive)
-        draw_rectangle(ex-2,ey-17+7*0,365,ey-4,false)
-        draw_set_colour(c_black)
-        draw_text_ext(ex,ey-9-7*1,"creates a copy of yourself",0,100)
-        draw_text_ext(ex,ey-9-7*0,"raNge 1",0,100)
+        str="creates a copy of yourself#raNge 1"
         break;
     case 7:
-        draw_set_colour(c_olive)
-        draw_rectangle(ex-2,ey-17+7*0,365,ey-4,false)
-        draw_set_colour(c_black)
-        draw_text_ext(ex,ey-9-7*1,"damages then dash",0,100)
-        draw_text_ext(ex,ey-9-7*0,"raNge 1-4",0,100)
+        str="damages then dash#raNge 1-4"
         break;
     default:return""
 }
+//drawing
+hgt=string_height(str)*8/6
+draw_set_colour(c_olive)
+draw_rectangle(ex-2,ey-3-hgt,358,ey-4,false)
+draw_set_colour(c_black)
+draw_text_ext(ex,ey-2-hgt,str,str_sep,358-(ex)-2)

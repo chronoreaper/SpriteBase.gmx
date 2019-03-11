@@ -32,7 +32,7 @@ mhp=hp
 stats[2,2]=5
 unit=chest_r
 name="chest"
-var rand=irandom(6)+1;
+var rand=irandom(7)+1;
 item[0]=rand+return_item_usage_default(rand)
 
 dmg=hp
