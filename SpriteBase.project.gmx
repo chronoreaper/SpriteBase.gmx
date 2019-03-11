@@ -49,6 +49,12 @@
         <sprite>sprites\hero001_2</sprite>
         <sprite>sprites\hero001_3</sprite>
       </sprites>
+      <sprites name="mage">
+        <sprite>sprites\mage001_0</sprite>
+        <sprite>sprites\mage001_1</sprite>
+        <sprite>sprites\mage001_2</sprite>
+        <sprite>sprites\mage001_3</sprite>
+      </sprites>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
@@ -233,6 +239,7 @@
     <objects name="units">
       <object>objects\oFighter</object>
       <object>objects\oArcher</object>
+      <object>objects\oMage</object>
       <object>objects\oHero</object>
       <object>objects\oSlime</object>
       <object>objects\oBoar</object>
