@@ -111,8 +111,8 @@ inst=instance_create(x+15,y,oArcher);
 ds_list_add(unitList,inst)
 inst=instance_create(x,y-15,oMage);
 ds_list_add(unitList,inst)
-//inst=instance_create(x-15*15,y+15*15,oHero)
-//ds_list_add(unitList,inst)
+inst=instance_create(x+15,y-15,oHero)
+ds_list_add(unitList,inst)
 //inst.team=-1
 //inst.ai=0 
 inst=instance_create(x+15*15,y+15*15,oDragon1)
@@ -380,8 +380,8 @@ with selected{
 instance_activate_all()
 with selected{
 wait=1
-hpg+=(abs(xx-x)+abs(yy-y))*0.01
-spg+=(abs(xx-x)+abs(yy-y))*0.01
+hpg+=0.01
+spg+=0.01
 xx=x
 yy=y
 if xp&gt;=mxp
@@ -552,8 +552,8 @@ if selected!=noone{
     //alarm[4]=2
     with selected{
     wait=1
-    hpg+=(abs(xx-x)+abs(yy-y))*0.01
-    spg+=(abs(xx-x)+abs(yy-y))*0.01
+    hpg+=0.01
+    spg+=0.01
     //xp+=ceil((abs(xx-x)+abs(yy-y))/10)
     xx=x
     yy=y
@@ -1261,6 +1261,7 @@ if currentTurn&lt;0
                 c.link=noone
                 c.ai=0
                 c.marker=1
+                //c.wait=1
             }  
         if close!=noone{
             //move towards it

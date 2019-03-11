@@ -52,8 +52,8 @@ stats[1,2]=1.7
 stats[1,3]=1.7
 stats[1,4]=1.7
 
-mov=4
-view=6
+mov=3
+view=4
 
 unit=hero001_0
 name="hero"

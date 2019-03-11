@@ -25,6 +25,7 @@ if  get_random()<arg_acc
         txt.colour=c_orange
         txt.text+="!"
         }
+    if !object_is_ancestor(arg_targ.object_index,oObj)
     arg_source.xp+=arg_xp
 return dmg
 }

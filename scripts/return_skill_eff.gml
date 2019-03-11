@@ -9,7 +9,7 @@ switch floor(arg_skill){
     case 1:
         if arg_source.sp>=4 {
         if arg_targ!=noone{
-            arg_targ.hp+=arg_source.lv
+            arg_targ.hp+=ceil(arg_source.lv/2)+2
             arg_source.sp-=4
             arg_source.xp+=3
             arg_source.spg+=0.1

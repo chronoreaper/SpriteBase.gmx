@@ -24,7 +24,7 @@ switch floor(arg_skill){
         str="creates a copy#of yourself#raNge 1"
         break;
     case 7:
-        str="damages then#dash#raNge 1-4"
+        str="damages then dashs#raNge 1-4"
         break;
     case 8:
         str="basic fire#attack#raNge 1-2"

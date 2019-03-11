@@ -9,7 +9,7 @@ switch floor(arg_item){
         str="restores 4 hp#wt: "+string(return_item_wt(arg_item))
         break;
     case 2://dagger
-        str="Basic weapoN#mt: 2#wt: "+string(return_item_wt(arg_item))+"#2 hits"
+        str="Basic weapoN#mt: 0#wt: "+string(return_item_wt(arg_item))+"#2 hits"
         break;
     case 3:
         str="restores 10 hp#wt: "+string(return_item_wt(arg_item))
