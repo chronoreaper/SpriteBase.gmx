@@ -134,5 +134,18 @@ switch arg_skill{
             draw_set_halign(fa_left)
         }*/
     break;
-    break;
+    case 7:
+        var xxx=arg_source.x;
+        var yyy=arg_source.y
+        var angle=point_direction(arg_source.x,arg_source.y,arg_xx,arg_yy)
+        if frac(angle/90)==0
+        //if arg_xx!=arg_source.x
+        //if arg_yy!=arg_source.y
+        for(var i=1;i<=4;i++){
+            xxx=round((arg_source.x+i*15*dcos(angle))/15)*15
+            yyy=round((arg_source.y-i*15*dsin(angle))/15)*15
+            draw_set_colour(c_red)
+            draw_rectangle(xxx,yyy,xxx+13,yyy+13,false)
+                        
+        }break;
 }

@@ -88,6 +88,7 @@
       <sprite>sprites\water_breath</sprite>
       <sprite>sprites\laser_beam</sprite>
       <sprite>sprites\angelic</sprite>
+      <sprite>sprites\dashSlash</sprite>
     </sprites>
     <sprites name="in game menu">
       <sprite>sprites\miniselectmenu</sprite>

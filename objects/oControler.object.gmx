@@ -100,7 +100,7 @@ udg=1
 ch=0
 var inst,inst2;
 repeat(1){
-inst=instance_create(x,y,oHero);
+inst=instance_create(x,y,oSlime);
 ds_list_add(unitList,inst)
 //inst=instance_create(x+15,y,oFighter);
 //ds_list_add(unitList,inst)
@@ -904,7 +904,8 @@ if currentTurn&gt;=0{
         }
         
         if mouse_check_button_pressed(mb_left)
-        ||keyboard_check_pressed(keys[4]){
+        ||keyboard_check_pressed(keys[4])
+        {
             if return_skill_eff(selected,noone){
             if menuSel2=-1{
                 //select skill
@@ -933,24 +934,28 @@ if currentTurn&gt;=0{
         var inst=instance_place(xx,yy,oUnit)
         var targType=return_skill_targ_type(c.skill[menuSel])
         if mouse_check_button_pressed(mb_left)
-        ||keyboard_check_pressed(keys[4])
-        if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=skill_range
-        ||(abs(xx-c.x)/15&lt;=abs(skill_range)&amp;&amp;abs(yy-c.y)==0)
-        ||(abs(yy-c.y)/15&lt;=abs(skill_range)&amp;&amp;abs(xx-c.x)==0)
+        ||keyboard_check_pressed(keys[4]){
+        if ds_grid_get(gridF1,xx/15,yy/15)&gt;=0 
             {
-            if return_check_skill_target(c,inst,targType){
-                if (targType==0)
-                ||targType==4{
-                    inst=instance_create(xx,yy,oTempTarg);
-                }
-                alarm[0]=30
-                return_skill_eff(c,inst)
-                menuSel2=-1
-                menuSel=0
-                phase=8
-                 //skill usage range stuff   
-            }else message_create("No valid target")
-        }else message_create("Not in raNge")
+                if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=skill_range
+                ||(abs(xx-c.x)/15&lt;=abs(skill_range)&amp;&amp;abs(yy-c.y)==0)
+                ||(abs(yy-c.y)/15&lt;=abs(skill_range)&amp;&amp;abs(xx-c.x)==0)
+                    {
+                    if return_check_skill_target(c,inst,targType){
+                        if (targType==0)
+                        ||targType==4{
+                            inst=instance_create(xx,yy,oTempTarg);
+                        }
+                        alarm[0]=30
+                        return_skill_eff(c,inst)
+                        menuSel2=-1
+                        menuSel=0
+                        phase=8
+                         //skill usage range stuff   
+                    }else message_create("No valid target")
+                }else message_create("Not in raNge")
+            }else message_create("No target")
+        }
     }
 }
 if phase=4{//damage step
@@ -1365,13 +1370,10 @@ if currentTurn&lt;0
             menuSel=option-11
             if return_skill_eff(c,noone)//if you can use skill
             {
-                var inst=noone//=instance_place(xx,yy,oUnit)
+                var inst=return_skill_has_target(c.skill[menuSel],c)
                 var targType=return_skill_targ_type(c.skill[menuSel])
                 var range=return_skill_range(c.skill[menuSel])
-                var temp=return_skill_has_target(c.skill[menuSel],c)&gt;0
-                if temp&gt;0
-                     inst=temp
-                if inst!=noone
+                if inst&gt;0
                 //if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=range
                 //||(abs(xx-c.x)/15&lt;=abs(range)&amp;&amp;abs(yy-c.y)==0)
                 //||(abs(yy-c.y)/15&lt;=abs(range)&amp;&amp;abs(xx-c.x)==0)
@@ -2630,7 +2632,7 @@ if selected!=noone
 if phase=11
 if currentTurn&gt;=0{
 var c=selected
-var range = return_skill_range(c.skill[menuSel])
+var range = abs(return_skill_range(c.skill[menuSel]))
 var area_type= return_skill_area_type(c.skill[menuSel])
 switch area_type{
     case 0: 
@@ -2646,8 +2648,8 @@ switch area_type{
                 }
             }break;
     case 1:
-        for (var i=range*15;i&lt;=-range*15;i+=15){
-            for (var j=range*15;j&lt;=-range*15;j+=15){
+        for (var i=-range*15;i&lt;=range*15;i+=15){
+            for (var j=-range*15;j&lt;=range*15;j+=15){
             if abs(i/15)+abs(j/15)&lt;=abs(range)
             if (i==0||j==0)
             if i!=round(xx/15)*15&amp;&amp;j!=round(yy/15)*15{
@@ -2659,8 +2661,8 @@ switch area_type{
             }
         }break;
     case 2:
-        for (var i=range*15;i&lt;=-range*15;i+=15){
-            for (var j=range*15;j&lt;=-range*15;j+=15){
+        for (var i=-range*15;i&lt;=range*15;i+=15){
+            for (var j=-range*15;j&lt;=range*15;j+=15){
             if (i&lt;=15&amp;&amp;i&gt;=-15)||(j&lt;=15&amp;&amp;j&gt;=-15)
             if i!=round(xx/15)*15&amp;&amp;j!=round(yy/15)*15{
                 draw_set_colour(c_orange)

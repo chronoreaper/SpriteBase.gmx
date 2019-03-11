@@ -10,7 +10,7 @@ options
 3 - same area as a range of 2
 */
 switch floor(arg_skill){
-    case 1: return 1//heal
+    case 1: return 0//heal
     case 2: 
         var inst=instance_create(arg_source.x+7,arg_source.y+7,oEff);
         inst.sprite_index=laser_beam

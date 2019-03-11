@@ -184,5 +184,36 @@ switch floor(arg_skill){
         return 1
         }
         return 0
+        case 7:
+        if arg_source.sp>=5 {
+        if arg_targ!=noone{
+            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            if arg_source.dir>3
+                arg_source.dir=0
+            arg_source.sp-=5
+            arg_source.strg+=0.1
+            var inst=instance_create(arg_source.x+7,arg_source.y+7,oEff);
+            inst.sprite_index=dashSlash
+            inst.image_blend=c_orange
+            inst.image_angle=arg_source.dir*90
+            inst.rotate=0
+            arg_source.x=arg_targ.x
+            arg_source.y=arg_targ.y
+            with inst{
+                var cinst=instance_place(x,y,oUnit);
+                while cinst!=noone{
+                    if (cinst!=arg_source){
+                        //var dmg=return_dmg(20,0,cinst.stats[2,2]);
+                        calculate_damage(arg_source,cinst,arg_source.stats[2,0]+7,return_skill_acc(arg_skill,0),0,1,1)
+                    }
+                    instance_deactivate_object(cinst);
+                    cinst=instance_place(x,y,oUnit);
+                    } 
+                    instance_activate_all()               
+                }
+            }
+        return 1
+        }
+        return 0
     default:return 0
 }

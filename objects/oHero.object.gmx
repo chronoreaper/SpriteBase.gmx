@@ -31,7 +31,7 @@ wep=0
 item[1]=51+return_item_usage_default(51)
 arm=1
 skill[0]=5
-
+skill[1]=7
 
 hp=15
 mhp=hp

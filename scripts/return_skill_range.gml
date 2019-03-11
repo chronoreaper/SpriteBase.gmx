@@ -6,5 +6,6 @@ switch arg_skill{
     case 4: return 1
     case 5: return 1
     case 6: return 1
+    case 7: return 4
     default: return 0
 }

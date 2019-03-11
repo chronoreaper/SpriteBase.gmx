@@ -99,14 +99,11 @@ for (var i=0;i&lt;10;i++)
     status[i]=0
 }
 item[10]=0//weapon default
+skill[1]=1
 if !object_is_ancestor(object_index,oObj){
 var rand=irandom(6)+1;
 if irandom(3)=0
 item[0]=rand+return_item_usage_default(rand)
-skill[0]=3
-skill[1]=1
-skill[2]=2
-skill[3]=4
 }
 c=0
 ud=1
