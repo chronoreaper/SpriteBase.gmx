@@ -100,7 +100,7 @@ udg=1
 ch=0
 var inst,inst2;
 repeat(1){
-inst=instance_create(x+15,y,oFighter);
+inst=instance_create(x,y,oFighter);
 ds_list_add(unitList,inst)
 xx=inst.xx
 yy=inst.yy
@@ -119,16 +119,15 @@ inst.marker=1
 
 inst=instance_create(x-15*15,y-15*15,oWurm)
 inst.team=-1
-inst.ai=-1
+inst.ai=0
+inst.marker=1
 for(var i=1;i&lt;10;i++){
 inst2=instance_create(x-(15-i)*15,y-15*15,oWurm)
 inst2.team=-1
 inst2.ai=-1
-inst.link=inst2
+inst2.link=inst
 inst=inst2
 }
-inst.ai=0
-inst.marker=1
 add_all_to_map()
 show_debug_overlay(true)
 generate_map()
@@ -1414,6 +1413,7 @@ if currentTurn&lt;0
             <kind>1</kind>
             <string>///#5 move to unit on current turn
 var i=0
+if menu=-1
 if currentTurn&gt;=0
 if selected=noone
 if mouse_check_button_pressed(mb_right)
@@ -1426,6 +1426,14 @@ if mouse_check_button_pressed(mb_right)
             if currentNumber&gt;=ds_list_size(unitList)
                 currentNumber=0
             inst=ds_list_find_value(unitList,currentNumber)
+            var lim=0;
+            while (lim&lt;ds_list_size(unitList)&amp;&amp;inst.wait=1){
+                currentNumber++
+                if currentNumber&gt;=ds_list_size(unitList)
+                    currentNumber=0
+                inst=ds_list_find_value(unitList,currentNumber)
+                lim++
+            }
             x=inst.xx
             y=inst.yy
             xx=x
@@ -1433,6 +1441,14 @@ if mouse_check_button_pressed(mb_right)
             view_xview=inst.xx-view_wview/2
             view_yview=inst.yy-view_hview/2
         }else{
+            var lim=0;
+            while (lim&lt;ds_list_size(unitList)&amp;&amp;inst.wait=1){
+                currentNumber++
+                if currentNumber&gt;=ds_list_size(unitList)
+                    currentNumber=0
+                inst=ds_list_find_value(unitList,currentNumber)
+                lim++
+            }
             x=inst.xx
             y=inst.yy
             xx=x

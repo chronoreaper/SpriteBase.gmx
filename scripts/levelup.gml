@@ -3,6 +3,7 @@ lv+=1
 xp-=mxp
 mxp+=1//+lv*2
 var sum = (hpg+spg+strg+intg+defg+tecg+lucg+1);
+if team>=0{
 show_debug_message(object_get_name(object_index)+" Leveled up!")
 show_debug_message("level:"+string(lv-1)+"->"+string(lv))
 show_debug_message("HP:"+string(mhp)+" + "+string(hpp)+" + "+string(hpg/sum))
@@ -12,6 +13,7 @@ show_debug_message("INT:"+string(stats[2,1])+" + "+string(stats[1,1])+" + "+stri
 show_debug_message("DEF:"+string(stats[2,2])+" + "+string(stats[1,2])+" + "+string(defg/sum))
 show_debug_message("TEC:"+string(stats[2,3])+" + "+string(stats[1,3])+" + "+string(tecg/sum))
 show_debug_message("LUC:"+string(stats[2,4])+" + "+string(stats[1,4])+" + "+string(lucg/sum))
+}
 hp+=hpp
 mhp+=hpp
 sp+=spp

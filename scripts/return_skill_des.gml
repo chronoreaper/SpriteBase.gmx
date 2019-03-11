@@ -6,7 +6,7 @@ var str=""
 var htg=0
 switch floor(arg_skill){
     case 1:
-        str="heals very little hp"
+        str="heals very little#hp"
         break;
     case 2:
         str="shoots a laser beam#raNge 0-5"
@@ -18,13 +18,13 @@ switch floor(arg_skill){
         str="bites and heals#raNge 1"
         break;
     case 5:
-        str="heals all in a large area#raNge 1#AOE 3"
+        str="heals all in#a large area#raNge 1#AOE 3"
         break;
     case 6:
-        str="creates a copy of yourself#raNge 1"
+        str="creates a copy#of yourself#raNge 1"
         break;
     case 7:
-        str="damages then dash#raNge 1-4"
+        str="damages then#dash#raNge 1-4"
         break;
     default:return""
 }

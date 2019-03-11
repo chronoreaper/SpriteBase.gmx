@@ -103,7 +103,7 @@ if fin=1{
             wait=0
         }
     }
-    ds_list_sort(unitList,false)
+    ds_list_sort(unitList,true)
     if ds_list_size(unitList)>0{
         if currentTurn>=0
         {
