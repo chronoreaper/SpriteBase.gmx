@@ -100,17 +100,15 @@ udg=1
 ch=0
 var inst,inst2;
 repeat(1){
-inst=instance_create(x,y,oSlime);
+inst=instance_create(x+15,y,oFighter);
 ds_list_add(unitList,inst)
-//inst=instance_create(x+15,y,oFighter);
-//ds_list_add(unitList,inst)
 xx=inst.xx
 yy=inst.yy
 view_xview=inst.xx-view_wview/2
 view_yview=inst.yy-view_hview/2
 }
-//inst=instance_create(x+15,y,oArcher);
-//ds_list_add(unitList,inst)
+inst=instance_create(x+15,y,oArcher);
+ds_list_add(unitList,inst)
 //inst=instance_create(x-15*15,y+15*15,oHero)
 //ds_list_add(unitList,inst)
 //inst.team=-1
