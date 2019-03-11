@@ -8,5 +8,6 @@ switch floor(arg_item){
     case 5:return oHotDog;
     case 6:return oRock;
     case 7:return oBow;
+    case 8:return oSword;
     default: return oJuicebox
 }

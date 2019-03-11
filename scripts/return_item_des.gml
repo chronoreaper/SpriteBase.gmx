@@ -57,6 +57,14 @@ switch floor(arg_item){
         draw_text_ext(ex,ey-16,"wt: 5",0,100)
         draw_text_ext(ex,ey-9,"raNge 3",0,100)
         break;
+    case 8://sword
+        draw_set_colour(c_olive)
+        draw_rectangle(ex-2,ey-17-7*1,340,ey-4,false)
+        draw_set_colour(c_black)
+        draw_text_ext(ex,ey-23,"Basic weapoN",0,100)
+        draw_text_ext(ex,ey-16,"mt: 3",0,100)
+        draw_text_ext(ex,ey-9,"wt: 7",0,100)
+        break;
     case 50://excalabur
         draw_set_colour(c_olive)
         draw_rectangle(ex-2,ey-17-7*3,340,ey-4,false)

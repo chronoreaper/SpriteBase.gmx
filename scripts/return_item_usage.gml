@@ -16,6 +16,9 @@ switch floor(arg_item){
     case 7: 
         if arg_equip=0 return "EQUIP"
         else return "UNEQUIP"
+    case 8: 
+        if arg_equip=0 return "EQUIP"
+        else return "UNEQUIP"
     case 50: 
         if arg_equip=0 return "EQUIP"
         else return "UNEQUIP"

@@ -78,10 +78,12 @@
       <sprite>sprites\xcalabur</sprite>
       <sprite>sprites\aegis</sprite>
       <sprite>sprites\rock</sprite>
+      <sprite>sprites\sword</sprite>
     </sprites>
     <sprites name="eff">
       <sprite>sprites\spawn_eff</sprite>
       <sprite>sprites\slash</sprite>
+      <sprite>sprites\slashsweep</sprite>
       <sprite>sprites\stab</sprite>
       <sprite>sprites\windSlash</sprite>
       <sprite>sprites\bite</sprite>
@@ -216,6 +218,7 @@
       <object>objects\oHotDog</object>
       <object>objects\oRock</object>
       <object>objects\oBow</object>
+      <object>objects\oSword</object>
     </objects>
     <objects name="objects">
       <object>objects\oBuilding</object>
