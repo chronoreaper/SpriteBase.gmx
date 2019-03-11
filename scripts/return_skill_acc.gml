@@ -8,6 +8,7 @@ switch floor(arg_skill){
     case 5:return 100;//redemption
     case 6:return 100;//split
     case 7:return 90;//piercing strike
+    case 8:return 87;//fire
     default: return 0
 }
 

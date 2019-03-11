@@ -26,6 +26,9 @@ switch floor(arg_skill){
     case 7:
         str="damages then#dash#raNge 1-4"
         break;
+    case 8:
+        str="basic fire#attack#raNge 1-2"
+        break;
     default:return""
 }
 //drawing

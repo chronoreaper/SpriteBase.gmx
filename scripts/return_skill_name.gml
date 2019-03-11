@@ -7,5 +7,6 @@ switch floor(arg_skill){
     case 5: return "redemptioN"
     case 6: return "split"
     case 7: return "pierciNg strike"
+    case 8: return "fire"
     default:return""
 }

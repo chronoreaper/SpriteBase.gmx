@@ -7,5 +7,6 @@ switch floor(arg_skill){
     case 5: return "15 SP" 
     case 6: return "4 SP" 
     case 7: return "5 SP" 
+    case 8: return "3 SP" 
     default:return""
 }

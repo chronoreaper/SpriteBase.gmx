@@ -91,12 +91,15 @@
       <sprite>sprites\slash</sprite>
       <sprite>sprites\slashsweep</sprite>
       <sprite>sprites\stab</sprite>
+      <sprite>sprites\sourceDirection</sprite>
+      <sprite>sprites\sourcedir2</sprite>
       <sprite>sprites\windSlash</sprite>
       <sprite>sprites\bite</sprite>
       <sprite>sprites\water_breath</sprite>
       <sprite>sprites\laser_beam</sprite>
       <sprite>sprites\angelic</sprite>
       <sprite>sprites\dashSlash</sprite>
+      <sprite>sprites\magicBurnEff</sprite>
     </sprites>
     <sprites name="in game menu">
       <sprite>sprites\miniselectmenu</sprite>

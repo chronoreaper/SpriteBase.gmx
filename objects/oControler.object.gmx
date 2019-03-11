@@ -109,6 +109,8 @@ view_yview=inst.yy-view_hview/2
 }
 inst=instance_create(x+15,y,oArcher);
 ds_list_add(unitList,inst)
+inst=instance_create(x,y-15,oMage);
+ds_list_add(unitList,inst)
 //inst=instance_create(x-15*15,y+15*15,oHero)
 //ds_list_add(unitList,inst)
 //inst.team=-1

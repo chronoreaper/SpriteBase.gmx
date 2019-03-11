@@ -184,7 +184,7 @@ switch floor(arg_skill){
         return 1
         }
         return 0
-        case 7:
+    case 7:
         if arg_source.sp>=5 {
         if arg_targ!=noone{
             arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
@@ -204,13 +204,36 @@ switch floor(arg_skill){
                 while cinst!=noone{
                     if (cinst!=arg_source){
                         //var dmg=return_dmg(20,0,cinst.stats[2,2]);
-                        calculate_damage(arg_source,cinst,arg_source.stats[2,0]+7,return_skill_acc(arg_skill,0),0,1,1)
+                        calculate_damage(arg_source,cinst,arg_source.stats[2,0]+7,return_skill_acc(arg_skill,0),0,3,1)
                     }
                     instance_deactivate_object(cinst);
                     cinst=instance_place(x,y,oUnit);
                     } 
                     instance_activate_all()               
                 }
+            }
+        return 1
+        }
+        return 0
+    case 8:
+        if arg_source.sp>=3 {
+        if arg_targ!=noone{
+            arg_source.sp-=3
+            arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
+            arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
+            arg_source.alarm[0]=6
+            arg_source.intg+=1
+            arg_source.spg+=1
+            var base =return_dmg(arg_source.stats[2,1],0,arg_targ.stats[2,2]);
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),0,3,1)
+            //effect
+            var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
+            eff.sprite_index=sourcedir2
+            eff.image_blend=c_red
+            eff.rotate=false
+            eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
+            eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
+            eff.sprite_index=magicBurnEff    
             }
         return 1
         }
