@@ -268,12 +268,14 @@ debug1=0;
           <argument>
             <kind>1</kind>
             <string>///check end turn
+if selected=noone{
 phase=0
 selected=noone
 update_fog()
 check_turn_end()
 add_all_to_map()
-alarm[10]=30
+}
+//alarm[10]=30
 </string>
           </argument>
         </arguments>
@@ -1253,6 +1255,7 @@ if currentTurn&lt;0
     //if alarm_get(0)&lt;=0
     //if alarm_get(9)=2
     {
+    //alarm[10]=30
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
    
