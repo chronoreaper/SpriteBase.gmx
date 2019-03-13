@@ -27,7 +27,7 @@ switch arg_dir{
         break;
     case 7://none
         //tile_add(tilesprite2,15*3,15*1,30,30,arg_x+15*0,arg_y+15*0,100000)
-        if irandom(5)=0
+        if irandom(4)=0
             tile_add(tilesprite2,15*(1+irandom(9)),15*0,15,15,arg_x+15*irandom(1),arg_y+15*irandom(1),100000)
         break;
     case 8://upside down T

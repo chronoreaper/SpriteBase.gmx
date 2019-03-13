@@ -120,9 +120,13 @@ ds_list_add(unitList,inst)*/
 //inst.xp=100
 //inst.team=-1
 //inst.ai=0 
-inst=instance_create(x+15*15,y+15*15,oHero)
+inst=instance_create(x+15,y+15,oHero)
 inst.team=-2
 inst.ai=2
+inst2=instance_create(x+15,y+15,oHealer)
+inst2.team=-2
+inst2.ai=2
+inst2.link=inst
 //inst.marker=2
 create_boss_area(x-15*20,y-15*15,0,0)
 inst=instance_create(x-15*19,y-12*15,oWurm)
@@ -299,7 +303,7 @@ add_all_to_map()
           <argument>
             <kind>1</kind>
             <string>//activate things
-/*instance_deactivate_all(true)
+instance_deactivate_all(true)
 instance_activate_region(xx-view_wview/2,yy-view_hview/2,view_wview,view_hview,true)
 instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
 if selected!=noone
@@ -1000,8 +1004,9 @@ var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],target.stats[2,2
 var xpgain=3
 if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),3,multi)&gt;0{
     //create eff
-    if !(c.draw=0
-    &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2){
+    if (!(c.draw=0
+    &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)
+    ||debugging){
         var eff=instance_create(target.x+7,target.y+7,oEff);
         eff.sprite_index=return_wep_sprite_eff(c.item[c.wep])
         eff.image_angle=point_direction(c.x,c.y,target.x,target.y)
@@ -1225,14 +1230,16 @@ if currentTurn&lt;0
            //show_debug_message(char.wait)
            if char!=noone{
            if instance_exists(char)
-           if char.wait=0{
+           if char.wait=0
+           if char.ai!=2||!instance_exists(char.link)||char.link.wait=1
+           {
            // show_debug_message(object_get_name(char.object_index))
                 selected=char
                 break
            }
            }
         }
-        //instance_deactivate_all(true)
+        instance_deactivate_all(true)
         alarm[9]=1
         /*with oChar{
             if team=ct
@@ -1253,7 +1260,7 @@ if currentTurn&lt;0
     }
     if selected!=noone
     //if alarm_get(0)&lt;=0
-    //if alarm_get(9)=2
+    if alarm_get(9)=2
     {
     //alarm[10]=30
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
@@ -1268,13 +1275,23 @@ if currentTurn&lt;0
         var close=noone
         var c=selected
         with (oChar){
+            var u=id
             if team!=c.team
-            if close=noone||
-            abs(close.x-c.x)+abs(close.y-c.y)&gt;abs(x-c.x)+abs(y-c.y){
-                close=id
+            //abs(close.x-c.x)+abs(close.y-c.y)&gt;abs(x-c.x)+abs(y-c.y)
+            {
+                add_all_to_map()
+                mp_grid_clear_cell(grid,c.x/15,c.y/15)
+                mp_grid_clear_cell(grid,u.x/15,u.y/15)
+                if mp_grid_path(grid,u.path,c.x+7.5,c.y+7.5,u.x+7.5,u.y+7.5,false)
+                with oControler{
+                    if close=noone||floor(path_get_length(c.path)/15)&gt;floor(path_get_length(u.path)/15){
+                        close=u
+                        mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,u.x+7.5,u.y+7.5,false)
+                        }
                 }
+            }
         }
-        //following ai
+        //following ai for wurm boss
         if c.ai=-1
             if instance_exists(c.link)
                 close=c.link  
@@ -1285,8 +1302,8 @@ if currentTurn&lt;0
                 c.close=noone
                 //c.wait=1
             }
-        //move in a straight line ai
-        if c.ai=1{
+        //move in a straight line ai for wurm boss
+        else if c.ai=1{
             //if there is an object in way
             if instance_place(c.x+15*cos(degtorad(c.dir*90)),c.y-15*sin(degtorad(c.dir*90)),oObj){
                 //turn 90 left or right
@@ -1298,6 +1315,20 @@ if currentTurn&lt;0
             else{
                 close=instance_create(c.x+30*cos(degtorad((c.dir)*90)),c.y-30*sin(degtorad((c.dir)*90)),oTempTarg)
                 }
+        }
+        //linked ai that follows and attacks
+        else if c.ai=2{
+            if instance_exists(c.link){
+                //NOTE aggro is reset at the start of each turn
+                if c.link.aggro!=noone&amp;&amp;instance_exists(c.link.aggro){
+                    close=c.link.aggro
+                }
+                else 
+                    close=c.link
+            }
+            else{
+                c.link=noone
+            }
         }  
         if close!=noone{
             if c.x!=c.xx&amp;&amp;c.y!=c.yy
@@ -1321,9 +1352,10 @@ if currentTurn&lt;0
                 }
                 //start the path
                 //see if visable or not
-                if c.draw=0
+                if (c.draw=0
                 &amp;&amp; ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
-                &amp;&amp;!debugging
+                &amp;&amp;!debugging)
+                ||keyboard_check(vk_space)
                 {
                     with c{
                        //path_start(path,999,path_action_stop,false)
@@ -1342,12 +1374,17 @@ if currentTurn&lt;0
                    cx=floor(path_get_x(path,1)/15)*15
                    cy=floor(path_get_y(path,1)/15)*15
                    }
-                   //if you can see the ai, camera moves to ai
-                   if (cx&lt;view_xview+15*3
-                    &amp;&amp; cx&gt;view_xview+view_wview-15*3
-                    &amp;&amp; cy&lt;view_yview+15*3
-                    &amp;&amp; cy&gt;view_yview+view_hview-15*3)
-                    ||debugging=1{
+                   //if you cant see the ai, camera moves to ai
+                   if debugging{
+                        xx=cx
+                        yy=cy
+                   }
+                   if (cx&lt;view_xview+15*5
+                    || cx&gt;view_xview+view_wview-15*5
+                    || cy&lt;view_yview+15*5
+                    || cy&gt;view_yview+view_hview-15*5)
+                    //||debugging=1
+                    {
                         view_xview=cx-view_wview/2
                         view_yview=cy-view_hview/2
                         xx=cx
@@ -1381,38 +1418,46 @@ if currentTurn&lt;0
         11-20 - skill
         */
         if (option&gt;10)
-        &amp;&amp;!instance_exists(c.link)
+        &amp;&amp;(!instance_exists(c.link)||c.ai=2)
             phase=11
-        else
-        {//continue attack
-            var range=return_wep_range(c.item[c.wep])
-            var close=noone
-            //get where you can attack
-                for (var i=-range*15;i&lt;=range*15;i+=15){
-                    for (var j=-range*15;j&lt;=range*15;j+=15){
-                    if abs(i/15)+abs(j/15)&lt;=range
-                    if i!=0||j!=0{
-                        var inst=instance_place(i+c.x,j+c.y,oUnit)
-                        if inst!=noone
-                        if !object_is_ancestor(inst.object_index,oObj)
-                        if inst.team!=c.team
-                        if close=noone||
-                        abs(close.x-c.x)+abs(close.y-c.y)&gt;abs(inst.x-c.x)+abs(inst.y-c.y){
-                            close=inst
+        else{
+            if c.ai!=2||!instance_exists(c.link)||
+                (c.link.aggro!=noone&amp;&amp;instance_exists(c.link.aggro))
+            {//continue attack
+                var range=return_wep_range(c.item[c.wep])
+                var close=noone
+                //get where you can attack
+                    for (var i=-range*15;i&lt;=range*15;i+=15){
+                        for (var j=-range*15;j&lt;=range*15;j+=15){
+                        if abs(i/15)+abs(j/15)&lt;=range
+                        if i!=0||j!=0{
+                            var inst=instance_place(i+c.x,j+c.y,oUnit)
+                            if inst!=noone
+                            if !object_is_ancestor(inst.object_index,oObj)
+                            if inst.team!=c.team
+                            if close=noone||
+                            abs(close.x-c.x)+abs(close.y-c.y)&gt;abs(inst.x-c.x)+abs(inst.y-c.y){
+                                close=inst
+                                }
                             }
                         }
+                    }//end loop
+                    if c.ai=2&amp;&amp;instance_exists(c.link)&amp;&amp;c.link.aggro!=noone&amp;&amp;instance_exists(c.link.aggro)
+                    if abs((c.link.aggro.x-c.x)/15)+abs((c.link.aggro.y-c.y)/15)&lt;=range
+                    {
+                        close=c.link.aggro
                     }
-                }//end loop
-                if close=noone
-                ||selected.ai=-1 {//no target
-                    alarm[0]=1
-                }
-                else{
-                    loop=return_multi_atk(selected.item[selected.wep])
-                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,close.x+7,close.y+7)/90)
-                    target=close
-                    phase=4
-                }
+                    if close=noone
+                    ||selected.ai=-1 {//no target
+                        alarm[0]=1
+                    }
+                    else{
+                        loop=return_multi_atk(selected.item[selected.wep])
+                        selected.dir=floor(point_direction(selected.x+7,selected.y+7,close.x+7,close.y+7)/90)
+                        target=close
+                        phase=4
+                    }
+                }alarm[0]=1//ai 2 no attack
             }
         }//end phase 3
         /*if phase=5{//before turn ends after attacking
@@ -1553,7 +1598,7 @@ if mouse_check_button_pressed(mb_right)
           <argument>
             <kind>1</kind>
             <string>///#5 ai debug Timer
-if currentTurn=-1{
+if currentTurn&lt;0{
 if phase=0
 timePhase0++
 else if phase=1
@@ -2232,7 +2277,7 @@ image_blend=c_white
 var bx=0,by=0
 var over=instance_place(xx,yy,oUnit);
 var temp=selected
-if ds_grid_get(gridF1,xx/15,yy/15)&gt;0
+if ds_grid_get(gridF1,xx/15,yy/15)&gt;0||debugging=1
 if selected=noone
 ||phase=3
 ||phase=7
@@ -2244,7 +2289,7 @@ if over=noone
     }
 if selected!=noone
 if instance_exists(selected)
-if currentTurn&gt;=0
+if currentTurn&gt;=0||debugging=1
 {
     var cur=selected
     image_blend=playerColour[cur.team+3];

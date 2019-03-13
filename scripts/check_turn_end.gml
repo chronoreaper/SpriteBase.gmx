@@ -98,6 +98,7 @@ if fin=1{
                 }
             //start of every turn action
             sp+=1
+            aggro=noone
             if sp>msp
                 sp=msp
             wait=0

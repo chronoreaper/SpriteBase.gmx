@@ -28,11 +28,13 @@ if  get_random()<arg_acc
     else if arg_targ.weakness[arg_type]<1
         txt.colour=c_ltgray
     if arg_multi>=1{
-        repeat(ceil(arg_multi-1))
+        repeat(ceil(arg_multi)-2)
             txt.text+="!"
         }
-    if !object_is_ancestor(arg_targ.object_index,oObj)
-    arg_source.xp+=arg_xp
+    if !object_is_ancestor(arg_targ.object_index,oObj){
+        arg_source.xp+=arg_xp
+        arg_source.aggro=arg_targ
+        }
 return dmg
 }
 else{

@@ -11,7 +11,7 @@ options
 3 - same area as a range of 2
 */
 switch floor(arg_skill){
-    case 1: return 0//heal
+    case 1: return noone//heal
     case 2: 
         var inst=instance_create(arg_source.x+7,arg_source.y+7,oEff);
         inst.sprite_index=laser_beam
@@ -77,7 +77,22 @@ switch floor(arg_skill){
             }
         }*/
         break;
-    default:return 0
+    case 9:
+        var range=return_skill_range(arg_skill)
+        for(var i=-range;i<=range;i++)
+        for(var j=-range;j<=range;j++){
+            var cinst=instance_place(arg_source.x+i*15,arg_source.y+j*15,oChar);
+            if (abs(i)+abs(j))<=range
+            if cinst!=noone
+            if return_check_skill_target(arg_source,cinst,1)
+            if toTarg<cinst.mhp-cinst.hp||toTarg=-1
+            {
+                toTarg=cinst.mhp-cinst.hp
+                targ=cinst
+            }
+        }
+        break;
+    //default:return noone
 }
 if toTarg>=0
     return targ

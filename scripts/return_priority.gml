@@ -12,8 +12,26 @@ for(var i=0;i<10;i++){
             case 1:if (arg_char.hp+arg_char.lv<arg_char.mhp) num=5 break//rest
             case 2:num=10 break//laser beam
             case 3:num=10 break//water breath
-            case 5:if arg_char.hp<=arg_char.mhp/2 num=10 break//redemption
+            case 5://redemption
+            //needs to be changed
+            var inst=return_skill_has_target(9,arg_char)
+                if inst!=noone{
+                    if inst.mhp-inst.hp>=floor(arg_char.stats[2,4])
+                        num=10
+                    if inst.hp<=inst.mhp/2
+                        num+=10
+                }
+                break;
             case 6:num=15 break//split
+            case 9:
+                var inst=return_skill_has_target(9,arg_char)
+                if inst!=noone{
+                    if inst.mhp-inst.hp>=floor(arg_char.stats[2,4])
+                        num=10
+                    if inst.hp<=inst.mhp/2
+                        num+=10
+                }
+                break;
         }//end switch
         //change priorities
         if num!=0

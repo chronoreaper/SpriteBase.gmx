@@ -127,7 +127,7 @@ for (var i=0;i<width;i++)
     }
 }
 //create objects
-repeat((width+height)*20){
+repeat((width+height)*15){
 var rx=irandom(room_width/30)//room_width/15);
 var ry=irandom(room_height/30)//room_height/15);
     if ds_grid_get(gridMap,rx,ry)=0{

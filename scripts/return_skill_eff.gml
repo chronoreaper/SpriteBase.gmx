@@ -18,7 +18,7 @@ switch floor(arg_skill){
                 hp=mhp
             }
             var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
-            txt.text=arg_source.lv
+            txt.text=ceil(arg_source.lv/2)+2
             txt.colour=c_lime
             }
         return 1
