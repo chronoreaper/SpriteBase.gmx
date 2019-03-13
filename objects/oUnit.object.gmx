@@ -97,8 +97,22 @@ for (var i=0;i&lt;10;i++)
     item[i]=0
     skill[i]=0
     status[i]=0
+    weakness[i]=1
 }
-item[10]=0//weapon default
+/*
+weakness
+0 - no type
+1 - slash
+2 - stab
+3 - smash
+4 - fire
+5 - ice
+6 - wind
+7 - electric
+8 - light
+9 - dark
+*/
+item[10]=0//weapon/arm default
 skill[1]=1
 if !object_is_ancestor(object_index,oObj){
 var rand=irandom(7)+1;
@@ -230,6 +244,7 @@ if xprevious!=x
 if path_position=1||path_position=0
 {
    image_speed=0
+   if !object_is_ancestor(object_index,oObj)
    image_index=0
 }
 </string>

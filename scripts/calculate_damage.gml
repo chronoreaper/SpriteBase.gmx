@@ -15,15 +15,20 @@ var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
 //check if hit *luck(selected.luc)
 if  get_random()<arg_acc
 {
+    var weak=arg_targ.weakness[arg_type]
     var dmg=ceil(arg_dmg*arg_multi);
     arg_targ.hp-=dmg
     arg_targ.hp=max(arg_targ.hp,0)
     arg_targ.image_blend=c_red
     arg_targ.alarm[1]=4
     txt.text=string(dmg)
-    if arg_multi>=2{
+    if arg_targ.weakness[arg_type]>1
         txt.colour=c_orange
-        txt.text+="!"
+    else if arg_targ.weakness[arg_type]<1
+        txt.colour=c_ltgray
+    if arg_multi>=1{
+        repeat(ceil(arg_multi-1))
+            txt.text+="!"
         }
     if !object_is_ancestor(arg_targ.object_index,oObj)
     arg_source.xp+=arg_xp

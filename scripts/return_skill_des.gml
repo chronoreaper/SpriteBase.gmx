@@ -9,25 +9,29 @@ switch floor(arg_skill){
         str="heals very little#hp"
         break;
     case 2:
-        str="shoots a laser beam#raNge 0-5"
+        str="shoots a laser beam#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 3:
-        str="sprays water#raNge 0-2"
+        str="sprays water#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 4:
-        str="bites and heals#raNge 1"
+        str="bites and heals#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 5:
-        str="heals all in#a large area#raNge 1#AOE 3"
+        str="heals all in#a large area#raNge "+string(abs(return_skill_range(arg_skill)))
+            +"#AOE 3"
         break;
     case 6:
-        str="creates a copy#of yourself#raNge 1"
+        str="creates a copy#of yourself#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 7:
-        str="damages then dashs#raNge 1-4"
+        str="damages then dashs#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 8:
-        str="basic fire#attack#raNge 1-2"
+        str="basic fire attack#[int]#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
+    case 9:
+        str="heals an ally [luc]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     default:return""
 }

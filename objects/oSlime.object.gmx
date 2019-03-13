@@ -27,7 +27,8 @@
             <kind>1</kind>
             <string>event_inherited()
 skill[0]=6
-
+weakness[4]=2
+    
 hp=9
 mhp=hp
 sp=4

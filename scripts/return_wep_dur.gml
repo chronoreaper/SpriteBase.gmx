@@ -42,7 +42,8 @@ with arg_unit{
         }
         break;
         case 8:
-        item[wep]-=0.01
+        if hit_miss=1
+            item[wep]-=0.01
         if frac(item[wep])=0{
             with oControler
                 message_create("sword broke")

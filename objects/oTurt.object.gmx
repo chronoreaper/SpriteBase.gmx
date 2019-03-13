@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
+weakness[4]=0.8
 
 hp=12
 mhp=hp

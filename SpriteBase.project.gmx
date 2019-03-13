@@ -55,6 +55,18 @@
         <sprite>sprites\mage001_2</sprite>
         <sprite>sprites\mage001_3</sprite>
       </sprites>
+      <sprites name="healer">
+        <sprite>sprites\healer001_0</sprite>
+        <sprite>sprites\healer001_1</sprite>
+        <sprite>sprites\healer001_2</sprite>
+        <sprite>sprites\healer001_3</sprite>
+      </sprites>
+      <sprites name="Merchant">
+        <sprite>sprites\merchant001_0</sprite>
+        <sprite>sprites\merchant001_1</sprite>
+        <sprite>sprites\merchant001_2</sprite>
+        <sprite>sprites\merchant001_3</sprite>
+      </sprites>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
@@ -68,6 +80,7 @@
       <sprite>sprites\bench_u</sprite>
       <sprite>sprites\bench_l</sprite>
       <sprite>sprites\bench_d</sprite>
+      <sprite>sprites\ruinWall</sprite>
       <sprite>sprites\tree</sprite>
       <sprite>sprites\chest_r</sprite>
       <sprite>sprites\chest_u</sprite>
@@ -99,6 +112,7 @@
       <sprite>sprites\laser_beam</sprite>
       <sprite>sprites\angelic</sprite>
       <sprite>sprites\dashSlash</sprite>
+      <sprite>sprites\healEff</sprite>
       <sprite>sprites\magicBurnEff</sprite>
     </sprites>
     <sprites name="in game menu">
@@ -157,6 +171,7 @@
     <script>scripts\return_priority.gml</script>
     <script>scripts\return_dmg.gml</script>
     <script>scripts\return_wep_range.gml</script>
+    <script>scripts\return_wep_type.gml</script>
     <script>scripts\return_item_range.gml</script>
     <script>scripts\return_wep_dmg.gml</script>
     <script>scripts\return_stat_gain.gml</script>
@@ -182,8 +197,8 @@
     <script>scripts\return_skill_des.gml</script>
     <script>scripts\return_skill_eff.gml</script>
     <script>scripts\return_skill_area_type.gml</script>
-    <script>scripts\return_skill_has_target.gml</script>
     <script>scripts\draw_skill_area_type.gml</script>
+    <script>scripts\return_skill_has_target.gml</script>
     <script>scripts\return_check_skill_target.gml</script>
     <script>scripts\return_power.gml</script>
     <script>scripts\message_create.gml</script>
@@ -199,6 +214,7 @@
     <script>scripts\generate_map_old2.gml</script>
     <script>scripts\generate_map_old.gml</script>
     <script>scripts\create_area.gml</script>
+    <script>scripts\create_boss_area.gml</script>
     <script>scripts\return_item_number.gml</script>
   </scripts>
   <shaders name="shaders">
@@ -235,6 +251,7 @@
       <object>objects\oTrafficLight_l</object>
       <object>objects\oTrafficLight_r</object>
       <object>objects\oTree</object>
+      <object>objects\oAncientWall</object>
       <object>objects\oRecyclingBin</object>
       <object>objects\oBench</object>
       <object>objects\oChest</object>
@@ -243,7 +260,9 @@
       <object>objects\oFighter</object>
       <object>objects\oArcher</object>
       <object>objects\oMage</object>
+      <object>objects\oHealer</object>
       <object>objects\oHero</object>
+      <object>objects\oMerchant</object>
       <object>objects\oSlime</object>
       <object>objects\oBoar</object>
       <object>objects\oFrog</object>

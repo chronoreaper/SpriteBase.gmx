@@ -11,7 +11,7 @@ switch floor(arg_skill){
         if arg_targ!=noone{
             arg_targ.hp+=ceil(arg_source.lv/2)+2
             arg_source.sp-=4
-            arg_source.xp+=3
+            arg_source.xp+=1
             arg_source.spg+=0.1
             with arg_targ{
             if hp>mhp
@@ -41,7 +41,7 @@ switch floor(arg_skill){
                 var cinst=instance_place(x,y,oUnit);
                 while cinst!=noone{
                     if (cinst!=arg_source){
-                        var dmg=return_dmg(20,0,cinst.stats[2,2]);
+                        var dmg=return_dmg(10+arg_source.lv,0,cinst.stats[2,2]);
                         calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0),0,1,1)
                     }
                     instance_deactivate_object(cinst);
@@ -69,7 +69,7 @@ switch floor(arg_skill){
                 var cinst=instance_place(x,y,oUnit);
                 while cinst!=noone{
                     if (cinst!=arg_source){
-                        var dmg=return_dmg(15,0,cinst.stats[2,2]);
+                        var dmg=return_dmg(10+arg_source.lv,0,cinst.stats[2,2]);
                         calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0),0,1,1)
                     }
                     instance_deactivate_object(cinst);
@@ -224,8 +224,8 @@ switch floor(arg_skill){
             arg_source.alarm[0]=6
             arg_source.intg+=1
             arg_source.spg+=1
-            var base =return_dmg(arg_source.stats[2,1],0,arg_targ.stats[2,2]);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),0,3,1)
+            var base =return_dmg(arg_source.stats[2,1]+2,0,arg_targ.stats[2,2]);
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),4,3,1)
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -234,6 +234,40 @@ switch floor(arg_skill){
             eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
             eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=magicBurnEff    
+            }
+        return 1
+        }
+        return 0
+    case 9:
+        if arg_source.sp>=8 {
+        if arg_targ!=noone{
+            arg_targ.hp+=floor(arg_source.stats[2,4])
+            arg_source.sp-=8
+            arg_source.xp+=5
+            arg_source.spg+=1
+            arg_source.lucg+=1
+            with arg_targ{
+            if hp>mhp
+                hp=mhp
+            }
+            var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
+            txt.text=floor(arg_source.stats[2,4])
+            txt.colour=c_lime
+            
+            //effect
+            var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
+            eff.sprite_index=sourcedir2
+            eff.image_blend=c_lime
+            eff.rotate=false
+            eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
+            var k=0
+            repeat(5){
+            eff=instance_create(arg_targ.x+2+irandom(11),arg_targ.y+2+irandom(11),oEff);
+            eff.sprite_index=healEff 
+            eff.image_speed=0.5
+            eff.image_index=5-k;
+            k++
+            }
             }
         return 1
         }

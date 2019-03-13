@@ -2,6 +2,7 @@ var arg_skill=argument0
 var arg_source=argument1
 var targ=noone
 var toTarg=-1
+//for ai
 /*
 options
 0 - normal

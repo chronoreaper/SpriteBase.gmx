@@ -3,7 +3,7 @@
   <spriteName>cruser</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>10000</depth>
+  <depth>1000</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -106,25 +106,38 @@ xx=inst.xx
 yy=inst.yy
 view_xview=inst.xx-view_wview/2
 view_yview=inst.yy-view_hview/2
+//inst.xp=100
 }
 inst=instance_create(x+15,y,oArcher);
 ds_list_add(unitList,inst)
-inst=instance_create(x,y-15,oMage);
+//inst.xp=100
+inst=instance_create(x,y-15,oHealer);
 ds_list_add(unitList,inst)
-inst=instance_create(x+15,y-15,oHero)
+//inst.xp=100
+inst=instance_create(x+15,y-15,oMage)
 ds_list_add(unitList,inst)
+//inst.xp=100
 //inst.team=-1
 //inst.ai=0 
-inst=instance_create(x+15*15,y+15*15,oDragon1)
+/*inst=instance_create(x+15*15,y+15*15,oDragon1)
 inst.team=-1
 inst.marker=1
-
-inst=instance_create(x-15*15,y-15*15,oWurm)
+*/
+create_boss_area(x-15*20,y-15*15,0,0)
+inst=instance_create(x-15*19,y-12*15,oWurm)
 inst.team=-1
-inst.ai=0
+inst.ai=1
 inst.marker=1
-for(var i=1;i&lt;10;i++){
-inst2=instance_create(x-(15-i)*15,y-15*15,oWurm)
+inst.dir=3
+for(var i=1;i&lt;=2;i++){
+inst2=instance_create(x-(19)*15,y-(12+1)*15,oWurm)
+inst2.team=-1
+inst2.ai=-1
+inst2.link=inst
+inst=inst2
+}
+for(var i=0;i&lt;=6;i++){
+inst2=instance_create(x-(19-i)*15,y-(14)*15,oWurm)
 inst2.team=-1
 inst2.ai=-1
 inst2.link=inst
@@ -981,7 +994,7 @@ if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(25
     multi*=2+(c.stats[2,3])*0.02*0.8
 var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],target.stats[2,2]);
 var xpgain=3
-if calculate_damage(c,target,dmg,acc,0,3,multi)&gt;0{
+if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),3,multi)&gt;0{
     //create eff
     if !(c.draw=0
     &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2){
@@ -1259,10 +1272,28 @@ if currentTurn&lt;0
                 close=c.link  
             else{
                 c.link=noone
-                c.ai=0
+                c.ai=1
                 c.marker=1
                 //c.wait=1
-            }  
+            }
+        //move in a straight line ai
+        if c.ai=1{
+            //if there is an object in way
+            if instance_place(c.x+15*cos(degtorad(c.dir*90)),c.y-15*sin(degtorad(c.dir*90)),oObj){
+                //turn 90 left or right
+                var rand=choose(1,-1)
+                if instance_place(c.x+15*cos(degtorad((c.dir+rand)*90)),c.y-15*sin(degtorad((c.dir+rand)*90)),oObj)
+                    rand*=-1
+                close=instance_create(c.x+30*cos(degtorad((c.dir+rand)*90)),c.y-30*sin(degtorad((c.dir+rand)*90)),oTempTarg)
+                if rand=1
+                    show_debug_message("left")
+                else
+                show_debug_message("right")
+            }
+            else{
+                close=instance_create(c.x+30*cos(degtorad((c.dir)*90)),c.y-30*sin(degtorad((c.dir)*90)),oTempTarg)
+                }
+        }  
         if close!=noone{
             //move towards it
              add_all_to_map()
@@ -1994,7 +2025,7 @@ draw_text(2,70,"Phase MoviNg: "+string(timePhase1/30))
 draw_text(2,80,"Phase AttackiNg: "+string(timePhase3/30))
 draw_text(2,90,"Phase skill: "+string(timePhase5/30))
 draw_text(2,100,"Phase : "+string(phase))
-draw_text(2,110,"Units : "+string(instance_number(oUnit)))
+draw_text(2,110,"Boss left : "+string(instance_number(oWurm)))
 //draw_sprite(sprite_index,image_index,x-view_xview,y-view_yview)
 if selected!=noone{
 var c=selected
@@ -2201,7 +2232,11 @@ if currentTurn&gt;=0
       draw_set_colour(c_ltgray)
    draw_set_font(pixelFont)
    draw_sprite_ext(hpBar,0,5+bx,223,min((cur.xp/cur.mxp)*68,68),2.5,0,c_teal,1)
-   var text="LV:"+string(cur.lv)+" "+cur.name
+   var text=""
+   if object_is_ancestor(cur.object_index,oObj)
+        text=cur.name
+   else
+        text="LV:"+string(cur.lv)+" "+cur.name
    draw_text(5+bx,223,text)
    draw_sprite_ext(hpBar,0,5+bx,206,68,3.5,0,c_ltgray,1)
    draw_sprite_ext(hpBar,0,5+bx,214,68,3.5,0,c_ltgray,1)

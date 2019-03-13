@@ -55,8 +55,9 @@ yy=y
             <kind>1</kind>
             <string>///check for collision
 if x!=xprevious
-||y!=yprevious{
-    var inst=collision_line(x+7.5,y+7.5,xprevious+7.5,yprevious+7.5,oChar,false,true)//instance_place(x,y,oChar)
+||y!=yprevious
+if point_direction(x,y,xx,yy)&lt;7{
+    var inst=instance_place(xx,yy,oChar)//collision_line(x+7.5,y+7.5,xprevious+7.5,yprevious+7.5,oChar,false,true)//instance_place(x,y,oChar)
     if inst!=noone
     if inst!=source
     if instance_exists(source)
