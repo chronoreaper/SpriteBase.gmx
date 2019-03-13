@@ -46,7 +46,7 @@ if fin=1{
     currentTurn++
     if currentTurn>0{//end of round
         turnsSurvive++
-        currentTurn=-1
+        currentTurn=-2
         //add time
         minu+=1;
         if minu>=6{

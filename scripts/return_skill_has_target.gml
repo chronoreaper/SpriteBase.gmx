@@ -63,7 +63,20 @@ switch floor(arg_skill){
         with inst instance_destroy()
         break
     case 4: return 0
-    case 5: return 0
+    case 5: 
+            return arg_source
+        /*for(var i=-1;i<=1;i++)
+        for(var j=-1;j<=1;j++){
+            var cinst=instance_place(x,y,oChar);
+            if cinst!=noone
+            if return_check_skill_target(arg_source,cinst,1)
+            if cinst.mhp-cinst.hp<=arg_source.lv*2+5
+            if cinst.mhp-cinst.hp<toTarg{
+                toTarg=cinst.mhp-cinst.hp
+                targ=cinst
+            }
+        }*/
+        break;
     default:return 0
 }
 if toTarg>=0

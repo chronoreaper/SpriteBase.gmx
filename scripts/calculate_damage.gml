@@ -17,6 +17,7 @@ if  get_random()<arg_acc
 {
     var weak=arg_targ.weakness[arg_type]
     var dmg=ceil(arg_dmg*arg_multi);
+    arg_targ.lastHitBy=arg_source
     arg_targ.hp-=dmg
     arg_targ.hp=max(arg_targ.hp,0)
     arg_targ.image_blend=c_red

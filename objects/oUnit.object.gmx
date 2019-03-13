@@ -26,7 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>ai=0
-link=noone
 xx=x
 yy=y
 ax=0
@@ -42,6 +41,10 @@ mxp=15
 lv=1
 alpha=0
 draw=0
+
+link=noone
+aggro=noone;
+lastHitBy=noone;
 
 name=""
 
@@ -303,7 +306,7 @@ else if wave&lt;=0
     lr=1
 }
 
-}else{ visible=false
+}else{ //visible=false
 //instance_deactivate_object(id)
 }
 </string>
@@ -450,9 +453,9 @@ if draw&gt;0
 }
 
 //draw health bars
-var colour=oControler.playerColour[team+1];
+var colour=oControler.playerColour[team+3];
 if object_is_ancestor(object_index,oObj)
-    colour=oControler.playerColour[10];
+    colour=oControler.playerColour[0];
 else
     draw_sprite_ext(marker1,0,x-7*(size-1),y-7*(size-1),size,size,0,colour,1-wait)
 /*if dmg!=hp{

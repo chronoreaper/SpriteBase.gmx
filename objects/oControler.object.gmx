@@ -26,9 +26,10 @@
           <argument>
             <kind>1</kind>
             <string>image_speed=0.1
-playerColour[0]=c_red
-playerColour[1]=c_blue
-playerColour[10]=c_white
+playerColour[1]=c_lime
+playerColour[2]=c_red
+playerColour[3]=c_blue
+playerColour[0]=c_white
 window_set_size(360*3,240*3+3)
 hit=0
 gridAlpha=0.1
@@ -108,21 +109,21 @@ view_xview=inst.xx-view_wview/2
 view_yview=inst.yy-view_hview/2
 //inst.xp=100
 }
-inst=instance_create(x+15,y,oArcher);
+/*inst=instance_create(x+15,y,oArcher);
 ds_list_add(unitList,inst)
 //inst.xp=100
 inst=instance_create(x,y-15,oHealer);
 ds_list_add(unitList,inst)
 //inst.xp=100
 inst=instance_create(x+15,y-15,oMage)
-ds_list_add(unitList,inst)
+ds_list_add(unitList,inst)*/
 //inst.xp=100
 //inst.team=-1
 //inst.ai=0 
-/*inst=instance_create(x+15*15,y+15*15,oDragon1)
-inst.team=-1
-inst.marker=1
-*/
+inst=instance_create(x+15*15,y+15*15,oHero)
+inst.team=-2
+inst.ai=2
+//inst.marker=2
 create_boss_area(x-15*20,y-15*15,0,0)
 inst=instance_create(x-15*19,y-12*15,oWurm)
 inst.team=-1
@@ -296,13 +297,13 @@ alarm[10]=30
           <argument>
             <kind>1</kind>
             <string>//activate things
-instance_deactivate_all(true)
+/*instance_deactivate_all(true)
 instance_activate_region(xx-view_wview/2,yy-view_hview/2,view_wview,view_hview,true)
 instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
 if selected!=noone
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
 
-//alarm[8]=1
+//alarm[8]=1*/
 alarm[9]=2
 </string>
           </argument>
@@ -982,8 +983,9 @@ c.ay=-sin(degtorad(point_direction(selected.x+7,selected.y+7,target.x+7,target.y
 c.alarm[0]=6
 //timer before next action
 //var k=return_multi_atk(c.item[c.wep]);
-if selected.draw=0
-&amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2
+if (selected.draw=0
+&amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)
+&amp;&amp;debugging=0
 alarm[0]=1
 else
 alarm[0]=max(13)
@@ -1206,6 +1208,9 @@ else if ch&lt;=0
             <string>///#4 ai
 if menu=-1
 if currentTurn&lt;0
+//if alarm_get(0)&lt;=0
+//if alarm_get(3)&lt;=0
+//if alarm_get(9)=2
 {
     if selected=noone
     {
@@ -1225,7 +1230,7 @@ if currentTurn&lt;0
            }
            }
         }
-        instance_deactivate_all(true)
+        //instance_deactivate_all(true)
         alarm[9]=1
         /*with oChar{
             if team=ct
@@ -1246,7 +1251,7 @@ if currentTurn&lt;0
     }
     if selected!=noone
     //if alarm_get(0)&lt;=0
-    if alarm_get(9)=2
+    //if alarm_get(9)=2
     {
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
@@ -1274,6 +1279,7 @@ if currentTurn&lt;0
                 c.link=noone
                 c.ai=1
                 c.marker=1
+                c.close=noone
                 //c.wait=1
             }
         //move in a straight line ai
@@ -1285,23 +1291,23 @@ if currentTurn&lt;0
                 if instance_place(c.x+15*cos(degtorad((c.dir+rand)*90)),c.y-15*sin(degtorad((c.dir+rand)*90)),oObj)
                     rand*=-1
                 close=instance_create(c.x+30*cos(degtorad((c.dir+rand)*90)),c.y-30*sin(degtorad((c.dir+rand)*90)),oTempTarg)
-                if rand=1
-                    show_debug_message("left")
-                else
-                show_debug_message("right")
             }
             else{
                 close=instance_create(c.x+30*cos(degtorad((c.dir)*90)),c.y-30*sin(degtorad((c.dir)*90)),oTempTarg)
                 }
         }  
         if close!=noone{
+            if c.x!=c.xx&amp;&amp;c.y!=c.yy
+                show_debug_message("ERROR! Already moved")
             //move towards it
              add_all_to_map()
              mp_grid_clear_cell(grid,c.x/15,c.y/15)
              mp_grid_clear_cell(grid,close.x/15,close.y/15)
             if mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,close.x+7.5,close.y+7.5,false){//checks if can move there
                 //compares mac movement to how much you need to move
-                if (abs(close.x-c.x)+abs(close.y-c.y))/15&gt;c.mov{//travels furthest
+                //if (abs(close.x-c.x)+abs(close.y-c.y))/15&gt;c.mov
+                if floor(path_get_length(c.path)/15)&gt;c.mov
+                {//travels furthest
                     mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
                     path_get_point_y(c.path,c.mov),false)
                    }
@@ -1314,6 +1320,7 @@ if currentTurn&lt;0
                 //see if visable or not
                 if c.draw=0
                 &amp;&amp; ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
+                &amp;&amp;!debugging
                 {
                     with c{
                        //path_start(path,999,path_action_stop,false)
@@ -1325,15 +1332,32 @@ if currentTurn&lt;0
                        add_all_to_map()
                    }
                 else{
+                    var cx
+                   var cy
                     with c{
                    path_start(path,3,path_action_stop,false)
+                   cx=floor(path_get_x(path,1)/15)*15
+                   cy=floor(path_get_y(path,1)/15)*15
                    }
+                   //if you can see the ai, camera moves to ai
+                   if (cx&lt;view_xview+15*3
+                    &amp;&amp; cx&gt;view_xview+view_wview-15*3
+                    &amp;&amp; cy&lt;view_yview+15*3
+                    &amp;&amp; cy&gt;view_yview+view_hview-15*3)
+                    ||debugging=1{
+                        view_xview=cx-view_wview/2
+                        view_yview=cy-view_hview/2
+                        xx=cx
+                        yy=cy
+                    }
                    phase=1
                 }
             }else phase=3
              
         
-        }else alarm[0]=1
+        }else{ 
+            alarm[0]=1 
+            phase=8}
     }//end phase 0
     if phase=1{
         var c=selected
@@ -2024,8 +2048,9 @@ draw_text(2,60,"Phase SelectiNg: "+string(timePhase0/30))
 draw_text(2,70,"Phase MoviNg: "+string(timePhase1/30))
 draw_text(2,80,"Phase AttackiNg: "+string(timePhase3/30))
 draw_text(2,90,"Phase skill: "+string(timePhase5/30))
-draw_text(2,100,"Phase : "+string(phase))
-draw_text(2,110,"Boss left : "+string(instance_number(oWurm)))
+draw_text(2,100,"units: "+string(instance_number(oUnit)))
+if selected!=noone
+draw_text(2,110,"Selected : "+string(selected.name)+" "+string(selected))
 //draw_sprite(sprite_index,image_index,x-view_xview,y-view_yview)
 if selected!=noone{
 var c=selected
@@ -2210,7 +2235,8 @@ if selected=noone
 ||phase=7
 ||phase=11
 if over=noone
-||over.draw=1{
+||over.draw=1
+||debugging=1{
     selected=over;
     }
 if selected!=noone
@@ -2218,9 +2244,9 @@ if instance_exists(selected)
 if currentTurn&gt;=0
 {
     var cur=selected
-    image_blend=playerColour[cur.team+1];
+    image_blend=playerColour[cur.team+3];
     if object_is_ancestor(cur.object_index,oObj)
-        image_blend=playerColour[10];
+        image_blend=playerColour[0];
    draw_set_colour(c_white)
    draw_rectangle(2+bx,203,75+bx,231,false)
    draw_rectangle(76+bx,197,135+bx,231,false)
