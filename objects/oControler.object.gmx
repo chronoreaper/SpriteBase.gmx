@@ -109,24 +109,26 @@ view_xview=inst.xx-view_wview/2
 view_yview=inst.yy-view_hview/2
 //inst.xp=100
 }
-/*inst=instance_create(x+15,y,oArcher);
+inst=instance_create(x+15,y,oArcher);
 ds_list_add(unitList,inst)
 //inst.xp=100
 inst=instance_create(x,y-15,oHealer);
 ds_list_add(unitList,inst)
 //inst.xp=100
 inst=instance_create(x+15,y-15,oMage)
-ds_list_add(unitList,inst)*/
+ds_list_add(unitList,inst)
 //inst.xp=100
 //inst.team=-1
 //inst.ai=0 
-inst=instance_create(x+15,y+15,oHero)
+inst=instance_create(x+15*10,y+15,oHero)
 inst.team=-2
 inst.ai=2
-inst2=instance_create(x+15,y+15,oHealer)
+inst.xp=100
+inst2=instance_create(x+15*11,y+15,oHealer)
 inst2.team=-2
 inst2.ai=2
 inst2.link=inst
+inst2.xp=100
 //inst.marker=2
 create_boss_area(x-15*20,y-15*15,0,0)
 inst=instance_create(x-15*19,y-12*15,oWurm)
@@ -943,13 +945,13 @@ if currentTurn&gt;=0{
     else if phase=11//use skill
     {
         var skill_range=return_skill_range(c.skill[menuSel]);
-        if skill_range=0{
+        /*if skill_range=0{
             alarm[0]=30
             return_skill_eff(c,c)
             menuSel2=-1
             menuSel=0
             phase=8
-        }
+        }*/
         var inst=instance_place(xx,yy,oUnit)
         var targType=return_skill_targ_type(c.skill[menuSel])
         if mouse_check_button_pressed(mb_left)
@@ -1277,6 +1279,7 @@ if currentTurn&lt;0
         with (oChar){
             var u=id
             if team!=c.team
+            if (c.ai!=2||object_is_ancestor(object_index,oMonster))
             //abs(close.x-c.x)+abs(close.y-c.y)&gt;abs(x-c.x)+abs(y-c.y)
             {
                 add_all_to_map()
@@ -1435,6 +1438,7 @@ if currentTurn&lt;0
                             if inst!=noone
                             if !object_is_ancestor(inst.object_index,oObj)
                             if inst.team!=c.team
+                            if (c.ai!=2||object_is_ancestor(inst.object_index,oMonster))
                             if close=noone||
                             abs(close.x-c.x)+abs(close.y-c.y)&gt;abs(inst.x-c.x)+abs(inst.y-c.y){
                                 close=inst

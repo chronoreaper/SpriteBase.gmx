@@ -28,3 +28,4 @@ for (var my=0;my<array_length_1d(map);my++){
         tile_add(tilesprite2,15*(5+irandom(7)),15*5,15,15,arg_x+mx*15,arg_y+15*my,10000)
     }
 }
+tile_add(tilesprite2,15*(5+irandom(7)),15*5,15,15,arg_x+5*15,arg_y+15*11,10000)

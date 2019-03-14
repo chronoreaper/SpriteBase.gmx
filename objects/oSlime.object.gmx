@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>oChar</parentName>
+  <parentName>oMonster</parentName>
   <maskName>hitbox</maskName>
   <events>
     <event eventtype="0" enumb="0">

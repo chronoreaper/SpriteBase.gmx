@@ -13,10 +13,9 @@ for(var i=0;i<10;i++){
             case 2:num=10 break//laser beam
             case 3:num=10 break//water breath
             case 5://redemption
-            //needs to be changed
-            var inst=return_skill_has_target(9,arg_char)
+            var inst=return_skill_has_target(5,arg_char)
                 if inst!=noone{
-                    if inst.mhp-inst.hp>=floor(arg_char.stats[2,4])
+                    if inst.mhp-inst.hp>=floor(arg_char.lv*2+5)
                         num=10
                     if inst.hp<=inst.mhp/2
                         num+=10
@@ -27,9 +26,7 @@ for(var i=0;i<10;i++){
                 var inst=return_skill_has_target(9,arg_char)
                 if inst!=noone{
                     if inst.mhp-inst.hp>=floor(arg_char.stats[2,4])
-                        num=10
-                    if inst.hp<=inst.mhp/2
-                        num+=10
+                        num=15
                 }
                 break;
         }//end switch

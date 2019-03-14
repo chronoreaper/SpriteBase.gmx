@@ -233,6 +233,7 @@
     <object>objects\oDeco4</object>
     <object>objects\oFade</object>
     <object>objects\oChar</object>
+    <object>objects\oMonster</object>
     <object>objects\oTempTarg</object>
     <object>objects\oUnit</object>
     <objects name="item">
