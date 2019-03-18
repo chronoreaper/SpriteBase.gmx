@@ -103,6 +103,7 @@
       <sprite>sprites\spawn_eff</sprite>
       <sprite>sprites\slash</sprite>
       <sprite>sprites\slashsweep</sprite>
+      <sprite>sprites\crossSlash</sprite>
       <sprite>sprites\stab</sprite>
       <sprite>sprites\sourceDirection</sprite>
       <sprite>sprites\sourcedir2</sprite>

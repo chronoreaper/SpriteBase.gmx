@@ -33,6 +33,9 @@ switch floor(arg_skill){
     case 9:
         str="heals an ally [luc]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
+    case 10:
+        str="stroNg twiN attack#usiNg melee weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
     default:return""
 }
 //drawing

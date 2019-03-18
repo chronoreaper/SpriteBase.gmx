@@ -87,6 +87,7 @@ switch floor(arg_skill){
         if arg_source.sp>=3 {
         if arg_targ!=noone{
             arg_source.sp-=3
+            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.alarm[0]=6
@@ -270,6 +271,25 @@ switch floor(arg_skill){
             eff.image_index=5-k;
             k++
             }
+            }
+        return 1
+        }
+        return 0
+    case 10:
+        if frac(arg_source.item[arg_source.wep])>=0.03 
+        if return_wep_range(arg_source.item[arg_source.wep])=1{
+        if arg_targ!=noone{
+            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            arg_source.item[arg_source.wep]-=0.03
+            return_wep_dur(arg_source,0)
+            arg_source.xp+=8
+            arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
+            arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
+            arg_source.alarm[0]=6
+            var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
+            eff.sprite_index=crossSlash
+            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)*2,0,arg_targ.stats[2,2]);
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),0,5,1)
             }
         return 1
         }

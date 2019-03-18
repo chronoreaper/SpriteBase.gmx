@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>event_inherited()
 item[0]=8+return_item_usage_default(8)
+skill[1]=10
 wep =0
 
 hp=15

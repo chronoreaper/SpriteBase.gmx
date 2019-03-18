@@ -10,6 +10,7 @@ switch floor(arg_skill){
     case 7:return 90;//piercing strike
     case 8:return 94;//fire
     case 9:return 100;//heal
+    case 10:return 85;//crossSlash
     default: return 0
 }
 
