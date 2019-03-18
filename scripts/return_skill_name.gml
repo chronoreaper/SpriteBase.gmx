@@ -9,6 +9,7 @@ switch floor(arg_skill){
     case 7: return "pierciNg strike"
     case 8: return "fire"
     case 9: return "heal"
-    case 10: return "crossSlash"
+    case 10: return "cross slash"
+    case 11: return "loNg shot"
     default:return""
 }

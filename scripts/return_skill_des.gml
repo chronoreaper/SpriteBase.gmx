@@ -36,6 +36,9 @@ switch floor(arg_skill){
     case 10:
         str="stroNg twiN attack#usiNg melee weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
+    case 11:
+        str="loNg raNged attack#usiNg raNged weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
     default:return""
 }
 //drawing

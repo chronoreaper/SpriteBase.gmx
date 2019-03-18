@@ -10,5 +10,6 @@ switch arg_skill{
     case 8: return 2
     case 9: return 2
     case 10: return 1
+    case 11: return 5
     default: return 0
 }
