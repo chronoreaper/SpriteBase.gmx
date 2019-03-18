@@ -116,11 +116,8 @@ weakness
 9 - dark
 */
 item[10]=0//weapon/arm default
-skill[1]=1
+skill[0]=1
 if !object_is_ancestor(object_index,oObj){
-var rand=irandom(7)+1;
-if irandom(3)=0
-item[0]=rand+return_item_usage_default(rand)
 }
 c=0
 ud=1
@@ -401,6 +398,10 @@ if oControler.phase&lt;3||oControler.currentTurn&lt;0{
         case 1:      
             col=c_red
             txt="boss"
+        break
+        case 2:      
+            col=c_blue
+            txt="trade"
         break
     }
     draw_set_halign(fa_center)

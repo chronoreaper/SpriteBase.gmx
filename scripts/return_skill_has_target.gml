@@ -86,7 +86,7 @@ switch floor(arg_skill){
             if (abs(i)+abs(j))<=range
             if cinst!=noone
             if return_check_skill_target(arg_source,cinst,1)
-            if toTarg<cinst.mhp-cinst.hp||toTarg=-1
+            if toTarg<cinst.mhp-cinst.hp
             {
                 toTarg=cinst.mhp-cinst.hp
                 targ=cinst

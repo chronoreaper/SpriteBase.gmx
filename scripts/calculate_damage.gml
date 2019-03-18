@@ -31,7 +31,8 @@ if  get_random()<arg_acc
         repeat(ceil(arg_multi)-2)
             txt.text+="!"
         }
-    if !object_is_ancestor(arg_targ.object_index,oObj){
+    if !object_is_ancestor(arg_targ.object_index,oObj)
+    if arg_targ.team!=arg_source.team{
         arg_source.xp+=arg_xp
         arg_source.aggro=arg_targ
         }

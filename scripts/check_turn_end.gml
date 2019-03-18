@@ -59,7 +59,7 @@ if fin=1{
     //spawn monsters
     var rx=irandom(room_width/15)//room_width/15);
     var ry=irandom(room_height/15)//room_height/15);
-    if irandom(2)=0
+    if irandom(1)=0
     if !place_meeting(rx*15,ry*15,oUnit)
     if ds_grid_get(gridF1,rx,ry)<1
         {
@@ -69,7 +69,7 @@ if fin=1{
         inst.view=0
         inst.draw=0
         //stats
-        inst.xp+=irandom(turnsSurvive*2)+turnsSurvive*2
+        inst.xp+=irandom(turnsSurvive*2)+turnsSurvive
         inst.hpg+=random(turnsSurvive*0.1)
         inst.spg+=random(turnsSurvive*0.1)
         inst.strg+=random(turnsSurvive*0.1)
@@ -121,7 +121,7 @@ if fin=1{
         }
     }
     else{
-         alarm[10]=2//currentTurn++;//next turn
+         alarm[10]=1//currentTurn++;//next turn
     }
 }
 ds_list_destroy(list)

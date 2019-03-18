@@ -42,6 +42,6 @@ switch floor(arg_item){
 //drawing
 hgt=string_height(str)*8/6
 draw_set_colour(c_olive)
-draw_rectangle(ex-2,ey-3-hgt,358,ey-4,false)
+draw_rectangle(ex-2,ey-3-hgt,358+ex-273,ey-4,false)
 draw_set_colour(c_black)
 draw_text_ext(ex,ey-2-hgt,str,str_sep,358-(ex)-2)

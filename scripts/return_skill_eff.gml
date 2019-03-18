@@ -7,7 +7,9 @@ var arg_skill=arg_source.skill[arg_slot]
 */
 switch floor(arg_skill){
     case 1:
-        if arg_source.sp>=4 {
+        if arg_source.sp>=4 
+        if arg_source.x=arg_source.xx
+        if arg_source.y=arg_source.yy{
         if arg_targ!=noone{
             arg_targ.hp+=ceil(arg_source.lv/2)+2
             arg_source.sp-=4
@@ -89,7 +91,7 @@ switch floor(arg_skill){
             arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.alarm[0]=6
             var base =return_dmg(arg_source.stats[2,0],0,arg_targ.stats[2,2]);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),0,3,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),0,5,1)
                 if dmg>0{
                 //effect
                 var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -225,7 +227,7 @@ switch floor(arg_skill){
             arg_source.intg+=1
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,arg_targ.stats[2,2]);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),4,3,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),4,5,1)
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -243,7 +245,7 @@ switch floor(arg_skill){
         if arg_targ!=noone{
             arg_targ.hp+=floor(arg_source.stats[2,4])
             arg_source.sp-=8
-            arg_source.xp+=5
+            arg_source.xp+=8
             arg_source.spg+=1
             arg_source.lucg+=1
             with arg_targ{

@@ -22,11 +22,13 @@ for(var i=0;i<10;i++){
                 }
                 break;
             case 6:num=15 break//split
-            case 9:
+            case 9://heal
                 var inst=return_skill_has_target(9,arg_char)
                 if inst!=noone{
                     if inst.mhp-inst.hp>=floor(arg_char.stats[2,4])
                         num=15
+                    if inst.hp<=inst.mhp/2
+                        num+=10
                 }
                 break;
         }//end switch

@@ -13,7 +13,7 @@ var yy=round(height/2);
 0=planes
 1=dirt road planes
 */
-repeat((width+height)*2){
+repeat((width+height)){
     ds_grid_set(gridMap,xx,yy,1)
     switch dir{
         case 0:

@@ -6,7 +6,7 @@ var str=""
 var htg=0
 switch floor(arg_skill){
     case 1:
-        str="heals very little#hp"
+        str="heals very little#hp. CaNNot move#same turN."
         break;
     case 2:
         str="shoots a laser beam#raNge "+string(abs(return_skill_range(arg_skill)))

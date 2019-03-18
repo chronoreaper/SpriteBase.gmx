@@ -56,6 +56,7 @@ yy=y
 controler=0
 camTurnDir=0
 selected=noone
+eventOver=noone
 keys[0]=ord('W')
 keys[1]=ord('A')
 keys[2]=ord('S')
@@ -120,16 +121,34 @@ ds_list_add(unitList,inst)
 //inst.xp=100
 //inst.team=-1
 //inst.ai=0 
-inst=instance_create(x+15*10,y+15,oHero)
+inst=instance_create(x+15*20,y+15*15,oHero)
 inst.team=-2
 inst.ai=2
-inst.xp=100
-inst2=instance_create(x+15*11,y+15,oHealer)
+inst.xp=40
+inst2=instance_create(x+15*21,y+15*15,oHealer)
 inst2.team=-2
-inst2.ai=2
+inst2.ai=3
 inst2.link=inst
-inst2.xp=100
-//inst.marker=2
+inst2.xp=40
+var sx=15;
+var sy=15;
+inst=instance_create(x-15*sx,y+15*sy,oMerchant)
+inst.team=-2
+inst.ai=5
+inst.xp=40
+inst.marker=2
+inst2=instance_create(x-15*(sx+1),y+15*sy,oHealer)
+inst2.team=-2
+inst2.ai=3
+inst2.link=inst
+inst2.xp=40
+inst2=instance_create(x-15*(sx+2),y+15*sy,oFighter)
+inst2.team=-2
+inst2.ai=4
+inst2.link=inst
+inst2.xp=40
+
+
 create_boss_area(x-15*20,y-15*15,0,0)
 inst=instance_create(x-15*19,y-12*15,oWurm)
 inst.team=-1
@@ -191,7 +210,7 @@ if !place_meeting(rx*15,ry*15,oUnit)
     }    
 }*/
 //enemies
-repeat(10){
+repeat((room_width/15+room_height/15)/10){
 rx=irandom(room_width/15)//room_width/15);
 ry=irandom(room_height/15)//room_height/15);
 if !place_meeting(rx*15,ry*15,oUnit)
@@ -564,11 +583,12 @@ if selected!=noone{
         }
         else space++
     }
-    if space=10
-        alarm[3]=10
+    //if space=10
+    //    alarm[3]=10
 
     }
-    else{
+    //else
+    {
     //instance_activate_all()
     //alarm[9]=3
     //alarm[4]=2
@@ -615,7 +635,91 @@ option=0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///#1 when a unit is selected
+            <string>///#1 move to unit on current turn
+var i=0
+if menu=-1
+if currentTurn&gt;=0
+if selected=noone
+if mouse_check_button_pressed(mb_right)
+||keyboard_check_pressed(keys[5]){
+    if !ds_list_empty(unitList){
+        var inst=ds_list_find_value(unitList,currentNumber)
+        instance_activate_object(inst)
+        if instance_exists(inst)
+        {
+            if xx=inst.x
+            &amp;&amp; yy=inst.y{
+                currentNumber++
+                if currentNumber&gt;=ds_list_size(unitList)
+                    currentNumber=0
+                inst=ds_list_find_value(unitList,currentNumber)
+                var lim=0;
+                while (lim&lt;ds_list_size(unitList)&amp;&amp;inst.wait=1){
+                    currentNumber++
+                    if currentNumber&gt;=ds_list_size(unitList)
+                        currentNumber=0
+                    inst=ds_list_find_value(unitList,currentNumber)
+                    lim++
+                }
+                x=inst.xx
+                y=inst.yy
+                xx=x
+                yy=y
+                view_xview=inst.xx-view_wview/2
+                view_yview=inst.yy-view_hview/2
+            }else{
+                var lim=0;
+                while (lim&lt;ds_list_size(unitList)&amp;&amp;inst.wait=1){
+                    currentNumber++
+                    if currentNumber&gt;=ds_list_size(unitList)
+                        currentNumber=0
+                    inst=ds_list_find_value(unitList,currentNumber)
+                    lim++
+                }
+                x=inst.xx
+                y=inst.yy
+                xx=x
+                yy=y
+                view_xview=inst.xx-view_wview/2
+                view_yview=inst.yy-view_hview/2
+            }
+        }
+        /*var inst=ds_list_find_value(unitList,0)
+        while(i&lt;ds_list_size(unitList)&amp;&amp;inst.wait!=0){
+            i++
+            inst=ds_list_find_value(unitList,i)
+        }
+        {
+            x=inst.xx
+            y=inst.yy
+            xx=x
+            yy=y
+            view_xview=inst.xx-view_wview/2
+            view_yview=inst.yy-view_hview/2
+        }*/
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///#2 when a unit is selected
 if selected!=noone
 if menu=-1
 {
@@ -633,8 +737,9 @@ if currentTurn&gt;=0{
     mp_grid_clear_cell(grid,c.x/15,c.y/15)
         if mp_grid_get_cell(grid,xx/15,yy/15)=0
         {
-        if mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,xx+7.5,yy+7.5,false)
-        &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0    
+        if (mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,xx+7.5,yy+7.5,false)
+        &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0)  
+        ||(c.x==xx&amp;&amp;c.y==yy)
             {
 
             if c.mov&gt;=path_get_number(c.path)-1{
@@ -718,6 +823,14 @@ if currentTurn&gt;=0{
             yy=c.y
             view_xview=c.x-view_wview/2
             view_yview=c.y-view_hview/2
+        }else if phase=12{//shop phase
+            if menuSel2=-1{  
+                phase=8
+                alarm[0]=2
+                xx=c.x
+                yy=c.y
+            }
+            else menuSel2=-1
         }
     }
     
@@ -775,18 +888,26 @@ if currentTurn&gt;=0{
     else if phase=3{//attack    
         var inst=instance_place(xx,yy,oUnit)
         if inst!=noone
-        if mouse_check_button_pressed(mb_left)
-        ||keyboard_check_pressed(keys[4]){
-            if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.item[c.wep]){
-                if inst!=noone
-                if inst!=selected
-                {
-                    phase=4
-                    loop=return_multi_atk(c.item[c.wep])
-                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
-                    target=inst
-                }
-            }else message_create("Not in raNge")
+        if inst!=selected{
+            if mouse_check_button_pressed(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+                if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.item[c.wep]){
+                    {
+                        if inst.marker==2&amp;&amp;(abs(xx-c.x)+abs(yy-c.y))/15&lt;=1{
+                            phase=12
+                            menuSel=0
+                            menuSel2=-1
+                            eventOver=inst;
+                        }
+                        else{
+                            phase=4
+                            loop=return_multi_atk(c.item[c.wep])
+                            selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                            target=inst
+                        }
+                    }
+                }else message_create("Not in raNge")
+            }
         }
     }//end phase 3
     //phase 4 and 5 was here
@@ -978,6 +1099,62 @@ if currentTurn&gt;=0{
             }else message_create("No target")
         }
     }
+    else if phase==12{//shop phase
+        if menuSel2=-1{
+            if mouse_wheel_up()||
+            keyboard_check_pressed(keys[0])
+                menuSel++
+            else if mouse_wheel_down()||
+            keyboard_check_pressed(keys[2])
+                menuSel--
+            //change item menu selection
+            if mouse_x-view_xview&gt;270
+            &amp;&amp; mouse_y-view_yview&gt;219-70
+            &amp;&amp; mouse_y-view_yview&lt;226
+            {
+            menuSel=10-floor((mouse_y-view_yview-219+70)/7)
+            }
+            //else menuSel=0
+            menuSel=min(9,menuSel)
+            menuSel=max(0,menuSel)
+            //get item
+            if mouse_check_button_pressed(mb_left)
+            ||keyboard_check_pressed(keys[4])
+            if eventOver.item[menuSel]&gt;0{
+                menuSel2=0
+            }
+        }else
+        {//trading
+            if mouse_wheel_up()||
+            keyboard_check_pressed(keys[0])
+                menuSel2++
+            else if mouse_wheel_down()||
+            keyboard_check_pressed(keys[2])
+                menuSel2--
+                //change item menu selection
+            if mouse_x-view_xview&gt;270-90
+            &amp;&amp;mouse_x-view_xview&lt;270
+            &amp;&amp; mouse_y-view_yview&gt;219-70
+            &amp;&amp; mouse_y-view_yview&lt;226
+            {
+                menuSel2=10-floor((mouse_y-view_yview-219+70)/7)
+            }
+            menuSel2=min(9,menuSel2)
+            menuSel2=max(0,menuSel2)
+            if mouse_check_button_pressed(mb_left)
+            ||keyboard_check_pressed(keys[4])
+            if selected.item[menuSel2]&gt;0{
+                if menuSel2==selected.wep
+                    selected.wep=10
+                if menuSel2==selected.arm
+                    selected.arm=10
+                var temp=eventOver.item[menuSel];
+                eventOver.item[menuSel]=selected.item[menuSel2]
+                selected.item[menuSel2]=temp
+                menuSel2=-1
+            }            
+        }
+    }//end shop phase
 }
 if phase=4{//damage step
 var c=selected
@@ -1004,7 +1181,7 @@ if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(25
     multi*=2+(c.stats[2,3])*0.02*0.8
 var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],target.stats[2,2]);
 var xpgain=3
-if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),3,multi)&gt;0{
+if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),5,multi)&gt;0{
     //create eff
     if (!(c.draw=0
     &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)
@@ -1052,7 +1229,7 @@ else if phase=5{//before turn ends after attacking
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///#2 move controler
+            <string>///#3 move controler
 if menu=-1
 {
 if phase&lt;=0
@@ -1188,32 +1365,6 @@ if selected=noone
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///#3 other things
-/*ch+=0.01*udg
-if ch&gt;=0.15
-    udg=-1
-else if ch&lt;=0
-    udg=1
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///#4 ai
 if menu=-1
 if currentTurn&lt;0
@@ -1276,6 +1427,7 @@ if currentTurn&lt;0
     if phase=0{
         var close=noone
         var c=selected
+        var toItem=false
         with (oChar){
             var u=id
             if team!=c.team
@@ -1332,10 +1484,47 @@ if currentTurn&lt;0
             else{
                 c.link=noone
             }
+        }
+        else if c.ai=3{//just follows
+            if instance_exists(c.link){
+                close=c.link
+            }
+            else{
+                c.link=noone
+            }
         }  
+        else if c.ai=4{//follows and revenge against last hit or targets nearest
+            if instance_exists(c.link){
+                //NOTE aggro is reset at the start of each turn
+                if c.link.lastHitBy!=noone&amp;&amp;instance_exists(c.link.lastHitBy){
+                    close=c.link.lastHitBy
+                }
+                else if (abs(c.link.x-c.x)/15+abs(c.link.y-c.y)/15&gt;=4)||
+                    close!=noone&amp;&amp;((abs(close.x-c.x)/15+abs(close.y-c.y)/15&gt;=4)
+                    ||!object_is_ancestor(close.object_index,oMonster))
+                    close=c.link
+            }
+            else{
+                c.link=noone
+            }
+        } else if c.ai=5{//just randomly move for merchant
+            //if there is an object in way
+            if instance_place(c.x+15*cos(degtorad(c.dir*90)),c.y-15*sin(degtorad(c.dir*90)),oUnit)
+            ||c.x+15*cos(degtorad(c.dir*90))&lt;0+15*3
+            ||c.x+15*cos(degtorad(c.dir*90))&gt;room_width-15*3
+            ||c.y-15*sin(degtorad(c.dir*90))&lt;0+15*3
+            ||c.y-15*sin(degtorad(c.dir*90))&gt;room_height-15*3{
+                //turn 90 left or right
+                var rand=choose(1,-1)
+                if instance_place(c.x+15*cos(degtorad((c.dir+rand)*90)),c.y-15*sin(degtorad((c.dir+rand)*90)),oObj)
+                    rand*=-1
+                close=instance_create(c.x+15*(c.mov+1)*cos(degtorad((c.dir+rand)*90)),c.y-15*(c.mov+1)*sin(degtorad((c.dir+rand)*90)),oTempTarg)
+            }
+            else{
+                close=instance_create(c.x+15*(c.mov+1)*cos(degtorad((c.dir)*90)),c.y-15*(c.mov+1)*sin(degtorad((c.dir)*90)),oTempTarg)
+                }
+        }
         if close!=noone{
-            if c.x!=c.xx&amp;&amp;c.y!=c.yy
-                show_debug_message("ERROR! Already moved")
             //move towards it
              add_all_to_map()
              mp_grid_clear_cell(grid,c.x/15,c.y/15)
@@ -1343,16 +1532,18 @@ if currentTurn&lt;0
             if mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,close.x+7.5,close.y+7.5,false){//checks if can move there
                 //compares mac movement to how much you need to move
                 //if (abs(close.x-c.x)+abs(close.y-c.y))/15&gt;c.mov
-                if floor(path_get_length(c.path)/15)&gt;c.mov
-                {//travels furthest
-                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
-                    path_get_point_y(c.path,c.mov),false)
-                   }
-                else {//travels one before target
-                mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,
-                    path_get_point_x(c.path,path_get_number(c.path)-2),
-                    path_get_point_y(c.path,path_get_number(c.path)-2),false)
-                }
+                if !toItem{//not traveling towards an item
+                    if floor(path_get_length(c.path)/15)&gt;c.mov
+                    {//travels furthest
+                        mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
+                        path_get_point_y(c.path,c.mov),false)
+                       }
+                    else {//travels one before target
+                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,
+                        path_get_point_x(c.path,path_get_number(c.path)-2),
+                        path_get_point_y(c.path,path_get_number(c.path)-2),false)
+                    }
+                }//travels towards an item
                 //start the path
                 //see if visable or not
                 if (c.draw=0
@@ -1421,11 +1612,12 @@ if currentTurn&lt;0
         11-20 - skill
         */
         if (option&gt;10)
-        &amp;&amp;(!instance_exists(c.link)||c.ai=2)
+        &amp;&amp;(!instance_exists(c.link)||c.ai=2||c.ai=3)
             phase=11
         else{
-            if c.ai!=2||!instance_exists(c.link)||
-                (c.link.aggro!=noone&amp;&amp;instance_exists(c.link.aggro))
+            if (c.ai!=2||!instance_exists(c.link)||
+            (c.link.aggro!=noone&amp;&amp;instance_exists(c.link.aggro)))
+            &amp;&amp;(c.ai!=5)
             {//continue attack
                 var range=return_wep_range(c.item[c.wep])
                 var close=noone
@@ -1439,6 +1631,9 @@ if currentTurn&lt;0
                             if !object_is_ancestor(inst.object_index,oObj)
                             if inst.team!=c.team
                             if (c.ai!=2||object_is_ancestor(inst.object_index,oMonster))
+                            if(c.ai!=3||object_is_ancestor(inst.object_index,oMonster))
+                            if (c.ai!=4||object_is_ancestor(inst.object_index,oMonster))
+                            if (c.ai!=5)
                             if close=noone||
                             abs(close.x-c.x)+abs(close.y-c.y)&gt;abs(inst.x-c.x)+abs(inst.y-c.y){
                                 close=inst
@@ -1447,9 +1642,18 @@ if currentTurn&lt;0
                         }
                     }//end loop
                     if c.ai=2&amp;&amp;instance_exists(c.link)&amp;&amp;c.link.aggro!=noone&amp;&amp;instance_exists(c.link.aggro)
-                    if abs((c.link.aggro.x-c.x)/15)+abs((c.link.aggro.y-c.y)/15)&lt;=range
                     {
-                        close=c.link.aggro
+                        if abs((c.link.aggro.x-c.x)/15)+abs((c.link.aggro.y-c.y)/15)&lt;=range
+                        {
+                            close=c.link.aggro
+                        }
+                    }
+                    else if c.ai=4&amp;&amp;instance_exists(c.link)&amp;&amp;c.link.lastHitBy!=noone&amp;&amp;instance_exists(c.link.lastHitBy)
+                    {
+                        if abs((c.link.lastHitBy.x-c.x)/15)+abs((c.link.lastHitBy.y-c.y)/15)&lt;=range
+                        {
+                            close=c.link.lastHitBy
+                        }
                     }
                     if close=noone
                     ||selected.ai=-1 {//no target
@@ -1499,86 +1703,6 @@ if currentTurn&lt;0
             }else phase=3
         menuSel=0
         }//end phase 11
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///#5 move to unit on current turn
-var i=0
-if menu=-1
-if currentTurn&gt;=0
-if selected=noone
-if mouse_check_button_pressed(mb_right)
-||keyboard_check_pressed(keys[5]){
-    if !ds_list_empty(unitList){
-        var inst=ds_list_find_value(unitList,currentNumber)
-        if xx=inst.x
-        &amp;&amp; yy=inst.y{
-            currentNumber++
-            if currentNumber&gt;=ds_list_size(unitList)
-                currentNumber=0
-            inst=ds_list_find_value(unitList,currentNumber)
-            var lim=0;
-            while (lim&lt;ds_list_size(unitList)&amp;&amp;inst.wait=1){
-                currentNumber++
-                if currentNumber&gt;=ds_list_size(unitList)
-                    currentNumber=0
-                inst=ds_list_find_value(unitList,currentNumber)
-                lim++
-            }
-            x=inst.xx
-            y=inst.yy
-            xx=x
-            yy=y
-            view_xview=inst.xx-view_wview/2
-            view_yview=inst.yy-view_hview/2
-        }else{
-            var lim=0;
-            while (lim&lt;ds_list_size(unitList)&amp;&amp;inst.wait=1){
-                currentNumber++
-                if currentNumber&gt;=ds_list_size(unitList)
-                    currentNumber=0
-                inst=ds_list_find_value(unitList,currentNumber)
-                lim++
-            }
-            x=inst.xx
-            y=inst.yy
-            xx=x
-            yy=y
-            view_xview=inst.xx-view_wview/2
-            view_yview=inst.yy-view_hview/2
-        }
-        /*var inst=ds_list_find_value(unitList,0)
-        while(i&lt;ds_list_size(unitList)&amp;&amp;inst.wait!=0){
-            i++
-            inst=ds_list_find_value(unitList,i)
-        }
-        {
-            x=inst.xx
-            y=inst.yy
-            xx=x
-            yy=y
-            view_xview=inst.xx-view_wview/2
-            view_yview=inst.yy-view_hview/2
-        }*/
     }
 }
 </string>
@@ -1789,7 +1913,7 @@ var fx=floor(view_xview[p]/15),fy=floor(view_yview[p]/15);
 var vh=view_hview[p]/15,vw=view_wview[p]/15-16//0
 for (var i=max(vx-3,0);i&lt;min(25+ceil(vw)+vx+2,room_width/15+1);i++)
 for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15+1);j++){
-        if ds_grid_get(gridF1,i,j)&lt;1
+        if ds_grid_get(gridF1,clamp(i,0,room_width/15),clamp(j,0,room_height/15))&lt;1
         if debugging=0
         {
           draw_sprite_ext(hitbox,0,fx*15+(i-vx)*15,fy*15+(j-vy)*15,1,1,0,0,0.5-ds_grid_get(gridF1,i,j))
@@ -1837,7 +1961,17 @@ if phase=3{
     if inst!=noone
     if inst!=c
     if ds_grid_get(gridF1,round(xx)/15,round(yy)/15)&gt;0 {
-    if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range{
+    if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range
+    if inst.marker=2&amp;&amp;abs(xx/15)+abs(yy/15)&lt;=1
+    {
+        draw_set_font(pixelBlock)
+        draw_set_halign(fa_center)
+        draw_set_colour(c_blue)
+        draw_text_transformed(x+7-37*dsin(-view_angle),y+7-37*dcos(view_angle),"trade",1,1,-view_angle)
+        draw_set_halign(fa_left)
+    }
+    else
+    {
         draw_sprite_ext(atkInfo,0,x+7+10*dsin(view_angle),y+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
         draw_set_colour(c_black)
         draw_set_halign(fa_center)
@@ -1852,7 +1986,7 @@ if phase=3{
         }
     }
 }
-if phase=7{
+else if phase=7{
     var c=selected
     var range=ceil((ceil(sqrt(c.stats[2,0])*2)-return_item_wt(c.item[menuSel])/2)/2)
     var inst=instance_place(xx,yy,oUnit)
@@ -1872,6 +2006,10 @@ if phase=7{
         draw_set_halign(fa_left)
         }
     }
+}
+else if phase=11{
+    var c=selected
+    draw_skill_area_type(c.skill[menuSel],xx,yy,c,1)
 }
 }
 </string>
@@ -2100,9 +2238,29 @@ draw_text(2,60,"Phase SelectiNg: "+string(timePhase0/30))
 draw_text(2,70,"Phase MoviNg: "+string(timePhase1/30))
 draw_text(2,80,"Phase AttackiNg: "+string(timePhase3/30))
 draw_text(2,90,"Phase skill: "+string(timePhase5/30))
-draw_text(2,100,"units: "+string(instance_number(oUnit)))
-if selected!=noone
-draw_text(2,110,"Selected : "+string(selected.name)+" "+string(selected))
+var unitLeft=0;
+for (var i=0;i&lt;ds_list_size(unitList);i++){
+    var char=ds_list_find_value(unitList,i)
+        instance_activate_object(char)
+        if instance_exists(char)
+        {
+        if char.wait=0
+            unitLeft++;
+        }
+}
+draw_text(2,100,"uNit to move: "+string(unitLeft)+"/"+string(ds_list_size(unitList)))
+var over=instance_place(xx,yy,oUnit)
+if over!=noone
+    draw_text(2,110,"over : "+string(over.name)+" "+string(over))
+
+draw_set_colour(c_white)
+draw_set_font(pixelBlock)
+draw_set_halign(fa_right)
+draw_text(358,10,"wasd: move coNtroler")
+draw_text(358,22,"f: select")
+draw_text(358,34,"g: back")
+draw_set_halign(fa_left)
+draw_set_font(pixelFont)
 //draw_sprite(sprite_index,image_index,x-view_xview,y-view_yview)
 if selected!=noone{
 var c=selected
@@ -2255,6 +2413,52 @@ var c=selected
                 
             }
         }
+        else if phase=12{
+            for (var i=0;i&lt;10;i++){
+                if i=menuSel{
+                    draw_set_colour(c_dkgray)
+                    draw_rectangle(270,220-i*7,359,226-i*7,false)
+                    draw_set_colour(c_orange)
+                }
+                else{
+                    draw_set_colour(c_ltgray)
+                    draw_rectangle(270,220-i*7,359,226-i*7,false)
+                    draw_set_colour(c_black)
+                }
+                draw_text_transformed(273,221-i*7,return_item_name(eventOver.item[i]),1,1,0,)
+            }
+            draw_set_colour(c_dkgray)
+            draw_rectangle(270,140,359,153,false)
+            draw_set_colour(c_orange)
+            draw_text_transformed(273,142,"trade",2,2,0)
+            infoTime++
+            if infoTime&gt;30
+            return_item_des(eventOver.item[menuSel],273,221-menuSel*7)
+            
+            if menuSel2&gt;=0{
+                var shift=91
+                for (var i=0;i&lt;10;i++){
+                    if i=menuSel2{
+                        draw_set_colour(c_dkgray)
+                        draw_rectangle(270-shift,220-i*7,359-shift,226-i*7,false)
+                        draw_set_colour(c_orange)
+                    }
+                    else{
+                        draw_set_colour(c_ltgray)
+                        draw_rectangle(270-shift,220-i*7,359-shift,226-i*7,false)
+                        draw_set_colour(c_black)
+                    }
+                    draw_text_transformed(273-shift,221-i*7,return_item_name(selected.item[i]),1,1,0,)
+                }
+                draw_set_colour(c_dkgray)
+                draw_rectangle(270-shift,140,359-shift,153,false)
+                draw_set_colour(c_orange)
+                draw_text_transformed(273-shift,142,"give",2,2,0)
+                infoTime++
+                if infoTime&gt;30
+                return_item_des(selected.item[menuSel2],273-shift,221-menuSel2*7)
+            }
+        }//end draw trade menu
 }
 </string>
           </argument>
@@ -2409,47 +2613,6 @@ if messTimer&gt;0
           <argument>
             <kind>1</kind>
             <string>///#4 draw info over unit
-/*if selected!=noone
-if currentTurn&gt;=0{
-if phase=3{
-    var c=selected
-    var range=return_wep_range(c.item[c.wep])
-    var inst=instance_place(xx,yy,oUnit)
-    if inst!=noone
-    if inst!=c{
-    if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range{
-        draw_sprite(atkInfo,0,x-view_xview+view_wview-view_wport,y-4-view_yview+view_hview-view_hport)
-        draw_set_colour(c_black)
-        draw_text(x+1-view_xview,y-21-view_yview,string(return_wep_acc(c.item[c.wep],abs(c.x-inst.x)+abs(c.y-inst.y)))+"%")
-        draw_text(x+1-view_xview,y-15-view_yview,return_wep_dmg(c.item[c.wep],c))
-        draw_set_font(pixelBlock)
-        draw_set_halign(fa_center)
-        draw_set_colour(c_red)
-        draw_text(x+8-view_xview,y-30-view_yview,"attack")
-        draw_set_halign(fa_left)
-        }
-    }
-}
-if phase=7{
-    var c=selected
-    var range=ceil(c.str-return_item_wt(c.item[menuSel]))
-    var inst=instance_place(xx,yy,oUnit)
-    if inst!=noone
-    if inst!=c{
-    if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range{
-        draw_sprite(atkInfo,0,x-view_xview,y-4-view_yview)
-        draw_set_colour(c_black)
-        draw_text(x+1-view_xview,y-21-view_yview,string(90-(abs(c.x-inst.x)+abs(c.y-inst.y))/15*5+c.tec)+"%")
-        draw_text(x+1-view_xview,y-15-view_yview,return_item_wt(c.item[menuSel]))
-        draw_set_font(pixelBlock)
-        draw_set_halign(fa_center)
-        draw_set_colour(c_red)
-        draw_text(x+8-view_xview,y-30-view_yview,"throw")
-        draw_set_halign(fa_left)
-        }
-    }
-}
-}
 </string>
           </argument>
         </arguments>
@@ -2685,8 +2848,13 @@ var range=return_wep_range(c.item[c.wep])
         if abs(i/15)+abs(j/15)&lt;=range
         if i!=0||j!=0{
             draw_set_colour(c_orange)
-            if place_meeting(i+c.x,j+c.y,oUnit)
-                draw_set_colour(c_red)
+            var inst=instance_place(i+c.x,j+c.y,oUnit)
+            if inst!=noone{
+                if inst.marker=2&amp;&amp;abs(i/15)+abs(j/15)&lt;=1
+                    draw_set_colour(c_blue)
+                else
+                    draw_set_colour(c_red)
+            }
             draw_set_alpha(0.7)
             draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
             draw_set_alpha(1)
@@ -2727,7 +2895,8 @@ var range=ceil((ceil(sqrt(c.stats[2,0])*2)-return_item_wt(c.item[menuSel])/2)/2)
         for (var j=-range*15;j&lt;=range*15;j+=15){
         if abs(i/15)+abs(j/15)&lt;=range
         if !place_meeting(i+c.x,j+c.y,oObj)
-        if i!=0||j!=0{
+       // if i!=0||j!=0
+        {
             draw_set_colour(c_orange)
             draw_set_alpha(0.7)
             draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
@@ -2815,7 +2984,7 @@ switch area_type{
                 }
             }break;
         }//end switch
-    draw_skill_area_type(c.skill[menuSel],xx,yy,c)
+    draw_skill_area_type(c.skill[menuSel],xx,yy,c,0)
 }
 
 </string>
@@ -2905,7 +3074,6 @@ draw_self()
           <argument>
             <kind>1</kind>
             <string>///debugging, make objects
-debugObj=clamp(debugObj,0,5)
 if keyboard_check_pressed(ord('K'))
     randPos++
 else if keyboard_check_pressed(ord('L'))
@@ -2921,24 +3089,10 @@ if keyboard_check_pressed(vk_down)
 if keyboard_check(vk_left)//||keyboard_check(keys[6])
     view_angle-=2
     //camTurnDir=-1
+debugObj=clamp(debugObj,0,29)
 var obj=noone
-switch debugObj{
-    case 1:
-        obj=oSlime
-        break
-    case 2:
-        obj=oLamppost
-        break
-    case 3:
-        obj=oRecyclingBin
-        break
-    case 4:
-        obj=oTree
-        break
-    case 5:
-        obj=oBench
-        break
-}
+if debugObj&gt;0
+var obj=oUnit+debugObj
 if obj!=noone{
 draw_sprite_ext(object_get_sprite(obj),0,x+7,y+7,1,1,-view_angle,-1,0.5)
 if keyboard_check_pressed(vk_enter){
@@ -2947,12 +3101,17 @@ if keyboard_check_pressed(vk_enter){
     temp.sprite_index=spawn_eff
     }
 }
+if selected=noone
 if keyboard_check_pressed(vk_backspace)
 {
-    var inst=instance_place(x,y,oObj)
-    if inst!=noone
+    var inst=instance_place(x,y,oUnit)
+    if inst=noone
+        inst=instance_place(x,y,oItem)
+    if inst!=noone{
         with inst
             instance_destroy()
+        alarm[10]=1
+    }
 }
 
 //cnage grid apha
