@@ -69,6 +69,12 @@ switch floor(arg_item){
         else
             arg_unit.wep=10
         break;
+    case 9:
+        if arg_unit.wep!=arg_slot
+            arg_unit.wep=arg_slot
+        else
+            arg_unit.wep=10
+        break;
     case 50:
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot

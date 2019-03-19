@@ -31,6 +31,9 @@ switch floor(arg_item){
     case 8://sword
         str="Basic weapoN#mt: 3#wt: "+string(return_item_wt(arg_item))
         break;
+    case 9://club
+        str="ver big stick#mt: 4#wt: "+string(return_item_wt(arg_item))
+        break;
     case 50://excalabur
         str="LegeNdary Sword wielded#by the hero#mt: ???#wt: ???#raNge 2"
         break;

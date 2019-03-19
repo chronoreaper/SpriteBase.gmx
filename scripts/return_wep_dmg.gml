@@ -6,6 +6,7 @@ switch floor(arg_wep){
     case 6: return floor(arg_sel.stats[2,0])+2;
     case 7: return floor(arg_sel.stats[2,3])+2;//bow
     case 8: return floor(arg_sel.stats[2,0])+3;//sword
+    case 9: return floor(arg_sel.stats[2,0])+4;//club
     case 50: 
         var sum=0;
         with arg_sel

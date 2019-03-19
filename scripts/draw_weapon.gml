@@ -10,6 +10,7 @@ switch floor(item[wep]){
     case 6:wepSprite=rock break;
     case 7:wepSprite=bow break;
     case 8:wepSprite=sword break;
+    case 9:wepSprite=club break;
     case 50:wepSprite=xcalabur break;
 }
 draw_sprite_ext(wepSprite,0,ax+x+7+2*dsin(dir2*90-view_angle)-3*dsin(-view_angle)

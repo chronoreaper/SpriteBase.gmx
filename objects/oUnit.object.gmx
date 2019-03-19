@@ -462,7 +462,14 @@ if draw&gt;0
 }
 
 //draw health bars
-var colour=oControler.playerColour[team+3];
+var colour;
+if team&lt;0 colour=oControler.playerColour[2];
+if team&gt;=0{
+    if oControler.currentTurn=team
+        colour=oControler.playerColour[3]
+    else
+        colour=oControler.playerColour[1]
+}
 if object_is_ancestor(object_index,oObj)
     colour=oControler.playerColour[0];
 else

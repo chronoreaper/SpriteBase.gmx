@@ -31,6 +31,8 @@ playerColour[2]=c_red
 playerColour[3]=c_blue
 playerColour[0]=c_white
 window_set_size(360*3,240*3+3)
+playerMax=2
+playerMin=-1
 hit=0
 gridAlpha=0.1
 miss=0
@@ -116,17 +118,17 @@ ds_list_add(unitList,inst)
 var sx=15;
 var sy=15;
 inst=instance_create(x-15*sx,y+15*sy,oMerchant)
-inst.team=-2
+inst.team=2
 inst.ai=5
 inst.xp=40
 inst.marker=2
 inst2=instance_create(x-15*(sx+1),y+15*sy,oHealer)
-inst2.team=-2
+inst2.team=2
 inst2.ai=3
 inst2.link=inst
 inst2.xp=40
 inst2=instance_create(x-15*(sx+2),y+15*sy,oFighter)
-inst2.team=-2
+inst2.team=2
 inst2.ai=4
 inst2.link=inst
 inst2.xp=40
@@ -193,14 +195,14 @@ if !place_meeting(rx*15,ry*15,oUnit)
     }    
 }*/
 //enemies
-repeat((room_width/15+room_height/15)/8){
+repeat((room_width/15+room_height/15)/5){
 rx=irandom(room_width/15)//room_width/15);
 ry=irandom(room_height/15)//room_height/15);
 if !place_meeting(rx*15,ry*15,oUnit)
 if ds_grid_get(gridF1,rx,ry)&lt;1
     {
     var inst=instance_create(rx*15,ry*15,
-    choose(oSlime,oBoar,oFrog,oTurt,oShroom));
+    choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops));
     inst.team=-1
     inst.draw=0
     }
@@ -621,7 +623,7 @@ option=0
             <string>///#1 move to unit on current turn
 var i=0
 if menu=-1
-if currentTurn&gt;=0
+if currentTurn=0
 if selected=noone
 if mouse_check_button_pressed(mb_right)
 ||keyboard_check_pressed(keys[5]){
@@ -706,7 +708,7 @@ if mouse_check_button_pressed(mb_right)
 if selected!=noone
 if menu=-1
 {
-if currentTurn&gt;=0{
+if currentTurn=0{
     //instance_deactivate_all(true)
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
@@ -1350,7 +1352,7 @@ if selected=noone
             <kind>1</kind>
             <string>///#4 ai
 if menu=-1
-if currentTurn&lt;0
+if currentTurn&lt;0||currentTurn=2
 //if alarm_get(0)&lt;=0
 //if alarm_get(3)&lt;=0
 //if alarm_get(9)=2
@@ -1935,7 +1937,7 @@ if ds_grid_get(gridF1,round(xx/15),round(yy/15))&lt;=0
             <string>///#2 draw info over unit
 draw_set_alpha(1)
 if selected!=noone
-if currentTurn&gt;=0{
+if currentTurn=0{
 if phase=3{
     var c=selected
     var range=return_wep_range(c.item[c.wep])
@@ -2494,9 +2496,13 @@ if instance_exists(selected)
 if currentTurn&gt;=0||debugging=1
 {
     var cur=selected
-    image_blend=playerColour[cur.team+3];
-    if object_is_ancestor(cur.object_index,oObj)
-        image_blend=playerColour[0];
+    if cur.team&lt;0 image_blend=playerColour[2];
+    if cur.team&gt;=0{
+        if currentTurn=cur.team
+            image_blend=playerColour[3]
+        else
+            image_blend=playerColour[1]
+    }
    draw_set_colour(c_white)
    draw_rectangle(2+bx,203,75+bx,231,false)
    draw_rectangle(76+bx,197,135+bx,231,false)
@@ -2751,7 +2757,7 @@ mp_grid_clear_cell(grid,c.x/15,c.y/15)
         if mp_grid_path(grid,path,c.x+7.5,c.y+7.5,c.x+i+7.5,c.y+j+7.5,false)
         if path_get_number(path)-1&lt;=c.mov{
             draw_set_colour(c_teal)
-            draw_set_alpha(0.7)
+            draw_set_alpha(0.8)
             draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
             draw_set_alpha(1)
             }

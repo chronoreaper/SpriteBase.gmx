@@ -44,9 +44,9 @@ if fin=1{
          ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
         }
     currentTurn++
-    if currentTurn>0{//end of round
+    if currentTurn>playerMax{//end of round
         turnsSurvive++
-        currentTurn=-2
+        currentTurn=playerMin
         //add time
         minu+=1;
         if minu>=6{
@@ -64,7 +64,7 @@ if fin=1{
     if ds_grid_get(gridF1,rx,ry)<1
         {
         var inst=instance_create(rx*15,ry*15,
-        choose(oSlime,oBoar,oFrog,oTurt));
+        choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops));
         inst.team=-1
         inst.view=0
         inst.draw=0
