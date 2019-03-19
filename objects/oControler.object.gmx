@@ -200,7 +200,7 @@ if !place_meeting(rx*15,ry*15,oUnit)
 if ds_grid_get(gridF1,rx,ry)&lt;1
     {
     var inst=instance_create(rx*15,ry*15,
-    choose(oSlime,oBoar,oFrog,oTurt));
+    choose(oSlime,oBoar,oFrog,oTurt,oShroom));
     inst.team=-1
     inst.draw=0
     }
@@ -2500,11 +2500,11 @@ if currentTurn&gt;=0||debugging=1
    draw_set_colour(c_white)
    draw_rectangle(2+bx,203,75+bx,231,false)
    draw_rectangle(76+bx,197,135+bx,231,false)
-   draw_rectangle(136+bx,203,178+bx,231,false)
+   draw_rectangle(136+bx,203,188+bx,231,false)
    draw_set_colour(c_dkgray)
    draw_rectangle(3+bx,204,74+bx,230,false)
    draw_rectangle(77+bx,198,134+bx,230,false)
-   draw_rectangle(137+bx,204,177+bx,230,false)
+   draw_rectangle(137+bx,204,187+bx,230,false)
       draw_set_colour(c_ltgray)
    draw_set_font(pixelFont)
    draw_sprite_ext(hpBar,0,5+bx,223,min((cur.xp/cur.mxp)*68,68),2.5,0,c_teal,1)
@@ -3083,7 +3083,7 @@ if keyboard_check_pressed(vk_down)
 if keyboard_check(vk_left)//||keyboard_check(keys[6])
     view_angle-=2
     //camTurnDir=-1
-debugObj=clamp(debugObj,0,29)
+debugObj=clamp(debugObj,0,object47-oUnit-1)
 var obj=noone
 if debugObj&gt;0
 var obj=oUnit+debugObj

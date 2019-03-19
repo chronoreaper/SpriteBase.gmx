@@ -4,6 +4,9 @@ switch floor(arg_wep){
     case 7:return stab;//bow
     case 8:return slashsweep;//sword
     case 50:return windSlash;//xcalabur
+    
+    //monster weapons
+    case -1:return poison_splash;
     default: return blank;//no wep
 }
 

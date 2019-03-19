@@ -7,5 +7,8 @@ switch floor(arg_wep){
     case 7: return 3
     case 8: return 1
     case 50: return 2
+    
+    //monster weapons
+    case -1: return 2;
     default: return 1;
 }

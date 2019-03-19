@@ -67,6 +67,12 @@
         <sprite>sprites\merchant001_2</sprite>
         <sprite>sprites\merchant001_3</sprite>
       </sprites>
+      <sprites name="shroom">
+        <sprite>sprites\shroom001_0</sprite>
+        <sprite>sprites\sprite115</sprite>
+        <sprite>sprites\sprite116</sprite>
+        <sprite>sprites\sprite117</sprite>
+      </sprites>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
@@ -114,6 +120,7 @@
       <sprite>sprites\angelic</sprite>
       <sprite>sprites\dashSlash</sprite>
       <sprite>sprites\healEff</sprite>
+      <sprite>sprites\poison_splash</sprite>
       <sprite>sprites\magicBurnEff</sprite>
     </sprites>
     <sprites name="in game menu">
@@ -269,6 +276,7 @@
       <object>objects\oHero</object>
       <object>objects\oMerchant</object>
       <object>objects\oSlime</object>
+      <object>objects\oShroom</object>
       <object>objects\oBoar</object>
       <object>objects\oFrog</object>
       <object>objects\oTurt</object>
@@ -277,6 +285,7 @@
         <object>objects\oDragon1</object>
       </objects>
     </objects>
+    <object>objects\object47</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
