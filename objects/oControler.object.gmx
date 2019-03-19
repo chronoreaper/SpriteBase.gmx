@@ -31,7 +31,7 @@ playerColour[2]=c_red
 playerColour[3]=c_blue
 playerColour[0]=c_white
 window_set_size(360*3,240*3+3)
-playerMax=2
+playerMax=1
 playerMin=-1
 hit=0
 gridAlpha=0.1
@@ -53,10 +53,15 @@ pixelFont=font_add_sprite_ext(letters,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNO
 pixelBlock=font_add_sprite_ext(lettersBlock,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,1)
 unitList=ds_list_create()
 allUnits=ds_list_create()
+aiTurns=ds_map_create()
+ds_map_add(aiTurns,0,0)
+ds_map_add(aiTurns,-1,-1)
+ds_map_add(aiTurns,1,-1)
 xx=x
 yy=y
 controler=0
 camTurnDir=0
+eventScene=0
 selected=noone
 eventOver=noone
 keys[0]=ord('W')
@@ -118,17 +123,17 @@ ds_list_add(unitList,inst)
 var sx=15;
 var sy=15;
 inst=instance_create(x-15*sx,y+15*sy,oMerchant)
-inst.team=2
+inst.team=1
 inst.ai=5
 inst.xp=40
 inst.marker=2
 inst2=instance_create(x-15*(sx+1),y+15*sy,oHealer)
-inst2.team=2
+inst2.team=1
 inst2.ai=3
 inst2.link=inst
 inst2.xp=40
 inst2=instance_create(x-15*(sx+2),y+15*sy,oFighter)
-inst2.team=2
+inst2.team=1
 inst2.ai=4
 inst2.link=inst
 inst2.xp=40
@@ -622,8 +627,9 @@ option=0
             <kind>1</kind>
             <string>///#1 move to unit on current turn
 var i=0
+if !eventScene
 if menu=-1
-if currentTurn=0
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0
 if selected=noone
 if mouse_check_button_pressed(mb_right)
 ||keyboard_check_pressed(keys[5]){
@@ -708,7 +714,7 @@ if mouse_check_button_pressed(mb_right)
 if selected!=noone
 if menu=-1
 {
-if currentTurn=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     //instance_deactivate_all(true)
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
@@ -1222,7 +1228,7 @@ if phase&lt;=0
 ||phase=7
 ||phase=11
 ||phase=9
-if currentTurn&gt;=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 xx=clamp(xx,0,room_width-15)
 yy=clamp(yy,0,room_height-15)
 if controler=0{
@@ -1230,6 +1236,7 @@ xx=floor(mouse_x/15)*15
 yy=floor(mouse_y/15)*15
 }
 var del=4
+if !eventScene{
 if delay=0
 {
         del=max(1,del-hold)
@@ -1284,6 +1291,7 @@ if delay=0
     }
 }
 else if delay&gt;0 delay--
+}
 if mouse_check_button_pressed(mb_left)
     controler=0
 //view angle
@@ -1320,6 +1328,7 @@ if mouse_check_button_pressed(mb_left)
 ||keyboard_check_pressed(keys[4])
 if phase=0
 if selected=noone
+if !eventScene
 {
     var inst=instance_place(x,y,oChar)
     if inst!=noone
@@ -1352,12 +1361,13 @@ if selected=noone
             <kind>1</kind>
             <string>///#4 ai
 if menu=-1
-if currentTurn&lt;0||currentTurn=2
+if ds_map_find_value(aiTurns, currentTurn)&lt;0
 //if alarm_get(0)&lt;=0
 //if alarm_get(3)&lt;=0
 //if alarm_get(9)=2
 {
     if selected=noone
+    if !eventScene
     {
         //var ct=currentTurn
         //var c=noone
@@ -1818,6 +1828,7 @@ ds_list_destroy(allUnits)
 mp_grid_destroy(grid)
 ds_grid_destroy(gridF1)
 ds_grid_destroy(gridF2)
+ds_map_destroy(aiTurns)
 </string>
           </argument>
         </arguments>
@@ -1937,7 +1948,7 @@ if ds_grid_get(gridF1,round(xx/15),round(yy/15))&lt;=0
             <string>///#2 draw info over unit
 draw_set_alpha(1)
 if selected!=noone
-if currentTurn=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 if phase=3{
     var c=selected
     var range=return_wep_range(c.item[c.wep])
@@ -2493,7 +2504,7 @@ if over=noone
     }
 if selected!=noone
 if instance_exists(selected)
-if currentTurn&gt;=0||debugging=1
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
 {
     var cur=selected
     if cur.team&lt;0 image_blend=playerColour[2];
@@ -2743,7 +2754,7 @@ draw_set_alpha(1)
 //draw selected
 if selected!=noone
 if phase=0
-if currentTurn&gt;=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     /*draw_set_colour(c_yellow)
     draw_set_alpha(0.5)
     draw_rectangle(selected.x,selected.y,selected.x+13,selected.y+13,false)
@@ -2788,7 +2799,7 @@ path_delete(path)
             <kind>1</kind>
             <string>///draw move dist over unit when not selecting any
 if menu=-1
-if currentTurn&gt;=0
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0
 if selected=noone{
     add_all_to_map()
     selected=instance_place(xx,yy,oUnit);
@@ -2839,7 +2850,7 @@ if selected=noone{
             <string>///draw where you can attack
 if selected!=noone
 if phase=3
-if currentTurn&gt;=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 var c=selected
 var range=return_wep_range(c.item[c.wep])
 //show where you can attack
@@ -2887,7 +2898,7 @@ var range=return_wep_range(c.item[c.wep])
             <string>///draw where you can throw
 if selected!=noone
 if phase=7
-if currentTurn&gt;=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 var c=selected
 var range=ceil((ceil(sqrt(c.stats[2,0])*2)-return_item_wt(c.item[menuSel])/2)/2)
 //show where you can move
@@ -2929,7 +2940,7 @@ var range=ceil((ceil(sqrt(c.stats[2,0])*2)-return_item_wt(c.item[menuSel])/2)/2)
             <string>///draw where you can use skill
 if selected!=noone
 if phase=11
-if currentTurn&gt;=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 var c=selected
 var range = abs(return_skill_range(c.skill[menuSel]))
 var area_type= return_skill_area_type(c.skill[menuSel])
@@ -3010,7 +3021,7 @@ switch area_type{
             <string>///draw where you can use item
 if selected!=noone
 if phase=9
-if currentTurn&gt;=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 var c=selected
 var range = return_item_range(c.item[menuSel])
 var area_type= 0
@@ -3101,6 +3112,10 @@ if keyboard_check_pressed(vk_enter){
     temp.sprite_index=spawn_eff
     }
 }
+if keyboard_check(ord('Q'))//&amp;&amp;selected=noone
+    eventScene=true
+else
+    eventScene=false
 if selected=noone
 if keyboard_check_pressed(vk_backspace)
 {
@@ -3115,7 +3130,7 @@ if keyboard_check_pressed(vk_backspace)
 }
 
 //cnage grid apha
-if keyboard_check_pressed(ord('O'))
+if keyboard_check(ord('O'))
 if gridAlpha&gt;0
     gridAlpha-=0.1
 if keyboard_check_pressed(ord('P'))

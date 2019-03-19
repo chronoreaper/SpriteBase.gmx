@@ -1,7 +1,7 @@
 ///fog
 if selected!=noone{
 if selected.view>0
-if selected.team>=0
+if ds_map_find_value(aiTurns,selected.team)>=0
 {
 //fog
 var v=selected.view+round(-2*cos((hour*6+minu)*pi/(12*6))+2)
