@@ -25,7 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ai=0
+            <string>/*
+ai code
+xxyyzz
+xx= movement code
+yy= attacking code
+zz= skill item code
+
+*/
+ai=0
 xx=x
 yy=y
 ax=0

@@ -10,7 +10,7 @@ options
 */
 switch arg_targType{
     case 0:return true;
-    case 1:if arg_targ!=noone return arg_targ.team=arg_source.team break
+    case 1:if arg_targ!=noone return arg_targ.team=arg_source.team&&!object_is_ancestor(arg_targ.object_index,oObj) break
     case 2:if arg_targ!=noone return arg_targ.team!=arg_source.team||object_is_ancestor(arg_targ.object_index,oObj) break
     case 3:return arg_targ!=noone;
     case 4:return arg_targ=noone;

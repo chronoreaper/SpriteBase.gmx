@@ -93,6 +93,20 @@ switch floor(arg_skill){
             }
         }
         break;
+    case 12:
+        var range=return_skill_range(arg_skill)
+        for(var i=-range;i<=range;i++)
+        for(var j=-range;j<=range;j++){
+            var cinst=instance_place(arg_source.x+i*15,arg_source.y+j*15,oChar);
+            if (abs(i)+abs(j))<=range
+            if i!=0||j!=0
+            if cinst!=noone
+            if return_check_skill_target(arg_source,cinst,1){
+                toTarg=get_random()+1
+                targ=cinst
+                }
+        }
+        break;
     //default:return noone
 }
 if toTarg>=0

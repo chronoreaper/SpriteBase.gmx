@@ -195,6 +195,7 @@
     <script>scripts\return_skill_range.gml</script>
     <script>scripts\return_skill_cost.gml</script>
     <script>scripts\return_skill_targ_type.gml</script>
+    <script>scripts\return_skill_type.gml</script>
     <script>scripts\return_skill_acc.gml</script>
     <script>scripts\return_skill_des.gml</script>
     <script>scripts\return_skill_eff.gml</script>

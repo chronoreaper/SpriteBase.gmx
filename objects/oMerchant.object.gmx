@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>event_inherited()
 var rand;
+skill[0]=12
 for (var i=0;i&lt;10;i++){
     rand=irandom(7)+1;
     item[i]=rand+return_item_usage_default(rand)

@@ -1,5 +1,6 @@
 var arg_unit=argument0
 var hit_miss=argument1
+if currentTurn>=0{
 with arg_unit{
     switch floor(item[wep]){
         case 2:
@@ -53,4 +54,5 @@ with arg_unit{
         break;
         default: break
     }
+}
 }

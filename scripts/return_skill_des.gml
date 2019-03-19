@@ -25,7 +25,7 @@ switch floor(arg_skill){
         str="creates a copy#of yourself#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 7:
-        str="damages then dashs#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="damages theN dashs#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 8:
         str="basic fire attack#[int]#raNge "+string(abs(return_skill_range(arg_skill)))
@@ -37,7 +37,10 @@ switch floor(arg_skill){
         str="stroNg twiN attack#usiNg melee weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 11:
-        str="loNg raNged attack#usiNg raNged weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="loNg raNged attack#usiNg raNge weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
+    case 12:
+        str="swaps places with#target ally#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     default:return""
 }

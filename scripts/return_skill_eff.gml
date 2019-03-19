@@ -29,7 +29,7 @@ switch floor(arg_skill){
     case 2:
         if arg_source.sp>=10 {
         if arg_targ!=noone{
-            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             if arg_source.dir>3
                 arg_source.dir=0
             arg_source.sp-=10
@@ -44,7 +44,7 @@ switch floor(arg_skill){
                 while cinst!=noone{
                     if (cinst!=arg_source){
                         var dmg=return_dmg(10+arg_source.lv,0,cinst.stats[2,2]);
-                        calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0),0,1,1)
+                        calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),1,1)
                     }
                     instance_deactivate_object(cinst);
                     cinst=instance_place(x,y,oUnit);
@@ -58,7 +58,7 @@ switch floor(arg_skill){
     case 3:
         if arg_source.sp>=8 {
         if arg_targ!=noone{
-            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             if arg_source.dir>3
                 arg_source.dir=0
             arg_source.sp-=8
@@ -72,7 +72,7 @@ switch floor(arg_skill){
                 while cinst!=noone{
                     if (cinst!=arg_source){
                         var dmg=return_dmg(10+arg_source.lv,0,cinst.stats[2,2]);
-                        calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0),0,1,1)
+                        calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),1,1)
                     }
                     instance_deactivate_object(cinst);
                     cinst=instance_place(x,y,oUnit);
@@ -87,12 +87,12 @@ switch floor(arg_skill){
         if arg_source.sp>=3 {
         if arg_targ!=noone{
             arg_source.sp-=3
-            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.alarm[0]=6
             var base =return_dmg(arg_source.stats[2,0],0,arg_targ.stats[2,2]);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),0,5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
                 if dmg>0{
                 //effect
                 var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -190,7 +190,7 @@ switch floor(arg_skill){
     case 7:
         if arg_source.sp>=5 {
         if arg_targ!=noone{
-            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             if arg_source.dir>3
                 arg_source.dir=0
             arg_source.sp-=5
@@ -207,7 +207,7 @@ switch floor(arg_skill){
                 while cinst!=noone{
                     if (cinst!=arg_source){
                         //var dmg=return_dmg(20,0,cinst.stats[2,2]);
-                        calculate_damage(arg_source,cinst,arg_source.stats[2,0]+7,return_skill_acc(arg_skill,0),0,3,1)
+                        calculate_damage(arg_source,cinst,arg_source.stats[2,0]+7,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),3,1)
                     }
                     instance_deactivate_object(cinst);
                     cinst=instance_place(x,y,oUnit);
@@ -228,7 +228,7 @@ switch floor(arg_skill){
             arg_source.intg+=1
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,arg_targ.stats[2,2]);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),4,5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -279,7 +279,7 @@ switch floor(arg_skill){
         if frac(arg_source.item[arg_source.wep])>=0.03 
         if return_wep_range(arg_source.item[arg_source.wep])=1{
         if arg_targ!=noone{
-            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             arg_source.item[arg_source.wep]-=0.03
             return_wep_dur(arg_source,0)
             arg_source.xp+=5
@@ -290,7 +290,7 @@ switch floor(arg_skill){
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=crossSlash
             var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)*2,0,arg_targ.stats[2,2]);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),0,5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
             }
         return 1
         }
@@ -299,7 +299,7 @@ switch floor(arg_skill){
         if frac(arg_source.item[arg_source.wep])>=0.02 
         if return_wep_range(arg_source.item[arg_source.wep])>1{
         if arg_targ!=noone{
-            arg_source.dir=floor(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
+            arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             arg_source.item[arg_source.wep]-=0.02
             return_wep_dur(arg_source,0)
             arg_source.xp+=5
@@ -317,7 +317,31 @@ switch floor(arg_skill){
             eff.rotate=false
             eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
             var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)+2,0,arg_targ.stats[2,2]);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,abs(arg_source.x-arg_targ.x)/15+abs(arg_source.y-arg_targ.y)/15),0,5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,
+                return_skill_acc(arg_skill,abs(arg_source.x-arg_targ.x)/15+abs(arg_source.y-arg_targ.y)/15)
+                ,return_skill_type(arg_skill),5,1)
+            }
+        return 1
+        }
+        return 0
+    case 12:
+        if arg_source.sp>=2
+        if arg_source!=arg_targ{
+        if arg_targ!=noone{
+                arg_source.sp-=2
+                arg_source.xx=arg_targ.x
+                arg_source.yy=arg_targ.y
+                arg_targ.xx=arg_source.x
+                arg_targ.yy=arg_source.y
+                mp_grid_clear_all(grid)
+                mp_grid_path(grid,arg_source.path,arg_source.x+7.5,arg_source.y+7.5,arg_targ.x+7.5,arg_targ.y+7.5,false)
+                with arg_source{
+                   path_start(path,3,path_action_stop,false)
+                }
+                mp_grid_path(grid,arg_targ.path,arg_targ.x+7.5,arg_targ.y+7.5,arg_source.x+7.5,arg_source.y+7.5,false)
+                with arg_targ{
+                   path_start(path,3,path_action_stop,false)
+                }
             }
         return 1
         }

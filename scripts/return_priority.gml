@@ -31,6 +31,11 @@ for(var i=0;i<10;i++){
                         num+=10
                 }
                 break;
+            case 12://swap
+                if xx=x
+                if yy=y
+                    num=1
+                break
         }//end switch
         //change priorities
         if num!=0

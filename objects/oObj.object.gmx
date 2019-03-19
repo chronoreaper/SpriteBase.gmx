@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
+skill[0]=12
 str=0
 int=0
 tec=0

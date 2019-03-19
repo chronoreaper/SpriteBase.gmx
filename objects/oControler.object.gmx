@@ -112,24 +112,7 @@ view_yview=inst.yy-view_hview/2
 }
 inst=instance_create(x+15,y,oArcher);
 ds_list_add(unitList,inst)
-//inst.xp=100
-inst=instance_create(x,y-15,oHealer);
-ds_list_add(unitList,inst)
-//inst.xp=100
-inst=instance_create(x+15,y-15,oMage)
-ds_list_add(unitList,inst)
-//inst.xp=100
-//inst.team=-1
 //inst.ai=0 
-inst=instance_create(x+15*20,y+15*15,oHero)
-inst.team=-2
-inst.ai=2
-inst.xp=40
-inst2=instance_create(x+15*21,y+15*15,oHealer)
-inst2.team=-2
-inst2.ai=3
-inst2.link=inst
-inst2.xp=40
 var sx=15;
 var sy=15;
 inst=instance_create(x-15*sx,y+15*sy,oMerchant)
@@ -210,7 +193,7 @@ if !place_meeting(rx*15,ry*15,oUnit)
     }    
 }*/
 //enemies
-repeat((room_width/15+room_height/15)/10){
+repeat((room_width/15+room_height/15)/8){
 rx=irandom(room_width/15)//room_width/15);
 ry=irandom(room_height/15)//room_height/15);
 if !place_meeting(rx*15,ry*15,oUnit)
@@ -1384,7 +1367,7 @@ if currentTurn&lt;0
            if char!=noone{
            if instance_exists(char)
            if char.wait=0
-           if char.ai!=2||!instance_exists(char.link)||char.link.wait=1
+           if !instance_exists(char.link)||char.link.wait=1
            {
            // show_debug_message(object_get_name(char.object_index))
                 selected=char
@@ -1393,7 +1376,7 @@ if currentTurn&lt;0
            }
         }
         instance_deactivate_all(true)
-        alarm[9]=1
+        alarm[9]=2
         /*with oChar{
             if team=ct
             if wait=0{
@@ -1413,12 +1396,11 @@ if currentTurn&lt;0
     }
     if selected!=noone
     //if alarm_get(0)&lt;=0
-    if alarm_get(9)=2
+    if alarm_get(9)=1
     {
     //alarm[10]=30
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
-   
     /*
     phase
     1
@@ -1961,28 +1943,40 @@ if phase=3{
     if inst!=noone
     if inst!=c
     if ds_grid_get(gridF1,round(xx)/15,round(yy)/15)&gt;0 {
-    if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range
-    if inst.marker=2&amp;&amp;abs(xx/15)+abs(yy/15)&lt;=1
-    {
-        draw_set_font(pixelBlock)
-        draw_set_halign(fa_center)
-        draw_set_colour(c_blue)
-        draw_text_transformed(x+7-37*dsin(-view_angle),y+7-37*dcos(view_angle),"trade",1,1,-view_angle)
-        draw_set_halign(fa_left)
-    }
-    else
-    {
-        draw_sprite_ext(atkInfo,0,x+7+10*dsin(view_angle),y+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
-        draw_set_colour(c_black)
-        draw_set_halign(fa_center)
-        draw_text_transformed(x+7-26*dsin(-view_angle),y+7-26*dcos(view_angle),string(floor(return_wep_acc(c.item[c.wep],abs(c.x-inst.x)+abs(c.y-inst.y))))+"%",1,1,-view_angle)
-        draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-            return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2]),1,1,-view_angle)
-        draw_set_font(pixelBlock)
-        draw_set_halign(fa_center)
-        draw_set_colour(c_red)
-        draw_text_transformed(x+7-37*dsin(-view_angle),y+7-37*dcos(view_angle),"attack",1,1,-view_angle)
-        draw_set_halign(fa_left)
+    if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range{
+        if inst.marker=2&amp;&amp;abs((inst.x-selected.x)/15)+abs((inst.y-selected.y)/15)&lt;=1
+        {
+            draw_set_font(pixelBlock)
+            draw_set_halign(fa_center)
+            draw_set_colour(c_blue)
+            draw_text_transformed(x+7-17*dsin(-view_angle),y+7-17*dcos(view_angle),"trade",1,1,-view_angle)
+            draw_set_halign(fa_left)
+        }
+        else
+        {
+            draw_sprite_ext(atkInfo,0,x+7+10*dsin(view_angle),y+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
+            draw_set_colour(c_black)
+            draw_set_halign(fa_center)
+            draw_text_transformed(x+7-26*dsin(-view_angle),y+7-26*dcos(view_angle),string(floor(return_wep_acc(c.item[c.wep],abs(c.x-inst.x)+abs(c.y-inst.y))))+"%",1,1,-view_angle)
+            if inst.weakness[return_wep_type(c.item[c.wep])]&gt;1
+                draw_set_colour(c_orange)
+            else if inst.weakness[return_wep_type(c.item[c.wep])]&lt;1
+                draw_set_colour(c_ltgray)
+            if return_multi_atk(c.item[c.wep])==1{
+                draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
+                    return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2]),1,1,-view_angle)
+            }
+            else{
+                draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
+                    string(return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2]))+"x"+string(return_multi_atk(c.item[c.wep]))
+                        ,1,1,-view_angle)
+            }
+            draw_set_font(pixelBlock)
+            draw_set_halign(fa_center)
+            draw_set_colour(c_red)
+            draw_text_transformed(x+7-37*dsin(-view_angle),y+7-37*dcos(view_angle),"attack",1,1,-view_angle)
+            draw_set_halign(fa_left)
+            }
         }
     }
 }

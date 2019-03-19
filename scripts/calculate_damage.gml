@@ -16,11 +16,15 @@ var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
 if  get_random()<arg_acc
 {
     var weak=arg_targ.weakness[arg_type]
-    var dmg=ceil(arg_dmg*arg_multi);
+    var dmg=ceil(arg_dmg*arg_multi*weak);
     arg_targ.lastHitBy=arg_source
     arg_targ.hp-=dmg
     arg_targ.hp=max(arg_targ.hp,0)
     arg_targ.image_blend=c_red
+    if dmg<0{
+        arg_targ.image_blend=c_lime
+        dmg*=-1
+        }
     arg_targ.alarm[1]=4
     txt.text=string(dmg)
     if arg_targ.weakness[arg_type]>1
