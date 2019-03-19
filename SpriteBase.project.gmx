@@ -147,6 +147,13 @@
         <sprite>sprites\Dragon001_2</sprite>
         <sprite>sprites\Dragon001_3</sprite>
       </sprites>
+      <sprites name="Great Tree">
+        <sprite>sprites\greatTree001</sprite>
+        <sprite>sprites\sprite127</sprite>
+        <sprite>sprites\sprite128</sprite>
+        <sprite>sprites\sprite129</sprite>
+        <sprite>sprites\vineGT</sprite>
+      </sprites>
     </sprites>
     <sprites name="area of effect">
       <sprite>sprites\AOE_range2</sprite>
@@ -292,6 +299,8 @@
       <objects name="Boss">
         <object>objects\oWurm</object>
         <object>objects\oDragon1</object>
+        <object>objects\oGreatTree</object>
+        <object>objects\oVine</object>
       </objects>
     </objects>
     <object>objects\object47</object>

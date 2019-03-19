@@ -107,6 +107,11 @@ switch floor(arg_skill){
                 }
         }
         break;
+    case -1:
+        {
+            toTarg=1
+            targ=arg_source
+        }
     //default:return noone
 }
 if toTarg>=0

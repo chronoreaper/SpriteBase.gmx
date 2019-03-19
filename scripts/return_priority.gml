@@ -36,6 +36,11 @@ for(var i=0;i<10;i++){
                 if yy=y
                     num=1
                 break
+                
+            //boss skills
+            case -1:
+                    num=99
+                break
         }//end switch
         //change priorities
         if num!=0

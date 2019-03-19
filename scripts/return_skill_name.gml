@@ -12,5 +12,6 @@ switch floor(arg_skill){
     case 10: return "cross slash"
     case 11: return "loNg shot"
     case 12: return "swap"
+    case -1: return "spawn vine blocker"
     default:return""
 }

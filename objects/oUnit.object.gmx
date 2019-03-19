@@ -38,9 +38,12 @@ xx=x
 yy=y
 ax=0
 ay=0
+//bosses
 phase=0
 action=0
+
 team=0
+
 path=path_add()
 dir=0
 wait=0
@@ -61,6 +64,8 @@ mhp=1
 sp=1
 msp=1
 slowHP=0
+
+idle=0
 
 /*
 0 - TOTAL
@@ -251,9 +256,13 @@ if xprevious!=x
 }
 if path_position=1||path_position=0
 {
+    if idle=0{
    image_speed=0
    if !object_is_ancestor(object_index,oObj)
    image_index=0
+   }
+   else
+    image_speed=0.2
 }
 </string>
           </argument>
@@ -338,7 +347,6 @@ else if wave&lt;=0
             <kind>1</kind>
             <string>///set depth
 depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
-
 </string>
           </argument>
         </arguments>

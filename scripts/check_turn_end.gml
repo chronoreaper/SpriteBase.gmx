@@ -106,7 +106,7 @@ if fin=1{
     }
     ds_list_sort(unitList,true)
     if ds_list_size(unitList)>0{
-        if currentTurn>=0
+        if ds_map_find_value(aiTurns, currentTurn)>=0
         {
             var inst=ds_list_find_value(unitList,0)
             if inst!=noone

@@ -42,6 +42,10 @@ switch floor(arg_skill){
     case 12:
         str="swaps places with#target ally#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
+    
+    case -1:
+        str="spawns vines#blocking exits"
+        break;
     default:return""
 }
 //drawing

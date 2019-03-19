@@ -165,6 +165,7 @@ switch floor(arg_skill){
                 temp.msp=arg_source.msp
                 temp.lv=arg_source.lv
                 temp.mov=arg_source.mov
+                temp.team=arg_source.team
                 temp.xx=arg_targ.x
                 temp.yy=arg_targ.y
                 //so it cant move the same turn
@@ -342,6 +343,31 @@ switch floor(arg_skill){
                 with arg_targ{
                    path_start(path,3,path_action_stop,false)
                 }
+            }
+        return 1
+        }
+        return 0
+        
+///boss skills        
+        case -1://spawn vine
+        //if arg_source.ai=6 
+        {
+        {
+                var temp=instance_create(arg_source.x-5*15,arg_source.y-15,oVine);
+                temp.wait=1
+                temp.team=arg_source.team
+                temp=instance_create(arg_source.x+5*15,arg_source.y-15,oVine);
+                temp.wait=1
+                temp.team=arg_source.team
+                temp=instance_create(arg_source.x,arg_source.y-15*5,oVine);
+                temp.wait=1
+                temp.team=arg_source.team
+                temp=instance_create(arg_source.x,arg_source.y+15*5,oVine);
+                temp.wait=1
+                temp.team=arg_source.team
+                //add it to the list of current units
+                with oControler
+                    ds_list_add(unitList,temp)
             }
         return 1
         }
