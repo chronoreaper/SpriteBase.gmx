@@ -28,16 +28,17 @@
             <string>event_inherited()
 weakness[4]=2
 skill[0]=-1
+skill[1]=-2
 lv=10
 hp=250
 mhp=hp
-sp=20
+sp=25
 msp=sp
 stats[2,0]=1
-stats[2,1]=13
-stats[2,2]=15
+stats[2,1]=17
+stats[2,2]=25
 stats[2,3]=0
-stats[2,4]=10
+stats[2,4]=13
 //per level
 hpp=1.8
 spp=1.5

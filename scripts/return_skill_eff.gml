@@ -245,6 +245,9 @@ switch floor(arg_skill){
     case 9:
         if arg_source.sp>=8 {
         if arg_targ!=noone{
+            //var base =-floor(arg_source.stats[2,4]);
+            //calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),8,1)
+            
             arg_targ.hp+=floor(arg_source.stats[2,4])
             arg_source.sp-=8
             arg_source.xp+=8
@@ -347,30 +350,169 @@ switch floor(arg_skill){
         return 1
         }
         return 0
-        
-///boss skills        
-        case -1://spawn vine
-        //if arg_source.ai=6 
-        {
-        {
-                var temp=instance_create(arg_source.x-5*15,arg_source.y-15,oVine);
-                temp.wait=1
-                temp.team=arg_source.team
-                temp=instance_create(arg_source.x+5*15,arg_source.y-15,oVine);
-                temp.wait=1
-                temp.team=arg_source.team
-                temp=instance_create(arg_source.x,arg_source.y-15*5,oVine);
-                temp.wait=1
-                temp.team=arg_source.team
-                temp=instance_create(arg_source.x,arg_source.y+15*5,oVine);
-                temp.wait=1
-                temp.team=arg_source.team
-                //add it to the list of current units
-                with oControler
-                    ds_list_add(unitList,temp)
+    case 13:
+        if arg_source.sp>=3 {
+        if arg_targ!=noone{
+            var value=floor(arg_source.stats[2,4]/2)
+            if arg_targ.status[0]<value
+                arg_targ.status[0]+=value
+            else
+                arg_targ.status[0]=value
+            arg_source.sp-=3
+            arg_source.xp+=3
+            arg_source.spg+=1
+            arg_source.lucg+=1
+
+            var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
+            txt.text=value
+            txt.colour=c_orange
+            
+            //effect
+            var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
+            eff.sprite_index=sourcedir2
+            eff.image_blend=c_orange
+            eff.rotate=false
+            eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
             }
         return 1
         }
         return 0
+           
+    ///boss skills       
+    case -1://spawn vine
+        //if arg_source.ai=6 
+        {
+        if arg_targ!=noone{
+                var m=arg_source.lv-1;
+                var temp
+                var atarg=instance_place(arg_source.x-5*15,arg_source.y,oUnit)
+                if atarg!=noone{
+                    var base=return_dmg(arg_source.stats[2,1],0,atarg.stats[2,2])
+                    calculate_damage(arg_source,atarg,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
+                }else{
+                    temp=instance_create(arg_source.x-5*15,arg_source.y,oVine);
+                    temp.team=arg_source.team
+                    temp.lv=m+1
+                    temp.link=arg_source
+                    temp.ai=8
+                    with temp{
+                        hp+=hpp*m
+                        mhp+=hpp*m
+                        sp+=spp*m
+                        msp+=spp*m
+                        for (var j=0;j<=4;j++)
+                            stats[2,j]+=stats[1,j]*m
+                    }
+                    var inst=instance_create(temp.x,temp.y,oEff);
+                    inst.sprite_index=spawn_eff
+                }
+                //add it to the list of current units
+                atarg=instance_place(arg_source.x+5*15,arg_source.y,oUnit)
+                if atarg!=noone{
+                    var base=return_dmg(arg_source.stats[2,1],0,atarg.stats[2,2])
+                    calculate_damage(arg_source,atarg,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
+                }else{
+                    temp=instance_create(arg_source.x+5*15,arg_source.y,oVine);
+                    temp.team=arg_source.team
+                    temp.lv=m+1
+                    temp.link=arg_source
+                    temp.ai=8
+                    with temp{
+                        hp+=hpp*m
+                        mhp+=hpp*m
+                        sp+=spp*m
+                        msp+=spp*m
+                        for (var j=0;j<=4;j++)
+                            stats[2,j]+=stats[1,j]*m
+                    }
+                    var inst=instance_create(temp.x,temp.y,oEff);
+                    inst.sprite_index=spawn_eff
+                }
+                atarg=instance_place(arg_source.x,arg_source.y-5*15,oUnit)
+                if atarg!=noone{
+                    var base=return_dmg(arg_source.stats[2,1],0,atarg.stats[2,2])
+                    calculate_damage(arg_source,atarg,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
+                }else{
+                    temp=instance_create(arg_source.x,arg_source.y-15*5,oVine);
+                    temp.team=arg_source.team
+                    temp.lv=m+1
+                    temp.link=arg_source
+                    temp.ai=8
+                    with temp{
+                        hp+=hpp*m
+                        mhp+=hpp*m
+                        sp+=spp*m
+                        msp+=spp*m
+                        for (var j=0;j<=4;j++)
+                            stats[2,j]+=stats[1,j]*m
+                    }
+                    var inst=instance_create(temp.x,temp.y,oEff);
+                    inst.sprite_index=spawn_eff
+                }
+                //add it to the list of current units
+                atarg=instance_place(arg_source.x,arg_source.y+5*15,oUnit)
+                if atarg!=noone{
+                    var base=return_dmg(arg_source.stats[2,1],0,atarg.stats[2,2])
+                    calculate_damage(arg_source,atarg,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
+                }else{
+                    temp=instance_create(arg_source.x,arg_source.y+15*5,oVine);
+                    temp.team=arg_source.team
+                    temp.lv=m+1
+                    temp.link=arg_source
+                    temp.ai=8
+                    with temp{
+                        hp+=hpp*m
+                        mhp+=hpp*m
+                        sp+=spp*m
+                        msp+=spp*m
+                        for (var j=0;j<=4;j++)
+                            stats[2,j]+=stats[1,j]*m
+                    }
+                    var inst=instance_create(temp.x,temp.y,oEff);
+                    inst.sprite_index=spawn_eff
+                }
+                //add it to the list of current units
+            }
+        return 1
+        }
+        return 0
+    case -2://spawn vine
+        //if arg_source.ai=6 
+        {
+        if arg_targ!=noone{
+                var m=arg_source.lv-1;
+                var temp
+                repeat(3){
+                    var rx=irandom_range(-4,4)
+                    var ry=irandom_range(-4,4)
+                    var atarg=instance_place(arg_source.x+rx*15,arg_source.y+ry*15,oUnit)
+                    if atarg!=noone{
+                        if atarg.team!=arg_source.team{
+                            var base=return_dmg(arg_source.stats[2,1],0,atarg.stats[2,2])
+                            calculate_damage(arg_source,atarg,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
+                        }
+                    }else{
+                        temp=instance_create(arg_source.x+rx*15,arg_source.y+ry*15,oVine);
+                        temp.team=arg_source.team
+                        temp.lv=m+1
+                        temp.link=arg_source
+                        temp.ai=8
+                        with temp{
+                            hp+=hpp*m
+                            mhp+=hpp*m
+                            sp+=spp*m
+                            msp+=spp*m
+                            for (var j=0;j<=4;j++)
+                                stats[2,j]+=stats[1,j]*m
+                        }
+                        var inst=instance_create(temp.x,temp.y,oEff);
+                        inst.sprite_index=spawn_eff
+                    }
+                }
+                //add it to the list of current units
+            }
+        return 1
+        }
+        return 0 
     default:return 0
 }

@@ -29,7 +29,7 @@
 weakness[4]=2
 idle=1
 
-hp=20
+hp=15
 mhp=hp
 sp=5
 msp=sp
@@ -39,8 +39,8 @@ stats[2,2]=1
 stats[2,3]=0
 stats[2,4]=1
 //per level
-hpp=1.5
-spp=0.9
+hpp=0.8
+spp=0.6
 stats[1,0]=1
 stats[1,1]=0.8
 stats[1,2]=0.8
@@ -49,7 +49,7 @@ stats[1,4]=0.3
 mov=0
 view=4
 unit=vineGT
-name="vine"
+name="viNe"
 
 dmg=hp
 </string>

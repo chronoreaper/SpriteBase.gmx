@@ -16,21 +16,35 @@ var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
 if  get_random()<arg_acc
 {
     var weak=arg_targ.weakness[arg_type]
-    var dmg=ceil(arg_dmg*arg_multi*weak);
-    arg_targ.lastHitBy=arg_source
-    arg_targ.hp-=dmg
-    arg_targ.hp=max(arg_targ.hp,0)
-    arg_targ.image_blend=c_red
-    if dmg<0{
-        arg_targ.image_blend=c_lime
-        dmg*=-1
-        }
-    arg_targ.alarm[1]=4
-    txt.text=string(dmg)
+    var dmg=0;
+    
     if arg_targ.weakness[arg_type]>1
         txt.colour=c_orange
     else if arg_targ.weakness[arg_type]<1
         txt.colour=c_ltgray
+        
+    if arg_dmg>=0
+        dmg=ceil(arg_dmg*arg_multi*weak);
+    else
+        dmg=floor(arg_dmg*arg_multi*weak);
+    arg_targ.lastHitBy=arg_source
+    if arg_targ.status[0]>dmg{
+        arg_targ.status[0]-=dmg
+    }
+    else{
+        dmg-=arg_targ.status[0]
+        arg_targ.status[0]=0
+        arg_targ.hp-=dmg
+        arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.hp)
+    }
+    arg_targ.image_blend=c_red
+    if dmg<0{
+        arg_targ.image_blend=c_lime
+        dmg*=-1
+        txt.colour=c_lime
+    }
+    arg_targ.alarm[1]=4
+    txt.text=string(dmg)
     if arg_multi>=1{
         repeat(ceil(arg_multi)-2)
             txt.text+="!"
@@ -45,6 +59,7 @@ return dmg
 else{
     txt.text="miss"
     txt.colour=c_gray
-    return_wep_dur(arg_source,0)
+    with oControler
+        return_wep_dur(arg_source,0)
     return 0
     }

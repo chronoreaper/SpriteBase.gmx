@@ -31,16 +31,19 @@ switch floor(arg_skill){
         str="basic fire attack#[int]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 9:
-        str="heals an ally [luc]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="heals aN ally [luc]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 10:
-        str="stroNg twiN attack#usiNg melee weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="stroNg<slash>attack#usiNg melee weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 11:
-        str="loNg raNged attack#usiNg raNge weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="raNged<stab>attack#usiNg raNge weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 12:
         str="swaps places with#target ally#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
+    case 13:
+        str="shields aN ally#[luc]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     
     case -1:

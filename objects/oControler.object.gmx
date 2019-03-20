@@ -119,6 +119,10 @@ view_yview=inst.yy-view_hview/2
 }
 inst=instance_create(x+15,y,oArcher);
 ds_list_add(unitList,inst)
+inst=instance_create(x+15,y+15,oHealer);
+ds_list_add(unitList,inst)
+inst=instance_create(x,y+15,oMage);
+ds_list_add(unitList,inst)
 //inst.ai=0 
 var sx=15;
 var sy=15;
@@ -570,9 +574,9 @@ if selected!=noone{
                 item[space]=inst.item
                 item[space]+=inst.use
             }
-            if currentTurn&gt;=0
+            if ds_map_find_value(aiTurns, currentTurn)&gt;=0
             message_create("obtaiN "+return_item_name(inst.item+inst.use))
-            alarm[2]=15
+            alarm[0]=15
             with inst
                 instance_destroy()
             break;
@@ -584,7 +588,7 @@ if selected!=noone{
 
     }
     //else
-    {
+    if inst=noone||space=10{
     //instance_activate_all()
     //alarm[9]=3
     //alarm[4]=2
@@ -890,7 +894,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             ||keyboard_check_pressed(keys[4]){
                 if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.item[c.wep]){
                     {
-                        if inst.marker==2&amp;&amp;(abs(xx-c.x)+abs(yy-c.y))/15&lt;=1{
+                        if (inst.marker==2||inst.team=c.team)&amp;&amp;(abs(xx-c.x)+abs(yy-c.y))/15&lt;=1{
                             phase=12
                             menuSel=0
                             menuSel2=-1
@@ -1117,7 +1121,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             //get item
             if mouse_check_button_pressed(mb_left)
             ||keyboard_check_pressed(keys[4])
-            if eventOver.item[menuSel]&gt;0{
+            if eventOver.item[menuSel]&gt;0||(eventOver.team=selected.team){
                 menuSel2=0
             }
         }else
@@ -1140,7 +1144,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             menuSel2=max(0,menuSel2)
             if mouse_check_button_pressed(mb_left)
             ||keyboard_check_pressed(keys[4])
-            if selected.item[menuSel2]&gt;0{
+            if selected.item[menuSel2]&gt;0||(eventOver.team=selected.team){
                 if menuSel2==selected.wep
                     selected.wep=10
                 if menuSel2==selected.arm
@@ -1167,10 +1171,11 @@ c.alarm[0]=6
 //var k=return_multi_atk(c.item[c.wep]);
 if (selected.draw=0
 &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)
-&amp;&amp;debugging=0
-alarm[0]=1
+&amp;&amp;debugging=0{
+    alarm[0]=1
+    }
 else
-alarm[0]=max(13)
+    alarm[0]=max(13)
 //calculate dmg
 var acc=return_wep_acc(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y));
 var multi=1;
@@ -1234,7 +1239,8 @@ if phase&lt;=0
 ||phase=7
 ||phase=11
 ||phase=9
-if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0||
+(debugging=1&amp;&amp;eventScene){
 xx=clamp(xx,0,room_width-15)
 yy=clamp(yy,0,room_height-15)
 if controler=0{
@@ -1242,7 +1248,8 @@ xx=floor(mouse_x/15)*15
 yy=floor(mouse_y/15)*15
 }
 var del=4
-if !eventScene{
+if !eventScene||debugging=1
+{
 if delay=0
 {
         del=max(1,del-hold)
@@ -1404,20 +1411,24 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
         }*/
         //selected=c
         if selected!=noone{
+            var c=selected
             if selected.mov&gt;0
             phase=0
             else{ 
                 phase=3
-                if (selected.x&lt;view_xview+15*5
-                || selected.x&gt;view_xview+view_wview-15*5
-                || selected.y&lt;view_yview+15*5
-                || selected.y&gt;view_yview+view_hview-15*5)
+                if !ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
+                if (selected.x&lt;view_xview+15*2
+                || selected.x&gt;view_xview+view_wview-15*2
+                || selected.y&lt;view_yview+15*2
+                || selected.y&gt;view_yview+view_hview-15*2)
                 //||debugging=1
                 {
-                    view_xview=selected.x-view_wview/2
-                    view_yview=selected.y-view_hview/2
                     xx=selected.x
                     yy=selected.y
+                    x=xx
+                    y=yy
+                    view_xview=xx-view_wview/2
+                    view_yview=yy-view_hview/2
                 }
             }
             instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
@@ -1589,16 +1600,18 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                         xx=cx
                         yy=cy
                    }
-                   if (cx&lt;view_xview+15*5
-                    || cx&gt;view_xview+view_wview-15*5
-                    || cy&lt;view_yview+15*5
-                    || cy&gt;view_yview+view_hview-15*5)
+                   if (cx&lt;view_xview+15*2
+                    || cx&gt;view_xview+view_wview-15*2
+                    || cy&lt;view_yview+15*2
+                    || cy&gt;view_yview+view_hview-15*2)
                     //||debugging=1
                     {
-                        view_xview=cx-view_wview/2
-                        view_yview=cy-view_hview/2
                         xx=cx
                         yy=cy
+                        x=xx
+                        y=yy
+                        view_xview=xx-view_wview/2
+                        view_yview=yy-view_hview/2
                     }
                    phase=1
                 }
@@ -1630,7 +1643,7 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
         if c.ai=6{//great tree boss ai
             if c.lastHitBy=noone
                 option=0
-            else c.ai=7
+            else{ c.ai=7}
             }
         
         if (option&gt;10)
@@ -1693,6 +1706,14 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                         phase=4
                     }
                 }alarm[0]=1//ai 2 no attack
+            }
+            //cancel and kill self if no link
+            if c.ai=8{
+            if !instance_exists(c.link){
+                c.hp=0
+                phase=0
+                selected=noone
+            }
             }
         }//end phase 3
         /*if phase=5{//before turn ends after attacking
@@ -1990,7 +2011,7 @@ if phase=3{
     if inst!=c
     if ds_grid_get(gridF1,round(xx)/15,round(yy)/15)&gt;0 {
     if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range{
-        if inst.marker=2&amp;&amp;abs((inst.x-selected.x)/15)+abs((inst.y-selected.y)/15)&lt;=1
+        if (inst.marker=2||inst.team=selected.team)&amp;&amp;abs((inst.x-selected.x)/15)+abs((inst.y-selected.y)/15)&lt;=1
         {
             draw_set_font(pixelBlock)
             draw_set_halign(fa_center)
@@ -2262,7 +2283,189 @@ draw_background_stretched(greenBackground,0,0,room_width,room_height)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///#1 draw menus
+            <string>///draw selected unit
+image_blend=c_white
+var bx=0,by=0
+var over=instance_place(xx,yy,oUnit);
+var temp=selected
+if ds_grid_get(gridF1,xx/15,yy/15)&gt;0||debugging=1
+if selected=noone
+||phase=3
+||phase=7
+||phase=11
+if over=noone
+||over.draw=1
+||debugging=1{
+    selected=over;
+    }
+if selected!=noone
+if instance_exists(selected)
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
+{
+    var cur=selected
+    if cur.team&lt;0 image_blend=playerColour[2];
+    if cur.team&gt;=0{
+        if currentTurn=cur.team
+            image_blend=playerColour[3]
+        else
+            image_blend=playerColour[1]
+    }
+   draw_set_colour(c_white)
+   draw_rectangle(2+bx,203,75+bx,231,false)
+   draw_rectangle(76+bx,197,135+bx,231,false)
+   draw_rectangle(136+bx,203,188+bx,231,false)
+   draw_set_colour(c_dkgray)
+   draw_rectangle(3+bx,204,74+bx,230,false)
+   draw_rectangle(77+bx,198,134+bx,230,false)
+   draw_rectangle(137+bx,204,187+bx,230,false)
+      draw_set_colour(c_ltgray)
+   draw_set_font(pixelFont)
+   draw_sprite_ext(hpBar,0,5+bx,223,min((cur.xp/cur.mxp)*68,68),2.5,0,c_teal,1)
+   var text=""
+   if object_is_ancestor(cur.object_index,oObj)
+        text=cur.name
+   else
+        text="LV:"+string(cur.lv)+" "+cur.name
+   draw_text(5+bx,223,text)
+   draw_sprite_ext(hpBar,0,5+bx,206,68,3.5,0,c_ltgray,1)
+   draw_sprite_ext(hpBar,0,5+bx,214,68,3.5,0,c_ltgray,1)
+   
+    with cur{
+        if status[0]=0{
+           if dmg&gt;=hp{
+            draw_sprite_ext(hpBar,0,5+bx,206,(floor(dmg)/floor(mhp))*68,3.5,0,c_red,1)
+            draw_sprite_ext(hpBar,0,5+bx,206,(floor(hp)/floor(mhp))*68,3.5,0,c_lime,1)}
+            else{
+            draw_sprite_ext(hpBar,0,5+bx,206,(floor(hp)/floor(mhp))*68,3.5,0,c_green,1)
+            draw_sprite_ext(hpBar,0,5+bx,206,(floor(dmg)/floor(mhp))*68,3.5,0,c_lime,1)}
+        }
+        else
+            draw_sprite_ext(hpBar,0,5+bx,206,68,3.5,0,c_orange,1)
+       draw_set_colour(c_black)
+       draw_text(6+bx,207,"HP:"+string(ceil(hp)+status[0])+"/"+string(ceil(mhp)));
+       draw_sprite_ext(hpBar,0,5+bx,214,(floor(sp)/floor(msp))*68,3.5,0,c_blue,1)
+       draw_text(6+bx,215,"SP:"+string(floor(sp))+"/"+string(floor(msp)));
+       //draw other stats
+       for (var i=0;i&lt;5;i++)
+        draw_sprite_ext(hpBar,0,102+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
+        //draw_sprite_ext(hpBar,0,102+bx,206,(luc/20)*26,2,0,c_white,1)
+
+       draw_set_colour(c_ltgray)
+       draw_text(78+bx,200,"atk:"+string(floor(stats[2,0])));
+       draw_text(78+bx,206,"int:"+string(floor(stats[2,1])));
+       draw_text(78+bx,212,"def:"+string(floor(stats[2,2])));
+       draw_text(78+bx,218,"tec:"+string(floor(stats[2,3])));
+       draw_text(78+bx,224,"luc:"+string(floor(stats[2,4])));
+       //draw_text(78+bx,206,"luc:"+string(ceil(luc)));
+       draw_text(138+bx,212,return_item_name(item[wep]));
+       draw_text(138+bx,224,return_power());//might be changed with luck or move etc
+       draw_set_colour(c_orange)
+       draw_text(138+bx,206,"WEAPON");
+       draw_text(138+bx,218,"POWER");
+       draw_text(138+bx,190,"start "+string(xstart)+" "+string(ystart));
+       draw_text(138+bx,180,"cur "+string(x)+" "+string(y));
+       //status
+       var s=0;
+       for (var i=0;i&lt;10;i++){
+            if status[i]!=0{
+                var tx=""
+                switch i{
+                    case 0:tx="shield"break;
+                    case 1:tx="boost"break;
+                    case 2:tx="poisoN"break;
+                    case 3:tx="burN"break;
+                    case 4:tx="rooted"break;
+                    case 5:tx="slow"break;
+                    case 6:break;
+                    case 7:break;
+                    case 8:break;
+                    case 9:break;
+                }
+                draw_text(2,196-s*7,tx+" "+string(status[i]))
+                s++;
+            }
+       }
+   }
+}
+selected=temp
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///#3 draw message
+if messTimer&gt;0
+{
+    draw_set_font(pixelFont)
+    draw_set_alpha(messTimer)
+    draw_set_colour(c_dkgray)
+    draw_rectangle(180-string_width(message)-8,10,180+string_width(message)+8,23,false)
+    draw_set_colour(c_teal)
+    draw_rectangle(180-string_width(message)-6,10,180+string_width(message)+6,23,false)
+    draw_set_halign(fa_center)
+    draw_set_colour(c_dkgray)
+    draw_text_transformed(180,12,message,2,2,0)
+    draw_set_halign(fa_left)
+    messTimer-=0.1
+    draw_set_alpha(1)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///#4 draw info over unit
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///#5 draw menus
 draw_set_colour(c_fuchsia)
 draw_set_font(pixelFont)
 draw_set_alpha(1)
@@ -2520,163 +2723,6 @@ var c=selected
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///draw selected unit
-image_blend=c_white
-var bx=0,by=0
-var over=instance_place(xx,yy,oUnit);
-var temp=selected
-if ds_grid_get(gridF1,xx/15,yy/15)&gt;0||debugging=1
-if selected=noone
-||phase=3
-||phase=7
-||phase=11
-if over=noone
-||over.draw=1
-||debugging=1{
-    selected=over;
-    }
-if selected!=noone
-if instance_exists(selected)
-if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
-{
-    var cur=selected
-    if cur.team&lt;0 image_blend=playerColour[2];
-    if cur.team&gt;=0{
-        if currentTurn=cur.team
-            image_blend=playerColour[3]
-        else
-            image_blend=playerColour[1]
-    }
-   draw_set_colour(c_white)
-   draw_rectangle(2+bx,203,75+bx,231,false)
-   draw_rectangle(76+bx,197,135+bx,231,false)
-   draw_rectangle(136+bx,203,188+bx,231,false)
-   draw_set_colour(c_dkgray)
-   draw_rectangle(3+bx,204,74+bx,230,false)
-   draw_rectangle(77+bx,198,134+bx,230,false)
-   draw_rectangle(137+bx,204,187+bx,230,false)
-      draw_set_colour(c_ltgray)
-   draw_set_font(pixelFont)
-   draw_sprite_ext(hpBar,0,5+bx,223,min((cur.xp/cur.mxp)*68,68),2.5,0,c_teal,1)
-   var text=""
-   if object_is_ancestor(cur.object_index,oObj)
-        text=cur.name
-   else
-        text="LV:"+string(cur.lv)+" "+cur.name
-   draw_text(5+bx,223,text)
-   draw_sprite_ext(hpBar,0,5+bx,206,68,3.5,0,c_ltgray,1)
-   draw_sprite_ext(hpBar,0,5+bx,214,68,3.5,0,c_ltgray,1)
-   
-    with cur{
-       if dmg&gt;=hp{
-       draw_sprite_ext(hpBar,0,5+bx,206,(floor(dmg)/floor(mhp))*68,3.5,0,c_red,1)
-       draw_sprite_ext(hpBar,0,5+bx,206,(floor(hp)/floor(mhp))*68,3.5,0,c_lime,1)}
-       else{
-       draw_sprite_ext(hpBar,0,5+bx,206,(floor(hp)/floor(mhp))*68,3.5,0,c_green,1)
-        draw_sprite_ext(hpBar,0,5+bx,206,(floor(dmg)/floor(mhp))*68,3.5,0,c_lime,1)}
-       draw_set_colour(c_black)
-       draw_text(6+bx,207,"HP:"+string(floor(hp))+"/"+string(floor(mhp)));
-       draw_sprite_ext(hpBar,0,5+bx,214,(floor(sp)/floor(msp))*68,3.5,0,c_blue,1)
-       draw_text(6+bx,215,"SP:"+string(floor(sp))+"/"+string(floor(msp)));
-       //draw other stats
-       for (var i=0;i&lt;5;i++)
-        draw_sprite_ext(hpBar,0,102+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
-        //draw_sprite_ext(hpBar,0,102+bx,206,(luc/20)*26,2,0,c_white,1)
-
-       draw_set_colour(c_ltgray)
-       draw_text(78+bx,200,"atk:"+string(floor(stats[2,0])));
-       draw_text(78+bx,206,"int:"+string(floor(stats[2,1])));
-       draw_text(78+bx,212,"def:"+string(floor(stats[2,2])));
-       draw_text(78+bx,218,"tec:"+string(floor(stats[2,3])));
-       draw_text(78+bx,224,"luc:"+string(floor(stats[2,4])));
-       //draw_text(78+bx,206,"luc:"+string(ceil(luc)));
-       draw_text(138+bx,212,return_item_name(item[wep]));
-       draw_text(138+bx,224,return_power());//might be changed with luck or move etc
-       draw_set_colour(c_orange)
-       draw_text(138+bx,206,"WEAPON");
-       draw_text(138+bx,218,"POWER");
-       draw_text(138+bx,190,"start "+string(xstart)+" "+string(ystart));
-       draw_text(138+bx,180,"cur "+string(x)+" "+string(y));
-   }
-}
-selected=temp
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///#3 draw message
-if messTimer&gt;0
-{
-    draw_set_font(pixelFont)
-    draw_set_alpha(messTimer)
-    draw_set_colour(c_dkgray)
-    draw_rectangle(180-string_width(message)-8,10,180+string_width(message)+8,23,false)
-    draw_set_colour(c_teal)
-    draw_rectangle(180-string_width(message)-6,10,180+string_width(message)+6,23,false)
-    draw_set_halign(fa_center)
-    draw_set_colour(c_dkgray)
-    draw_text_transformed(180,12,message,2,2,0)
-    draw_set_halign(fa_left)
-    messTimer-=0.1
-    draw_set_alpha(1)
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///#4 draw info over unit
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///start menu
 if menu=0{
     if keyboard_check_pressed(keys[0])
@@ -2894,7 +2940,7 @@ var range=return_wep_range(c.item[c.wep])
             draw_set_colour(c_orange)
             var inst=instance_place(i+c.x,j+c.y,oUnit)
             if inst!=noone{
-                if inst.marker=2&amp;&amp;abs(i/15)+abs(j/15)&lt;=1
+                if (inst.marker=2||inst.team=c.team)&amp;&amp;abs(i/15)+abs(j/15)&lt;=1
                     draw_set_colour(c_blue)
                 else
                     draw_set_colour(c_red)
@@ -3140,7 +3186,8 @@ var obj=oUnit+debugObj
 if obj!=noone{
 draw_sprite_ext(object_get_sprite(obj),0,x+7,y+7,1,1,-view_angle,-1,0.5)
 if keyboard_check_pressed(vk_enter){
-    instance_create(x,y,obj)
+    var inst=instance_create(x,y,obj);
+    inst.team=currentTurn
     var temp=instance_create(x,y,oEff);
     temp.sprite_index=spawn_eff
     }

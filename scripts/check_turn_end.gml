@@ -39,6 +39,9 @@ if fin=1{
         var inst=ds_list_find_value(list,i);
         instance_activate_object(inst)
         inst.wait=0
+        for (var j=0;j<10;j++)
+            if inst.status[j]!=0
+                inst.status[j]-=sign(inst.status[j])
         }
     if currentTurn=-1{
          ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
@@ -62,6 +65,7 @@ if fin=1{
     if irandom(1)=0
     if !place_meeting(rx*15,ry*15,oUnit)
     if ds_grid_get(gridF1,rx,ry)<1
+    if !tile_layer_find(10000,rx*15,ry*15)
         {
         var inst=instance_create(rx*15,ry*15,
         choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops));

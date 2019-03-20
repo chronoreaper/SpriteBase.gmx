@@ -129,6 +129,7 @@
       <sprite>sprites\healEff</sprite>
       <sprite>sprites\poison_splash</sprite>
       <sprite>sprites\magicBurnEff</sprite>
+      <sprite>sprites\shieldSprite</sprite>
     </sprites>
     <sprites name="in game menu">
       <sprite>sprites\miniselectmenu</sprite>
@@ -153,6 +154,9 @@
         <sprite>sprites\sprite128</sprite>
         <sprite>sprites\sprite129</sprite>
         <sprite>sprites\vineGT</sprite>
+        <sprite>sprites\sprite131</sprite>
+        <sprite>sprites\sprite132</sprite>
+        <sprite>sprites\sprite133</sprite>
       </sprites>
     </sprites>
     <sprites name="area of effect">
@@ -242,7 +246,7 @@
     <script>scripts\return_item_number.gml</script>
   </scripts>
   <shaders name="shaders">
-    <shader type="GLSLES">shaders\shader0.shader</shader>
+    <shader type="GLSLES">shaders\shader1.shader</shader>
   </shaders>
   <objects name="objects">
     <object>objects\oMenu</object>

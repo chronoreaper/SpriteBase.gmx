@@ -20,5 +20,7 @@ switch floor(arg_wep){
     case 9: return 8//"heal"
     case 10: return 1//"cross slash"
     case 11: return 2//"loNg shot"
+    case -1:return 2//spawn vines start
+    case -2:return 2//spawn vines
     default: return 0;
 }

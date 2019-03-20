@@ -25,15 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*
-ai code
-xxyyzz
-xx= movement code
-yy= attacking code
-zz= skill item code
-
-*/
-ai=0
+            <string>ai=0
 xx=x
 yy=y
 ax=0
@@ -128,6 +120,18 @@ weakness
 8 - light
 9 - dark
 */
+/*Status
+0 - shield
+1 - boost
+2 - posion
+3 - burn
+4 - rooted
+5 - slow
+6 - 
+7 -
+8 - 
+9 - 
+*/
 item[10]=0//weapon/arm default
 skill[0]=1
 if !object_is_ancestor(object_index,oObj){
@@ -139,6 +143,12 @@ lr=1
 wm=irandom(3)+5
 marker=0
 size=1
+
+//shaders stuff
+/*upixelH = shader_get_uniform(shader1, "pixelH");
+upixelW = shader_get_uniform(shader1, "pixelW");
+texelW = texture_get_texel_width(sprite_get_texture(sprite_index,0));
+texelH = texture_get_texel_height(sprite_get_texture(sprite_index,0));
 </string>
           </argument>
         </arguments>
@@ -368,7 +378,7 @@ depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
           <argument>
             <kind>1</kind>
             <string>///check if dead
-if hp=0{
+if hp&lt;=0{
     var inst=instance_create(x,y,oFade);
     inst.sprite_index=sprite_index
     instance_destroy()
@@ -540,10 +550,24 @@ if dir2=4
     dir2=3
 if dir2=1||dir2=2
     draw_weapon()
+if oControler.selected=id
+{
+   /* shader_set(shader1)
+    texelW = texture_get_texel_width(sprite_get_texture(sprite_index,0));
+    texelH = texture_get_texel_height(sprite_get_texture(sprite_index,0));
+    shader_set_uniform_f(upixelW,texelW)
+    shader_set_uniform_f(upixelH,texelH)
+    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
+    shader_reset()*/
+}
+//else
 draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
+
 if dir2!=1
 if dir2!=2
     draw_weapon()
+if status[0]&gt;0
+    draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,1,1,-view_angle,-1,0.5)
 }//end draw
 }
 </string>

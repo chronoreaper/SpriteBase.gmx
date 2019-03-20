@@ -82,6 +82,8 @@ with oControler{
             <string>///fog
 //if draw&gt;0
 event_inherited()
+if place_meeting(x,y,oControler)
+    depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))-1000
 /*if view&gt;0
 if team&gt;=0
 {
