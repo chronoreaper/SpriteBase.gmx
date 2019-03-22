@@ -104,6 +104,8 @@
       <sprite>sprites\recycle</sprite>
       <sprite>sprites\trash</sprite>
       <sprite>sprites\building001</sprite>
+      <sprite>sprites\building002</sprite>
+      <sprite>sprites\building003</sprite>
       <sprite>sprites\bench_r</sprite>
       <sprite>sprites\bench_u</sprite>
       <sprite>sprites\bench_l</sprite>
@@ -145,6 +147,7 @@
       <sprite>sprites\healEff</sprite>
       <sprite>sprites\poison_splash</sprite>
       <sprite>sprites\magicBurnEff</sprite>
+      <sprite>sprites\rootedSprite</sprite>
       <sprite>sprites\shieldSprite</sprite>
     </sprites>
     <sprites name="in game menu">
@@ -173,6 +176,10 @@
         <sprite>sprites\sprite131</sprite>
         <sprite>sprites\sprite132</sprite>
         <sprite>sprites\sprite133</sprite>
+        <sprite>sprites\rootGT</sprite>
+        <sprite>sprites\sprite138</sprite>
+        <sprite>sprites\sprite139</sprite>
+        <sprite>sprites\sprite140</sprite>
         <sprite>sprites\prant001_0</sprite>
         <sprite>sprites\prant001_1</sprite>
         <sprite>sprites\prant001_2</sprite>
@@ -264,6 +271,7 @@
     <script>scripts\generate_map_old.gml</script>
     <script>scripts\create_area.gml</script>
     <script>scripts\create_boss_area.gml</script>
+    <script>scripts\create_dungeon.gml</script>
     <script>scripts\return_item_number.gml</script>
   </scripts>
   <shaders name="shaders">
@@ -324,9 +332,11 @@
       <objects name="Boss">
         <object>objects\oWurm</object>
         <object>objects\oDragon1</object>
-        <object>objects\oGreatTree</object>
-        <object>objects\oVine</object>
-        <object>objects\oPrant</object>
+        <objects name="great tree">
+          <object>objects\oGreatTree</object>
+          <object>objects\oVine</object>
+          <object>objects\oPrant</object>
+        </objects>
       </objects>
     </objects>
     <object>objects\object47</object>

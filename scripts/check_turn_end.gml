@@ -74,7 +74,8 @@ if fin=1{
             if irandom(1){
             inst=instance_create(rx*15,ry*15,
             choose(oFighter,oArcher,oMage,oHealer,oMerchant));
-                        inst.team=1
+            inst.team=1
+            inst.ai=2
             }
             else{
                 inst=instance_create(rx*15,ry*15,
