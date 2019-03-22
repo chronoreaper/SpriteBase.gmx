@@ -22,6 +22,7 @@ for(var i=0;i<10;i++){
                 }
                 break;
             case 6:num=15 break//split
+            case 8:num=2 break;//fire
             case 9://heal
                 var inst=return_skill_has_target(9,arg_char)
                 if inst!=noone{

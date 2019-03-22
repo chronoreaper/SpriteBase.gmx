@@ -58,6 +58,7 @@ msp=1
 slowHP=0
 
 idle=0
+combat=0
 
 /*
 0 - TOTAL

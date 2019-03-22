@@ -10,7 +10,7 @@ x = wall
 */
 switch pattren{
 case 0:
-map[0] ="xxxxxxxxxxx"
+map[0] ="xxxxx-xxxxx"
 map[1] ="x---------x"
 map[2] ="x-xx-xx-x-x"
 map[3] ="x-x---x-x-x"

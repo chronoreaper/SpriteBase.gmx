@@ -4,7 +4,23 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\sBoost</sound>
+    <sound>sound\sDown</sound>
+    <sound>sound\sFire</sound>
+    <sound>sound\sGroundPound</sound>
+    <sound>sound\sHeal</sound>
+    <sound>sound\sHitSlash</sound>
+    <sound>sound\sLevelUp</sound>
+    <sound>sound\sMiss</sound>
+    <sound>sound\sMoveCruser</sound>
+    <sound>sound\sSelect</sound>
+    <sound>sound\sSelected</sound>
+    <sound>sound\sThunder</sound>
+    <sound>sound\sUp</sound>
+    <sound>sound\sWindDmg</sound>
+    <sound>sound\TempBGM1</sound>
+  </sounds>
   <sprites name="sprites">
     <sprites name="Units">
       <sprites name="Fighter">
@@ -157,6 +173,10 @@
         <sprite>sprites\sprite131</sprite>
         <sprite>sprites\sprite132</sprite>
         <sprite>sprites\sprite133</sprite>
+        <sprite>sprites\prant001_0</sprite>
+        <sprite>sprites\prant001_1</sprite>
+        <sprite>sprites\prant001_2</sprite>
+        <sprite>sprites\prant001_3</sprite>
       </sprites>
     </sprites>
     <sprites name="area of effect">
@@ -198,6 +218,7 @@
     <script>scripts\return_priority.gml</script>
     <script>scripts\return_dmg.gml</script>
     <script>scripts\return_wep_range.gml</script>
+    <script>scripts\return_wep_sound.gml</script>
     <script>scripts\return_wep_type.gml</script>
     <script>scripts\return_item_range.gml</script>
     <script>scripts\return_wep_dmg.gml</script>
@@ -305,6 +326,7 @@
         <object>objects\oDragon1</object>
         <object>objects\oGreatTree</object>
         <object>objects\oVine</object>
+        <object>objects\oPrant</object>
       </objects>
     </objects>
     <object>objects\object47</object>

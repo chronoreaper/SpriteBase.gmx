@@ -5,6 +5,8 @@ var arg_item=arg_unit.item[arg_slot]
 switch floor(arg_item){
     case 1: 
         with arg_unit{
+        if draw>0
+            audio_play_sound(sHeal,50,false)
         hp+=4
         if hp>mhp
             hp=mhp
@@ -23,6 +25,8 @@ switch floor(arg_item){
     case 3: 
         with arg_target{
         hp+=10
+        if draw>0
+            audio_play_sound(sHeal,50,false)
         if hp>mhp
             hp=mhp
         }
@@ -40,6 +44,8 @@ switch floor(arg_item){
         break;
     case 5: 
         with arg_unit{
+        if draw>0
+            audio_play_sound(sHeal,50,false)
         hp+=5
         if hp>mhp
             hp=mhp

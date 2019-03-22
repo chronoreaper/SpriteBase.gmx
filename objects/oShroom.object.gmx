@@ -29,7 +29,7 @@
 skill[0]=6
 weakness[4]=2
 item[10]=-1    
-hp=7
+hp=11
 mhp=hp
 sp=5
 msp=sp

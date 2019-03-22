@@ -28,7 +28,7 @@
             <string>event_inherited()
 weakness[4]=0.8
 
-hp=12
+hp=16
 mhp=hp
 sp=3
 msp=sp

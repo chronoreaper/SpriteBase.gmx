@@ -39,9 +39,6 @@ if fin=1{
         var inst=ds_list_find_value(list,i);
         instance_activate_object(inst)
         inst.wait=0
-        for (var j=0;j<10;j++)
-            if inst.status[j]!=0
-                inst.status[j]-=sign(inst.status[j])
         }
     if currentTurn=-1{
          ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
@@ -62,14 +59,29 @@ if fin=1{
     //spawn monsters
     var rx=irandom(room_width/15)//room_width/15);
     var ry=irandom(room_height/15)//room_height/15);
-    if irandom(1)=0
+    if irandom(2)=0
     if !place_meeting(rx*15,ry*15,oUnit)
     if ds_grid_get(gridF1,rx,ry)<1
     if !tile_layer_find(10000,rx*15,ry*15)
         {
-        var inst=instance_create(rx*15,ry*15,
+        var inst;
+        if irandom(2){
+        inst=instance_create(rx*15,ry*15,
         choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops));
         inst.team=-1
+        }
+        else{
+            if irandom(1){
+            inst=instance_create(rx*15,ry*15,
+            choose(oFighter,oArcher,oMage,oHealer,oMerchant));
+                        inst.team=1
+            }
+            else{
+                inst=instance_create(rx*15,ry*15,
+                choose(oChest));
+                inst.team=0.1
+            }
+        }
         inst.view=0
         inst.draw=0
         //stats
@@ -105,7 +117,12 @@ if fin=1{
             aggro=noone
             if sp>msp
                 sp=msp
+            if combat>0
+                combat--
             wait=0
+            for (var j=0;j<10;j++)
+                if status[j]!=0
+                    status[j]-=sign(status[j])
         }
     }
     ds_list_sort(unitList,true)

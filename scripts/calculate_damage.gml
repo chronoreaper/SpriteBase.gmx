@@ -12,6 +12,13 @@ types
 //returns hit = 1 or miss =0
 arg_dmg=return_arm_reduction(arg_targ.item[arg_targ.arm],arg_dmg)
 var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
+arg_targ.lastHitBy=arg_source;
+var cp=3;
+arg_targ.combat=cp
+if arg_targ.link!=noone
+if instance_exists(arg_targ.link)
+    arg_targ.link.combat=cp
+arg_source.combat=cp
 //check if hit *luck(selected.luc)
 if  get_random()<arg_acc
 {
@@ -27,9 +34,9 @@ if  get_random()<arg_acc
         dmg=ceil(arg_dmg*arg_multi*weak);
     else
         dmg=floor(arg_dmg*arg_multi*weak);
-    arg_targ.lastHitBy=arg_source
     if arg_targ.status[0]>dmg{
         arg_targ.status[0]-=dmg
+        dmg=0
     }
     else{
         dmg-=arg_targ.status[0]
@@ -59,7 +66,7 @@ return dmg
 else{
     txt.text="miss"
     txt.colour=c_gray
-    with oControler
-        return_wep_dur(arg_source,0)
+    //with oControler
+    //    return_wep_dur(arg_source,0)
     return 0
     }

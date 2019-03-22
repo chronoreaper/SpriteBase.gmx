@@ -22,6 +22,8 @@ switch floor(arg_skill){
             var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
             txt.text=ceil(arg_source.lv/2)+2
             txt.colour=c_lime
+            if arg_source.draw>0
+                audio_play_sound(sHeal,50,false)
             }
         return 1
         }
@@ -105,7 +107,10 @@ switch floor(arg_skill){
                 var txt=instance_create(arg_source.x+7,arg_source.y-11,DmgWord);
                 txt.text=floor(dmg/2)
                 txt.colour=c_lime
-                }
+                if arg_source.draw>0
+                    audio_play_sound(sHitSlash,50,false)
+                }else if arg_source.draw>0
+                    audio_play_sound(sMiss,50,false)
             }
         return 1
         }
@@ -237,7 +242,14 @@ switch floor(arg_skill){
             eff.rotate=false
             eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
             eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
-            eff.sprite_index=magicBurnEff    
+            eff.sprite_index=magicBurnEff
+            if arg_source.draw>0
+            {
+                if dmg>0
+                    audio_play_sound(sFire,50,false)   
+                else
+                    audio_play_sound(sMiss,50,false)   
+            } 
             }
         return 1
         }
@@ -256,11 +268,12 @@ switch floor(arg_skill){
             with arg_targ{
             if hp>mhp
                 hp=mhp
+            if draw>0
+                audio_play_sound(sHeal,50,false)
             }
             var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
             txt.text=floor(arg_source.stats[2,4])
             txt.colour=c_lime
-            
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -295,6 +308,12 @@ switch floor(arg_skill){
             eff.sprite_index=crossSlash
             var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)*2,0,arg_targ.stats[2,2]);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
+            if arg_source.draw>0{
+                if dmg>0
+                    audio_play_sound(sHitSlash,50,false)
+                else
+                    audio_play_sound(sMiss,50,false)
+            }
             }
         return 1
         }
@@ -304,8 +323,8 @@ switch floor(arg_skill){
         if return_wep_range(arg_source.item[arg_source.wep])>1{
         if arg_targ!=noone{
             arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
-            arg_source.item[arg_source.wep]-=0.02
-            return_wep_dur(arg_source,0)
+            arg_source.item[arg_source.wep]-=0.01
+            return_wep_dur(arg_source,0)//this has an additional -0.01
             arg_source.xp+=5
             arg_source.tecg+=1
             arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
@@ -324,6 +343,12 @@ switch floor(arg_skill){
             var dmg =calculate_damage(arg_source,arg_targ,base,
                 return_skill_acc(arg_skill,abs(arg_source.x-arg_targ.x)/15+abs(arg_source.y-arg_targ.y)/15)
                 ,return_skill_type(arg_skill),5,1)
+            if arg_source.draw>0{
+                if dmg>0
+                    audio_play_sound(sHitSlash,50,false)
+                else
+                    audio_play_sound(sMiss,50,false)
+            }
             }
         return 1
         }
@@ -351,15 +376,15 @@ switch floor(arg_skill){
         }
         return 0
     case 13:
-        if arg_source.sp>=3 {
+        if arg_source.sp>=5 {
         if arg_targ!=noone{
-            var value=floor(arg_source.stats[2,4]/2)
+            var value=floor(arg_source.stats[2,4]/2)+2
             if arg_targ.status[0]<value
                 arg_targ.status[0]+=value
             else
                 arg_targ.status[0]=value
-            arg_source.sp-=3
-            arg_source.xp+=3
+            arg_source.sp-=5
+            arg_source.xp+=4
             arg_source.spg+=1
             arg_source.lucg+=1
 
@@ -373,6 +398,9 @@ switch floor(arg_skill){
             eff.image_blend=c_orange
             eff.rotate=false
             eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
+            
+            if arg_source.draw>0
+                audio_play_sound(sUp,50,false)
             }
         return 1
         }
@@ -482,7 +510,8 @@ switch floor(arg_skill){
         if arg_targ!=noone{
                 var m=arg_source.lv-1;
                 var temp
-                repeat(3){
+                var k=0
+                repeat(2){
                     var rx=irandom_range(-4,4)
                     var ry=irandom_range(-4,4)
                     var atarg=instance_place(arg_source.x+rx*15,arg_source.y+ry*15,oUnit)
@@ -492,7 +521,10 @@ switch floor(arg_skill){
                             calculate_damage(arg_source,atarg,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
                         }
                     }else{
-                        temp=instance_create(arg_source.x+rx*15,arg_source.y+ry*15,oVine);
+                        if k=0&&irandom(1)
+                            temp=instance_create(arg_source.x+rx*15,arg_source.y+ry*15,oPrant);
+                        else
+                            temp=instance_create(arg_source.x+rx*15,arg_source.y+ry*15,oVine);
                         temp.team=arg_source.team
                         temp.lv=m+1
                         temp.link=arg_source
@@ -508,6 +540,7 @@ switch floor(arg_skill){
                         var inst=instance_create(temp.x,temp.y,oEff);
                         inst.sprite_index=spawn_eff
                     }
+                k++
                 }
                 //add it to the list of current units
             }

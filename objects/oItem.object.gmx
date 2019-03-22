@@ -111,11 +111,11 @@ if point_direction(x,y,xx,yy)&lt;7{
           <argument>
             <kind>1</kind>
             <string>if abs(xx-x)&gt;1
-   x+=(xx-x)/5
+   x+=(xx-x)/3
 else
     x=xx
 if abs(yy-y)&gt;1
-   y+=(yy-y)/5
+   y+=(yy-y)/3
 else
     y=yy
 </string>
