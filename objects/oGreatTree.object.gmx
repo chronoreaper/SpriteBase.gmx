@@ -6,7 +6,7 @@
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>oMonster</parentName>
-  <maskName>hitbox</maskName>
+  <maskName>hitbox3</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
@@ -79,6 +79,139 @@ dmg=hp
             <string>event_inherited()
 ax=0
 ay=0
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw
+if visible||debugging=1
+{
+
+if draw&gt;0
+||debugging=1{
+//if !object_is_ancestor(object_index,oObj)
+{//draw curr turn
+    //if oControler.phase=0
+    if oControler.currentTurn=team
+    if oControler.currentTurn&gt;=0
+    if wait=0
+    if oControler.selected=noone
+    //if oControler.selected=id
+    //if oControler.phase=0
+    {
+        draw_sprite_ext(box14x14,0,x,y,1,1,0,c_yellow,0.5)
+    }
+}
+
+//draw health bars
+var colour;
+if team&lt;0 colour=oControler.playerColour[2];
+if team&gt;=0{
+    if oControler.currentTurn=team
+        colour=oControler.playerColour[3]
+    else
+        colour=oControler.playerColour[1]
+}
+if object_is_ancestor(object_index,oObj)
+    colour=oControler.playerColour[0];
+else
+    draw_sprite_ext(marker1,0,x-0*(size-1),y-0*(size-1),size,size,0,colour,1-wait)
+/*if dmg!=hp{
+   if image_blend!=c_red{
+      alpha=5
+   if abs(dmg-hp)&gt;0.5
+      dmg+=sign(hp-dmg)/2//5//round(((mhp/2)/(hp-dmg)))
+   else dmg=hp
+   }
+}*/
+if floor(hp)&lt;floor(mhp){
+    alpha=5
+if wait!=0
+    alpha=0.5
+}
+if alpha&gt;0
+{
+    if hp&lt;dmg{
+    draw_sprite_ext(healthBar,58*(dmg/mhp),x-0*(size-1),y-0*(size-1),size,size,0,colour,alpha)
+   //draw_sprite_ext(healthBar,58*(hp/mhp),x,y,1,1,0,colour,alpha)
+   }
+   else{
+   //draw_sprite_ext(healthBar,58*(hp/mhp),x,y,1,1,0,c_green,alpha)
+   draw_sprite_ext(healthBar,58*(dmg/mhp),x-0*(size-1),y-0*(size-1),size,size,0,colour,alpha)
+   }
+   
+    //if hp&lt;dmg{
+   //draw_sprite_ext(hpBar,0,x,y-11,(dmg/mhp)*13,1,0,c_red,alpha)
+  // draw_sprite_ext(hpBar,0,x,y-11,(hp/mhp)*13,1,0,c_lime,alpha)}
+   //else{
+   //draw_sprite_ext(hpBar,0,x,y-11,(hp/mhp)*13,1,0,c_green,alpha)
+   //draw_sprite_ext(hpBar,0,x,y-11,(dmg/mhp)*13,1,0,c_lime,alpha)}
+   
+   //if alarm_get(6)&lt;=0
+      alpha-=0.1
+}
+
+//draw unit
+//draw_set_colour(c_black)
+//draw_set_alpha(0.5)
+//draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
+//ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
+//draw_set_alpha(1)
+if (object_is_ancestor(object_index,oObj)
+||ai=-1)
+&amp;&amp;!object_is_ancestor(object_index,oDeco4){
+var viewSprite=dir
+}
+else{
+var viewSprite=dir+round(view_angle/90)
+if viewSprite&lt;0
+    viewSprite+=4
+viewSprite=viewSprite%4
+}
+
+var dir2=abs(dir-round(view_angle/90))
+if dir2=4
+    dir2=3
+if dir2=1||dir2=2
+    draw_weapon()
+if oControler.selected=id
+{
+   /* shader_set(shader1)
+    texelW = texture_get_texel_width(sprite_get_texture(sprite_index,0));
+    texelH = texture_get_texel_height(sprite_get_texture(sprite_index,0));
+    shader_set_uniform_f(upixelW,texelW)
+    shader_set_uniform_f(upixelH,texelH)
+    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
+    shader_reset()*/
+}
+//else
+draw_sprite_ext(sprite_index+viewSprite,image_index,x+15+ax,y+15+ay,1,1-c,-view_angle+wave,image_blend,1)
+
+if dir2!=1
+if dir2!=2
+    draw_weapon()
+if status[0]&gt;0
+    draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,1,1,-view_angle,-1,0.5)
+}//end draw
+}
 </string>
           </argument>
         </arguments>

@@ -63,63 +63,63 @@ for (var i=0;i<width;i++)
     if !tile_layer_find(100000,i*30,j*30)
     {
         if (ds_grid_get(gridMap,i,j)==0)
-            create_area(0,7,i*30,j*30)
+            create_area(0,7,i*30,j*30,100000)
         else if ds_grid_get(gridMap,i,j)==1{
             
             if ds_grid_get(gridMap,i-1,j)==1{
                 if ds_grid_get(gridMap,i+1,j)==1{
                     if ds_grid_get(gridMap,i,j-1)==1{
                         if ds_grid_get(gridMap,i,j+1)==1
-                            create_area(0,6,i*30,j*30)//center
+                            create_area(0,6,i*30,j*30,100000)//center
                         else
-                            create_area(0,6,i*30,j*30)//upside down T (8)
+                            create_area(0,6,i*30,j*30,100000)//upside down T (8)
                     }else
                     {
                         if ds_grid_get(gridMap,i,j+1)==1
-                            create_area(0,6,i*30,j*30)//T (9)
+                            create_area(0,6,i*30,j*30,100000)//T (9)
                         else
-                            create_area(0,2,i*30,j*30)//horizontal
+                            create_area(0,2,i*30,j*30,100000)//horizontal
                     }
                 }else{//no right
                     if ds_grid_get(gridMap,i,j-1)==1{
                         if ds_grid_get(gridMap,i,j+1)==1
-                            create_area(0,6,i*30,j*30)//T left in(11)
+                            create_area(0,6,i*30,j*30,100000)//T left in(11)
                         else
-                            create_area(0,5,i*30,j*30)//bottom right
+                            create_area(0,5,i*30,j*30,100000)//bottom right
                     }else//no up
                     {
                         if ds_grid_get(gridMap,i,j+1)==1
-                            create_area(0,4,i*30,j*30)//Top right
+                            create_area(0,4,i*30,j*30,100000)//Top right
                         else
-                            create_area(0,13,i*30,j*30)//left in
+                            create_area(0,13,i*30,j*30,100000)//left in
                     }
                 }
             }else{//no left
                 if ds_grid_get(gridMap,i+1,j)==1{
                     if ds_grid_get(gridMap,i,j-1)==1{
                         if ds_grid_get(gridMap,i,j+1)==1
-                            create_area(0,6,i*30,j*30)//T right in(10)
+                            create_area(0,6,i*30,j*30,100000)//T right in(10)
                         else
-                            create_area(0,3,i*30,j*30)//bottom left
+                            create_area(0,3,i*30,j*30,100000)//bottom left
                     }else//no up
                     {
                         if ds_grid_get(gridMap,i,j+1)==1
-                            create_area(0,0,i*30,j*30)//top left
+                            create_area(0,0,i*30,j*30,100000)//top left
                         else
-                            create_area(0,2,i*30,j*30)//right in(12)
+                            create_area(0,2,i*30,j*30,100000)//right in(12)
                     }
                 }else{//no right
                     if ds_grid_get(gridMap,i,j-1)==1{
                         if ds_grid_get(gridMap,i,j+1)==1
-                            create_area(0,1,i*30,j*30)//Vertical
+                            create_area(0,1,i*30,j*30,100000)//Vertical
                         else
-                            create_area(0,1,i*30,j*30)//top in (15)
+                            create_area(0,1,i*30,j*30,100000)//top in (15)
                     }else//no up
                     {
                         if ds_grid_get(gridMap,i,j+1)==1
-                            create_area(0,1,i*30,j*30)//bottom in(14)
+                            create_area(0,1,i*30,j*30,100000)//bottom in(14)
                         else
-                            create_area(0,7,i*30,j*30)//empty
+                            create_area(0,7,i*30,j*30,100000)//empty
                     }
                 }
             }

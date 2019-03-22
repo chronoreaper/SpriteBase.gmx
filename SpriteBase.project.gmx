@@ -204,6 +204,7 @@
     <sprite>sprites\sprite60</sprite>
     <sprite>sprites\diamond</sprite>
     <sprite>sprites\hitbox</sprite>
+    <sprite>sprites\hitbox3</sprite>
     <sprite>sprites\levelupsprite</sprite>
     <sprite>sprites\atkInfo</sprite>
     <sprite>sprites\unit_marker</sprite>
@@ -267,11 +268,9 @@
     <script>scripts\get_random.gml</script>
     <script>scripts\update_view_zone.gml</script>
     <script>scripts\generate_map.gml</script>
-    <script>scripts\generate_map_old2.gml</script>
-    <script>scripts\generate_map_old.gml</script>
     <script>scripts\create_area.gml</script>
     <script>scripts\create_boss_area.gml</script>
-    <script>scripts\create_dungeon.gml</script>
+    <script>scripts\create_city_dungeon.gml</script>
     <script>scripts\return_item_number.gml</script>
   </scripts>
   <shaders name="shaders">

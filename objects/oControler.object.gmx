@@ -163,12 +163,7 @@ inst2.ai=-1
 inst2.link=inst
 inst=inst2
 }
-
-create_boss_area(x+15*20,y+15*15,1,0)
-inst=instance_create(x+15*25,y+20*15,oGreatTree)
-inst.team=-1
-inst.ai=6
-inst.marker=1
+create_city_dungeon(x+15*12,y+15*10)
 add_all_to_map()
 show_debug_overlay(true)
 generate_map()
@@ -325,10 +320,10 @@ add_all_to_map()
             <kind>1</kind>
             <string>//activate things
 instance_deactivate_all(true)
-instance_activate_region(xx-view_wview/2,yy-view_hview/2,view_wview,view_hview,true)
-instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
+instance_activate_region(xx-view_wview/2,yy-view_wview/2,view_wview,view_wview,true)
+instance_activate_region(view_xview,view_yview,view_wview,view_wview,true)
 if selected!=noone
-    instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
+    instance_activate_region(selected.x-view_wview/2,selected.y-view_wview/2,view_wview,view_wview,true)
 
 //alarm[8]=1*/
 alarm[9]=2
@@ -2821,8 +2816,14 @@ with (oUnit)
 {
     if draw&gt;0
     if visible
-        draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
+    if object_index!=oGreatTree{
+        draw_ellipse(ax+x+6.5-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
         ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
+    }
+    else{
+        draw_ellipse(ax+x+15-sprite_get_width(sprite_index)/2,ay+y+15-sprite_get_width(sprite_index)/2,
+        ax+x+15+sprite_get_width(sprite_index)/2,ay+y+15+sprite_get_width(sprite_index)/2,false)
+    }
 }
 draw_set_alpha(1)
 </string>
