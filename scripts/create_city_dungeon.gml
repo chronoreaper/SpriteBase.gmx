@@ -35,15 +35,17 @@ map2[19]="--------------------"
 for (var my=0;my<array_length_1d(map);my++){
     for(var mx=0;mx<string_length(map[my]);mx++){
         create_area(1,real(string_char_at(map[my],mx+1)),arg_x+mx*60-15,arg_y+my*60-15,10000)
+        repeat(irandom(8)+1)
+        tile_add(cityruinsBackground,15*(irandom(11)),60*4,15,15,arg_x+mx*60-15+15*irandom(3),arg_y+my*60-15+15*irandom(3),10000)
     }
 }
 repeat(100){
-    var r1=irandom(19);
+    var r1=irandom(18)+1;
     var r2=irandom(19);
-    if !place_meeting(arg_x+r1*15,arg_y+r2*15,oUnit)
-    if string_char_at(map2[r1],r2)="-"
+    if !place_meeting(arg_x+r1*15-30,arg_y+r2*15-15,oUnit)
+    if string_char_at(map2[r2],r1)="-"
     {
-        instance_create(arg_x+r1*15,arg_y+r2*15,oBuilding)
+        instance_create(arg_x+r1*15-30,arg_y+r2*15-15,oBuilding2)
     }
 }
 var inst=instance_create(arg_x+60*2+15*0,arg_y+2*60+15*0,oGreatTree);

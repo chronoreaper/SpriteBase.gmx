@@ -13,7 +13,7 @@
     <TextureGroup0>1</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>255</width>
-  <height>240</height>
+  <width>240</width>
+  <height>255</height>
   <data>images\cityruinsBackground.png</data>
 </background>

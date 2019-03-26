@@ -2,7 +2,7 @@ while xp>=mxp{
 lv+=1
 xp-=mxp
 mxp+=1//+lv*2
-var sum = (hpg+spg+strg+intg+defg+tecg+lucg+1);
+var sum = max(hpg+spg+strg+intg+defg+tecg+lucg,1);
 if team>=0{
 show_debug_message(object_get_name(object_index)+" Leveled up!")
 show_debug_message("level:"+string(lv-1)+"->"+string(lv))

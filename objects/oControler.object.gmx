@@ -33,6 +33,20 @@ playerColour[0]=c_white
 window_set_size(360*3,240*3+3)
 playerMax=1
 playerMin=-1
+
+for (var i=0;i&lt;playerMax;i++){
+    unitSelect[i]=0
+    unitSkill[i]=0
+    unitWep[i]=0
+    hp[i]=0
+    sp[i]=0
+    a[i]=0
+    int[i]=0
+    d[i]=0
+    t[i]=0
+    l[i]=0
+    }
+
 hit=0
 gridAlpha=0.1
 miss=0
@@ -41,12 +55,13 @@ hold=0
 delay=0
 viewTurn=0
 turnTime=0
-timePhase0=0
-timePhase1=0
-timePhase2=0
-timePhase3=0
-timePhase4=0
-timePhase5=0
+timePhase0=0//selecting
+timePhase1=0//moving
+timePhase3=0//to attack
+timePhase4=0//attacking 1
+timePhase5=0//attacking 2
+timePhase8=0//using skill
+timePhase11=0//skill
 currentNumber=0
 globalvar pixelFont,pixelBlock;
 pixelFont=font_add_sprite_ext(letters,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,1)
@@ -205,11 +220,11 @@ if !place_meeting(rx*15,ry*15,oUnit)
     }    
 }*/
 //enemies
-repeat((room_width/15+room_height/15)/4){
+repeat((room_width/15+room_height/15)/3){
 rx=irandom(room_width/15)//room_width/15);
 ry=irandom(room_height/15)//room_height/15);
 if !place_meeting(rx*15,ry*15,oUnit)
-if ds_grid_get(gridF1,rx,ry)&lt;1
+//if ds_grid_get(gridF1,rx,ry)&lt;1
     {
     var inst=instance_create(rx*15,ry*15,
     choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops));
@@ -262,6 +277,7 @@ menuSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
+global.production=1
 debugging=0
 debugObj=0
 debug1=0;
@@ -760,8 +776,8 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         if phase=0{
             phase=0
             add_all_to_map()
-            x=selected.xx
-            y=selected.yy
+            xx=selected.xx
+            yy=selected.yy
             selected=noone
             }
         else if phase=2{
@@ -1162,6 +1178,7 @@ if (frac(c.item[c.wep])&gt;0
 c.ax=cos(degtorad(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)))*5
 c.ay=-sin(degtorad(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)))*5
 c.alarm[0]=6
+c.dir=round(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)/90)
 //timer before next action
 //var k=return_multi_atk(c.item[c.wep]);
 if (selected.draw=0
@@ -1188,11 +1205,11 @@ if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),5,multi)&gt;
         eff.image_angle=point_direction(c.x,c.y,target.x,target.y)
         audio_play_sound(return_wep_sound(c.item[c.wep]),50,false)
     }
-    return_stat_gain(c.item[c.wep],c)
-    return_wep_dur(c,1)
-    
+    return_stat_gain(c.item[c.wep],c)  
+    return_wep_dur(c,1) 
 }
 else{
+    return_wep_dur(c,0)
     if (!(c.draw=0
     &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)
     ||debugging)
@@ -1423,7 +1440,7 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
             phase=0
             else{ 
                 phase=3
-                if !ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
+                if !ds_grid_get(gridF1,selected.x/15,selected.y/15)&lt;0.2||debugging=1
                 if (selected.x&lt;view_xview+15*2
                 || selected.x&gt;view_xview+view_wview-15*2
                 || selected.y&lt;view_yview+15*2
@@ -1652,7 +1669,7 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
         1-10 - item
         11-20 - skill
         */
-        if c.ai=6{//great tree boss ai
+        /*if c.ai=6{//great tree boss ai
             if c.lastHitBy=noone
                 option=0
             else{ c.ai=7}
@@ -1662,7 +1679,7 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                 c.ai=6
                 c.lastHitBy=noone
                 }
-        }
+        }*/
         
         if (option&gt;10)
         &amp;&amp;(!instance_exists(c.link)||c.ai=2||c.ai=3)
@@ -1726,13 +1743,13 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                 }alarm[0]=1//ai 2 no attack
             }
             //cancel and kill self if no link or link is not in combat
-            if c.ai=8{
+           /* if c.ai=8{
             if !instance_exists(c.link)||c.link.combat&lt;=0{
                 c.hp=0
                 phase=0
                 selected=noone
             }
-            }
+            }*/
         }//end phase 3
         /*if phase=5{//before turn ends after attacking
             if loop&lt;=1{
@@ -1792,15 +1809,17 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
           <argument>
             <kind>1</kind>
             <string>///#5 ai debug Timer
+if global.production=0
 if currentTurn&lt;0{
-if phase=0
-timePhase0++
-else if phase=1
-timePhase1++
-else if phase=3
-timePhase3++
-else if phase=8
-timePhase5++
+switch phase{
+    case 0: timePhase0++; break;
+    case 1: timePhase1++; break;
+    case 3: timePhase3++; break;
+    case 4: timePhase4++; break;
+    case 5: timePhase5++; break;
+    case 8: timePhase8++; break;
+    case 11: timePhase11++; break;
+}
 }
 </string>
           </argument>
@@ -1823,6 +1842,7 @@ timePhase5++
           <argument>
             <kind>1</kind>
             <string>///camera movement
+if global.production=0{
 if keyboard_check(vk_right)//||keyboard_check(keys[7])
     //camTurnDir=1
     view_angle+=2
@@ -1872,6 +1892,7 @@ if camTurnDir!=0
     ||view_angle=270
     ||view_angle=360
     camTurnDir=0
+}
 }
 </string>
           </argument>
@@ -1997,6 +2018,7 @@ for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15+1);j++){
 if ds_grid_get(gridF1,round(xx/15),round(yy/15))&lt;=0
     draw_sprite_ext(sprite_index,image_index,x,y,1,1,image_angle,-1,1)
 
+draw_self()
 </string>
           </argument>
         </arguments>
@@ -2316,6 +2338,7 @@ if over=noone
 ||debugging=1{
     selected=over;
     }
+if menu=-1
 if selected!=noone
 if instance_exists(selected)
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
@@ -2365,7 +2388,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        draw_text(6+bx,215,"SP:"+string(floor(sp))+"/"+string(floor(msp)));
        //draw other stats
        for (var i=0;i&lt;5;i++)
-        draw_sprite_ext(hpBar,0,102+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
+        draw_sprite_ext(hpBar,0,103+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
         //draw_sprite_ext(hpBar,0,102+bx,206,(luc/20)*26,2,0,c_white,1)
 
        draw_set_colour(c_ltgray)
@@ -2484,6 +2507,7 @@ if messTimer&gt;0
           <argument>
             <kind>1</kind>
             <string>///#5 draw menus
+if global.production=0{
 draw_set_colour(c_fuchsia)
 draw_set_font(pixelFont)
 draw_set_alpha(1)
@@ -2493,12 +2517,6 @@ draw_text(2,20,"turNs survived: "+string(turnsSurvive))
 draw_text(2,30,string("RNG: "+string(randNum[randPos])))
 draw_text(2,40,"FPS: "+string(fps))
 turnTime++
-draw_text(2,50,"AI Time: "+string((timePhase0+timePhase1+timePhase2
-+timePhase3+timePhase4+timePhase5)/30))
-draw_text(2,60,"Phase SelectiNg: "+string(timePhase0/30))
-draw_text(2,70,"Phase MoviNg: "+string(timePhase1/30))
-draw_text(2,80,"Phase AttackiNg: "+string(timePhase3/30))
-draw_text(2,90,"Phase skill: "+string(timePhase5/30))
 var unitLeft=0;
 for (var i=0;i&lt;ds_list_size(unitList);i++){
     var char=ds_list_find_value(unitList,i)
@@ -2509,10 +2527,20 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
             unitLeft++;
         }
 }
-draw_text(2,100,"uNit to move: "+string(unitLeft)+"/"+string(ds_list_size(unitList)))
+draw_text(2,50,"uNit to move: "+string(unitLeft)+"/"+string(ds_list_size(unitList)))
 var over=instance_place(xx,yy,oUnit)
 if over!=noone
-    draw_text(2,110,"over : "+string(over.name)+" "+string(over))
+    draw_text(2,60,"over : "+string(over.name)+" "+string(over))
+draw_text(2,70,"AI Time: "+string((timePhase0+timePhase1
++timePhase3+timePhase4+timePhase5+timePhase8+timePhase11)/30))
+draw_text(2,80,"Phase SelectiNg: "+string(timePhase0/30))
+draw_text(2,90,"Phase MoviNg: "+string(timePhase1/30))
+draw_text(2,100,"Phase AttackiNg: "+string(timePhase3/30))
+draw_text(2,110,"AttackiNg1: "+string(timePhase4/30))
+draw_text(2,120,"AttackiNg2: "+string(timePhase5/30))
+draw_text(2,130,"Phase skill: "+string(timePhase11/30))
+draw_text(2,140,"using skill: "+string(timePhase8/30))
+}
 
 draw_set_colour(c_white)
 draw_set_font(pixelBlock)
@@ -2774,7 +2802,7 @@ if menu=0{
         case 0: draw_text_transformed(180,160,"-New game-",2,2,0)
             if mouse_check_button(mb_left)
             ||keyboard_check_pressed(keys[4]){
-            menu=-1
+            menu=1
             }
             break;
         case 1: draw_text_transformed(180,180,"-stats-",2,2,0)break;
@@ -2786,6 +2814,98 @@ if menu=0{
             break;
     }
     draw_set_halign(fa_left)
+}
+else if menu=1{
+ draw_set_halign(fa_center)
+ var i=0
+ var m=0;
+ var p=0
+ var cc=4
+ if mouse_x-view_xview&gt;(1+i)*(view_wview/5)-31
+ if mouse_x-view_xview&lt;(1+i)*(view_wview/5)+30
+ if mouse_y-view_yview&gt;view_hview-170
+    menuSelect=floor((mouse_y-view_yview-090)/42)
+ menuSelect=clamp(menuSelect,0,3)  
+ if keyboard_check_pressed(keys[2]){
+    menuSelect=menuSelect+1
+    }
+else if keyboard_check_pressed(keys[0]){
+    menuSelect=menuSelect-1
+    }
+if menuSelect&gt;3
+    menuSelect=0
+else if menuSelect&lt;0
+    menuSelect=3
+ switch menuSelect{
+    case 0: 
+        if mouse_check_button(mb_left)
+        ||keyboard_check_pressed(keys[4]){
+            unitSelect[i]++
+        }
+        break;
+    case 3:
+        if mouse_check_button(mb_left)
+        ||keyboard_check_pressed(keys[4])
+            menu=-1
+        break;
+}   
+//set limit
+if unitSelect[i]&gt;=cc
+    unitSelect[i]=0
+else if unitSelect[i]&lt;0
+    unitSelect[i]=cc-1
+ draw_set_colour(c_dkgray)
+ draw_rectangle((1+i)*(view_wview/5)-31,10,(1+i)*(view_wview/5)+30,view_hview-10,false)
+ draw_set_colour(c_ltgray)
+ draw_rectangle((1+i)*(view_wview/5)-27,15,(1+i)*(view_wview/5)+26,65,false)
+ draw_sprite_ext(return_unit(unitSelect[i],1,0),0,(1+i)*(view_wview/5),60,2,2,0,-1,1)
+ draw_set_colour(c_orange)
+ draw_text_transformed((1+i)*(view_wview/5)+6,view_hview-170,"Class ",2,2,0)
+ draw_text_transformed((1+i)*(view_wview/5),view_hview-84,"Skill",2,2,0)
+ draw_text_transformed((1+i)*(view_wview/5),view_hview-60,"weapoN",2,2,0)
+ draw_set_colour(c_ltgray)
+ draw_text_transformed((1+i)*(view_wview/5),view_hview-158,return_unit(unitSelect[i],0,0),1,1,0)
+ draw_text((1+i)*(view_wview/5),view_hview-151,string(unitSelect[i]+1)+"/"+string(cc))
+ //draw_text((1+i)*(view_wview/5),view_hview-90,returnSkill(unitSkill[i],0,0,unitSelect[i]))
+ //draw_text((1+i)*(view_wview/5),view_hview-61,return_Wep(unitWep[i],0,0,unitSelect[i]))
+ //var m=returnSkill(unitSkill[i],3,0,unitSelect[i])
+ //var p=return_Wep(unitWep[i],3,0,unitSelect[i])
+ draw_text((1+i)*(view_wview/5),view_hview-73,string(unitSkill[i])+"/"+string(m))
+ draw_text((1+i)*(view_wview/5),view_hview-44,string(unitWep[i]+1)+"/"+string(p+1))
+ draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"ready",2,2,0)
+ draw_set_colour(c_white)
+ return_unit(unitSelect[i],2,i)
+ var ab=a[i],ib=int[i],db=d[i],tb=t[i],lb=l[i]
+ //returnSkill(unitSkill[i],2,i,unitSelect[i])
+ //return_Wep(unitWep[i],2,i,unitSelect[i])
+ //draw stats
+ draw_text((1+i)*(view_wview/5),view_hview-143,"HP:"+string(hp[i]));
+ draw_text((1+i)*(view_wview/5),view_hview-136,"SP:"+string(sp[i]));
+ //with bonus
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-129,a[i]*2,2,0,c_orange,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-123,int[i]*2,2,0,c_orange,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-117,d[i]*2,2,0,c_orange,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-111,t[i]*2,2,0,c_orange,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-105,l[i]*2,2,0,c_orange,1)
+ //base stats
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-129,ab*2,2,0,c_white,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-123,ib*2,2,0,c_white,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-117,db*2,2,0,c_white,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-111,tb*2,2,0,c_white,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-105,lb*2,2,0,c_white,1)
+ draw_set_colour(c_ltgray)
+ draw_text((1+i)*(view_wview/5)-17,view_hview-129,"ATK:");
+ draw_text((1+i)*(view_wview/5)-17,view_hview-123,"INT:");
+draw_text((1+i)*(view_wview/5)-17,view_hview-117,"DEF:");
+draw_text((1+i)*(view_wview/5)-17,view_hview-111,"TEC:");
+draw_text((1+i)*(view_wview/5)-17,view_hview-105,"LUC:");
+ draw_set_colour(c_white)
+ switch menuSelect{
+     case 0: draw_text((1+i)*(view_wview/5),view_hview-158,"-"+return_unit(unitSelect[i],0,0)+"-")break;
+     //case 1: draw_text((1+i)*(view_wview/5),view_hview-90,"-"+returnSkill(unitSkill[i],0,0,unitSelect[i])+"-")break;
+    // case 2: draw_text((1+i)*(view_wview/5),view_hview-61,"-"+return_Wep(unitWep[i],0,0,unitSelect[i])+"-")break;
+     case 3: draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"-ready-",2,2,0)break;
+ }
 }
 </string>
           </argument>
@@ -2864,6 +2984,8 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     draw_set_alpha(1)*/
 var c=selected
 var path=path_add()
+var ix=-1
+var iy=-1
 mp_grid_clear_cell(grid,c.x/15,c.y/15)
 //show where you can move
     for (var i=-c.mov*15;i&lt;=c.mov*15;i+=15){
@@ -2874,11 +2996,20 @@ mp_grid_clear_cell(grid,c.x/15,c.y/15)
             draw_set_alpha(0.8)
             draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
             draw_set_alpha(1)
+            if xx=i+c.x
+            if yy=j+c.y{
+                    ix=xx
+                    iy=yy
+                }
             }
         }
     }
 
 path_delete(path)
+if ix!=-1&amp;&amp;iy!=-1
+{
+//draw_sprite_ext(infoSprite,0,ix+7,iy+7,1,1,-view_angle,-1,1)
+}
 }
 </string>
           </argument>
@@ -2925,7 +3056,6 @@ if selected=noone{
             }
         }
         //draw_set_alpha(1)
-    
         path_delete(path)
     }
     selected=noone
@@ -3166,7 +3296,7 @@ switch area_type{
           <argument>
             <kind>1</kind>
             <string>///last
-draw_self()
+//draw_self()
 </string>
           </argument>
         </arguments>
@@ -3188,6 +3318,8 @@ draw_self()
           <argument>
             <kind>1</kind>
             <string>///debugging, make objects
+if global.production=0
+{
 if keyboard_check_pressed(ord('K'))
     randPos++
 else if keyboard_check_pressed(ord('L'))
@@ -3241,6 +3373,7 @@ if gridAlpha&gt;0
 if keyboard_check_pressed(ord('P'))
 if gridAlpha&lt;1
     gridAlpha+=0.1
+}
 </string>
           </argument>
         </arguments>
@@ -3263,10 +3396,12 @@ if gridAlpha&lt;1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if debugging=1
+            <string>if global.production=0{
+if debugging=1
     debugging=0
 else
     debugging=1
+}
 </string>
           </argument>
         </arguments>

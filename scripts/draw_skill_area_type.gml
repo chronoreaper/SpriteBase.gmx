@@ -240,7 +240,7 @@ switch arg_skill{
                     draw_set_colour(c_orange)
                 else if inst.weakness[return_skill_type(arg_skill)]<1
                     draw_set_colour(c_ltgray)
-                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle),string(floor(c.stats[2,4])),1,1,-view_angle)
+                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle),string(floor(c.stats[2,4]/2)+2),1,1,-view_angle)
                 draw_set_font(pixelBlock)
                 draw_set_colour(c_lime)
                 draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"heal",1,1,-view_angle)
@@ -352,7 +352,7 @@ switch arg_skill{
                 draw_set_colour(c_black)
                 draw_set_halign(fa_center)
                 draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y)))+"%",1,1,-view_angle)
-                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle),floor(arg_source.stats[2,4]/2)+2,1,1,-view_angle)
+                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle),floor(arg_source.stats[2,4]),1,1,-view_angle)
                 draw_set_font(pixelBlock)
                 draw_set_colour(c_orange)
                 draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"shield",1,1,-view_angle)

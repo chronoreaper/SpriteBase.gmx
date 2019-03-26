@@ -34,6 +34,9 @@ ay=0
 phase=0
 action=0
 
+//unit type
+summon=0
+
 team=0
 
 path=path_add()
@@ -129,8 +132,8 @@ weakness
 3 - burn
 4 - rooted
 5 - slow
-6 - 
-7 -
+6 - regen
+7 - stun
 8 - 
 9 - 
 */
@@ -474,7 +477,7 @@ if draw&gt;0
     if oControler.currentTurn&gt;=0
     if wait=0
     if oControler.selected=noone
-    //if oControler.selected=id
+    || oControler.selected=id
     //if oControler.phase=0
     {
         draw_sprite_ext(box14x14,0,x,y,1,1,0,c_yellow,0.5)
@@ -569,7 +572,7 @@ if dir2!=1
 if dir2!=2
     draw_weapon()
 if status[0]&gt;0
-    draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,1,1,-view_angle,-1,0.5)
+    draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,size,size,-view_angle,-1,0.5)
 }//end draw
 }
 </string>

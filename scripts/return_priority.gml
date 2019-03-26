@@ -40,12 +40,8 @@ for(var i=0;i<10;i++){
                 
             //boss skills
             case -1:
-                if arg_char.lastHitBy!=noone
-                if arg_char.ai=6{
-                    num=99
-                }
-                break
-            case -2:num=1 break
+                num=1
+            //case -2:num=1 break
         }//end switch
         //change priorities
         if num!=0

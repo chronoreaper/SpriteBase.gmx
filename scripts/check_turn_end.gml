@@ -29,10 +29,11 @@ if fin=1{
     if currentTurn>=0{
     timePhase0=0
     timePhase1=0
-    timePhase2=0
     timePhase3=0
     timePhase4=0
-    timePhase5=0}
+    timePhase5=0
+    timePhase8=0
+    timePhase11=0}
     //if currentTurn=0
     //show_debug_message(ds_list_size(list))
     for(i=0;i<ds_list_size(list);i++){
@@ -65,19 +66,19 @@ if fin=1{
     if !tile_layer_find(10000,rx*15,ry*15)
         {
         var inst;
-        if irandom(2){
+        if irandom(3){
         inst=instance_create(rx*15,ry*15,
         choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops));
         inst.team=-1
         }
         else{
-            if irandom(1){
+            if irandom(2){
             inst=instance_create(rx*15,ry*15,
             choose(oFighter,oArcher,oMage,oHealer,oMerchant));
             inst.team=1
             inst.ai=2
             }
-            else{
+            else if irandom(1){
                 inst=instance_create(rx*15,ry*15,
                 choose(oChest));
                 inst.team=0.1
@@ -107,14 +108,15 @@ if fin=1{
         with c
         if round(team)=turn{
             var unit=id
-            with (oControler){
-                ds_list_add(unitList,unit)
-                selected=unit
-                update_fog()
-                selected=noone
-                }
             //start of every turn action
-            sp+=1
+            if summon=0{
+                sp+=1
+            }else{
+                sp--
+                if sp<=0
+                    hp=0                
+            }
+            
             aggro=noone
             if sp>msp
                 sp=msp
@@ -124,6 +126,13 @@ if fin=1{
             for (var j=0;j<10;j++)
                 if status[j]!=0
                     status[j]-=sign(status[j])
+            if hp>0
+            with (oControler){
+                ds_list_add(unitList,unit)
+                selected=unit
+                update_fog()
+                selected=noone
+                }
         }
     }
     ds_list_sort(unitList,true)

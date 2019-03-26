@@ -31,7 +31,7 @@ idle=1
 
 hp=15
 mhp=hp
-sp=5
+sp=3
 msp=sp
 stats[2,0]=2
 stats[2,1]=1
@@ -40,7 +40,7 @@ stats[2,3]=0
 stats[2,4]=1
 //per level
 hpp=0.8
-spp=0.6
+spp=0.3
 stats[1,0]=1
 stats[1,1]=0.8
 stats[1,2]=0.8

@@ -205,6 +205,7 @@
     <sprite>sprites\diamond</sprite>
     <sprite>sprites\hitbox</sprite>
     <sprite>sprites\hitbox3</sprite>
+    <sprite>sprites\infoSprite</sprite>
     <sprite>sprites\levelupsprite</sprite>
     <sprite>sprites\atkInfo</sprite>
     <sprite>sprites\unit_marker</sprite>
@@ -258,6 +259,7 @@
     <script>scripts\return_skill_has_target.gml</script>
     <script>scripts\return_check_skill_target.gml</script>
     <script>scripts\return_power.gml</script>
+    <script>scripts\return_unit.gml</script>
     <script>scripts\message_create.gml</script>
     <script>scripts\calculate_damage.gml</script>
     <script>scripts\update_fog.gml</script>
@@ -306,6 +308,7 @@
     </objects>
     <objects name="objects">
       <object>objects\oBuilding</object>
+      <object>objects\oBuilding2</object>
       <object>objects\oLamppost</object>
       <object>objects\oTrafficLight_l</object>
       <object>objects\oTrafficLight_r</object>
@@ -340,6 +343,9 @@
     </objects>
     <object>objects\object47</object>
   </objects>
+  <timelines name="timelines">
+    <timeline>timelines\timeline0</timeline>
+  </timelines>
   <rooms name="rooms">
     <room>rooms\room0</room>
     <room>rooms\testRoom</room>
