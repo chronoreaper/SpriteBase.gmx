@@ -270,7 +270,7 @@ switch arg_skill{
                     draw_set_colour(c_orange)
                 else if inst.weakness[return_skill_type(arg_skill)]<1
                     draw_set_colour(c_ltgray)
-                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), return_dmg(return_wep_dmg(c.item[c.wep],c)*2,0,inst.stats[2,2]),1,1,-view_angle)
+                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), return_dmg(return_wep_dmg(c.item[c.wep],c)*2,arg_source.stats[2,3],inst.stats[2,2]),1,1,-view_angle)
                 draw_set_font(pixelBlock)
                 draw_set_colour(c_red)
                 draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"attack",1,1,-view_angle)
@@ -300,7 +300,7 @@ switch arg_skill{
                     draw_set_colour(c_orange)
                 else if inst.weakness[return_skill_type(arg_skill)]<1
                     draw_set_colour(c_ltgray)
-                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), return_dmg(return_wep_dmg(c.item[c.wep],c)+2,0,inst.stats[2,2]),1,1,-view_angle)
+                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), return_dmg(return_wep_dmg(c.item[c.wep],c)+2,arg_source.stats[2,3],inst.stats[2,2]),1,1,-view_angle)
                 draw_set_font(pixelBlock)
                 draw_set_colour(c_red)
                 draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"attack",1,1,-view_angle)

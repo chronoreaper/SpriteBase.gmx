@@ -28,7 +28,7 @@
             <string>event_inherited()
 
 lv=5
-hp=50
+hp=30
 mhp=hp
 sp=10
 msp=sp
@@ -38,7 +38,7 @@ stats[2,2]=6
 stats[2,3]=0
 stats[2,4]=0
 //per level
-hpp=1.5
+hpp=3
 spp=1
 stats[1,0]=2
 stats[1,1]=1

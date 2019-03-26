@@ -29,18 +29,18 @@
 weakness[4]=2
 skill[0]=-1
 skill[1]=-2
-lv=10
-hp=250
+lv=5
+hp=150
 mhp=hp
-sp=25
+sp=15
 msp=sp
 stats[2,0]=1
-stats[2,1]=17
-stats[2,2]=25
+stats[2,1]=8
+stats[2,2]=10
 stats[2,3]=0
-stats[2,4]=13
+stats[2,4]=7
 //per level
-hpp=1.8
+hpp=5
 spp=1.5
 stats[1,0]=0
 stats[1,1]=1

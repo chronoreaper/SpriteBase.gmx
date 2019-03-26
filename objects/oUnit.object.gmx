@@ -550,9 +550,9 @@ if viewSprite&lt;0
 viewSprite=viewSprite%4
 }
 
-var dir2=abs(dir-round(view_angle/90))
-if dir2=4
-    dir2=3
+var dir2=abs(dir+round(view_angle/90))
+if dir2&gt;=4
+    dir2-=4
 if dir2=1||dir2=2
     draw_weapon()
 if oControler.selected=id

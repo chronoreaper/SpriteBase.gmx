@@ -259,8 +259,8 @@ switch floor(arg_skill){
         if arg_targ!=noone{
             //var base =-floor(arg_source.stats[2,4]);
             //calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),8,1)
-            
-            arg_targ.hp+=floor(arg_source.stats[2,4]/2)+2
+            var value=floor(arg_source.stats[2,4]/2)+2;
+            arg_targ.hp+=value
             arg_source.sp-=8
             arg_source.xp+=8
             arg_source.spg+=1
@@ -272,7 +272,7 @@ switch floor(arg_skill){
                 audio_play_sound(sHeal,50,false)
             }
             var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
-            txt.text=floor(arg_source.stats[2,4])
+            txt.text=value
             txt.colour=c_lime
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -306,7 +306,7 @@ switch floor(arg_skill){
             arg_source.alarm[0]=6
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=crossSlash
-            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)*2,0,arg_targ.stats[2,2]);
+            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)*2,arg_source.stats[2,3],arg_targ.stats[2,2]);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),5,1)
             if arg_source.draw>0{
                 if dmg>0
@@ -339,7 +339,7 @@ switch floor(arg_skill){
             eff.image_blend=c_red
             eff.rotate=false
             eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
-            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)+2,0,arg_targ.stats[2,2]);
+            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)+2,arg_source.stats[2,3],arg_targ.stats[2,2]);
             var dmg =calculate_damage(arg_source,arg_targ,base,
                 return_skill_acc(arg_skill,abs(arg_source.x-arg_targ.x)/15+abs(arg_source.y-arg_targ.y)/15)
                 ,return_skill_type(arg_skill),5,1)
@@ -415,8 +415,8 @@ switch floor(arg_skill){
                 var temp
                 var k=0
                 repeat(2){
-                    var rx=irandom_range(-4,4)
-                    var ry=irandom_range(-4,4)
+                    var rx=irandom_range(-5,6)
+                    var ry=irandom_range(-5,6)
                     var atarg=instance_place(arg_source.x+rx*15,arg_source.y+ry*15,oUnit)
                     if atarg!=noone{
                         if atarg.team!=arg_source.team{
@@ -429,17 +429,15 @@ switch floor(arg_skill){
                         else
                             temp=instance_create(arg_source.x+rx*15,arg_source.y+ry*15,oVine);
                         temp.team=arg_source.team
-                        temp.lv=m+1
+                        //temp.lv=m+1
                         temp.link=arg_source
                         temp.ai=8
                         temp.summon=1
                         with temp{
-                            hp+=hpp*m
-                            mhp+=hpp*m
-                            sp+=spp*m
-                            msp+=spp*m
-                            for (var j=0;j<=4;j++)
-                                stats[2,j]+=stats[1,j]*m
+                            repeat(m){
+                                xp=mxp
+                                levelup()
+                                }
                         }
                         var inst=instance_create(temp.x,temp.y,oEff);
                         inst.sprite_index=spawn_eff
