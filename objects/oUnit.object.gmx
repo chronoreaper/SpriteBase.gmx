@@ -271,6 +271,8 @@ if xprevious!=x
 }
 if path_position=1||path_position=0
 {
+    if dir&gt;3
+        dir-=4
     if idle=0{
    image_speed=0
    if !object_is_ancestor(object_index,oObj)

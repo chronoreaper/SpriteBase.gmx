@@ -228,6 +228,7 @@ switch floor(arg_skill){
         if arg_source.sp>=3 {
         if arg_targ!=noone{
             arg_source.sp-=3
+            arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90)
             arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.alarm[0]=6

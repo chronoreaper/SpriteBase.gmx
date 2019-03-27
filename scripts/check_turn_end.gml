@@ -36,10 +36,15 @@ if fin=1{
     timePhase11=0}
     //if currentTurn=0
     //show_debug_message(ds_list_size(list))
+    //ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
+    //set wait to 0
     for(i=0;i<ds_list_size(list);i++){
         var inst=ds_list_find_value(list,i);
         instance_activate_object(inst)
         inst.wait=0
+            selected=inst
+            update_fog()
+            selected=noone
         }
     if currentTurn=-1{
          ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
@@ -60,13 +65,13 @@ if fin=1{
     //spawn monsters
     var rx=irandom(room_width/15)//room_width/15);
     var ry=irandom(room_height/15)//room_height/15);
-    if irandom(2)=0
+    //if irandom(1)=0
     if !place_meeting(rx*15,ry*15,oUnit)
     if ds_grid_get(gridF1,rx,ry)<1
     if !tile_layer_find(10000,rx*15,ry*15)
         {
         var inst;
-        if irandom(3){
+        if irandom(2){
         inst=instance_create(rx*15,ry*15,
         choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops));
         inst.team=-1
@@ -74,7 +79,7 @@ if fin=1{
         else{
             if irandom(2){
             inst=instance_create(rx*15,ry*15,
-            choose(oFighter,oArcher,oMage,oHealer,oMerchant));
+            choose(oFighter,oArcher,oMage,oHealer));
             inst.team=1
             inst.ai=2
             }

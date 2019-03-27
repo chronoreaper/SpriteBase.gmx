@@ -26,13 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
-weakness[4]=0.8
+weakness[4]=1.2
 
 hp=16
 mhp=hp
 sp=3
 msp=sp
-stats[2,0]=2
+stats[2,0]=1
 stats[2,1]=1
 stats[2,2]=3
 stats[2,3]=0
