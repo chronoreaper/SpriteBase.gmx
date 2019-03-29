@@ -17,10 +17,10 @@ switch index{
                 hp[playerIndex]=15
                 sp[playerIndex]=8
                 a[playerIndex]=3
-              int[playerIndex]=3
+              int[playerIndex]=2
                 d[playerIndex]=3
                 t[playerIndex]=3
-                l[playerIndex]=3
+                l[playerIndex]=2
                 break;
             case 3:return oFighter break;
         }

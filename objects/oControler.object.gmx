@@ -926,7 +926,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             menuSel2=-1
                             eventOver=inst;
                         }
-                        if inst.team&gt;=0{
+                        else if inst.team&gt;=0&amp;&amp;!object_is_ancestor(inst,oObj){
                             inst.team=c.team
                             inst.wait=1
                             ds_list_add(unitList,inst)
@@ -1212,7 +1212,7 @@ if (selected.draw=0
 else
     alarm[0]=max(13)
 //calculate dmg
-var acc=return_wep_acc(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y));
+var acc=return_wep_acc(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y),c,target);
 var multi=1;
 if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(250))))
     multi*=2+(c.stats[2,3])*0.02*0.8
@@ -2082,7 +2082,7 @@ if phase=3{
             draw_text_transformed(x+7-17*dsin(-view_angle),y+7-17*dcos(view_angle),"trade",1,1,-view_angle)
             draw_set_halign(fa_left)
         }
-        else if inst.team&gt;0{
+        else if inst.team&gt;0&amp;&amp;!object_is_ancestor(inst,oObj){
             draw_set_font(pixelBlock)
             draw_set_halign(fa_center)
             draw_set_colour(c_blue)
@@ -2094,7 +2094,7 @@ if phase=3{
             draw_sprite_ext(atkInfo,0,x+7+10*dsin(view_angle),y+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
             draw_set_colour(c_black)
             draw_set_halign(fa_center)
-            draw_text_transformed(x+7-26*dsin(-view_angle),y+7-26*dcos(view_angle),string(floor(return_wep_acc(c.item[c.wep],abs(c.x-inst.x)+abs(c.y-inst.y))))+"%",1,1,-view_angle)
+            draw_text_transformed(x+7-26*dsin(-view_angle),y+7-26*dcos(view_angle),string(floor(return_wep_acc(c.item[c.wep],abs(c.x-inst.x)+abs(c.y-inst.y),c,inst)))+"%",1,1,-view_angle)
             if inst.weakness[return_wep_type(c.item[c.wep])]&gt;1
                 draw_set_colour(c_orange)
             else if inst.weakness[return_wep_type(c.item[c.wep])]&lt;1
@@ -3182,7 +3182,7 @@ var range=return_wep_range(c.item[c.wep])
                             itext="trade"
                         }
                     }
-                else if inst.team&gt;=0{
+                else if inst.team&gt;=0&amp;&amp;!object_is_ancestor(inst,oObj){
                     draw_set_colour(c_blue)
                 }
                 else{
