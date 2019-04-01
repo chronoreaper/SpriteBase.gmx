@@ -45,7 +45,7 @@ switch floor(arg_skill){
                 var cinst=instance_place(x,y,oUnit);
                 while cinst!=noone{
                     if (cinst!=arg_source){
-                        var dmg=return_dmg(10+arg_source.lv,0,cinst.stats[2,2]);
+                        var dmg=return_dmg(10+arg_source.lv,0,cinst.stats[2,2],return_skill_type(arg_skill),arg_source,cinst);
                         calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0,arg_source,cinst),return_skill_type(arg_skill),1,1)
                     }
                     instance_deactivate_object(cinst);
@@ -73,7 +73,7 @@ switch floor(arg_skill){
                 var cinst=instance_place(x,y,oUnit);
                 while cinst!=noone{
                     if (cinst!=arg_source){
-                        var dmg=return_dmg(10+arg_source.lv,0,cinst.stats[2,2]);
+                        var dmg=return_dmg(10+arg_source.lv,0,cinst.stats[2,2],return_skill_type(arg_skill),arg_source,cinst);
                         calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0,arg_source,cinst),return_skill_type(arg_skill),1,1)
                     }
                     instance_deactivate_object(cinst);
@@ -93,7 +93,7 @@ switch floor(arg_skill){
             arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.alarm[0]=6
-            var base =return_dmg(arg_source.stats[2,0],0,arg_targ.stats[2,2]);
+            var base =return_dmg(arg_source.stats[2,0],0,arg_targ.stats[2,2],return_skill_type(arg_skill),arg_source,cinst);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
                 if dmg>0{
                 //effect
@@ -234,7 +234,7 @@ switch floor(arg_skill){
             arg_source.alarm[0]=6
             arg_source.intg+=1
             arg_source.spg+=1
-            var base =return_dmg(arg_source.stats[2,1]+2,0,arg_targ.stats[2,2]);
+            var base =return_dmg(arg_source.stats[2,1]+2,0,arg_targ.stats[2,2],return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -307,7 +307,7 @@ switch floor(arg_skill){
             arg_source.alarm[0]=6
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=crossSlash
-            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)*2,arg_source.stats[2,3],arg_targ.stats[2,2]);
+            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)*2,arg_source.stats[2,3],arg_targ.stats[2,2],return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
             if arg_source.draw>0{
                 if dmg>0
@@ -340,7 +340,7 @@ switch floor(arg_skill){
             eff.image_blend=c_red
             eff.rotate=false
             eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
-            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)+2,arg_source.stats[2,3],arg_targ.stats[2,2]);
+            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)+2,arg_source.stats[2,3],arg_targ.stats[2,2],return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,
                 return_skill_acc(arg_skill,abs(arg_source.x-arg_targ.x)/15+abs(arg_source.y-arg_targ.y)/15,arg_source,arg_targ)
                 ,return_skill_type(arg_skill),5,1)
@@ -421,7 +421,7 @@ switch floor(arg_skill){
                     var atarg=instance_place(arg_source.x+rx*15,arg_source.y+ry*15,oUnit)
                     if atarg!=noone{
                         if atarg.team!=arg_source.team{
-                            var base=return_dmg(arg_source.stats[2,1],0,atarg.stats[2,2])
+                            var base=return_dmg(arg_source.stats[2,1],0,atarg.stats[2,2],return_skill_type(arg_skill),arg_source,atarg)
                             calculate_damage(arg_source,atarg,base,return_skill_acc(arg_skill,0,arg_source,atarg),return_skill_type(arg_skill),5,1)
                         }
                     }else{

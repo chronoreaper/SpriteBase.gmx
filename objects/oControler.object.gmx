@@ -1216,7 +1216,7 @@ var acc=return_wep_acc(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y),c,targe
 var multi=1;
 if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(250))))
     multi*=2+(c.stats[2,3])*0.02*0.8
-var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],target.stats[2,2]);
+var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],target.stats[2,2],return_wep_type(c.item[c.wep]),c,target);
 var xpgain=3
 if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),5,multi)&gt;0{
     //create eff
@@ -2101,11 +2101,11 @@ if phase=3{
                 draw_set_colour(c_ltgray)
             if return_multi_atk(c.item[c.wep])==1{
                 draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-                    return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2]),1,1,-view_angle)
+                    return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2],return_wep_type(c.item[c.wep]),c,inst),1,1,-view_angle)
             }
             else{
                 draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-                    string(return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2]))+"x"+string(return_multi_atk(c.item[c.wep]))
+                    string(return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2],return_wep_type(c.item[c.wep]),c,inst))+"x"+string(return_multi_atk(c.item[c.wep]))
                         ,1,1,-view_angle)
             }
             draw_set_font(pixelBlock)

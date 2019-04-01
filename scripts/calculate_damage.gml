@@ -31,9 +31,9 @@ if  get_random()<arg_acc
         txt.colour=c_ltgray
         
     if arg_dmg>=0
-        dmg=ceil(arg_dmg*arg_multi*weak);
+        dmg=ceil(arg_dmg*arg_multi);
     else
-        dmg=floor(arg_dmg*arg_multi*weak);
+        dmg=floor(arg_dmg*arg_multi);
     if arg_targ.status[0]>dmg{
         arg_targ.status[0]-=dmg
         dmg=0
