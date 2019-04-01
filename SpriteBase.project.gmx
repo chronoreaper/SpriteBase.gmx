@@ -148,6 +148,7 @@
       <sprite>sprites\healEff</sprite>
       <sprite>sprites\poison_splash</sprite>
       <sprite>sprites\magicBurnEff</sprite>
+      <sprite>sprites\root_eff</sprite>
       <sprite>sprites\rootedSprite</sprite>
       <sprite>sprites\shieldSprite</sprite>
     </sprites>

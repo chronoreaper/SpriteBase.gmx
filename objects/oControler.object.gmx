@@ -1865,9 +1865,9 @@ switch phase{
             <kind>1</kind>
             <string>///camera movement
 if global.production=0{
-if keyboard_check(vk_right)//||keyboard_check(keys[7])
+/*if keyboard_check(vk_right)//||keyboard_check(keys[7])
     //camTurnDir=1
-    view_angle+=2
+    view_angle+=2*/
 if keyboard_check(ord('R')){
     view_angle=0
     viewTurn=0
@@ -2898,8 +2898,12 @@ else if menuSelect&lt;0
  switch menuSelect{
     case 0: 
         if mouse_check_button_pressed(mb_left)
-        ||keyboard_check_pressed(keys[4]){
+        ||keyboard_check_pressed(keys[4])
+        ||keyboard_check_pressed(keys[3]){
             unitSelect[i]++
+        }
+        else if keyboard_check_pressed(keys[1]){
+            unitSelect[i]--
         }
         break;
     case 3:
@@ -3435,9 +3439,9 @@ if keyboard_check_pressed(vk_up)
     debugObj++
 if keyboard_check_pressed(vk_down)
     debugObj--
-if keyboard_check(vk_left)//||keyboard_check(keys[6])
+/*if keyboard_check(vk_left)//||keyboard_check(keys[6])
     view_angle-=2
-    //camTurnDir=-1
+    //camTurnDir=-1*/
 debugObj=clamp(debugObj,0,object47-oUnit-1)
 var obj=noone
 if debugObj&gt;0
