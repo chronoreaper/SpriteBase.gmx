@@ -33,7 +33,7 @@ stats[2,2]=8
 unit=chest_r
 name="chest"
 var rand=choose(2,3,7,8);
-item[0]=rand+return_item_usage_default(rand)
+item[0]=rand+return_item_usage_default(rand)//irandom(return_item_usage_default(rand)*10-1)/10+0.01
 
 dmg=hp
 </string>

@@ -28,9 +28,9 @@
             <string>event_inherited()
 
 hp=100+irandom(800)
-mhp=hp
-stats[2,2]=50+irandom(100)
-sprite_index=building002+irandom(1)
+mhp=1000
+stats[2,2]=10+irandom(50)
+sprite_index=building002+irandom(2)
 unit=sprite_index
 name="old buildiNg"
 

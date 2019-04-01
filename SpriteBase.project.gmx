@@ -106,6 +106,7 @@
       <sprite>sprites\building001</sprite>
       <sprite>sprites\building002</sprite>
       <sprite>sprites\building003</sprite>
+      <sprite>sprites\building004</sprite>
       <sprite>sprites\bench_r</sprite>
       <sprite>sprites\bench_u</sprite>
       <sprite>sprites\bench_l</sprite>
@@ -211,6 +212,7 @@
     <sprite>sprites\unit_marker</sprite>
     <sprite>sprites\hitbox2</sprite>
     <sprite>sprites\box14x14</sprite>
+    <sprite>sprites\box7x7</sprite>
     <sprite>sprites\sprite47</sprite>
   </sprites>
   <backgrounds name="background">

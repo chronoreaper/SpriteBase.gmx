@@ -2447,7 +2447,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        draw_text(6+bx,215,"SP:"+string(floor(sp))+"/"+string(floor(msp)));
        //draw other stats
        for (var i=0;i&lt;5;i++)
-        draw_sprite_ext(hpBar,0,103+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
+        draw_sprite_ext(hpBar,0,104+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
         //draw_sprite_ext(hpBar,0,102+bx,206,(luc/20)*26,2,0,c_white,1)
 
        draw_set_colour(c_ltgray)
@@ -3072,8 +3072,8 @@ mp_grid_clear_cell(grid,c.x/15,c.y/15)
         for (var j=-c.mov*15;j&lt;=c.mov*15;j+=15){
         if mp_grid_path(grid,path,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
         if path_get_number(path)-1&lt;=c.mov{
-            draw_set_colour(c_teal)
-            draw_set_alpha(0.8)
+            draw_set_colour(c_aqua)
+            draw_set_alpha(0.5)
             draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
             draw_set_alpha(1)
             if xx=i+c.x
@@ -3128,7 +3128,7 @@ if selected=noone{
             for (var j=-range*15;j&lt;=range*15;j+=15){
             if mp_grid_path(grid,path,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
             if path_get_number(path)-1&lt;=c.mov{
-                draw_sprite_ext(box14x14,0,i+c.x,j+c.y,1,1,0,c_teal,0.5)
+                draw_sprite_ext(box7x7,0,i+c.x+3,j+c.y+3,1,1,0,c_aqua,0.5)
                 //draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
                 }
             }
@@ -3467,6 +3467,15 @@ if keyboard_check_pressed(vk_backspace)
             instance_destroy()
         alarm[10]=1
     }
+}
+
+if keyboard_check_pressed(ord('I')){
+    var inst=instance_place(x,y,oUnit)
+        if inst!=noone
+            with inst{
+                xp=mxp
+                levelup()
+            }
 }
 
 //cnage grid apha
