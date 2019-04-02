@@ -20,7 +20,7 @@ for (var i=-v;i<=v;i+=1){
                 inst=collision_line(arx*15+7,ary*15+7,(arx+i)*15+7,(ary+j)*15+7,oBlock,false,true)
             }
             instance_activate_object(oBlock)
-            if c=1&&on=1
+            if (c=1&&on=1)
             ||c=0
             if arx+i>0
             if ary+j>0

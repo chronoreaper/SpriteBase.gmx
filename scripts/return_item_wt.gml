@@ -9,6 +9,7 @@ switch floor(arg_item){
     case 7: return 5
     case 8: return 7
     case 9: return 9
+    case 10: return 1
     case 50: return 999
     case 51: return 999
     default:return 0

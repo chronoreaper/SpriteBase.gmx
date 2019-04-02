@@ -130,6 +130,7 @@
       <sprite>sprites\rock</sprite>
       <sprite>sprites\club</sprite>
       <sprite>sprites\sword</sprite>
+      <sprite>sprites\stick</sprite>
     </sprites>
     <sprites name="eff">
       <sprite>sprites\spawn_eff</sprite>
@@ -308,6 +309,7 @@
       <object>objects\oBow</object>
       <object>objects\oSword</object>
       <object>objects\oClub</object>
+      <object>objects\oStick</object>
     </objects>
     <objects name="objects">
       <object>objects\oBuilding</object>

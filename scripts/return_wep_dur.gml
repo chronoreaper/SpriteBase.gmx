@@ -62,6 +62,16 @@ with arg_unit{
             wep=10
         }
         break;
+        case 10:
+        if hit_miss=1
+            item[wep]-=0.01
+        if frac(item[wep])=0{
+            with oControler
+                message_create("stick broke")
+            item[wep]=0
+            wep=10
+        }
+        break;
         default: break
     }
 }

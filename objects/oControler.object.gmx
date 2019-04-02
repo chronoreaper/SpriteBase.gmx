@@ -926,7 +926,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             menuSel2=-1
                             eventOver=inst;
                         }
-                        else if inst.team&gt;=0&amp;&amp;!object_is_ancestor(inst.object_index,oObj){
+                        else if inst.team&gt;=0&amp;&amp;!object_is_ancestor(inst.object_index,oObj)&amp;&amp;(abs(xx-c.x)+abs(yy-c.y))/15&lt;=1{
                             inst.team=c.team
                             inst.wait=1
                             ds_list_add(unitList,inst)
@@ -1462,10 +1462,10 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
             else{ 
                 phase=3
                 if !ds_grid_get(gridF1,selected.x/15,selected.y/15)&lt;0.2||debugging=1
-                if (selected.x&lt;view_xview+15*2
-                || selected.x&gt;view_xview+view_wview-15*2
-                || selected.y&lt;view_yview+15*2
-                || selected.y&gt;view_yview+view_hview-15*2)
+                if (selected.x&lt;view_xview+15*3
+                || selected.x&gt;view_xview+view_wview-15*3
+                || selected.y&lt;view_yview+15*3
+                || selected.y&gt;view_yview+view_hview-15*3)
                 //||debugging=1
                 {
                     xx=selected.x
@@ -1650,10 +1650,10 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                         xx=cx
                         yy=cy
                    }
-                   if (cx&lt;view_xview+15*2
-                    || cx&gt;view_xview+view_wview-15*2
-                    || cy&lt;view_yview+15*2
-                    || cy&gt;view_yview+view_hview-15*2)
+                   if (cx&lt;view_xview+15*3
+                    || cx&gt;view_xview+view_wview-15*3
+                    || cy&lt;view_yview+15*3
+                    || cy&gt;view_yview+view_hview-15*3)
                     //||debugging=1
                     {
                         xx=cx
@@ -2082,7 +2082,7 @@ if phase=3{
             draw_text_transformed(x+7-17*dsin(-view_angle),y+7-17*dcos(view_angle),"trade",1,1,-view_angle)
             draw_set_halign(fa_left)
         }
-        else if inst.team&gt;0&amp;&amp;!object_is_ancestor(inst.object_index,oObj){
+        else if inst.team&gt;0&amp;&amp;!object_is_ancestor(inst.object_index,oObj)&amp;&amp;abs((inst.x-selected.x)/15)+abs((inst.y-selected.y)/15)&lt;=1{
             draw_set_font(pixelBlock)
             draw_set_halign(fa_center)
             draw_set_colour(c_blue)
@@ -3186,7 +3186,7 @@ var range=return_wep_range(c.item[c.wep])
                             itext="trade"
                         }
                     }
-                else if inst.team&gt;=0&amp;&amp;!object_is_ancestor(inst.object_index,oObj){
+                else if inst.team&gt;=0&amp;&amp;!object_is_ancestor(inst.object_index,oObj)&amp;&amp;abs(i/15)+abs(j/15)&lt;=1{
                     draw_set_colour(c_blue)
                 }
                 else{
