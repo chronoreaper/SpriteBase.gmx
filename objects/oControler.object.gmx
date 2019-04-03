@@ -1498,7 +1498,7 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
     if selected.marker=1
     if selected.combat&lt;=0
     {
-        selected.hp=min(selected.hp+1,selected.mhp)
+        selected.hp=min(selected.hp+selected.lv,selected.mhp)
     }
     /*
     phase

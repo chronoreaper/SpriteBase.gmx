@@ -415,7 +415,7 @@ switch floor(arg_skill){
                 var m=arg_source.lv-1;
                 var temp
                 var k=0
-                repeat(2){
+                repeat(3){
                     var rx=irandom_range(-5,6)
                     var ry=irandom_range(-5,6)
                     var atarg=instance_place(arg_source.x+rx*15,arg_source.y+ry*15,oUnit)
