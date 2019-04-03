@@ -884,6 +884,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         //show_debug_message("mouse") 
         //show_debug_message(window_mouse_get_y()/display_get_height())
         //change base menu selection
+        if controler=0
         if mouse_x-view_xview&gt;270
         &amp;&amp; mouse_y-view_yview&gt;150
         &amp;&amp; mouse_y-view_yview&lt;165+60
@@ -955,6 +956,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             keyboard_check_pressed(keys[2])
                 menuSel--
             //change item menu selection
+            if controler=0
             if mouse_x-view_xview&gt;270
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226
@@ -972,6 +974,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             else if mouse_wheel_down()
             ||keyboard_check_pressed(keys[2])
                 menuSel2++
+            if controler=0
             if mouse_x-view_xview&gt;=230
             &amp;&amp;mouse_x-view_xview&lt;270
             &amp;&amp; mouse_y-view_yview&gt;219-menuSel*7-7
@@ -1065,6 +1068,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             keyboard_check_pressed(keys[2])
                 menuSel--
             //change item menu selection
+            if controler=0
             if mouse_x-view_xview&gt;270
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226
@@ -1167,6 +1171,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             keyboard_check_pressed(keys[2])
                 menuSel2--
                 //change item menu selection
+            if controler=0
             if mouse_x-view_xview&gt;270-90
             &amp;&amp;mouse_x-view_xview&lt;270
             &amp;&amp; mouse_y-view_yview&gt;219-70
@@ -2101,11 +2106,11 @@ if phase=3{
                 draw_set_colour(c_ltgray)
             if return_multi_atk(c.item[c.wep])==1{
                 draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-                    return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2],return_wep_type(c.item[c.wep]),c,inst),1,1,-view_angle)
+                    ceil(return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2],return_wep_type(c.item[c.wep]),c,inst)),1,1,-view_angle)
             }
             else{
                 draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-                    string(return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2],return_wep_type(c.item[c.wep]),c,inst))+"x"+string(return_multi_atk(c.item[c.wep]))
+                    string(ceil(return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],inst.stats[2,2],return_wep_type(c.item[c.wep]),c,inst)))+"x"+string(return_multi_atk(c.item[c.wep]))
                         ,1,1,-view_angle)
             }
             draw_set_font(pixelBlock)

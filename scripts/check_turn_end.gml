@@ -77,7 +77,7 @@ if fin=1{
         inst.team=-1
         }
         else{
-            if irandom(2){
+            if irandom(3){
             inst=instance_create(rx*15,ry*15,
             choose(oFighter,oArcher,oMage,oHealer));
             inst.team=1
@@ -89,7 +89,7 @@ if fin=1{
                 inst.team=0.1
             }
         }
-        inst.view=0
+        //inst.view=0
         inst.draw=0
         //stats
         inst.xp+=irandom(turnsSurvive*2)+turnsSurvive

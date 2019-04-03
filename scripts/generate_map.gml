@@ -148,12 +148,12 @@ var ry=irandom(room_height/30)//room_height/15);
             var inst=instance_create(rx*30+rx2*15,ry*30+ry2*15,choose(oTree));
             inst.visible=false
             }
-        if irandom(30)=0{
+        if irandom(25)=0{
             var rx2=irandom(1)
             var ry2=irandom(1)
             if !place_meeting(rx*30+rx2*15,ry*30+ry2*15,oUnit){
-                var itm=10
-                var inst=instance_create(rx*30+rx2*15,ry*30+ry2*15,choose(return_item_obj(itm)));
+                var itm=choose(10,6)
+                var inst=instance_create(rx*30+rx2*15,ry*30+ry2*15,return_item_obj(itm));
                 inst.use=return_item_usage_default(itm)
                 }
         }

@@ -113,6 +113,7 @@
       <sprite>sprites\bench_d</sprite>
       <sprite>sprites\ruinWall</sprite>
       <sprite>sprites\tree</sprite>
+      <sprite>sprites\stone</sprite>
       <sprite>sprites\chest_r</sprite>
       <sprite>sprites\chest_u</sprite>
       <sprite>sprites\chest_l</sprite>
@@ -318,6 +319,7 @@
       <object>objects\oTrafficLight_l</object>
       <object>objects\oTrafficLight_r</object>
       <object>objects\oTree</object>
+      <object>objects\oStone</object>
       <object>objects\oAncientWall</object>
       <object>objects\oRecyclingBin</object>
       <object>objects\oBench</object>
