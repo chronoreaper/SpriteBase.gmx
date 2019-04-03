@@ -16,9 +16,9 @@ var txt=instance_create(arg_targ.x+7-15*dsin(-view_angle),arg_targ.y+7-15*dcos(-
 arg_targ.lastHitBy=arg_source;
 var cp=3;
 arg_targ.combat=cp
-if arg_targ.link!=noone
+/*if arg_targ.link!=noone
 if instance_exists(arg_targ.link)
-    arg_targ.link.combat=cp
+    arg_targ.link.combat=cp*/
 arg_source.combat=cp
 //check if hit *luck(selected.luc)
 if  get_random()<arg_acc
