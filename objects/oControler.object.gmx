@@ -747,6 +747,7 @@ if mouse_check_button_pressed(mb_right)
           <argument>
             <kind>1</kind>
             <string>///#2 when a unit is selected
+
 if selected!=noone
 if menu=-1
 {
@@ -869,7 +870,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                menuSel=0
                add_all_to_map()
         }
-        menuSel=1
+        menuSel=0
     }
     //unit menu
     else if phase=2{
@@ -877,10 +878,10 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         view_yview=c.y-view_hview/2
         if mouse_wheel_up()
         ||keyboard_check_pressed(keys[0])
-            menuSel--
+            menuSel++
         else if mouse_wheel_down()
         ||keyboard_check_pressed(keys[2])
-            menuSel++
+            menuSel--
         //show_debug_message("mouse") 
         //show_debug_message(window_mouse_get_y()/display_get_height())
         //change base menu selection
@@ -889,12 +890,23 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         &amp;&amp; mouse_y-view_yview&gt;150
         &amp;&amp; mouse_y-view_yview&lt;165+60
         {
-        menuSel=floor((mouse_y-view_yview-150)/20)+1
+        menuSel=3-floor((mouse_y-view_yview-150)/20)//+1
         }
+        var menuOp;
+        menuOp[0]=4
+        //add menu options
+        //action option
+        if check_inventory_space(c)&gt;0
+            menuOp[array_length_1d(menuOp)]=3
+        if check_skill_space(c)&gt;0
+            menuOp[array_length_1d(menuOp)]=2
+        if return_unit_in_range(c,return_wep_range(c.item[c.wep]),0)!=noone
+            menuOp[array_length_1d(menuOp)]=1
+        
         //else menuSel=0
         if menuSel&lt;1
-            menuSel=4
-        else if menuSel&gt;4
+            menuSel=array_length_1d(menuOp)
+        else if menuSel&gt;array_length_1d(menuOp)
             menuSel=1
         //menuSel=min(4,menuSel)
         //menuSel=max(1,menuSel)
@@ -902,7 +914,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         if mouse_check_button_pressed(mb_left)
         ||keyboard_check_pressed(keys[4])
         if menuSel&gt;0{
-            switch menuSel{
+            switch menuOp[menuSel-1]{
                 case 1:phase=3 break;
                 case 2:phase=10 menuSel=0 break
                 case 3:phase=6 menuSel=0 break;
@@ -2027,8 +2039,8 @@ var p=0
 var vx=view_xview[p]/15,vy=view_yview[p]/15;
 var fx=floor(view_xview[p]/15),fy=floor(view_yview[p]/15);
 var vh=view_hview[p]/15,vw=view_wview[p]/15-16//0
-for (var i=max(vx-3,0);i&lt;min(25+ceil(vw)+vx+2,room_width/15+1);i++)
-for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15+1);j++){
+for (var i=max(vx-3,0);i&lt;min(25+ceil(vw)+vx+2,room_width/15);i++)
+for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15);j++){
         if ds_grid_get(gridF1,clamp(i,0,room_width/15),clamp(j,0,room_height/15))&lt;1
         if debugging=0
         {
@@ -2618,19 +2630,69 @@ draw_set_font(pixelFont)
 if selected!=noone{
 var c=selected
     if phase=2{
+        var menuOp;
+        menuOp[0]=4
+        //add menu options
+        //action option
+        if check_inventory_space(c)&gt;0
+            menuOp[array_length_1d(menuOp)]=3
+        if check_skill_space(c)&gt;0
+            menuOp[array_length_1d(menuOp)]=2
+        if return_unit_in_range(c,return_wep_range(c.item[c.wep]),0)!=noone
+            menuOp[array_length_1d(menuOp)]=1
+        
         draw_set_colour(c_dkgray)
-        for (var i=0;i&lt;4;i++){
+        for (var i=0;i&lt;array_length_1d(menuOp);i++){
             if i+1=menuSel{
                 draw_set_colour(c_dkgray)
-                draw_rectangle(270,150+i*20,359,165+i*20,false)
+                draw_rectangle(270,210-i*20,359,225-i*20,false)
             }
             else{
-                draw_rectangle(290,150+i*20,359,165+i*20,false)
+                draw_rectangle(290,210-i*20,359,225-i*20,false)
                 }
             }
         draw_set_colour(c_ltgray)
             draw_set_font(pixelFont)
-            switch menuSel{
+        
+        infoTime=0
+        
+        for (var i=0;i&lt;array_length_1d(menuOp);i++){
+            switch menuOp[i]{
+                case 1:
+                    if i+1==menuSel{
+                        draw_set_colour(c_white)
+                        draw_text_transformed(273,212-20*(i),"ACTION",2,2,0)
+                        draw_set_colour(c_ltgray)
+                        }
+                    else draw_text_transformed(293,212-20*(i),"ACTION",2,2,0)
+                break
+                case 2:
+                    if i+1==menuSel{
+                        draw_set_colour(c_white)
+                        draw_text_transformed(273,212-20*(i),"SKILL",2,2,0)
+                        draw_set_colour(c_ltgray)
+                        }
+                    else draw_text_transformed(293,212-20*(i),"SKILL",2,2,0)
+                break
+                case 3:
+                    if i+1==menuSel{
+                        draw_set_colour(c_white)
+                        draw_text_transformed(273,212-20*(i),"ITEM",2,2,0)
+                        draw_set_colour(c_ltgray)
+                        }
+                    else draw_text_transformed(293,212-20*(i),"ITEM",2,2,0)
+                break
+                case 4:
+                    if i+1==menuSel{
+                        draw_set_colour(c_white)
+                        draw_text_transformed(273,212-20*(i),"WAIT",2,2,0)
+                        draw_set_colour(c_ltgray)
+                        }
+                    else draw_text_transformed(293,212-20*(i),"WAIT",2,2,0)
+                break
+            }
+        }    
+            /*switch menuOp[menuSel]{
                 case 0:
                     draw_text_transformed(293,152,"ACTION",2,2,0)
                     draw_text_transformed(293,172,"SKILL",2,2,0)
@@ -2661,7 +2723,6 @@ var c=selected
                     draw_text_transformed(273,192,"ITEM",2,2,0)
                     draw_set_colour(c_ltgray)
                     draw_text_transformed(293,212,"WAIT",2,2,0)
-                    infoTime=0
                     break;
                 case 4:
                     draw_text_transformed(293,152,"ACTION",2,2,0)
@@ -2670,7 +2731,7 @@ var c=selected
                     draw_set_colour(c_white)
                     draw_text_transformed(273,212,"WAIT",2,2,0)
                     break;
-            }
+            }*/
         }//end phase 2 menu
         else if phase=6//draw item
         {

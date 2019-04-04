@@ -265,6 +265,9 @@
     <script>scripts\return_check_skill_target.gml</script>
     <script>scripts\return_power.gml</script>
     <script>scripts\return_unit.gml</script>
+    <script>scripts\return_unit_in_range.gml</script>
+    <script>scripts\check_inventory_space.gml</script>
+    <script>scripts\check_skill_space.gml</script>
     <script>scripts\message_create.gml</script>
     <script>scripts\calculate_damage.gml</script>
     <script>scripts\update_fog.gml</script>

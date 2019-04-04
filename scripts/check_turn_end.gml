@@ -77,13 +77,13 @@ if fin=1{
         inst.team=-1
         }
         else{
-            if irandom(3){
+            if irandom(4){
             inst=instance_create(rx*15,ry*15,
             choose(oFighter,oArcher,oMage,oHealer));
             inst.team=1
             inst.ai=2
             }
-            else if irandom(1){
+            else if irandom(2){
                 inst=instance_create(rx*15,ry*15,
                 choose(oChest));
                 inst.team=0.1
