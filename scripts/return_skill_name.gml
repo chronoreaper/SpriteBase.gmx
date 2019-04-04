@@ -13,6 +13,7 @@ switch floor(arg_skill){
     case 11: return "loNg shot"
     case 12: return "swap"
     case 13: return "barrier"
+    case 14: return "spirit bow"
     case -1: return "spawn vine start"
     case -2: return "spawn vine"
     default:return""

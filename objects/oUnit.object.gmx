@@ -138,7 +138,7 @@ weakness
 9 - 
 */
 item[10]=0//weapon/arm default
-skill[0]=1
+//skill[0]=1
 if !object_is_ancestor(object_index,oObj){
 }
 c=0

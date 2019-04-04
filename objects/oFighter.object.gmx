@@ -28,6 +28,7 @@
             <string>event_inherited()
 item[0]=8+return_item_usage_default(8)
 skill[1]=10
+skill[0]=1
 wep =0
 
 hp=15

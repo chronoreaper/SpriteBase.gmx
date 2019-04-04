@@ -45,7 +45,9 @@ switch floor(arg_skill){
     case 13:
         str="shields aN ally#[luc]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
-    
+    case 14:
+        str="equips a spirit#bow#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
     case -1:
         str="spawns vines#blocking exits"
         break;

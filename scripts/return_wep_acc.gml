@@ -9,6 +9,7 @@ switch floor(arg_wep){
     case 8:total=90; break;//sword
     case 9:total=75; break;//club
     case 10:total=85; break;//stick
+    case 11:total=90-(arg_dis-1)*3;break;//spirit bow
     case 50:total=95; break;//xcalabur
     default: total=80; break;//no wep
 }

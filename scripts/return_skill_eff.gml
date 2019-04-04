@@ -406,7 +406,18 @@ switch floor(arg_skill){
         return 1
         }
         return 0
-           
+    case 14:{
+        if arg_source.sp>=5 
+        if arg_source.item[10]=0{
+        if arg_targ!=noone{
+            arg_source.sp-=5
+            arg_source.wep=10
+            arg_source.item[10]=11+return_item_usage_default(11)
+            }
+        return 1
+        }
+        return 0
+    }       
     ///boss skills       
     case -1://spawn vine
         //if arg_source.ai=6 

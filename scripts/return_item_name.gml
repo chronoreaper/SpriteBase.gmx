@@ -10,6 +10,7 @@ switch floor(arg_item){
     case 8: return "sword "+string(round(frac(arg_item)*100))+"" 
     case 9: return "club "+string(round(frac(arg_item)*100))+"" 
     case 10: return "stick "+string(round(frac(arg_item)*100))+"" 
+    case 11: return "spiritbow "+string(round(frac(arg_item)*100))+"" 
     case 50: return "xcalabur ??"//+string(round(frac(arg_item)*100))+"" 
     case 51: return "aegis ??"//+string(round(frac(arg_item)*100))+"" 
     default:return""

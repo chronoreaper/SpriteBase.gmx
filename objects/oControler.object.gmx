@@ -874,6 +874,17 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     }
     //unit menu
     else if phase=2{
+        var menuOp;
+        menuOp[0]=4
+        //add menu options
+        //action option
+        if check_inventory_space(c)&gt;0
+            menuOp[array_length_1d(menuOp)]=3
+        if check_skill_space(c)&gt;0
+            menuOp[array_length_1d(menuOp)]=2
+        if return_unit_in_range(c,return_wep_range(c.item[c.wep]),0)!=noone
+            menuOp[array_length_1d(menuOp)]=1
+            
         view_xview=c.x-view_wview/2
         view_yview=c.y-view_hview/2
         if mouse_wheel_up()
@@ -892,16 +903,6 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         {
         menuSel=3-floor((mouse_y-view_yview-150)/20)//+1
         }
-        var menuOp;
-        menuOp[0]=4
-        //add menu options
-        //action option
-        if check_inventory_space(c)&gt;0
-            menuOp[array_length_1d(menuOp)]=3
-        if check_skill_space(c)&gt;0
-            menuOp[array_length_1d(menuOp)]=2
-        if return_unit_in_range(c,return_wep_range(c.item[c.wep]),0)!=noone
-            menuOp[array_length_1d(menuOp)]=1
         
         //else menuSel=0
         if menuSel&lt;1
