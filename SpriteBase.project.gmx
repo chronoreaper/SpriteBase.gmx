@@ -152,6 +152,9 @@
       <sprite>sprites\poison_splash</sprite>
       <sprite>sprites\magicBurnEff</sprite>
       <sprite>sprites\root_eff</sprite>
+      <sprite>sprites\freezeEff</sprite>
+      <sprite>sprites\shockEff</sprite>
+      <sprite>sprites\windEff</sprite>
       <sprite>sprites\rootedSprite</sprite>
       <sprite>sprites\shieldSprite</sprite>
     </sprites>
