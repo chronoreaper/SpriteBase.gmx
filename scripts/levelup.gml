@@ -2,7 +2,7 @@ while xp>=mxp{
 lv+=1
 xp-=mxp
 mxp+=1//+lv*2
-var sum = hpg+spg+strg+intg+defg+tecg+lucg;
+var sum = hpg+spg+strg+intg+defg+tecg+resg;
 if sum=0
     sum=1
 var stp;
@@ -21,7 +21,7 @@ show_debug_message("ATK:"+string(stats[2,0])+" + "+string(stp[2])+" + "+string(s
 show_debug_message("INT:"+string(stats[2,1])+" + "+string(stp[3])+" + "+string(intg/sum))
 show_debug_message("DEF:"+string(stats[2,2])+" + "+string(stp[4])+" + "+string(defg/sum))
 show_debug_message("TEC:"+string(stats[2,3])+" + "+string(stp[5])+" + "+string(tecg/sum))
-show_debug_message("LUC:"+string(stats[2,4])+" + "+string(stp[6])+" + "+string(lucg/sum))
+show_debug_message("RES:"+string(stats[2,4])+" + "+string(stp[6])+" + "+string(resg/sum))
 }
 hp+=stp[0]
 mhp+=stp[0]
@@ -37,14 +37,14 @@ stats[2,0]+=strg/sum
 stats[2,1]+=intg/sum
 stats[2,2]+=defg/sum
 stats[2,3]+=tecg/sum
-stats[2,4]+=lucg/sum
+stats[2,4]+=resg/sum
 hpg=0
 spg=0
 strg=0
 intg=0
 defg=0
 tecg=0
-lucg=0
+resg=0
 
 
 }

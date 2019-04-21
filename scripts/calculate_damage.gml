@@ -27,11 +27,11 @@ if 1
     var weak=arg_targ.weakness[arg_type]
     var dmg=0;
     
-    if arg_targ.weakness[arg_type]>1
+    /*if arg_targ.weakness[arg_type]>1
         txt.colour=c_orange
     else if arg_targ.weakness[arg_type]<1
         txt.colour=c_ltgray
-        
+    */    
     if arg_dmg>=0
         dmg=ceil(arg_dmg*arg_multi);
     else

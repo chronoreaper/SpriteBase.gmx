@@ -236,6 +236,8 @@
     <script>scripts\add_all_to_map.gml</script>
     <script>scripts\return_priority.gml</script>
     <script>scripts\return_dmg.gml</script>
+    <script>scripts\addStatus.gml</script>
+    <script>scripts\findStatus.gml</script>
     <script>scripts\return_wep_range.gml</script>
     <script>scripts\return_wep_sound.gml</script>
     <script>scripts\return_wep_type.gml</script>

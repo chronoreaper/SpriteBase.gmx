@@ -307,7 +307,8 @@ switch floor(arg_skill){
             arg_source.alarm[0]=6
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=crossSlash
-            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)*2,arg_source.stats[2,3],arg_targ.stats[2,2],return_skill_type(arg_skill),arg_source,arg_targ);
+            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source,abs(arg_source.x-arg_targ.x)+abs(arg_source.y-arg_targ.y))*2
+                                ,arg_source.stats[2,3],arg_targ.stats[2,2],return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
             if arg_source.draw>0{
                 if dmg>0
@@ -340,7 +341,8 @@ switch floor(arg_skill){
             eff.image_blend=c_red
             eff.rotate=false
             eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
-            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source)+2,arg_source.stats[2,3],arg_targ.stats[2,2],return_skill_type(arg_skill),arg_source,arg_targ);
+            var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source,abs(arg_source.x-arg_targ.x)+abs(arg_source.y-arg_targ.y))+2
+                                ,arg_source.stats[2,3],arg_targ.stats[2,2],return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,
                 return_skill_acc(arg_skill,abs(arg_source.x-arg_targ.x)/15+abs(arg_source.y-arg_targ.y)/15,arg_source,arg_targ)
                 ,return_skill_type(arg_skill),5,1)
@@ -376,14 +378,10 @@ switch floor(arg_skill){
         return 1
         }
         return 0
-    case 13:
+    case 13://shield
         if arg_source.sp>=5 {
         if arg_targ!=noone{
-            var value=floor(arg_source.stats[2,4])
-            if arg_targ.status[0]<value
-                arg_targ.status[0]+=value
-            else
-                arg_targ.status[0]=value
+            addStatus(arg_source,arg_targ,1,0.03,floor(arg_source.stats[2,4]))
             arg_source.sp-=5
             arg_source.xp+=4
             arg_source.spg+=1

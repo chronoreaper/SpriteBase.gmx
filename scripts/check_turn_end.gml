@@ -128,9 +128,14 @@ if fin=1{
             if combat>0
                 combat--
             wait=0
-            for (var j=0;j<10;j++)
+            for (var j=0;j<array_length_1d(status);j++)
                 if status[j]!=0
-                    status[j]-=sign(status[j])
+                    status[j]-=0.01
+                if frac(status[j])=0
+                {
+                    status[j]=0
+                    statusStr[j]=0
+                }
             if hp>0
             with (oControler){
                 ds_list_add(unitList,unit)
