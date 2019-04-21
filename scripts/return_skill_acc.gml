@@ -9,6 +9,9 @@ switch floor(arg_skill){
     case 8:return 94+arg_bonus;//fire
     case 10:return 87+arg_bonus;//crossSlash
     case 11:return 93-(arg_dis-1)*4+arg_bonus;//long shot
+    case 15:return 94+arg_bonus;//ice
+    case 16:return 94+arg_bonus;//thunder
+    case 17:return 94+arg_bonus;//wind
     
     default: return 100
 }

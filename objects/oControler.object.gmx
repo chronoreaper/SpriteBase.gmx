@@ -961,6 +961,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     }//end phase 3
     //phase 4 and 5 was here
     else if phase=6{//item
+        var maxItem=array_length_1d(selected.item);
         if menuSel2=-1{//before select item
             if mouse_wheel_up()||
             keyboard_check_pressed(keys[0])
@@ -974,11 +975,10 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226
             {
-            menuSel=10-floor((mouse_y-view_yview-219+70)/7)
+            menuSel=maxItem-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
-            menuSel=min(9,menuSel)
-            menuSel=max(0,menuSel)
+            menuSel=clamp(menuSel,1,maxItem-1)
         }else//selecting item action
         {
             if mouse_wheel_up()
@@ -1036,7 +1036,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             c.xp+=4
             //turn on for no glich
             if c.wep=menuSel
-                c.wep=10
+                c.wep=0
             menuSel2=-1
             menuSel=0
             phase=8
@@ -1073,6 +1073,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         }else message_create("Not in raNge")
     }
     else if phase=10{//use skill
+    var maxSkill=array_length_1d(selected.skill)
         if menuSel2=-1{//before use skill
             if mouse_wheel_up()||
             keyboard_check_pressed(keys[0])
@@ -1086,11 +1087,10 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226
             {
-            menuSel=10-floor((mouse_y-view_yview-219+70)/7)
+            menuSel=maxSkill-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
-            menuSel=min(9,menuSel)
-            menuSel=max(0,menuSel)
+            menuSel=clamp(menuSel,1,maxSkill-1)
         }else//selecting item action
         {
             //menuSel2 for range
@@ -1152,6 +1152,8 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         }
     }
     else if phase==12{//shop phase
+        var maxItem=array_length_1d(selected.item)
+        var shopItem=array_length_1d(eventOver.skill)
         if menuSel2=-1{
             if mouse_wheel_up()||
             keyboard_check_pressed(keys[0])
@@ -1164,11 +1166,10 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226
             {
-            menuSel=10-floor((mouse_y-view_yview-219+70)/7)
+            menuSel=shopItem-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
-            menuSel=min(9,menuSel)
-            menuSel=max(0,menuSel)
+            menuSel=clamp(menuSel,1,shopItem-1)
             //get item
             if mouse_check_button_pressed(mb_left)
             ||keyboard_check_pressed(keys[4])
@@ -1190,17 +1191,16 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226
             {
-                menuSel2=10-floor((mouse_y-view_yview-219+70)/7)
+                menuSel2=maxItem-floor((mouse_y-view_yview-219+70)/7)
             }
-            menuSel2=min(9,menuSel2)
-            menuSel2=max(0,menuSel2)
+            menuSel2=clamp(menuSel2,1,maxItem-1)
             if mouse_check_button_pressed(mb_left)
             ||keyboard_check_pressed(keys[4])
             if selected.item[menuSel2]&gt;0||(eventOver.team=selected.team){
                 if menuSel2==selected.wep
-                    selected.wep=10
+                    selected.wep=0
                 if menuSel2==selected.arm
-                    selected.arm=10
+                    selected.arm=0
                 var temp=eventOver.item[menuSel];
                 eventOver.item[menuSel]=selected.item[menuSel2]
                 selected.item[menuSel2]=temp
@@ -1213,7 +1213,7 @@ if phase=4{//damage step
 var c=selected
 //var inst=instance_place(xx,yy,oUnit);
 if (frac(c.item[c.wep])&gt;0
-||c.wep=10
+||c.wep=0
 )&amp;&amp;instance_exists(target){//check to see if there are uses left
 //attacking "animation"
 c.ax=cos(degtorad(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)))*5
@@ -1232,8 +1232,8 @@ else
 //calculate dmg
 var acc=return_wep_acc(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y),c,target);
 var multi=1;
-if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(250))))
-    multi*=2+(c.stats[2,3])*0.02*0.8
+//if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(250))))
+    //multi*=2+(c.stats[2,3])*0.02*0.8
 var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c),c.stats[2,3],target.stats[2,2],return_wep_type(c.item[c.wep]),c,target);
 var xpgain=3
 if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),5,multi)&gt;0{
@@ -2736,7 +2736,8 @@ var c=selected
         }//end phase 2 menu
         else if phase=6//draw item
         {
-            for (var i=0;i&lt;10;i++){
+            var maxItem = array_length_1d(selected.item)
+            for (var i=0;i&lt;maxItem;i++){
 
                 if i=menuSel{
                     draw_set_colour(c_dkgray)
@@ -2791,7 +2792,8 @@ var c=selected
         }
         else if phase=10//draw skill
         {
-            for (var i=0;i&lt;10;i++){
+            var maxSkill = array_length_1d(selected.skill)
+            for (var i=0;i&lt;maxSkill;i++){
 
                 if i=menuSel{
                     draw_set_colour(c_dkgray)
@@ -2828,8 +2830,10 @@ var c=selected
                 
             }
         }
-        else if phase=12{
-            for (var i=0;i&lt;10;i++){
+        else if phase=12{//trade
+        var maxItem = array_length_1d(selected.item)
+        var shopItem = array_length_1d(evcentOver.item)
+            for (var i=0;i&lt;shopItem;i++){
                 if i=menuSel{
                     draw_set_colour(c_dkgray)
                     draw_rectangle(270,220-i*7,359,226-i*7,false)
@@ -2852,7 +2856,7 @@ var c=selected
             
             if menuSel2&gt;=0{
                 var shift=91
-                for (var i=0;i&lt;10;i++){
+                for (var i=0;i&lt;maxItem;i++){
                     if i=menuSel2{
                         draw_set_colour(c_dkgray)
                         draw_rectangle(270-shift,220-i*7,359-shift,226-i*7,false)

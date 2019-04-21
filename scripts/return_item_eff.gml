@@ -20,7 +20,7 @@ switch floor(arg_item){
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else
-            arg_unit.wep=10
+            arg_unit.wep=0
         break;
     case 3: 
         with arg_target{
@@ -40,7 +40,7 @@ switch floor(arg_item){
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else
-            arg_unit.wep=10
+            arg_unit.wep=0
         break;
     case 5: 
         with arg_unit{
@@ -61,43 +61,43 @@ switch floor(arg_item){
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else
-            arg_unit.wep=10
+            arg_unit.wep=0
         break;
     case 7:
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else
-            arg_unit.wep=10
+            arg_unit.wep=0
         break;
     case 8:
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else
-            arg_unit.wep=10
+            arg_unit.wep=0
         break;
     case 9:
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else
-            arg_unit.wep=10
+            arg_unit.wep=0
         break;
     case 10:
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else
-            arg_unit.wep=10
+            arg_unit.wep=0
         break;
     case 50:
         if arg_unit.wep!=arg_slot
             arg_unit.wep=arg_slot
         else
-            arg_unit.wep=10
+            arg_unit.wep=0
         break;
     case 51:
         if arg_unit.arm!=arg_slot
             arg_unit.arm=arg_slot
         else
-            arg_unit.arm=10
+            arg_unit.arm=0
         break;
     default:return 0
 }

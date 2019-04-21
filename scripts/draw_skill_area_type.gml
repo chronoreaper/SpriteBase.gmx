@@ -387,4 +387,94 @@ switch arg_skill{
             }
         }
     break;
+    case 15:
+        if drawTime=0{
+        draw_set_colour(c_red)
+        draw_rectangle(xx,yy,xx+13,yy+13,false)
+        }
+        else{
+            var inst=instance_place(xx,yy,oUnit)
+            if inst!=noone
+            if (inst.draw>0)
+            if return_check_skill_target(arg_source,inst,return_skill_targ_type(arg_skill))
+            {
+                var c=arg_source
+                var targ=inst
+                draw_set_font(pixelFont)
+                draw_sprite_ext(atkInfo,0,xx+7+10*dsin(view_angle),yy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
+                draw_set_colour(c_black)
+                draw_set_halign(fa_center)
+                draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
+                if inst.weakness[return_skill_type(arg_skill)]>1
+                    draw_set_colour(c_orange)
+                else if inst.weakness[return_skill_type(arg_skill)]<1
+                    draw_set_colour(c_ltgray)
+                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), ceil(return_dmg(c.stats[2,1]+2,0,inst.stats[2,2],return_skill_type(arg_skill),c,inst)),1,1,-view_angle)
+                draw_set_font(pixelBlock)
+                draw_set_colour(c_red)
+                draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"attack",1,1,-view_angle)
+                draw_set_halign(fa_left)
+            }
+        }
+    break;
+    case 16:
+        if drawTime=0{
+        draw_set_colour(c_red)
+        draw_rectangle(xx,yy,xx+13,yy+13,false)
+        }
+        else{
+            var inst=instance_place(xx,yy,oUnit)
+            if inst!=noone
+            if (inst.draw>0)
+            if return_check_skill_target(arg_source,inst,return_skill_targ_type(arg_skill))
+            {
+                var c=arg_source
+                var targ=inst
+                draw_set_font(pixelFont)
+                draw_sprite_ext(atkInfo,0,xx+7+10*dsin(view_angle),yy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
+                draw_set_colour(c_black)
+                draw_set_halign(fa_center)
+                draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
+                if inst.weakness[return_skill_type(arg_skill)]>1
+                    draw_set_colour(c_orange)
+                else if inst.weakness[return_skill_type(arg_skill)]<1
+                    draw_set_colour(c_ltgray)
+                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), ceil(return_dmg(c.stats[2,1]+2,0,inst.stats[2,2],return_skill_type(arg_skill),c,inst)),1,1,-view_angle)
+                draw_set_font(pixelBlock)
+                draw_set_colour(c_red)
+                draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"attack",1,1,-view_angle)
+                draw_set_halign(fa_left)
+            }
+        }
+    break;
+    case 17:
+        if drawTime=0{
+        draw_set_colour(c_red)
+        draw_rectangle(xx,yy,xx+13,yy+13,false)
+        }
+        else{
+            var inst=instance_place(xx,yy,oUnit)
+            if inst!=noone
+            if (inst.draw>0)
+            if return_check_skill_target(arg_source,inst,return_skill_targ_type(arg_skill))
+            {
+                var c=arg_source
+                var targ=inst
+                draw_set_font(pixelFont)
+                draw_sprite_ext(atkInfo,0,xx+7+10*dsin(view_angle),yy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
+                draw_set_colour(c_black)
+                draw_set_halign(fa_center)
+                draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
+                if inst.weakness[return_skill_type(arg_skill)]>1
+                    draw_set_colour(c_orange)
+                else if inst.weakness[return_skill_type(arg_skill)]<1
+                    draw_set_colour(c_ltgray)
+                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), ceil(return_dmg(c.stats[2,1]+2,0,inst.stats[2,2],return_skill_type(arg_skill),c,inst)),1,1,-view_angle)
+                draw_set_font(pixelBlock)
+                draw_set_colour(c_red)
+                draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"attack",1,1,-view_angle)
+                draw_set_halign(fa_left)
+            }
+        }
+    break;
 }

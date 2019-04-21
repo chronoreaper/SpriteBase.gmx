@@ -6,5 +6,4 @@ var arg_source=argument4
 var arg_targ=argument5
 var dmg=0;
 dmg = ceil(1.5*sqrt(sqr(base)*(1+boost*0.01)/def))
-dmg *= arg_targ.weakness[arg_type]
 return dmg;

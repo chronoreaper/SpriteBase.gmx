@@ -14,6 +14,6 @@ switch floor(arg_wep){
     default: total=80; break;//no wep
 }
 total+=ceil(arg_source.stats[2,4]/2-arg_targ.stats[2,4]/2)
-total+=floor(arg_souce.lv/2-arg_targ.lv/2)
+total+=floor(arg_source.lv/2-arg_targ.lv/2)
 return total;
 

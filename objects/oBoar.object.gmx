@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>event_inherited()
 weakness[4]=2
+weakness[5]=2
+weakness[6]=0.9
 hp=14
 mhp=hp
 sp=3

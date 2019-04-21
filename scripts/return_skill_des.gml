@@ -28,7 +28,7 @@ switch floor(arg_skill){
         str="damages theN dashs#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 8:
-        str="basic fire attack#[int]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="basic fire attack#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 9:
         str="heals aN ally [luc]#raNge "+string(abs(return_skill_range(arg_skill)))
@@ -47,6 +47,15 @@ switch floor(arg_skill){
         break;
     case 14:
         str="equips a spirit#bow#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
+    case 15:
+        str="basic ice attack#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
+    case 16:
+        str="basic thuNder#attack [iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
+    case 17:
+        str="basic wiNd attack#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case -1:
         str="spawns vines#blocking exits"

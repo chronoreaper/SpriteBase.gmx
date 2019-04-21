@@ -1,5 +1,6 @@
 var arg_wep=argument0
 var arg_sel=argument1
+var arg_dist=argument2
 switch floor(arg_wep){
     case 2: return floor(arg_sel.stats[2,0])+0;//dagger
     case 4: return floor(arg_sel.stats[2,0])+1;
