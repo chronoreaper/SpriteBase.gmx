@@ -29,7 +29,7 @@
 item[1]=7+return_item_usage_default(7)
 skill[1]=11
 skill[0]=14
-wep=0
+wep=1
 
 hp=12
 mhp=hp

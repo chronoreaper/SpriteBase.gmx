@@ -265,7 +265,7 @@ switch floor(arg_skill){
             arg_source.sp-=8
             arg_source.xp+=8
             arg_source.spg+=1
-            arg_source.lucg+=1
+            arg_source.resg+=1
             with arg_targ{
             if hp>mhp
                 hp=mhp
@@ -381,11 +381,12 @@ switch floor(arg_skill){
     case 13://shield
         if arg_source.sp>=5 {
         if arg_targ!=noone{
-            addStatus(arg_source,arg_targ,1,0.03,floor(arg_source.stats[2,4]))
+            var value=floor(arg_source.stats[2,4])
+            addStatus(arg_source,arg_targ,1,0.03,value)
             arg_source.sp-=5
             arg_source.xp+=4
             arg_source.spg+=1
-            arg_source.lucg+=1
+            arg_source.resg+=1
 
             var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
             txt.text=value

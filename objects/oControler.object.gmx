@@ -593,8 +593,8 @@ if selected!=noone{
     var inst=instance_place(selected.x,selected.y,oItem)
     if inst!=noone
     {
-    var space=0
-    while space&lt;10{
+    var space=1
+    while space&lt;array_length_1d(selected.item){
         if selected.item[space]=0{
         with selected{
                 item[space]=inst.item
@@ -2460,7 +2460,11 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
         else
             draw_sprite_ext(hpBar,0,5+bx,206,68,3.5,0,c_orange,1)
        draw_set_colour(c_black)
-       draw_text(6+bx,207,"HP:"+string(ceil(hp)+status[0])+"/"+string(ceil(mhp)));
+       var shieldIndex=findStatus(id,1)
+       var shieldValue=0
+       if shieldIndex!=-1
+        shieldValue=statusStr[shieldIndex]
+       draw_text(6+bx,207,"HP:"+string(ceil(hp)+shieldValue)+"/"+string(ceil(mhp)));
        draw_sprite_ext(hpBar,0,5+bx,214,(floor(sp)/floor(msp))*68,3.5,0,c_blue,1)
        draw_text(6+bx,215,"SP:"+string(floor(sp))+"/"+string(floor(msp)));
        //draw other stats
@@ -2501,9 +2505,10 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
                     case 9:break;
                     case 10:break;
                 }
+                show_debug_message(status[i])
                 tx+=" "
-                tx+=frac(status[i])*100
-                draw_text(2,196-s*7,tx+" "+string(status[i]))
+                tx+=string(frac(status[i])*100)
+                draw_text(2,196-s*7,tx+" "+string(statusStr[i]))
                 s++;
             }
        }

@@ -36,15 +36,19 @@ if true
         dmg=ceil(arg_dmg*arg_multi);
     else
         dmg=floor(arg_dmg*arg_multi);
-    if arg_targ.status[0]>dmg{
-        arg_targ.status[0]-=dmg
-        dmg=0
-    }
-    else{
-        dmg-=arg_targ.status[0]
-        arg_targ.status[0]=0
-        arg_targ.hp-=dmg
-        arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.hp)
+    var shieldIndex=findStatus(arg_targ,1)
+    if shieldIndex!=-1{
+        if arg_targ.statusStr[shieldIndex]>dmg{
+            arg_targ.statusStr[shieldIndex]-=dmg
+            dmg=0
+        }
+        else{
+            dmg-=arg_targ.statusStr[shieldIndex]
+            arg_targ.status[shieldIndex]=0
+            arg_targ.statusStr[shieldIndex]=0
+            arg_targ.hp-=dmg
+            arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.hp)
+        }
     }
     arg_targ.image_blend=c_red
     if dmg<0{

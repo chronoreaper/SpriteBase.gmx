@@ -241,8 +241,8 @@
     <script>scripts\return_wep_range.gml</script>
     <script>scripts\return_wep_sound.gml</script>
     <script>scripts\return_wep_type.gml</script>
-    <script>scripts\return_item_range.gml</script>
     <script>scripts\return_wep_dmg.gml</script>
+    <script>scripts\return_item_range.gml</script>
     <script>scripts\return_stat_gain.gml</script>
     <script>scripts\return_multi_atk.gml</script>
     <script>scripts\return_wep_acc.gml</script>
