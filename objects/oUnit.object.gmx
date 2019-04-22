@@ -87,8 +87,8 @@ mov=1
 mmov=mov
 
 view=0
-wep=10
-arm=10
+wep=0
+arm=0
 unit=0
 //per level
 hpp=0

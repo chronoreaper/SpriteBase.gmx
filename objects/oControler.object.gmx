@@ -1234,7 +1234,7 @@ var acc=return_wep_acc(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y),c,targe
 var multi=1;
 //if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(250))))
     //multi*=2+(c.stats[2,3])*0.02*0.8
-var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-target.x)+abs(c.y-target.y)),c.stats[2,3],target.stats[2,2],return_wep_type(c.item[c.wep]),c,target);
+var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-target.x)+abs(c.y-target.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,target);
 var xpgain=3
 if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),5,multi)&gt;0{
     //create eff
@@ -2119,11 +2119,11 @@ if phase=3{
             //    draw_set_colour(c_ltgray)
             if return_multi_atk(c.item[c.wep])==1{
                 draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-                    ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],inst.stats[2,2],return_wep_type(c.item[c.wep]),c,inst)),1,1,-view_angle)
+                    ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,inst)),1,1,-view_angle)
             }
             else{
                 draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-                    string(ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],inst.stats[2,2],return_wep_type(c.item[c.wep]),c,inst)))+"x"+string(return_multi_atk(c.item[c.wep]))
+                    string(ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,inst)))+"x"+string(return_multi_atk(c.item[c.wep]))
                         ,1,1,-view_angle)
             }
             draw_set_font(pixelBlock)
@@ -2464,16 +2464,18 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        draw_sprite_ext(hpBar,0,5+bx,214,(floor(sp)/floor(msp))*68,3.5,0,c_blue,1)
        draw_text(6+bx,215,"SP:"+string(floor(sp))+"/"+string(floor(msp)));
        //draw other stats
-       for (var i=0;i&lt;5;i++)
+       for (var i=0;i&lt;3;i++)
         draw_sprite_ext(hpBar,0,104+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
+        draw_sprite_ext(hpBar,0,104+bx,200+3*6,(stats[2,4]/250)*26,2,0,c_white,1)
+        draw_sprite_ext(hpBar,0,104+bx,200+4*6,(stats[2,3]/250)*26,2,0,c_white,1)
         //draw_sprite_ext(hpBar,0,102+bx,206,(luc/20)*26,2,0,c_white,1)
-
+        
        draw_set_colour(c_ltgray)
        draw_text(78+bx,200,"atk:"+string(floor(stats[2,0])));
        draw_text(78+bx,206,"int:"+string(floor(stats[2,1])));
        draw_text(78+bx,212,"def:"+string(floor(stats[2,2])));
-       draw_text(78+bx,218,"tec:"+string(floor(stats[2,3])));
-       draw_text(78+bx,224,"luc:"+string(floor(stats[2,4])));
+       draw_text(78+bx,218,"res:"+string(floor(stats[2,4])));
+       draw_text(78+bx,224,"tec:"+string(floor(stats[2,3])));
        //draw_text(78+bx,206,"luc:"+string(ceil(luc)));
        draw_text(138+bx,212,return_item_name(item[wep]));
        draw_text(138+bx,224,return_power());//might be changed with luck or move etc
@@ -3040,20 +3042,20 @@ else if unitSelect[i]&lt;0
  draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-129,a[i]*2,2,0,c_orange,1)
  draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-123,int[i]*2,2,0,c_orange,1)
  draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-117,d[i]*2,2,0,c_orange,1)
- draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-111,t[i]*2,2,0,c_orange,1)
- draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-105,l[i]*2,2,0,c_orange,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-111,l[i]*2,2,0,c_orange,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-105,t[i]*2,2,0,c_orange,1)
  //base stats
  draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-129,ab*2,2,0,c_white,1)
  draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-123,ib*2,2,0,c_white,1)
  draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-117,db*2,2,0,c_white,1)
- draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-111,tb*2,2,0,c_white,1)
- draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-105,lb*2,2,0,c_white,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-111,lb*2,2,0,c_white,1)
+ draw_sprite_ext(hpBar,0,(1+i)*(view_wview/5)-9,view_hview-105,tb*2,2,0,c_white,1)
  draw_set_colour(c_ltgray)
  draw_text((1+i)*(view_wview/5)-17,view_hview-129,"ATK:");
  draw_text((1+i)*(view_wview/5)-17,view_hview-123,"INT:");
 draw_text((1+i)*(view_wview/5)-17,view_hview-117,"DEF:");
-draw_text((1+i)*(view_wview/5)-17,view_hview-111,"TEC:");
-draw_text((1+i)*(view_wview/5)-17,view_hview-105,"LUC:");
+draw_text((1+i)*(view_wview/5)-17,view_hview-111,"RES:");
+draw_text((1+i)*(view_wview/5)-17,view_hview-105,"TEC:");
  draw_set_colour(c_white)
  switch menuSelect{
      case 0: draw_text((1+i)*(view_wview/5),view_hview-158,"-"+return_unit(unitSelect[i],0,0)+"-")break;
