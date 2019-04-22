@@ -1090,7 +1090,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             menuSel=maxSkill-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
-            menuSel=clamp(menuSel,1,maxSkill-1)
+            menuSel=clamp(menuSel,0,maxSkill-1)
         }else//selecting item action
         {
             //menuSel2 for range
@@ -2449,7 +2449,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
    draw_sprite_ext(hpBar,0,5+bx,214,68,3.5,0,c_ltgray,1)
    
     with cur{
-        if status[0]=0{
+        if findStatus(id,1)=-1{
            if dmg&gt;=hp{
             draw_sprite_ext(hpBar,0,5+bx,206,(ceil(dmg)/ceil(mhp))*68,3.5,0,c_red,1)
             draw_sprite_ext(hpBar,0,5+bx,206,(ceil(hp)/ceil(mhp))*68,3.5,0,c_lime,1)}
@@ -2486,21 +2486,23 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        draw_text(138+bx,190,"cur "+string(round(x/15))+" "+string(round(y/15)));
        //status
        var s=0;
-       for (var i=0;i&lt;10;i++){
+       for (var i=0;i&lt;array_length_1d(status);i++){
             if status[i]!=0{
                 var tx=""
-                switch i{
-                    case 0:tx="shield"break;
-                    case 1:tx="boost"break;
-                    case 2:tx="poisoN"break;
-                    case 3:tx="burN"break;
-                    case 4:tx="rooted"break;
-                    case 5:tx="slow"break;
-                    case 6:break;
+                switch floor(status[i]){
+                    case 1:tx+="shield"break;
+                    case 2:tx+="boost"break;
+                    case 3:tx+="poisoN"break;
+                    case 4:tx+="burN"break;
+                    case 5:tx+="rooted"break;
+                    case 6:tx+="slow"break;
                     case 7:break;
                     case 8:break;
                     case 9:break;
+                    case 10:break;
                 }
+                tx+=" "
+                tx+=frac(status[i])*100
                 draw_text(2,196-s*7,tx+" "+string(status[i]))
                 s++;
             }

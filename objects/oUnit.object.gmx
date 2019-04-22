@@ -76,12 +76,12 @@ combat=0
 */
 for (var i=0;i&lt;=2;i++)
 for (var j=0;j&lt;=4;j++)
-    stats[i,j]=0
-stats[2,0]=0
-stats[2,1]=0
-stats[2,2]=0
-stats[2,3]=0
-stats[2,4]=0
+    stats[i,j]=1
+stats[2,0]=1
+stats[2,1]=1
+stats[2,2]=1
+stats[2,3]=1
+stats[2,4]=1
 
 mov=1
 mmov=mov
@@ -576,7 +576,7 @@ draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_an
 if dir2!=1
 if dir2!=2
     draw_weapon()
-if status[0]&gt;0
+if findStatus(id,1)!=-1
     draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,size,size,-view_angle,-1,0.5)
 }//end draw
 }

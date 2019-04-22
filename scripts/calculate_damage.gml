@@ -22,9 +22,9 @@ if instance_exists(arg_targ.link)
 arg_source.combat=cp
 //check if hit *luck(selected.luc)
 //if  get_random()<arg_acc
-if 1
+if true
 {
-    var weak=arg_targ.weakness[arg_type]
+    //var weak=arg_targ.weakness[arg_type]
     var dmg=0;
     
     /*if arg_targ.weakness[arg_type]>1

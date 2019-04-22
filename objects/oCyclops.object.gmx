@@ -29,7 +29,7 @@
 weakness[4]=0.8
 weakness[5]=1.2
 weakness[7]=0.8
-item[0]=9+return_item_usage_default(9)
+item[1]=9+return_item_usage_default(9)
 wep=0
 hp=20
 mhp=hp

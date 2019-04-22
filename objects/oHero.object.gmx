@@ -26,9 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
-item[0]=50+return_item_usage_default(50)
+item[1]=50+return_item_usage_default(50)
 wep=0
-item[1]=51+return_item_usage_default(51)
+item[2]=51+return_item_usage_default(51)
 arm=1
 skill[0]=5
 skill[1]=7

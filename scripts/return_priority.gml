@@ -3,7 +3,7 @@ var arg_limit=argument1
 var choice=0;
 var priority=0;
 //checks for skills choice = 11-20
-for(var i=0;i<10;i++){
+for(var i=0;i<array_length_1d(arg_char.skill);i++){
     menuSel=i
     //if you can use the skill
     if (return_skill_eff(arg_char,noone)){
