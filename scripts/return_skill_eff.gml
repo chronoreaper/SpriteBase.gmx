@@ -410,7 +410,7 @@ switch floor(arg_skill){
         if arg_source.item[0]=0{
         if arg_targ!=noone{
             arg_source.sp-=5
-            arg_source.wep=10
+            arg_source.wep=0
             arg_source.item[0]=11+return_item_usage_default(11)
             }
         return 1

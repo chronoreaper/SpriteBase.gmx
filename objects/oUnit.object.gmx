@@ -163,7 +163,7 @@ texelH = texture_get_texel_height(sprite_get_texture(sprite_index,0));
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for(var i=0;i&lt;10;i++)
+            <string>for(var i=1;i&lt;array_length_1d(item);i++)
 {
 if item[i]!=0{
     var inst=instance_create(x,y,return_item_obj(item[i]));
