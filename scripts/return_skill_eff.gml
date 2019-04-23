@@ -225,7 +225,7 @@ switch floor(arg_skill){
         }
         return 0
     case 8:
-        if arg_source.sp>=3 {
+        if arg_source.sp>=3 {//fire
         if arg_targ!=noone{
             arg_source.sp-=3
             arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90)
@@ -236,6 +236,9 @@ switch floor(arg_skill){
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            
+            addStatus(arg_source,arg_targ,4,0.02,ceil(arg_source.lv/2))
+            
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -417,7 +420,7 @@ switch floor(arg_skill){
         }
         return 0
     }
-    case 15:
+    case 15://freeze
         if arg_source.sp>=3 {
         if arg_targ!=noone{
             arg_source.sp-=3
@@ -429,6 +432,10 @@ switch floor(arg_skill){
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            
+            var val=1//ceil(arg_source.lv/2)
+            addStatus(arg_source,arg_targ,6,0.02,val)
+            
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -448,7 +455,7 @@ switch floor(arg_skill){
         return 1
         }
         return 0
-    case 16:
+    case 16://shock
         if arg_source.sp>=3 {
         if arg_targ!=noone{
             arg_source.sp-=3
@@ -460,6 +467,17 @@ switch floor(arg_skill){
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            //lower atk and int
+            var val=ceil(arg_source.lv/2)
+            if arg_targ.stats[2,0]-val<=0
+                val=arg_targ.stats[2,0]-1
+            addStatus(arg_source,arg_targ,10,0.02,val)
+            arg_targ.stats[2,0]-=val
+            val=ceil(arg_source.lv/2)
+             if arg_targ.stats[2,1]-val<=0
+                val=arg_targ.stats[2,1]-1
+            addStatus(arg_source,arg_targ,11,0.02,val)
+            arg_targ.stats[2,1]-=val
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -479,7 +497,7 @@ switch floor(arg_skill){
         return 1
         }
         return 0  
-    case 17:
+    case 17://wind
         if arg_source.sp>=3 {
         if arg_targ!=noone{
             arg_source.sp-=3
@@ -491,6 +509,19 @@ switch floor(arg_skill){
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            
+            //lower def and res
+            var val=ceil(arg_source.lv/2)
+            if arg_targ.stats[2,2]-val<=0
+               val=arg_targ.stats[2,2]-1
+            addStatus(arg_source,arg_targ,12,0.02,val)
+            arg_targ.stats[2,2]-=val
+            val=ceil(arg_source.lv/2)
+            if arg_targ.stats[2,4]-val<=0
+               val=arg_targ.stats[2,4]-1
+            addStatus(arg_source,arg_targ,13,0.02,val)
+            arg_targ.stats[2,4]-=val
+            
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2

@@ -36,7 +36,7 @@ msp=sp
 stats[2,0]=2
 stats[2,1]=1
 stats[2,2]=1
-stats[2,3]=0
+stats[2,3]=1
 stats[2,4]=1
 //per level
 hpp=1
@@ -47,6 +47,7 @@ stats[1,2]=1
 stats[1,3]=0
 stats[1,4]=0.3
 mov=0
+mmov=mov
 view=4
 unit=vineGT
 name="viNe"

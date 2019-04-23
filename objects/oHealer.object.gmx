@@ -49,6 +49,7 @@ stats[1,3]=0.7
 stats[1,4]=2
 
 mov=3
+mmov=mov
 view=4
 
 unit=healer001_0

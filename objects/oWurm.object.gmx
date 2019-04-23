@@ -35,8 +35,8 @@ msp=sp
 stats[2,0]=6
 stats[2,1]=1
 stats[2,2]=6
-stats[2,3]=0
-stats[2,4]=0
+stats[2,3]=1
+stats[2,4]=3
 //per level
 hpp=3
 spp=1
@@ -44,9 +44,10 @@ stats[1,0]=2
 stats[1,1]=1
 stats[1,2]=2
 stats[1,3]=0
-stats[1,4]=0
+stats[1,4]=0.8
 
 mov=1
+mmov=mov
 view=5
 unit=wurm001_0
 name="WURM"

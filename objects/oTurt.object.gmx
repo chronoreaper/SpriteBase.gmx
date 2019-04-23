@@ -51,6 +51,7 @@ stats[1,3]=0
 stats[1,4]=0.3
 
 mov=1
+mmov=mov
 view=3
 unit=turt001_0
 name="turt"

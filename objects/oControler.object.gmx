@@ -2475,10 +2475,24 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
         //draw_sprite_ext(hpBar,0,102+bx,206,(luc/20)*26,2,0,c_white,1)
         
        draw_set_colour(c_ltgray)
+       if findStatus(id,10)!=-1
+            draw_set_colour(c_red)
        draw_text(78+bx,200,"atk:"+string(floor(stats[2,0])));
+       draw_set_colour(c_ltgray)
+       if findStatus(id,11)!=-1
+            draw_set_colour(c_red)
        draw_text(78+bx,206,"int:"+string(floor(stats[2,1])));
+       draw_set_colour(c_ltgray)
+       if findStatus(id,12)!=-1
+            draw_set_colour(c_red)
        draw_text(78+bx,212,"def:"+string(floor(stats[2,2])));
+       draw_set_colour(c_ltgray)
+       if findStatus(id,13)!=-1
+            draw_set_colour(c_red)
        draw_text(78+bx,218,"res:"+string(floor(stats[2,4])));
+       draw_set_colour(c_ltgray)
+       if findStatus(id,14)!=-1
+            draw_set_colour(c_red)
        draw_text(78+bx,224,"tec:"+string(floor(stats[2,3])));
        //draw_text(78+bx,206,"luc:"+string(ceil(luc)));
        draw_text(138+bx,212,return_item_name(item[wep]));
@@ -2503,7 +2517,16 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
                     case 7:break;
                     case 8:break;
                     case 9:break;
-                    case 10:break;
+                    case 10:tx+="atk dowN"break;
+                    case 11:tx+="iNt dowN"break;
+                    case 12:tx+="def dowN"break;
+                    case 13:tx+="res dowN"break;
+                    case 14:tx+="tec dowN"break;
+                    case 15:tx+="atk up"break;
+                    case 16:tx+="iNt up"break;
+                    case 17:tx+="def up"break;
+                    case 18:tx+="res up"break;
+                    case 19:tx+="tec up"break;
                 }
                 tx+=" "
                 tx+=string(frac(status[i])*100)

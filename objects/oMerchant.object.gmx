@@ -53,6 +53,7 @@ stats[1,3]=0.7
 stats[1,4]=1
 
 mov=2
+mmov=mov
 view=4
 
 unit=merchant001_0

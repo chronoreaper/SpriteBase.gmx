@@ -122,7 +122,16 @@ xx= type
 7 - regen
 8 - stun
 9 - rage
-9 - 
+10 - Atk down
+11 - Int down
+12 - def down
+13 - res down
+14 - tec down
+15 - Atk up
+16 - Int up
+17 - def up
+18 - res up
+19 - tec up
 */
 item[0]=0//weapon/arm default
 //skill[0]=1

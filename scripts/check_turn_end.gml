@@ -42,6 +42,7 @@ if fin=1{
         var inst=ds_list_find_value(list,i);
         instance_activate_object(inst)
         inst.wait=0
+        inst.mov=inst.mmov
             selected=inst
             update_fog()
             selected=noone
@@ -128,15 +129,27 @@ if fin=1{
             if combat>0
                 combat--
             wait=0
-            for (var j=0;j<array_length_1d(status);j++)
+            for (var j=0;j<array_length_1d(status);j++){
                 if status[j]!=0{
+                    //status effects
+                    switch floor(status[j]){
+                        case 4:
+                            var dmg=round(frac(status[j])*100+statusStr[j])
+                            var txt=instance_create(x+7-15*dsin(-view_angle),y+7-15*dcos(-view_angle),DmgWord);
+                            txt.text=string(dmg)
+                            hp=max(hp-dmg,0)
+                            break;
+                        case 6:mov-=statusStr[j] break;
+                    }
                     status[j]-=0.01
-                    if frac(status[j])=0
+                    if frac(status[j])=0||statusStr[j]==0
                     {
+                        dispellStatus(id,j)
                         status[j]=0
                         statusStr[j]=0
                     }
                 }
+            }
             if hp>0
             with (oControler){
                 ds_list_add(unitList,unit)
