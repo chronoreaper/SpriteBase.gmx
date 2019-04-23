@@ -46,10 +46,10 @@ if true
             dmg-=arg_targ.statusStr[shieldIndex]
             arg_targ.status[shieldIndex]=0
             arg_targ.statusStr[shieldIndex]=0
-            arg_targ.hp-=dmg
-            arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.hp)
         }
     }
+    arg_targ.hp-=dmg
+    arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.hp)
     arg_targ.image_blend=c_red
     if dmg<0{
         arg_targ.image_blend=c_lime

@@ -2505,7 +2505,6 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
                     case 9:break;
                     case 10:break;
                 }
-                show_debug_message(status[i])
                 tx+=" "
                 tx+=string(frac(status[i])*100)
                 draw_text(2,196-s*7,tx+" "+string(statusStr[i]))
