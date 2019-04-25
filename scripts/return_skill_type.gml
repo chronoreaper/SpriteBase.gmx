@@ -5,6 +5,7 @@ weakness
 1 - magic
 */
 switch floor(arg_wep){
+    case 2: return 1//"laser beam" 
     case 3: return 1//"water breath" 
     case 5: return 1//"redemptioN"
     case 7: return 0//"pierciNg strike"

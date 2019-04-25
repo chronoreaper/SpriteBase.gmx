@@ -162,6 +162,9 @@ inst2.ai=4
 inst2.link=inst
 inst2.xp=40
 
+inst=instance_create(x-15*19,y+15*15,oDragon1)
+inst.team=-1
+inst.marker=1
 
 create_boss_area(x-15*20,y-15*15,0,0)
 inst=instance_create(x-15*19,y-12*15,oWurm)
@@ -918,7 +921,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             switch menuOp[menuSel-1]{
                 case 1:phase=3 break;
                 case 2:phase=10 menuSel=0 break
-                case 3:phase=6 menuSel=0 break;
+                case 3:phase=6 menuSel=1 break;
                 case 4:
                     phase=2.1
                     alarm[0]=5
@@ -2474,19 +2477,19 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        for (var i=0;i&lt;3;i++){
             in=findStatus(id,i+10)
             if in!=-1
-                draw_sprite_ext(hpBar,0,104+bx,200+i*6,((stats[2,i]+statusStr[in])/250)*26,2,0,c_red,1)
+                draw_sprite_ext(hpBar,0,104+bx,200+i*6,((stats[2,i]+statusStr[in])/150)*26,2,0,c_red,1)
        }
        in=findStatus(id,13)
        if in!=-1
-            draw_sprite_ext(hpBar,0,104+bx,200+3*6,((stats[2,4]+statusStr[in])/250)*26,2,0,c_red,1)
+            draw_sprite_ext(hpBar,0,104+bx,200+3*6,((stats[2,4]+statusStr[in])/150)*26,2,0,c_red,1)
        in=findStatus(id,14)
        if in!=-1
-            draw_sprite_ext(hpBar,0,104+bx,200+4*6,((stats[2,3]+statusStr[in])/250)*26,2,0,c_red,1)
+            draw_sprite_ext(hpBar,0,104+bx,200+4*6,((stats[2,3]+statusStr[in])/150)*26,2,0,c_red,1)
        //draw current stats
        for (var i=0;i&lt;3;i++)
-        draw_sprite_ext(hpBar,0,104+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
-        draw_sprite_ext(hpBar,0,104+bx,200+3*6,(stats[2,4]/250)*26,2,0,c_white,1)
-        draw_sprite_ext(hpBar,0,104+bx,200+4*6,(stats[2,3]/250)*26,2,0,c_white,1)
+        draw_sprite_ext(hpBar,0,104+bx,200+i*6,(stats[2,i]/150)*26,2,0,c_white,1)
+        draw_sprite_ext(hpBar,0,104+bx,200+3*6,(stats[2,4]/150)*26,2,0,c_white,1)
+        draw_sprite_ext(hpBar,0,104+bx,200+4*6,(stats[2,3]/150)*26,2,0,c_white,1)
         //draw_sprite_ext(hpBar,0,102+bx,206,(luc/20)*26,2,0,c_white,1)
         
        draw_set_colour(c_ltgray)

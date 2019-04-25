@@ -141,6 +141,7 @@ c=0
 ud=1
 wave=0
 lr=1
+stCt=0//for looping through the status
 wm=irandom(3)+5
 marker=0
 size=1
@@ -574,7 +575,7 @@ draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_an
         if oControler.currentTurn=team
         if oControler.currentTurn&gt;=0
         if wait=1
-        if oControler.selected=noone
+        //if oControler.selected=noone
         {
             draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,1,0.5)
 
@@ -587,6 +588,28 @@ if dir2!=2
     draw_weapon()
 if findStatus(id,1)!=-1
     draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,size,size,-view_angle,-1,0.5)
+//loop through the status
+var sub=-1
+switch floor(status[floor(stCt)]){
+    case 4:sub=2 break;
+    case 6:sub=3 break;
+    case 10:sub=0 break;
+    case 11:sub=0 break;
+    case 12:sub=0 break;
+    case 13:sub=0 break;
+    case 14:sub=0 break;
+    case 15:sub=1 break;
+    case 16:sub=1 break;
+    case 17:sub=1 break;
+    case 18:sub=1 break;
+    case 19:sub=1 break;
+}
+stCt+=0.02
+if stCt&gt;=array_length_1d(status)
+    stCt=0
+if sub!=-1
+    draw_sprite_ext(statuses,sub,x+7+ax,y+7+ay,1,1,-view_angle,-1,0.5
+        +place_meeting(x,y,oControler))
 }//end draw
 }
 </string>

@@ -1,4 +1,4 @@
-while xp>=mxp{
+while xp>=mxp&&lv<100{
 lv+=1
 xp-=mxp
 mxp+=1//+lv*2
