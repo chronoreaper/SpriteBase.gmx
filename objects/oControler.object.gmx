@@ -614,7 +614,7 @@ if selected!=noone{
 
     }
     //else
-    if inst=noone||space=10{
+    if inst=noone||space=array_length_1d(selected.item){
     //instance_activate_all()
     //alarm[9]=3
     //alarm[4]=2
@@ -1455,6 +1455,7 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
            if char!=noone{
            if instance_exists(char)
            if char.wait=0
+           if char.hp&gt;0
            if !instance_exists(char.link)||char.link.wait=1
            {
            // show_debug_message(object_get_name(char.object_index))
@@ -2394,7 +2395,7 @@ draw_background_stretched(greenBackground,0,0,room_width,room_height)
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
-        <whoName>self</whoName>
+        <whoName>oControler</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
@@ -2468,6 +2469,20 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        draw_sprite_ext(hpBar,0,5+bx,214,(floor(sp)/floor(msp))*68,3.5,0,c_blue,1)
        draw_text(6+bx,215,"SP:"+string(floor(sp))+"/"+string(floor(msp)));
        //draw other stats
+       //draw red stats
+       var in;
+       for (var i=0;i&lt;3;i++){
+            in=findStatus(id,i+10)
+            if in!=-1
+                draw_sprite_ext(hpBar,0,104+bx,200+i*6,((stats[2,i]+statusStr[in])/250)*26,2,0,c_red,1)
+       }
+       in=findStatus(id,13)
+       if in!=-1
+            draw_sprite_ext(hpBar,0,104+bx,200+3*6,((stats[2,4]+statusStr[in])/250)*26,2,0,c_red,1)
+       in=findStatus(id,14)
+       if in!=-1
+            draw_sprite_ext(hpBar,0,104+bx,200+4*6,((stats[2,3]+statusStr[in])/250)*26,2,0,c_red,1)
+       //draw current stats
        for (var i=0;i&lt;3;i++)
         draw_sprite_ext(hpBar,0,104+bx,200+i*6,(stats[2,i]/250)*26,2,0,c_white,1)
         draw_sprite_ext(hpBar,0,104+bx,200+3*6,(stats[2,4]/250)*26,2,0,c_white,1)
@@ -2768,7 +2783,7 @@ var c=selected
         else if phase=6//draw item
         {
             var maxItem = array_length_1d(selected.item)
-            for (var i=0;i&lt;maxItem;i++){
+            for (var i=1;i&lt;maxItem;i++){
 
                 if i=menuSel{
                     draw_set_colour(c_dkgray)
@@ -3580,6 +3595,8 @@ if keyboard_check_pressed(vk_backspace)
 if keyboard_check_pressed(ord('I')){
     var inst=instance_place(x,y,oUnit)
         if inst!=noone
+            //inst.item[array_length_1d(inst.item)]=0
+        
             with inst{
                 xp=mxp
                 levelup()

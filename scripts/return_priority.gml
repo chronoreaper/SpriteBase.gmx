@@ -37,7 +37,9 @@ for(var i=0;i<array_length_1d(arg_char.skill);i++){
                 if yy=y
                     num=1
                 break
-                
+            case 15:num=2 break;//ice
+            case 16:num=2 break;//electric
+            case 17:num=2 break;//wind    
             //boss skills
             case -1:
                 num=1

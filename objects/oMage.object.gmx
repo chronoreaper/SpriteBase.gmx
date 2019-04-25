@@ -26,10 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
-skill[0]=8
-skill[1]=15
-skill[2]=16
-skill[3]=17
+skill[0]=choose(8,15,16,17)
 
 hp=10
 mhp=hp

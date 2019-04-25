@@ -209,8 +209,8 @@ draw_sprite_ext(sprite_index+viewSprite,image_index,x+15+ax,y+15+ay,1,1-c,-view_
 if dir2!=1
 if dir2!=2
     draw_weapon()
-if status[0]&gt;0
-    draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,1,1,-view_angle,-1,0.5)
+//if status[0]&gt;0
+//    draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,1,1,-view_angle,-1,0.5)
 }//end draw
 }
 </string>

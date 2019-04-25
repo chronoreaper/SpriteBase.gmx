@@ -49,7 +49,7 @@ with arg_unit{
             with oControler
                 message_create("sword broke")
             item[wep]=0
-            wep=10
+            wep=0
         }
         break;
         case 9:
@@ -59,7 +59,7 @@ with arg_unit{
             with oControler
                 message_create("club broke")
             item[wep]=0
-            wep=10
+            wep=0
         }
         break;
         case 10:
@@ -69,7 +69,7 @@ with arg_unit{
             with oControler
                 message_create("stick broke")
             item[wep]=0
-            wep=10
+            wep=0
         }
         break;
         case 11:
@@ -78,7 +78,7 @@ with arg_unit{
             with oControler
                 message_create("spirit bow broke")
             item[wep]=0
-            wep=10
+            wep=0
         }
         break;
         default: break

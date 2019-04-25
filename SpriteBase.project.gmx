@@ -156,8 +156,11 @@
       <sprite>sprites\shockEff</sprite>
       <sprite>sprites\sprite162</sprite>
       <sprite>sprites\windEff</sprite>
-      <sprite>sprites\rootedSprite</sprite>
-      <sprite>sprites\shieldSprite</sprite>
+      <sprites name="status">
+        <sprite>sprites\statuses</sprite>
+        <sprite>sprites\rootedSprite</sprite>
+        <sprite>sprites\shieldSprite</sprite>
+      </sprites>
     </sprites>
     <sprites name="in game menu">
       <sprite>sprites\miniselectmenu</sprite>
@@ -235,6 +238,7 @@
   <scripts name="scripts">
     <script>scripts\add_all_to_map.gml</script>
     <script>scripts\return_priority.gml</script>
+    <script>scripts\return_skill_has_target.gml</script>
     <script>scripts\return_dmg.gml</script>
     <script>scripts\addStatus.gml</script>
     <script>scripts\findStatus.gml</script>
@@ -269,7 +273,6 @@
     <script>scripts\return_skill_eff.gml</script>
     <script>scripts\return_skill_area_type.gml</script>
     <script>scripts\draw_skill_area_type.gml</script>
-    <script>scripts\return_skill_has_target.gml</script>
     <script>scripts\return_check_skill_target.gml</script>
     <script>scripts\return_power.gml</script>
     <script>scripts\return_unit.gml</script>

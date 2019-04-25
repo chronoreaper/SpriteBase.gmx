@@ -38,15 +38,35 @@ if fin=1{
     //show_debug_message(ds_list_size(list))
     //ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
     //set wait to 0
-    for(i=0;i<ds_list_size(list);i++){
+    for(i=0;i<ds_list_size(list);i++){//end of turn
         var inst=ds_list_find_value(list,i);
         instance_activate_object(inst)
         inst.wait=0
         inst.mov=inst.mmov
-            selected=inst
-            update_fog()
-            selected=noone
-        }
+        selected=inst
+        update_fog()
+        selected=noone
+        for (var j=0;j<array_length_1d(inst.status);j++){
+                if inst.status[j]!=0{
+                    //status effects
+                    switch floor(inst.status[j]){
+                        case 6:inst.status[j]-=0.01 break;
+                        case 10:inst.status[j]-=0.01 break;
+                        case 11:inst.status[j]-=0.01 break;
+                        case 12:inst.status[j]-=0.01 break;
+                        case 13:inst.status[j]-=0.01 break;
+                        case 14:inst.status[j]-=0.01 break;
+                            
+                    }
+                    if frac(inst.status[j])=0||inst.statusStr[j]==0
+                    {
+                        dispellStatus(inst,j)
+                        inst.status[j]=0
+                        inst.statusStr[j]=0
+                    }
+                }
+            }
+    }
     if currentTurn=-1{
          ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
         }
@@ -133,15 +153,25 @@ if fin=1{
                 if status[j]!=0{
                     //status effects
                     switch floor(status[j]){
+                        case 1:
+                            status[j]-=0.01
+                            break;
                         case 4:
-                            var dmg=round(frac(status[j])*100+statusStr[j])
+                            status[j]-=0.01
+                            var dmg=ceil(frac(status[j])*100+statusStr[j])
                             var txt=instance_create(x+7-15*dsin(-view_angle),y+7-15*dcos(-view_angle),DmgWord);
                             txt.text=string(dmg)
                             hp=max(hp-dmg,0)
                             break;
-                        case 6:mov-=statusStr[j] break;
+                        case 6:
+                            mov-=statusStr[j] 
+                            break;
+                        case 15:inst.status[j]-=0.01 break;
+                        case 16:inst.status[j]-=0.01 break;
+                        case 17:inst.status[j]-=0.01 break;
+                        case 18:inst.status[j]-=0.01 break;
+                        case 19:inst.status[j]-=0.01 break;
                     }
-                    status[j]-=0.01
                     if frac(status[j])=0||statusStr[j]==0
                     {
                         dispellStatus(id,j)

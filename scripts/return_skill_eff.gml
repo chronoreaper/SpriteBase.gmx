@@ -471,13 +471,11 @@ switch floor(arg_skill){
             var val=ceil(arg_source.lv/2)
             if arg_targ.stats[2,0]-val<=0
                 val=arg_targ.stats[2,0]-1
-            addStatus(arg_source,arg_targ,10,0.02,val)
-            arg_targ.stats[2,0]-=val
+            arg_targ.stats[2,0]-=addStatus(arg_source,arg_targ,10,0.02,val)
             val=ceil(arg_source.lv/2)
              if arg_targ.stats[2,1]-val<=0
                 val=arg_targ.stats[2,1]-1
-            addStatus(arg_source,arg_targ,11,0.02,val)
-            arg_targ.stats[2,1]-=val
+             arg_targ.stats[2,1]-=addStatus(arg_source,arg_targ,11,0.02,val)
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -514,13 +512,11 @@ switch floor(arg_skill){
             var val=ceil(arg_source.lv/2)
             if arg_targ.stats[2,2]-val<=0
                val=arg_targ.stats[2,2]-1
-            addStatus(arg_source,arg_targ,12,0.02,val)
-            arg_targ.stats[2,2]-=val
+            arg_targ.stats[2,2]-=addStatus(arg_source,arg_targ,12,0.02,val)
             val=ceil(arg_source.lv/2)
             if arg_targ.stats[2,4]-val<=0
                val=arg_targ.stats[2,4]-1
-            addStatus(arg_source,arg_targ,13,0.02,val)
-            arg_targ.stats[2,4]-=val
+            arg_targ.stats[2,4]-=addStatus(arg_source,arg_targ,13,0.02,val)
             
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
