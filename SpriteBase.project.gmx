@@ -133,6 +133,17 @@
       <sprite>sprites\club</sprite>
       <sprite>sprites\sword</sprite>
       <sprite>sprites\stick</sprite>
+      <sprite>sprites\iron_sword</sprite>
+      <sprite>sprites\kranbit</sprite>
+      <sprite>sprites\great_sword</sprite>
+      <sprite>sprites\great_bow</sprite>
+      <sprite>sprites\cross_bow</sprite>
+      <sprite>sprites\spear</sprite>
+      <sprite>sprites\shurikin</sprite>
+      <sprite>sprites\battle_axe</sprite>
+      <sprite>sprites\gael_bolg</sprite>
+      <sprite>sprites\axe</sprite>
+      <sprite>sprites\herb</sprite>
     </sprites>
     <sprites name="eff">
       <sprite>sprites\spawn_eff</sprite>
