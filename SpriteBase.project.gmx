@@ -323,6 +323,7 @@
       <object>objects\oRock</object>
       <object>objects\oBow</object>
       <object>objects\oSword</object>
+      <object>objects\oXcalabur</object>
       <object>objects\oClub</object>
       <object>objects\oStick</object>
     </objects>
