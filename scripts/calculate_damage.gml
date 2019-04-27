@@ -48,8 +48,11 @@ if true
             arg_targ.statusStr[shieldIndex]=0
         }
     }
+    //on hit effect
     arg_targ.hp-=dmg
     arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.hp)
+    return_wep_onhit_eff(arg_source.item[arg_source.wep],arg_source,arg_targ)
+    return_skill_onhit_eff(arg_source,arg_targ)
     arg_targ.image_blend=c_red
     if dmg<0{
         arg_targ.image_blend=c_lime
@@ -59,12 +62,18 @@ if true
     arg_targ.alarm[1]=4
     txt.text=string(dmg)
     if arg_multi>=1{
-        repeat(ceil(arg_multi)-2)
+        repeat(ceil(arg_multi)-1)
             txt.text+="!"
         }
     if !object_is_ancestor(arg_targ.object_index,oObj)
     if arg_targ.team!=arg_source.team{
         arg_source.xp+=arg_xp
+        if arg_targ.hp=0{
+            var more=0
+            with arg_targ
+                more=return_power()
+            arg_source.xp+=floor(more/10)
+            }
         arg_source.aggro=arg_targ
         }
 return dmg

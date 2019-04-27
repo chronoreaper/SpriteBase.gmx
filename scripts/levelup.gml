@@ -12,7 +12,10 @@ stp[0]=floor(random(hpp)*10)/10
 stp[1]=floor(random(spp)*10)/10
 for (var i=0;i<5;i++)
     stp[i+2]=floor(random(stats[1,i]*10))/10
-if team>=0{
+var cTurn=-1
+with oControler
+    cTurn=ds_map_find_value(aiTurns, currentTurn)
+if cTurn>=0{
 show_debug_message(object_get_name(object_index)+" Leveled up!")
 show_debug_message("level:"+string(lv-1)+"->"+string(lv))
 show_debug_message("HP:"+string(mhp)+" + "+string(stp[0])+" + "+string(hpg/sum))

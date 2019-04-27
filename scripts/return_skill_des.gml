@@ -57,6 +57,9 @@ switch floor(arg_skill){
     case 17:
         str="basic wiNd attack#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
+    case 18:
+        str="takes the skills#of those killed"
+        break;
     case -1:
         str="spawns vines#blocking exits"
         break;

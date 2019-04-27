@@ -4,7 +4,7 @@ if selected.view>0
 if ds_map_find_value(aiTurns,selected.team)>=0
 {
 //fog
-var v=selected.view+round(-2*cos((hour*6+minu)*pi/(12*6))+2)
+var v=max(1,selected.view+round(-2*cos((hour*6+minu)*pi/(12*6))+2))
 var arx=round(selected.xx/15),ary=round(selected.yy/15);
 //with oControler
 {
@@ -21,7 +21,7 @@ for (var i=-v;i<=v;i+=1){
             }
             instance_activate_object(oBlock)
             if (c=1&&on=1)
-            ||c=0
+            ||c=0||(abs(i)+abs(j)<=1)
             if arx+i>0
             if ary+j>0
             if arx+i<ds_grid_width(gridF1)-1

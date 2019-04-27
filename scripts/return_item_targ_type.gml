@@ -8,5 +8,6 @@ options
 */
 switch floor(arg_skill){
     case 3: return 1
+    case 22: return 1
     default:return 1
 }

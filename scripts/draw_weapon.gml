@@ -13,6 +13,16 @@ switch floor(item[wep]){
     case 9:wepSprite=club break;
     case 10:wepSprite=stick break;
     case 11:wepSprite=spiritBow break;
+    case 12:wepSprite=iron_sword break;
+    case 13:wepSprite=kranbit break;
+    case 14:wepSprite=great_sword break;
+    case 15:wepSprite=great_bow break;
+    case 16:wepSprite=cross_bow break;
+    case 17:wepSprite=spear break;
+    case 18:wepSprite=shurikin break;
+    case 19:wepSprite=battle_axe break;
+    case 20:wepSprite=gael_bolg break;
+    case 21:wepSprite=axe break;
     case 50:wepSprite=xcalabur break;
 }
 draw_sprite_ext(wepSprite,0,ax+x+7+2*dsin(dir*90)-3*dsin(-view_angle)

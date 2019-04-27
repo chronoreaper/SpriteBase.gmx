@@ -105,6 +105,8 @@ movg=0
 image_speed=0
 
 item[1]=0
+item[2]=0
+item[3]=0
 skill[0]=0
 
 status[0]=0

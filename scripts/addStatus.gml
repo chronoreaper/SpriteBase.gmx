@@ -1,4 +1,4 @@
-var arg_source=argument0
+var arg_stack=argument0
 var arg_targ=argument1
 var arg_status=argument2
 var arg_dur=argument3
@@ -25,6 +25,7 @@ if index=-1{//not in the list yet
 else{
     if frac(arg_targ.status[index])<arg_dur
         arg_targ.status[index]=floor(arg_targ.status[index])+arg_dur
+    if arg_stack=0{
     if arg_targ.statusStr[index]<arg_str{
         var toReturn=arg_targ.statusStr[index];
         arg_targ.statusStr[index]=arg_str
@@ -32,5 +33,9 @@ else{
     }
     else//strength was not changed
         return 0
+    }else{//add more to current effect
+        arg_targ.statusStr[index]+=arg_str
+        return arg_str//returns the diffrence to change
+    }
 }
 return arg_str

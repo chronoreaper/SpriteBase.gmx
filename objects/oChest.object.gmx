@@ -33,7 +33,7 @@ stats[2,2]=8
 stats[2,4]=8
 unit=chest_r
 name="chest"
-var rand=choose(2,3,7,8);
+var rand=choose(2,3,7,8,12,13,14,15,16,17,18,19,20,21);
 item[1]=rand+return_item_usage_default(rand)//irandom(return_item_usage_default(rand)*10-1)/10+0.01
 
 dmg=hp

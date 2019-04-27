@@ -255,8 +255,10 @@
     <script>scripts\findStatus.gml</script>
     <script>scripts\dispellStatus.gml</script>
     <script>scripts\return_wep_range.gml</script>
+    <script>scripts\return_wep_crit.gml</script>
     <script>scripts\return_wep_sound.gml</script>
     <script>scripts\return_wep_type.gml</script>
+    <script>scripts\return_wep_onhit_eff.gml</script>
     <script>scripts\return_wep_dmg.gml</script>
     <script>scripts\return_item_range.gml</script>
     <script>scripts\return_stat_gain.gml</script>
@@ -282,6 +284,7 @@
     <script>scripts\return_skill_acc.gml</script>
     <script>scripts\return_skill_des.gml</script>
     <script>scripts\return_skill_eff.gml</script>
+    <script>scripts\return_skill_onhit_eff.gml</script>
     <script>scripts\return_skill_area_type.gml</script>
     <script>scripts\draw_skill_area_type.gml</script>
     <script>scripts\return_check_skill_target.gml</script>
@@ -337,6 +340,17 @@
       <object>objects\oXcalabur</object>
       <object>objects\oClub</object>
       <object>objects\oStick</object>
+      <object>objects\oIronSword</object>
+      <object>objects\oKranbit</object>
+      <object>objects\oGreatSword</object>
+      <object>objects\oGreatBow</object>
+      <object>objects\oCrossBow</object>
+      <object>objects\oSpear</object>
+      <object>objects\oShurikin</object>
+      <object>objects\oBattleAxe</object>
+      <object>objects\oGaelBolg</object>
+      <object>objects\oAxe</object>
+      <object>objects\oHerb</object>
     </objects>
     <objects name="objects">
       <object>objects\oBuilding</object>

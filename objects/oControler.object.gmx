@@ -588,6 +588,8 @@ add_all_to_map()
             <string>///end turn
 if phase=5{
 loop--
+if frac(selected.item[selected.wep])=0
+    loop=0
 if loop&gt;0
     phase=4
 }
@@ -1234,7 +1236,7 @@ else
     alarm[0]=max(13)
 //calculate dmg
 var acc=return_wep_acc(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y),c,target);
-var multi=1;
+var multi=return_wep_crit(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y),c,target);
 //if (get_random()&lt;floor(100*(sqrt(c.stats[2,3]*0.75+c.stats[2,4]*0.25)/sqrt(250))))
     //multi*=2+(c.stats[2,3])*0.02*0.8
 var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-target.x)+abs(c.y-target.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,target);
@@ -2121,15 +2123,18 @@ if phase=3{
             //    draw_set_colour(c_orange)
             //else if inst.weakness[return_wep_type(c.item[c.wep])]&lt;1
             //    draw_set_colour(c_ltgray)
+            var multi=return_wep_crit(c.item[c.wep],abs(c.x-inst.x)+abs(c.y-inst.y),c,inst);
+            var text=""
             if return_multi_atk(c.item[c.wep])==1{
-                draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-                    ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,inst)),1,1,-view_angle)
+                text=string(multi*ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,inst)))
             }
             else{
-                draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
-                    string(ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,inst)))+"x"+string(return_multi_atk(c.item[c.wep]))
-                        ,1,1,-view_angle)
+                text=string(multi*ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,inst)))+"x"+string(return_multi_atk(c.item[c.wep]))
             }
+            if multi&gt;1
+                text+="!"
+            draw_text_transformed(x+7-20*dsin(-view_angle),y+7-20*dcos(view_angle),
+                text,1,1,-view_angle)
             draw_set_font(pixelBlock)
             draw_set_halign(fa_center)
             draw_set_colour(c_red)
@@ -2435,11 +2440,11 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
    draw_set_colour(c_white)
    draw_rectangle(2+bx,203,75+bx,231,false)
    draw_rectangle(76+bx,197,135+bx,231,false)
-   draw_rectangle(136+bx,203,188+bx,231,false)
+   draw_rectangle(136+bx,203,208+bx,231,false)
    draw_set_colour(c_dkgray)
    draw_rectangle(3+bx,204,74+bx,230,false)
    draw_rectangle(77+bx,198,134+bx,230,false)
-   draw_rectangle(137+bx,204,187+bx,230,false)
+   draw_rectangle(137+bx,204,207+bx,230,false)
       draw_set_colour(c_ltgray)
    draw_set_font(pixelFont)
    draw_sprite_ext(hpBar,0,5+bx,223,min((cur.xp/cur.mxp)*68,68),2.5,0,c_teal,1)
@@ -2881,7 +2886,7 @@ var c=selected
         }
         else if phase=12{//trade
         var maxItem = array_length_1d(selected.item)
-        var shopItem = array_length_1d(evcentOver.item)
+        var shopItem = array_length_1d(eventOver.item)
             for (var i=0;i&lt;shopItem;i++){
                 if i=menuSel{
                     draw_set_colour(c_dkgray)
@@ -3573,6 +3578,8 @@ draw_sprite_ext(object_get_sprite(obj),0,x+7,y+7,1,1,-view_angle,-1,0.5)
 if keyboard_check_pressed(vk_enter)
 if !place_meeting(x,y,oUnit){
     var inst=instance_create(x,y,obj);
+    if obj&gt;=oJuicebox&amp;&amp;obj&lt;oBuilding
+        inst.use=return_item_usage_default(inst.item)
     inst.team=currentTurn
     var temp=instance_create(x,y,oEff);
     temp.sprite_index=spawn_eff

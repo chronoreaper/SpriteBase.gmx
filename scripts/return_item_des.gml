@@ -40,6 +40,9 @@ switch floor(arg_item){
     case 11://spirit bow
         str="a bow made out#of pure energy#mt: 0#wt: "+string(return_item_wt(arg_item))
         break;
+    case 22:
+        str="restores 7 hp#wt: "+string(return_item_wt(arg_item))
+        break;
     case 50://excalabur
         str="LegeNdary Sword wielded#by the hero#mt: ???#wt: ???#raNge 2"
         break;

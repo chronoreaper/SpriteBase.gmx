@@ -72,10 +72,10 @@ if fin=1{
         }
     currentTurn++
     if currentTurn>playerMax{//end of round
-        turnsSurvive++
+        turnsSurvive+=10
         currentTurn=playerMin
         //add time
-        minu+=1;
+        minu+=1
         if minu>=6{
             minu=0;
             hour+=1
@@ -104,7 +104,7 @@ if fin=1{
             inst.team=1
             inst.ai=2
             }
-            else if irandom(2){
+            else if irandom(1){
                 inst=instance_create(rx*15,ry*15,
                 choose(oChest));
                 inst.team=0.1
@@ -120,6 +120,18 @@ if fin=1{
         inst.intg+=random(turnsSurvive*0.1)
         inst.tecg+=random(turnsSurvive*0.1)
         }
+        rx=irandom(room_width/15)//room_width/15);
+        ry=irandom(room_height/15)//room_height/15);
+        if !place_meeting(rx*15,ry*15,oUnit)
+        if ds_grid_get(gridF1,rx,ry)<1
+        if !tile_layer_find(10000,rx*15,ry*15){
+            if irandom(2){
+                inst=instance_create(rx*15,ry*15,
+                choose(oHerb,oStick,oRock))
+                inst.use=return_item_usage_default(inst.item)
+            }
+        }
+        
     }
     //clear old units
     ds_list_clear(unitList)
