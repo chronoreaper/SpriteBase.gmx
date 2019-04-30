@@ -16,6 +16,7 @@ switch floor(arg_wep){
     case 15: return 1//"ice"
     case 16: return 1//"thunder"
     case 17: return 1//"wind"
+    case 19: return 1//"flux"
     case -1:return 0//spawn vines start
     case -2:return 0//spawn vines
     default: return 0;

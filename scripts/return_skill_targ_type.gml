@@ -25,5 +25,6 @@ switch floor(arg_skill){
     case 15: return 2
     case 16: return 2
     case 17: return 2
+    case 19: return 2
     default:return 0
 }

@@ -95,6 +95,18 @@
         <sprite>sprites\cyclops001_2</sprite>
         <sprite>sprites\cyclops001_3</sprite>
       </sprites>
+      <sprites name="mimic">
+        <sprite>sprites\mimic001_0</sprite>
+        <sprite>sprites\mimic001_1</sprite>
+        <sprite>sprites\mimic001_2</sprite>
+        <sprite>sprites\mimic001_3</sprite>
+      </sprites>
+      <sprites name="eye bat">
+        <sprite>sprites\eyebat001_0</sprite>
+        <sprite>sprites\eyebat001_1</sprite>
+        <sprite>sprites\eyebat001_2</sprite>
+        <sprite>sprites\eyebat001_3</sprite>
+      </sprites>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
@@ -166,6 +178,7 @@
       <sprite>sprites\freezeEff</sprite>
       <sprite>sprites\shockEff</sprite>
       <sprite>sprites\sprite162</sprite>
+      <sprite>sprites\fluxEff</sprite>
       <sprite>sprites\windEff</sprite>
       <sprites name="status">
         <sprite>sprites\statuses</sprite>
@@ -281,9 +294,9 @@
     <script>scripts\return_skill_cost.gml</script>
     <script>scripts\return_skill_targ_type.gml</script>
     <script>scripts\return_skill_type.gml</script>
-    <script>scripts\return_skill_acc.gml</script>
     <script>scripts\return_skill_des.gml</script>
     <script>scripts\return_skill_eff.gml</script>
+    <script>scripts\return_skill_acc.gml</script>
     <script>scripts\return_skill_onhit_eff.gml</script>
     <script>scripts\return_skill_area_type.gml</script>
     <script>scripts\draw_skill_area_type.gml</script>
@@ -378,6 +391,8 @@
       <object>objects\oFrog</object>
       <object>objects\oTurt</object>
       <object>objects\oCyclops</object>
+      <object>objects\oMimic</object>
+      <object>objects\oEyebat</object>
       <objects name="Boss">
         <object>objects\oWurm</object>
         <object>objects\oDragon1</object>

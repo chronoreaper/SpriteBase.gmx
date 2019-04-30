@@ -237,7 +237,7 @@ if !place_meeting(rx*15,ry*15,oUnit)
     if irandom(4)
     {
         var inst=instance_create(rx*15,ry*15,
-        choose(oSlime,oBoar,oFrog,oTurt,oShroom));
+        choose(oSlime,oBoar,oFrog,oTurt,oShroom,oEyebat));
         inst.team=-1
         inst.draw=0
         }
@@ -295,7 +295,7 @@ menuSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=0
+global.production=1
 debugging=0
 debugObj=0
 debug1=0;
@@ -625,8 +625,8 @@ if selected!=noone{
     //alarm[4]=2
     with selected{
     wait=1
-    hpg+=0.05
-    spg+=0.05
+    hpg+=0.1
+    spg+=0.1
     //xp+=ceil((abs(xx-x)+abs(yy-y))/10)
     xx=x
     yy=y
@@ -686,7 +686,7 @@ if mouse_check_button_pressed(mb_right)
                     currentNumber=0
                 inst=ds_list_find_value(unitList,currentNumber)
                 var lim=0;
-                while (lim&lt;ds_list_size(unitList)&amp;&amp;inst.wait=1){
+                while (lim&lt;ds_list_size(unitList)&amp;&amp;instance_exists(inst)&amp;&amp;inst.wait=1){
                     currentNumber++
                     if currentNumber&gt;=ds_list_size(unitList)
                         currentNumber=0
@@ -701,7 +701,7 @@ if mouse_check_button_pressed(mb_right)
                 view_yview=inst.yy-view_hview/2
             }else{
                 var lim=0;
-                while (lim&lt;ds_list_size(unitList)&amp;&amp;inst.wait=1){
+                while (lim&lt;ds_list_size(unitList)&amp;&amp;instance_exists(inst)&amp;&amp;inst.wait=1){
                     currentNumber++
                     if currentNumber&gt;=ds_list_size(unitList)
                         currentNumber=0
@@ -1158,7 +1158,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     }
     else if phase==12{//shop phase
         var maxItem=array_length_1d(selected.item)
-        var shopItem=array_length_1d(eventOver.skill)
+        var shopItem=array_length_1d(eventOver.item)
         if menuSel2=-1{
             if mouse_wheel_up()||
             keyboard_check_pressed(keys[0])
@@ -2887,7 +2887,7 @@ var c=selected
         else if phase=12{//trade
         var maxItem = array_length_1d(selected.item)
         var shopItem = array_length_1d(eventOver.item)
-            for (var i=0;i&lt;shopItem;i++){
+            for (var i=1;i&lt;shopItem;i++){
                 if i=menuSel{
                     draw_set_colour(c_dkgray)
                     draw_rectangle(270,220-i*7,359,226-i*7,false)
@@ -2910,7 +2910,7 @@ var c=selected
             
             if menuSel2&gt;=0{
                 var shift=91
-                for (var i=0;i&lt;maxItem;i++){
+                for (var i=1;i&lt;maxItem;i++){
                     if i=menuSel2{
                         draw_set_colour(c_dkgray)
                         draw_rectangle(270-shift,220-i*7,359-shift,226-i*7,false)

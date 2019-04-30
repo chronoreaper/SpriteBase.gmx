@@ -39,7 +39,8 @@ for(var i=0;i<array_length_1d(arg_char.skill);i++){
                 break
             case 15:num=2 break;//ice
             case 16:num=2 break;//electric
-            case 17:num=2 break;//wind    
+            case 17:num=2 break;//wind 
+            case 19:num=2 break;//flux     
             //boss skills
             case -1:
                 num=1

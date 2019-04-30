@@ -2,6 +2,7 @@ var arg_skill=argument0
 var arg_source=argument1
 var targ=noone
 var toTarg=-1
+//returns a target
 //for ai
 /*
 options
@@ -122,51 +123,6 @@ switch floor(arg_skill){
                 }
         }
         break;
-    case 15:
-        var range=2
-        for(var i=-range;i<=range;i++)
-        for(var j=-range;j<=range;j++){
-            var cinst=instance_place(arg_source.x+i*15,arg_source.y+j*15,oChar);
-            if (abs(i)+abs(j))<=range
-            if cinst!=noone
-            if return_check_skill_target(arg_source,cinst,2)
-            if toTarg<cinst.mhp-cinst.hp||toTarg=-1
-            {
-                toTarg=cinst.mhp-cinst.hp
-                targ=cinst
-            }
-        }
-        break;
-    case 16:
-        var range=2
-        for(var i=-range;i<=range;i++)
-        for(var j=-range;j<=range;j++){
-            var cinst=instance_place(arg_source.x+i*15,arg_source.y+j*15,oChar);
-            if (abs(i)+abs(j))<=range
-            if cinst!=noone
-            if return_check_skill_target(arg_source,cinst,2)
-            if toTarg<cinst.mhp-cinst.hp||toTarg=-1
-            {
-                toTarg=cinst.mhp-cinst.hp
-                targ=cinst
-            }
-        }
-        break;
-    case 17:
-        var range=2
-        for(var i=-range;i<=range;i++)
-        for(var j=-range;j<=range;j++){
-            var cinst=instance_place(arg_source.x+i*15,arg_source.y+j*15,oChar);
-            if (abs(i)+abs(j))<=range
-            if cinst!=noone
-            if return_check_skill_target(arg_source,cinst,2)
-            if toTarg<cinst.mhp-cinst.hp||toTarg=-1
-            {
-                toTarg=cinst.mhp-cinst.hp
-                targ=cinst
-            }
-        }
-        break;
     case -1:
         {
             toTarg=1
@@ -178,6 +134,22 @@ switch floor(arg_skill){
             targ=arg_source
         }break;
     //default:return noone
+    
+    default:
+        var range=return_skill_range(arg_skill)
+        for(var i=-range;i<=range;i++)
+        for(var j=-range;j<=range;j++){
+            var cinst=instance_place(arg_source.x+i*15,arg_source.y+j*15,oChar);
+            if (abs(i)+abs(j))<=range
+            if cinst!=noone
+            if return_check_skill_target(arg_source,cinst,2)
+            if toTarg<cinst.mhp-cinst.hp||toTarg=-1
+            {
+                toTarg=cinst.mhp-cinst.hp
+                targ=cinst
+            }
+        }
+        break;
 }
 if toTarg>=0
     return targ

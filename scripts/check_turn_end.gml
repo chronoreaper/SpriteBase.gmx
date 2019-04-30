@@ -72,7 +72,7 @@ if fin=1{
         }
     currentTurn++
     if currentTurn>playerMax{//end of round
-        turnsSurvive+=10
+        turnsSurvive+=1
         currentTurn=playerMin
         //add time
         minu+=1
@@ -94,7 +94,7 @@ if fin=1{
         var inst;
         if irandom(2){
         inst=instance_create(rx*15,ry*15,
-        choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops));
+        choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops,oEyebat));
         inst.team=-1
         }
         else{

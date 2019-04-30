@@ -24,5 +24,8 @@ switch floor(arg_item){
     case 21:return oAxe;
     case 22:return oHerb;
     case 50:return oXcalabur;
+    
+    //other items
+    case -1:return oMimic;
     default: return oJuicebox
 }
