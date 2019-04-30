@@ -16,7 +16,7 @@ switch floor(arg_wep){
             with arg_sel
                 distMov=(abs(x-xx)+abs(y-yy))/15
         return (floor(arg_sel.stats[2,0])+10)*(3/(distMov+2));//great Sword
-    case 15: return (floor(arg_sel.stats[2,3])+7)*((arg_dist+2)/5);//great bow
+    case 15: return (floor(arg_sel.stats[2,3])+7)*((arg_dist+2)/7);//great bow
     case 16: return (floor(arg_sel.stats[2,3]/10)+7);//cross bow
     case 17: return floor(arg_sel.stats[2,0])+3;//spear
     case 18: return (floor(arg_sel.stats[2,3]/2));//shurikin

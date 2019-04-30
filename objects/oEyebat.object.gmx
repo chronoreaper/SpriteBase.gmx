@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>event_inherited()
 idle=1
-skill[0]=17
+skill[0]=19
 hp=12
 mhp=hp
 sp=5
