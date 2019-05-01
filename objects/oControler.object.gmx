@@ -295,7 +295,7 @@ menuSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=1
+global.production=0
 debugging=0
 debugObj=0
 debug1=0;
@@ -2100,22 +2100,28 @@ if phase=3{
     if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range{
         if (inst.marker=2||inst.team=selected.team)&amp;&amp;abs((inst.x-selected.x)/15)+abs((inst.y-selected.y)/15)&lt;=1
         {
-            draw_set_font(pixelBlock)
+            /*draw_set_font(pixelBlock)
             draw_set_halign(fa_center)
             draw_set_colour(c_blue)
             draw_text_transformed(x+7-17*dsin(-view_angle),y+7-17*dcos(view_angle),"trade",1,1,-view_angle)
-            draw_set_halign(fa_left)
+            draw_set_halign(fa_left)*/
+            ix=x
+            iy=y
+            itext="trade"
         }
         else if inst.team&gt;0&amp;&amp;!object_is_ancestor(inst.object_index,oObj)&amp;&amp;abs((inst.x-selected.x)/15)+abs((inst.y-selected.y)/15)&lt;=1{
-            draw_set_font(pixelBlock)
+            /*draw_set_font(pixelBlock)
             draw_set_halign(fa_center)
             draw_set_colour(c_blue)
             draw_text_transformed(x+7-17*dsin(-view_angle),y+7-17*dcos(view_angle),"recruit",1,1,-view_angle)
-            draw_set_halign(fa_left)
+            draw_set_halign(fa_left)*/
+            ix=x
+            iy=y
+            itext="recruit"
         }
         else
         {
-            draw_sprite_ext(atkInfo,0,x+7+10*dsin(view_angle),y+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
+            /*draw_sprite_ext(atkInfo,0,x+7+10*dsin(view_angle),y+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
             draw_set_colour(c_black)
             draw_set_halign(fa_center)
             draw_text_transformed(x+7-26*dsin(-view_angle),y+7-26*dcos(view_angle),string(floor(return_wep_acc(c.item[c.wep],abs(c.x-inst.x)+abs(c.y-inst.y),c,inst)))+"%",1,1,-view_angle)
@@ -2139,7 +2145,21 @@ if phase=3{
             draw_set_halign(fa_center)
             draw_set_colour(c_red)
             draw_text_transformed(x+7-37*dsin(-view_angle),y+7-37*dcos(view_angle),"attack",1,1,-view_angle)
-            draw_set_halign(fa_left)
+            draw_set_halign(fa_left)*/
+            
+            ix=x
+            iy=y
+            itext="attack "
+            var multi=return_wep_crit(c.item[c.wep],abs(c.x-inst.x)+abs(c.y-inst.y),c,inst);
+            if return_multi_atk(c.item[c.wep])==1{
+                itext+=string(multi*ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,inst)))
+            }
+            else{
+                itext+=string(multi*ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,inst)))+"x"+string(return_multi_atk(c.item[c.wep]))
+            }
+            if multi&gt;1
+                itext+="!"
+                
             }
         }
     }
@@ -3562,7 +3582,7 @@ if randPos&gt;999
     randPos=0
 if randPos&lt;0
     randPos=999
-if keyboard_check_pressed(vk_up)
+if keyboard_check(vk_up)
     debugObj++
 if keyboard_check_pressed(vk_down)
     debugObj--
