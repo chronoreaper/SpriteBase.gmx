@@ -92,7 +92,7 @@ if fin=1{
     if !tile_layer_find(10000,rx*15,ry*15)
         {
         var inst;
-        if irandom(2){
+        if irandom(1){
         inst=instance_create(rx*15,ry*15,
         choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops,oEyebat));
         inst.team=-1

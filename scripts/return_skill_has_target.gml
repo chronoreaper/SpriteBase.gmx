@@ -144,6 +144,7 @@ switch floor(arg_skill){
             if (abs(i)+abs(j))<=range
             if cinst!=noone
             if return_check_skill_target(arg_source,cinst,return_skill_targ_type(arg_skill))
+            if ds_map_find_value(aiTurns, cinst.team)!=ds_map_find_value(aiTurns, arg_source.team)
             if toTarg<cinst.mhp-cinst.hp||toTarg=-1
             {
                 toTarg=cinst.mhp-cinst.hp

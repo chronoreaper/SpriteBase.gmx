@@ -51,7 +51,8 @@ resg=0
 gain_skill_per_level(id)
 
 }
+if lv<100{
 var inst=instance_create(x,y,oEff);
 inst.sprite_index=levelupsprite
 inst.image_index=0
-
+}

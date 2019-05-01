@@ -606,6 +606,8 @@ switch floor(status[floor(stCt)]){
     case 18:sub=1 break;
     case 19:sub=1 break;
 }
+if floor(status[floor(stCt)])==0
+    stCt++
 stCt+=0.02
 if stCt&gt;=array_length_1d(status)
     stCt=0

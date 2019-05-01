@@ -14,7 +14,7 @@ arg_dmg=return_arm_reduction(arg_targ.item[arg_targ.arm],arg_dmg)
 //var txt=instance_create(arg_targ.x+7,arg_targ.y-11,DmgWord);
 var txt=instance_create(arg_targ.x+7-15*dsin(-view_angle),arg_targ.y+7-15*dcos(-view_angle),DmgWord);
 arg_targ.lastHitBy=arg_source;
-var cp=3;
+var cp=2;
 arg_targ.combat=cp
 /*if arg_targ.link!=noone
 if instance_exists(arg_targ.link)

@@ -9,7 +9,8 @@ var index=findStatus(arg_targ,arg_status)
 
 if index=-1{//not in the list yet
     for (var i=0;i<array_length_1d(arg_targ.status);i++){
-        if arg_targ.status[i]=0{
+        if arg_targ.status[i]=0
+        if index=-1{
             arg_targ.status[i]=arg_status+arg_dur
             arg_targ.statusStr[i]=arg_str
             index=i

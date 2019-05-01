@@ -93,7 +93,7 @@ switch floor(arg_skill){
             arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.alarm[0]=6
-            var base =return_dmg(arg_source.stats[2,0],0,return_skill_type(arg_skill),arg_source,cinst);
+            var base =return_dmg(arg_source.stats[2,0],0,return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
                 if dmg>0{
                 //effect
