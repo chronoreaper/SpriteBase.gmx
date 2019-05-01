@@ -164,10 +164,11 @@ switch floor(arg_skill){
                 arg_source.hp=ceil(total_hp/2)
                  arg_source.sp=ceil(total_sp/2)
                 var temp=instance_create(arg_source.x,arg_source.y,arg_source.object_index);
-                temp.hp=floor(total_hp/2)
+                temp.hp=1//floor(total_hp/2)
                 temp.sp=floor(total_sp/2)
-                temp.mhp=arg_source.mhp
+                temp.mhp=1//arg_source.mhp
                 temp.msp=arg_source.msp
+                temp.mxp=999
                 temp.lv=arg_source.lv
                 temp.mov=arg_source.mov
                 temp.team=arg_source.team

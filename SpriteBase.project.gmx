@@ -301,6 +301,7 @@
     <script>scripts\return_skill_area_type.gml</script>
     <script>scripts\draw_skill_area_type.gml</script>
     <script>scripts\return_check_skill_target.gml</script>
+    <script>scripts\gain_skill_per_level.gml</script>
     <script>scripts\return_power.gml</script>
     <script>scripts\return_unit.gml</script>
     <script>scripts\return_unit_in_range.gml</script>

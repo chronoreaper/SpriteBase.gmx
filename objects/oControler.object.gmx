@@ -352,12 +352,12 @@ add_all_to_map()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//activate things
+            <string>///activate things
 instance_deactivate_all(true)
-instance_activate_region(xx-view_wview/2,yy-view_wview/2,view_wview,view_wview,true)
-instance_activate_region(view_xview,view_yview,view_wview,view_wview,true)
+instance_activate_region(xx-view_wview,yy-view_wview,view_wview*2,view_wview*2,true)
+instance_activate_region(view_xview-view_wview,view_yview-view_wview,view_wview*2,view_wview*2,true)
 if selected!=noone
-    instance_activate_region(selected.x-view_wview/2,selected.y-view_wview/2,view_wview,view_wview,true)
+    instance_activate_region(selected.x-view_wview,selected.y-view_wview,view_wview*2,view_wview*2,true)
 
 //alarm[8]=1*/
 alarm[9]=2
@@ -1500,8 +1500,8 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                     view_yview=yy-view_hview/2
                 }
             }
-            instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
-            instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
+            instance_activate_region(view_xview-view_wview,view_yview-view_wview,view_wview*2,view_wview*2,true)
+            instance_activate_region(selected.x-view_wview,selected.y-view_wview,view_wview*2,view_wview*2,true)
             }
         else{
             check_turn_end()
@@ -1512,8 +1512,8 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
     if alarm_get(9)=1
     {
     //alarm[10]=30
-    instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
-    instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
+    instance_activate_region(view_xview-view_wview,view_yview-view_wview,view_wview*2,view_wview*2,true)
+    instance_activate_region(selected.x-view_wview,selected.y-view_wview,view_wview*2,view_wview*2,true)
     if selected.marker=1
     if selected.combat&lt;=0
     {
@@ -3325,26 +3325,12 @@ var range=return_wep_range(c.item[c.wep])
             if inst!=noone{
                 if (inst.marker=2||inst.team=c.team)&amp;&amp;abs(i/15)+abs(j/15)&lt;=1{
                     draw_set_colour(c_blue)
-                    if 1=0
-                    if xx=i+c.x
-                    if yy=j+c.y{
-                            ix=xx
-                            iy=yy
-                            itext="trade"
-                        }
                     }
                 else if inst.team&gt;=0&amp;&amp;!object_is_ancestor(inst.object_index,oObj)&amp;&amp;abs(i/15)+abs(j/15)&lt;=1{
                     draw_set_colour(c_blue)
                 }
                 else{
                     draw_set_colour(c_red)
-                    if 1=0
-                    if xx=i+c.x
-                    if yy=j+c.y{
-                            ix=xx
-                            iy=yy
-                            itext="attack"
-                        }
                     }
             }
             draw_set_alpha(0.7)

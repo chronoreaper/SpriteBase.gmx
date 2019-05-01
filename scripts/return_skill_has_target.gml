@@ -25,6 +25,7 @@ switch floor(arg_skill){
                     if (cinst!=arg_source)
                     if return_check_skill_target(arg_source,cinst,2){
                         var dist=point_distance(arg_source.x,arg_source.y,cinst.x,cinst.y)
+                        if !collision_line(arg_source.x,arg_source.y,cinst.x,cinst.y,oBlock,false,true)
                         if toTarg=-1||dist<toTarg{
                             toTarg=dist
                             targ=cinst
@@ -142,7 +143,7 @@ switch floor(arg_skill){
             var cinst=instance_place(arg_source.x+i*15,arg_source.y+j*15,oChar);
             if (abs(i)+abs(j))<=range
             if cinst!=noone
-            if return_check_skill_target(arg_source,cinst,2)
+            if return_check_skill_target(arg_source,cinst,return_skill_targ_type(arg_skill))
             if toTarg<cinst.mhp-cinst.hp||toTarg=-1
             {
                 toTarg=cinst.mhp-cinst.hp

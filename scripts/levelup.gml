@@ -48,7 +48,7 @@ intg=0
 defg=0
 tecg=0
 resg=0
-
+gain_skill_per_level(id)
 
 }
 var inst=instance_create(x,y,oEff);

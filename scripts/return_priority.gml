@@ -44,6 +44,7 @@ for(var i=0;i<array_length_1d(arg_char.skill);i++){
             //boss skills
             case -1:
                 num=1
+            default: num=irandom(100) break;
             //case -2:num=1 break
         }//end switch
         //change priorities

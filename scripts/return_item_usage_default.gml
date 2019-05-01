@@ -9,7 +9,7 @@ switch floor(arg_item){
     case 7:return 0.15;
     case 8:return 0.15;
     case 9:return 0.10;
-    case 10:return 0.03;
+    case 10:return 0.02;
     case 11:return 0.03;
     case 12:return 0.20;
     case 13:return 0.12;

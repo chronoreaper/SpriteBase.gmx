@@ -14,6 +14,11 @@ switch floor(arg_sel.skill[i]){
                     arg_sel.skill[array_length_1d(arg_sel.skill)]=toCheck
             }
         }  
+    case 20:
+        if arg_targ.hp<=0{
+            arg_sel.hp++;
+            arg_sel.mhp++
+        }  
     break
 }
 }
