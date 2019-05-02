@@ -56,9 +56,14 @@ if fin=1{
                         case 12:inst.status[j]-=0.01 break;
                         case 13:inst.status[j]-=0.01 break;
                         case 14:inst.status[j]-=0.01 break;
+                        case 15:inst.status[j]-=0.01 break;
+                        case 16:inst.status[j]-=0.01 break;
+                        case 17:inst.status[j]-=0.01 break;
+                        case 18:inst.status[j]-=0.01 break;
+                        case 19:inst.status[j]-=0.01 break;
                             
                     }
-                    if frac(inst.status[j])=0||inst.statusStr[j]==0
+                    if frac(inst.status[j])=0||frac(inst.status[j])=1||inst.statusStr[j]==0
                     {
                         dispellStatus(inst,j)
                         inst.status[j]=0
@@ -178,11 +183,6 @@ if fin=1{
                         case 6:
                             mov-=statusStr[j] 
                             break;
-                        case 15:inst.status[j]-=0.01 break;
-                        case 16:inst.status[j]-=0.01 break;
-                        case 17:inst.status[j]-=0.01 break;
-                        case 18:inst.status[j]-=0.01 break;
-                        case 19:inst.status[j]-=0.01 break;
                     }
                     if frac(status[j])=0||statusStr[j]==0
                     {

@@ -177,9 +177,10 @@
       <sprite>sprites\root_eff</sprite>
       <sprite>sprites\freezeEff</sprite>
       <sprite>sprites\shockEff</sprite>
-      <sprite>sprites\sprite162</sprite>
+      <sprite>sprites\oldshock</sprite>
       <sprite>sprites\fluxEff</sprite>
       <sprite>sprites\windEff</sprite>
+      <sprite>sprites\buffEff</sprite>
       <sprites name="status">
         <sprite>sprites\statuses</sprite>
         <sprite>sprites\rootedSprite</sprite>

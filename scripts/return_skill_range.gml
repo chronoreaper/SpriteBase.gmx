@@ -18,6 +18,7 @@ switch arg_skill{
     case 16: return 2
     case 17: return 2
     case 19: return 2
+    case 21: return 1
     case -1: return 0
     default: return 0
 }

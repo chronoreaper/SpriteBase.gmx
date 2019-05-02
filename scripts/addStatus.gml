@@ -27,7 +27,7 @@ else{
     if frac(arg_targ.status[index])<arg_dur
         arg_targ.status[index]=floor(arg_targ.status[index])+arg_dur
     if arg_stack=0{
-    if arg_targ.statusStr[index]<arg_str{
+    if abs(arg_targ.statusStr[index])<abs(arg_str){
         var toReturn=arg_targ.statusStr[index];
         arg_targ.statusStr[index]=arg_str
         return arg_str-toReturn//returns the diffrence to change

@@ -2510,6 +2510,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        in=findStatus(id,14)
        if in!=-1
             draw_sprite_ext(hpBar,0,104+bx,200+4*6,((stats[2,3]+statusStr[in])/150)*26,2,0,c_red,1)
+ 
        //draw current stats
        for (var i=0;i&lt;3;i++)
         draw_sprite_ext(hpBar,0,104+bx,200+i*6,(stats[2,i]/150)*26,2,0,c_white,1)
@@ -2517,27 +2518,57 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
         draw_sprite_ext(hpBar,0,104+bx,200+4*6,(stats[2,3]/150)*26,2,0,c_white,1)
         //draw_sprite_ext(hpBar,0,102+bx,206,(luc/20)*26,2,0,c_white,1)
         
+        //draw_orange stats
+       for (var i=0;i&lt;3;i++){
+            in=findStatus(id,i+15)
+            if in!=-1{
+                draw_sprite_ext(hpBar,0,104+bx,200+i*6,((stats[2,i])/150)*26,2,0,c_orange,1)
+                draw_sprite_ext(hpBar,0,104+bx,200+i*6,((stats[2,i]+statusStr[in])/150)*26,2,0,c_white,1)
+                }
+       }
+       in=findStatus(id,18)
+       if in!=-1
+       {    
+            draw_sprite_ext(hpBar,0,104+bx,200+3*6,((stats[2,4])/150)*26,2,0,c_orange,1)
+            draw_sprite_ext(hpBar,0,104+bx,200+3*6,((stats[2,4]+statusStr[in])/150)*26,2,0,c_white,1)
+            }
+       in=findStatus(id,19)
+       if in!=-1{
+            draw_sprite_ext(hpBar,0,104+bx,200+4*6,((stats[2,3])/150)*26,2,0,c_orange,1)
+            draw_sprite_ext(hpBar,0,104+bx,200+4*6,((stats[2,3]+statusStr[in])/150)*26,2,0,c_white,1)
+            }
+            
        draw_set_colour(c_ltgray)
        if findStatus(id,10)!=-1
             draw_set_colour(c_red)
+       else if findStatus(id,15)!=-1
+            draw_set_colour(c_orange)
        draw_text(78+bx,200,"atk:"+string(floor(stats[2,0])));
        draw_set_colour(c_ltgray)
        if findStatus(id,11)!=-1
             draw_set_colour(c_red)
+       else if findStatus(id,16)!=-1
+            draw_set_colour(c_orange)
        draw_text(78+bx,206,"int:"+string(floor(stats[2,1])));
        draw_set_colour(c_ltgray)
        if findStatus(id,12)!=-1
             draw_set_colour(c_red)
+       else if findStatus(id,17)!=-1
+            draw_set_colour(c_orange)
        draw_text(78+bx,212,"def:"+string(floor(stats[2,2])));
        draw_set_colour(c_ltgray)
        if findStatus(id,13)!=-1
             draw_set_colour(c_red)
+       else if findStatus(id,18)!=-1
+            draw_set_colour(c_orange)
        draw_text(78+bx,218,"res:"+string(floor(stats[2,4])));
        draw_set_colour(c_ltgray)
        if findStatus(id,14)!=-1
             draw_set_colour(c_red)
+       else if findStatus(id,19)!=-1
+            draw_set_colour(c_orange)
        draw_text(78+bx,224,"tec:"+string(floor(stats[2,3])));
-       //draw_text(78+bx,206,"luc:"+string(ceil(luc)));
+       //draw_text(78+bx,206,"luc:"+string(ceil(luc)));       
        draw_text(138+bx,212,return_item_name(item[wep]));
        draw_text(138+bx,224,return_power());//might be changed with luck or move etc
        draw_set_colour(c_orange)
@@ -2573,7 +2604,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
                 }
                 tx+=" "
                 tx+=string(frac(status[i])*100)
-                draw_text(2,196-s*7,tx+" "+string(statusStr[i]))
+                draw_text(2,196-s*7,tx+" "+string(abs(statusStr[i])))
                 s++;
             }
        }

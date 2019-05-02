@@ -575,6 +575,48 @@ switch floor(arg_skill){
             }
         return 1
         }
+        return 0 
+    case 21://blessing
+        if arg_source.sp>=6 {
+        if arg_targ!=noone{
+            arg_source.sp-=6
+            arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90)
+            //arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
+            //arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
+            //arg_source.alarm[0]=6
+            arg_source.spg+=1
+            
+            //increase stats
+            var val;
+            for (var i=0;i<3;i++){
+                val=-ceil(arg_source.lv/2)
+                if arg_targ.stats[2,i]-val<=0
+                   val=arg_targ.stats[2,i]-1
+                arg_targ.stats[2,i]-=addStatus(0,arg_targ,15+i,0.03,val)
+            }
+            val=-ceil(arg_source.lv/2)
+                if arg_targ.stats[2,3]-val<=0
+                   val=arg_targ.stats[2,3]-1
+                arg_targ.stats[2,3]-=addStatus(0,arg_targ,19,0.03,val)
+            val=-ceil(arg_source.lv/2)
+                if arg_targ.stats[2,4]-val<=0
+                   val=arg_targ.stats[2,4]-1
+                arg_targ.stats[2,4]-=addStatus(0,arg_targ,18,0.03,val)
+            //effect
+            var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
+            eff.sprite_index=sourcedir2
+            eff.image_blend=c_red
+            eff.rotate=false
+            eff.image_angle=point_direction(arg_targ.x,arg_targ.y,arg_source.x,arg_source.y)
+            eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
+            eff.sprite_index=buffEff
+            if arg_source.draw>0
+            {
+                audio_play_sound(sUp,50,false)   
+            } 
+            }
+        return 1
+        }
         return 0      
     ///boss skills       
     case -1://spawn vine

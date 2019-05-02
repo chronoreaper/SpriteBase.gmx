@@ -20,13 +20,13 @@
   <width>20</width>
   <height>20</height>
   <frames>
-    <frame index="0">images\sprite162_0.png</frame>
-    <frame index="1">images\sprite162_1.png</frame>
-    <frame index="2">images\sprite162_2.png</frame>
-    <frame index="3">images\sprite162_3.png</frame>
-    <frame index="4">images\sprite162_4.png</frame>
-    <frame index="5">images\sprite162_5.png</frame>
-    <frame index="6">images\sprite162_6.png</frame>
-    <frame index="7">images\sprite162_7.png</frame>
+    <frame index="0">images\oldshock_0.png</frame>
+    <frame index="1">images\oldshock_1.png</frame>
+    <frame index="2">images\oldshock_2.png</frame>
+    <frame index="3">images\oldshock_3.png</frame>
+    <frame index="4">images\oldshock_4.png</frame>
+    <frame index="5">images\oldshock_5.png</frame>
+    <frame index="6">images\oldshock_6.png</frame>
+    <frame index="7">images\oldshock_7.png</frame>
   </frames>
 </sprite>
