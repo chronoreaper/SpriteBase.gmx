@@ -2046,8 +2046,8 @@ var p=0
 var vx=view_xview[p]/15,vy=view_yview[p]/15;
 var fx=floor(view_xview[p]/15),fy=floor(view_yview[p]/15);
 var vh=view_hview[p]/15,vw=view_wview[p]/15-16//0
-for (var i=max(vx-3,0);i&lt;min(25+ceil(vw)+vx+2,room_width/15);i++)
-for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15);j++){
+for (var i=max(vx-3,0);i&lt;min(25+ceil(vw)+vx+2,room_width/15-1);i++)
+for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15-1);j++){
         if ds_grid_get(gridF1,clamp(i,0,room_width/15),clamp(j,0,room_height/15))&lt;1
         if debugging=0
         {
