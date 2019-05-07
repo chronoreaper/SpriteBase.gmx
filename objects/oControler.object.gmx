@@ -2053,7 +2053,7 @@ draw_sprite_ext(sprite_index,image_index,x,y,1,1,image_angle,-1,0.5)
 0 visited
 0&lt; visable
 */
-/*var px=x/15
+var px=x/15
 var py=y/15
 var p=0
 var vx=view_xview[p]/15,vy=view_yview[p]/15;
@@ -2074,7 +2074,7 @@ for (var j=max(vy-7,0);j&lt;min(25+ceil(vw)+vy+1,room_height/15);j++){
         }*/
 
 //ds_grid_multiply_region(gridF1,0,0,100,100,min(-1,0.95))
-/*}
+}
 if ds_grid_get(gridF1,round(xx/15),round(yy/15))&lt;=0
     draw_sprite_ext(sprite_index,image_index,x,y,1,1,image_angle,-1,1)
 

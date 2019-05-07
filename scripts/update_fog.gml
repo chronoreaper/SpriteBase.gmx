@@ -29,7 +29,8 @@ for (var i=-v;i<=v;i+=1){
             {
                      if ds_grid_get(gridF1,arx+i,ary+j)<1
                         ds_grid_set(gridF1,arx+i,ary+j,1)//0.2
-                     ds_grid_set(gridF2,arx+i,ary+j,0)
+                     ds_grid_set(gridF2,clamp(arx+i,0,room_width/15),
+                        clamp(ary+j,0,room_height/15),0)
                 }
             }
         }
