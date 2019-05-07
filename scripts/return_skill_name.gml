@@ -21,6 +21,7 @@ switch floor(arg_skill){
     case 19: return "flux"
     case 20: return "coNsume"
     case 21: return "blessiNg"
+    //case 22: return "bash"
     case -1: return "spawn vine start"
     case -2: return "spawn vine"
     default:return""

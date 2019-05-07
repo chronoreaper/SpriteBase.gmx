@@ -72,10 +72,10 @@ if fin=1{
                 }
             }
     }
-    if currentTurn=-1{
-         ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
-        }
     currentTurn++
+    if ds_map_find_value(aiTurns, currentTurn)>=0{
+         ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
+    }
     if currentTurn>playerMax{//end of round
         turnsSurvive+=1
         currentTurn=playerMin
@@ -100,7 +100,7 @@ if fin=1{
         if irandom(1){
         inst=instance_create(rx*15,ry*15,
         choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops,oEyebat));
-        inst.team=-1
+        inst.team=2
         }
         else{
             if irandom(4){

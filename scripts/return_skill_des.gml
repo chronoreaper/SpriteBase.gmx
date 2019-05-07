@@ -28,37 +28,43 @@ switch floor(arg_skill){
         str="damages theN dashs#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 8:
-        str="basic fire attack#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="burNs target#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 9:
         str="heals aN ally [luc]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 10:
-        str="stroNg<slash>attack#usiNg melee weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="stroNg<Phy>attack#usiNg melee weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 11:
-        str="raNged<stab>attack#usiNg raNge weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="raNged<phy>attack#usiNg raNge weapoN#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 12:
         str="swaps places with#target ally#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 13:
-        str="shields aN ally#for 3 turns#[res]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="shields aN ally#for 3 turNs#[res]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 14:
         str="equips a spirit#bow#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 15:
-        str="basic ice attack#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="lowers target#movemeNt#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 16:
-        str="basic thuNder#attack [iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="lowers target#[atk]and[int]#attack#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 17:
-        str="basic wiNd attack#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="lowers target#[def]and[res]#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 18:
         str="takes the skills#of those killed"
+        break;
+    case 19:str="lowers [res]#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        break;
+    case 20:str="gaiNs 1 hp per kill"
+        break;
+    case 21:str="iNcrease all stats#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case -1:
         str="spawns vines#blocking exits"
