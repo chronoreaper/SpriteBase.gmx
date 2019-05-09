@@ -2501,7 +2501,11 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
    draw_sprite_ext(hpBar,0,5+bx,214,68,3.5,0,c_ltgray,1)
    
     with cur{
-        if findStatus(id,1)=-1{
+        var shieldIndex=findStatus(id,1)
+        var shieldValue=0
+        if shieldIndex!=-1
+            shieldValue=statusStr[shieldIndex]
+        {
            if dmg&gt;=hp{
             draw_sprite_ext(hpBar,0,5+bx,206,(ceil(dmg)/ceil(mhp))*68,3.5,0,c_red,1)
             draw_sprite_ext(hpBar,0,5+bx,206,(ceil(hp)/ceil(mhp))*68,3.5,0,c_lime,1)}
@@ -2509,13 +2513,13 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
             draw_sprite_ext(hpBar,0,5+bx,206,(ceil(hp)/ceil(mhp))*68,3.5,0,c_green,1)
             draw_sprite_ext(hpBar,0,5+bx,206,(ceil(dmg)/ceil(mhp))*68,3.5,0,c_lime,1)}
         }
-        else
-            draw_sprite_ext(hpBar,0,5+bx,206,68,3.5,0,c_orange,1)
+        if shieldIndex!=-1{
+            if shieldValue+hp&lt;=mhp
+                draw_sprite_ext(hpBar,0,5+bx+(ceil(hp)/ceil(mhp))*68,206,(ceil(shieldValue)/ceil(mhp))*68,3.5,0,c_orange,1)
+            else
+                draw_sprite_ext(hpBar,0,5+bx+68,206,-(ceil(shieldValue)/ceil(mhp+shieldValue))*68,3.5,0,c_orange,1)
+            }
        draw_set_colour(c_black)
-       var shieldIndex=findStatus(id,1)
-       var shieldValue=0
-       if shieldIndex!=-1
-        shieldValue=statusStr[shieldIndex]
        draw_text(6+bx,207,"HP:"+string(ceil(hp)+shieldValue)+"/"+string(ceil(mhp)));
        draw_sprite_ext(hpBar,0,5+bx,214,(floor(sp)/floor(msp))*68,3.5,0,c_blue,1)
        draw_text(6+bx,215,"SP:"+string(floor(sp))+"/"+string(floor(msp)));
