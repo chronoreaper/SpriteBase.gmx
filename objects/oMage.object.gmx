@@ -51,6 +51,7 @@ mov=3
 mmov=mov
 view=4
 
+face=face003
 unit=mage001_0
 name="mage"
 

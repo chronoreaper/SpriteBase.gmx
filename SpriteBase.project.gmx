@@ -108,6 +108,12 @@
         <sprite>sprites\eyebat001_3</sprite>
       </sprites>
     </sprites>
+    <sprites name="Face">
+      <sprite>sprites\face001</sprite>
+      <sprite>sprites\face002</sprite>
+      <sprite>sprites\face003</sprite>
+      <sprite>sprites\face004</sprite>
+    </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
       <sprite>sprites\stopSign</sprite>
@@ -125,11 +131,17 @@
       <sprite>sprites\bench_d</sprite>
       <sprite>sprites\ruinWall</sprite>
       <sprite>sprites\tree</sprite>
+      <sprite>sprites\tree2</sprite>
       <sprite>sprites\stone</sprite>
       <sprite>sprites\chest_r</sprite>
       <sprite>sprites\chest_u</sprite>
       <sprite>sprites\chest_l</sprite>
       <sprite>sprites\chest_d</sprite>
+      <sprite>sprites\house01_0</sprite>
+      <sprite>sprites\house01_1</sprite>
+      <sprite>sprites\house01_2</sprite>
+      <sprite>sprites\house01_3</sprite>
+      <sprite>sprites\fence01</sprite>
     </sprites>
     <sprites name="items">
       <sprite>sprites\juicebox</sprite>
@@ -246,6 +258,7 @@
     <sprite>sprites\levelupsprite</sprite>
     <sprite>sprites\atkInfo</sprite>
     <sprite>sprites\unit_marker</sprite>
+    <sprite>sprites\compassArrow</sprite>
     <sprite>sprites\hitbox2</sprite>
     <sprite>sprites\box14x14</sprite>
     <sprite>sprites\box7x7</sprite>
@@ -256,6 +269,7 @@
     <background>background\cityruinsBackground</background>
     <background>background\tilesprite2</background>
     <background>background\greenBackground</background>
+    <background>background\background5</background>
   </backgrounds>
   <paths name="paths">
     <path>paths\path0</path>
@@ -334,6 +348,7 @@
     <object>objects\oItem</object>
     <object>objects\oObj</object>
     <object>objects\oBlock</object>
+    <object>objects\oBlock4</object>
     <object>objects\oNature</object>
     <object>objects\oDeco</object>
     <object>objects\oDeco4</object>
@@ -379,6 +394,8 @@
       <object>objects\oRecyclingBin</object>
       <object>objects\oBench</object>
       <object>objects\oChest</object>
+      <object>objects\oHouse</object>
+      <object>objects\oFence</object>
     </objects>
     <objects name="units">
       <object>objects\oFighter</object>

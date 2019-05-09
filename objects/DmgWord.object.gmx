@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>text=""
-alpha=2
+alpha=2.5
 colour=c_red
 //y-=12*dcos(view_angle)
 //x-=12*dsin(-view_angle)

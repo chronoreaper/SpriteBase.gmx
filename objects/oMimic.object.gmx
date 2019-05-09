@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
+team=2
 var rand=choose(2,3,7,8,12,13,14,15,16,17,18,19,20,21);
 item[1]=rand+return_item_usage_default(rand)
 xp=oControler.turnsSurvive
@@ -47,7 +48,7 @@ stats[1,2]=1.2
 stats[1,3]=0.3
 stats[1,4]=1.2
 
-mov=2
+mov=1
 mmov=mov
 view=3
 unit=mimic001_0

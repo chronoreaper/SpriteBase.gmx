@@ -90,6 +90,7 @@ view=0
 wep=0
 arm=0
 unit=0
+face=0
 //per level
 hpp=0
 spp=0
@@ -568,7 +569,8 @@ if oControler.selected=id
 }
 //else
 draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
-
+if face!=0
+    draw_sprite_ext(face,viewSprite,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
 //draw inactive
 {
     //if !object_is_ancestor(object_index,oObj)
@@ -580,7 +582,8 @@ draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_an
         //if oControler.selected=noone
         {
             draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,1,0.5)
-
+            if face!=0
+            draw_sprite_ext(face,viewSprite,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,1,0.5)
         }
     }
 }

@@ -73,7 +73,8 @@ if fin=1{
             }
     }
     currentTurn++
-    if ds_map_find_value(aiTurns, currentTurn)>=0{
+    if currentTurn>playerMax//ds_map_find_value(aiTurns, currentTurn)>=0
+    {
          ds_grid_set_grid_region(gridF1,gridF2,0,0,ds_grid_width(gridF2),ds_grid_height(gridF1),0,0)
     }
     if currentTurn>playerMax{//end of round
@@ -116,14 +117,16 @@ if fin=1{
             }
         }
         //inst.view=0
-        inst.draw=0
-        //stats
-        inst.xp+=irandom(turnsSurvive*2)+turnsSurvive
-        inst.hpg+=random(turnsSurvive*0.1)
-        inst.spg+=random(turnsSurvive*0.1)
-        inst.strg+=random(turnsSurvive*0.1)
-        inst.intg+=random(turnsSurvive*0.1)
-        inst.tecg+=random(turnsSurvive*0.1)
+        if instance_exists(inst){
+            inst.draw=0
+            //stats
+            inst.xp+=irandom(turnsSurvive*2)+turnsSurvive
+            inst.hpg+=random(turnsSurvive*0.1)
+            inst.spg+=random(turnsSurvive*0.1)
+            inst.strg+=random(turnsSurvive*0.1)
+            inst.intg+=random(turnsSurvive*0.1)
+            inst.tecg+=random(turnsSurvive*0.1)
+            }
         }
         rx=irandom(room_width/15)//room_width/15);
         ry=irandom(room_height/15)//room_height/15);

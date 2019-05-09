@@ -30,7 +30,8 @@
 hp=100
 mhp=hp
 stats[2,2]=20
-unit=tree
+unit=choose(tree,tree2)
+sprite_index=unit
 name="Tree"
 
 dmg=hp

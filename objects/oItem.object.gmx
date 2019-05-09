@@ -70,7 +70,7 @@ if point_direction(x,y,xx,yy)&lt;7{
         var acc=90-(abs(xstart-inst.x)+abs(ystart-inst.y))/15*5+source.stats[2,3]
         var txt=instance_create(inst.x+7,inst.y-11,DmgWord);
         //check if hit *luck(selected.luc)
-        if get_random()&lt;acc
+        if 1=1//get_random()&lt;acc
         {
             inst.hp-=dmg
             inst.hp=max(inst.hp,0)

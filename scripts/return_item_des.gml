@@ -41,7 +41,7 @@ switch floor(arg_item){
         str="a bow made out#of pure energy#mt: 0#[int][tec]#wt: "+string(return_item_wt(arg_item))
         break;
     case 12://iron sword
-        str="a stroNger#sword#[atk]#mt: 5#wt: "+string(return_item_wt(arg_item))
+        str="a stroNger sword#[atk]#mt: 5#wt: "+string(return_item_wt(arg_item))
         break;
     case 13://kranbit
         str="critical hit#wheN target#is below 50%#[tec]#mt: 1#wt: "+string(return_item_wt(arg_item))

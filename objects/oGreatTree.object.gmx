@@ -124,17 +124,17 @@ if draw&gt;0
 
 //draw health bars
 var colour;
-if team&lt;0 colour=oControler.playerColour[2];
-if team&gt;=0{
-    if oControler.currentTurn=team
-        colour=oControler.playerColour[3]
-    else
-        colour=oControler.playerColour[1]
-}
+if oControler.currentTurn=team
+    colour=oControler.playerColour[3]
+else if oControler.allyMatrix[# team,oControler.currentTurn]&lt;0 colour=oControler.playerColour[2];
+else if oControler.allyMatrix[# team,oControler.currentTurn]&gt;0
+    colour=oControler.playerColour[1]
+else colour=oControler.playerColour[0];
+    
 if object_is_ancestor(object_index,oObj)
     colour=oControler.playerColour[0];
 else
-    draw_sprite_ext(marker1,0,x-0*(size-1),y-0*(size-1),size,size,0,colour,1-wait)
+    draw_sprite_ext(marker1,0,x-0*(size-1),y-0*(size-1),size,size,0,colour,1)
 /*if dmg!=hp{
    if image_blend!=c_red{
       alpha=5

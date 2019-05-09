@@ -15,6 +15,7 @@ arg_dmg=return_arm_reduction(arg_targ.item[arg_targ.arm],arg_dmg)
 var txt=instance_create(arg_targ.x+7-15*dsin(-view_angle),arg_targ.y+7-15*dcos(-view_angle),DmgWord);
 arg_targ.lastHitBy=arg_source;
 var cp=2;
+var reducedDmg=0;
 arg_targ.combat=cp
 /*if arg_targ.link!=noone
 if instance_exists(arg_targ.link)
@@ -39,11 +40,13 @@ if true
     var shieldIndex=findStatus(arg_targ,1)
     if shieldIndex!=-1{
         if arg_targ.statusStr[shieldIndex]>dmg{
+            reducedDmg=dmg
             arg_targ.statusStr[shieldIndex]-=dmg
             dmg=0
         }
         else{
             dmg-=arg_targ.statusStr[shieldIndex]
+            reducedDmg=arg_targ.statusStr[shieldIndex]
             arg_targ.status[shieldIndex]=0
             arg_targ.statusStr[shieldIndex]=0
         }
@@ -65,6 +68,12 @@ if true
         repeat(ceil(arg_multi)-1)
             txt.text+="!"
         }
+    //show reduced damage
+    if reducedDmg>0{
+        var txt2=instance_create(arg_targ.x+7-22*dsin(-view_angle),arg_targ.y+7-22*dcos(-view_angle),DmgWord);    
+        txt2.text="-"+string(reducedDmg)
+        txt2.colour=c_ltgray
+    }
     if !object_is_ancestor(arg_targ.object_index,oObj)
     if arg_targ.team!=arg_source.team{
         arg_source.xp+=arg_xp

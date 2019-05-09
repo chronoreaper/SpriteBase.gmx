@@ -130,9 +130,9 @@ switch floor(arg_skill){
             if cinst!=noone
             if return_check_skill_target(arg_source,cinst,return_skill_targ_type(arg_skill))
             if allyMatrix[# cinst.team,arg_source.team]<0
-            if toTarg<cinst.mhp-cinst.hp||toTarg=-1
+            if toTarg>point_distance(cinst.x,cinst.y,arg_source.x,arg_source.y)||toTarg=-1
             {
-                toTarg=cinst.mhp-cinst.hp
+                toTarg=point_distance(cinst.x,cinst.y,arg_source.x,arg_source.y)
                 targ=cinst
             }
         }

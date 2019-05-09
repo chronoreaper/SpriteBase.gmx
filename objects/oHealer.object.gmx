@@ -53,6 +53,7 @@ mov=3
 mmov=mov
 view=4
 
+face=face004
 unit=healer001_0
 name="healer"
 

@@ -174,7 +174,7 @@ inst2.ai=4
 inst2.link=inst
 inst2.xp=40
 
-inst=instance_create(x-15*19,y+15*15,oDragon1)
+inst=instance_create(x+15*36,y-15*17,oDragon1)
 inst.team=2
 inst.marker=1
 
@@ -773,30 +773,35 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
     var c=selected
+    if c.mov&lt;=0
+    if phase=0
+        phase=2
     //movement
     if mouse_check_button_pressed(mb_left)
     ||keyboard_check_pressed(keys[4])
     if phase=0
     {
-    add_all_to_map()
-    mp_grid_clear_cell(grid,c.x/15,c.y/15)
-        if mp_grid_get_cell(grid,xx/15,yy/15)=0
-        {
-        if (mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,xx+7.5,yy+7.5,false)
-        &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0)  
-        ||(c.x==xx&amp;&amp;c.y==yy)
+    {
+        add_all_to_map()
+        mp_grid_clear_cell(grid,c.x/15,c.y/15)
+            if mp_grid_get_cell(grid,xx/15,yy/15)=0
             {
-
-            if c.mov&gt;=path_get_number(c.path)-1{
-                //check to snap to grid
-               with c{
-                   path_start(path,3,path_action_stop,false)
-                   }
-               phase=1
-               }else message_create("too far")           
-           }
-           else message_create("caNNot move there")
-        }else message_create("caNNot move there")
+            if (mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,xx+7.5,yy+7.5,false)
+            &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0)  
+            ||(c.x==xx&amp;&amp;c.y==yy)
+                {
+    
+                if c.mov&gt;=path_get_number(c.path)-1{
+                    //check to snap to grid
+                   with c{
+                       path_start(path,3,path_action_stop,false)
+                       }
+                   phase=1
+                   }else message_create("too far")           
+               }
+               else message_create("caNNot move there")
+            }else message_create("caNNot move there")
+        }
     }
 
 
@@ -826,6 +831,8 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             xx=selected.xx
             yy=selected.yy
             add_all_to_map()
+            if selected.mov&lt;=0
+                selected=noone
         }
         else if phase=3{
             phase=2
@@ -957,7 +964,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             menuSel2=-1
                             eventOver=inst;
                         }
-                        else if allyMatrix[# inst.team,c.team]=0&amp;&amp;!object_is_ancestor(inst.object_index,oObj)&amp;&amp;(abs(xx-c.x)+abs(yy-c.y))/15&lt;=1{
+                        else if inst.combat&lt;=0&amp;&amp;allyMatrix[# inst.team,c.team]=0&amp;&amp;!object_is_ancestor(inst.object_index,oObj)&amp;&amp;(abs(xx-c.x)+abs(yy-c.y))/15&lt;=1{
                             inst.team=c.team
                             inst.wait=1
                             ds_list_add(unitList,inst)
@@ -1834,7 +1841,12 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                         //if (targType==0){
                             //inst=instance_create(c.x+dcos(c.dir*90),c.y-dsin(c.dir*90),oTempTarg);
                         //}
-                        alarm[0]=30
+                        if (c.draw=0
+                        &amp;&amp; ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
+                        &amp;&amp;!debugging)
+                            alarm[0]=1
+                        else 
+                            alarm[0]=30
                         return_skill_eff(c,inst)
                         menuSel=0
                         phase=8
@@ -1868,7 +1880,7 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
             <kind>1</kind>
             <string>///#5 ai debug Timer
 if global.production=0
-if currentTurn&lt;0{
+if currentTurn=2{
 switch phase{
     case 0: timePhase0++; break;
     case 1: timePhase1++; break;
@@ -2734,9 +2746,14 @@ draw_text(2,120,"AttackiNg2: "+string(timePhase5/30))
 draw_text(2,130,"Phase skill: "+string(timePhase11/30))
 draw_text(2,140,"using skill: "+string(timePhase8/30))
 }
+draw_set_font(pixelBlock)
+//draw compass
+draw_sprite_ext(compassArrow,0,180,30,1,1,view_angle,-1,1)
+draw_set_colour(c_red)
+draw_text(178,28,"N")
+
 
 draw_set_colour(c_white)
-draw_set_font(pixelBlock)
 draw_set_halign(fa_right)
 draw_text(358,10,"wasd: move coNtroler")
 draw_text(358,22,"f: select")
@@ -3129,6 +3146,7 @@ else if unitSelect[i]&lt;0
  draw_rectangle((1+i)*(view_wview/5)-31,10,(1+i)*(view_wview/5)+30,view_hview-10,false)
  draw_set_colour(c_ltgray)
  draw_rectangle((1+i)*(view_wview/5)-27,15,(1+i)*(view_wview/5)+26,65,false)
+ draw_sprite_ext(face001,0,(1+i)*(view_wview/5),60,2,2,0,-1,1)
  draw_sprite_ext(return_unit(unitSelect[i],1,0),0,(1+i)*(view_wview/5),60,2,2,0,-1,1)
  draw_set_colour(c_orange)
  draw_text_transformed((1+i)*(view_wview/5)+6,view_hview-170,"Class ",2,2,0)
@@ -3625,11 +3643,14 @@ if obj!=noone{
 draw_sprite_ext(object_get_sprite(obj),0,x+7,y+7,1,1,-view_angle,-1,0.5)
 if keyboard_check_pressed(vk_enter)
 if !place_meeting(x,y,oUnit){
-    var inst=instance_create(x,y,obj);
+    var inst=instance_create(floor(x/15)*15,floor(y/15)*15,obj);
     if obj&gt;=oJuicebox&amp;&amp;obj&lt;oBuilding
         inst.use=return_item_usage_default(inst.item)
+    else{
     inst.team=currentTurn
-    var temp=instance_create(x,y,oEff);
+    inst.dir=round(-view_angle/90)
+    }
+    var temp=instance_create(x+7,y+7,oEff);
     temp.sprite_index=spawn_eff
     }
 }

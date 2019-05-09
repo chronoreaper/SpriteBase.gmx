@@ -28,7 +28,7 @@
             <string>event_inherited()
 var rand;
 skill[0]=12
-for (var i=0;i&lt;10;i++){
+for (var i=1;i&lt;10;i++){
     rand=irandom(7)+1;
     item[i]=rand+return_item_usage_default(rand)
     }
@@ -85,8 +85,8 @@ dmg=hp
             <string>event_inherited()
 if oControler.selected=noone{
     var rand;
-    for (var i=0;i&lt;10;i++){
-    rand=irandom(7)+1;
+    for (var i=1;i&lt;10;i++){
+    rand=irandom(20)+1;
     item[i]=rand+return_item_usage_default(rand)
     }
 }
