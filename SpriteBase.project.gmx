@@ -114,6 +114,7 @@
       <sprite>sprites\face003</sprite>
       <sprite>sprites\face004</sprite>
       <sprite>sprites\face005</sprite>
+      <sprite>sprites\face006</sprite>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>

@@ -55,7 +55,7 @@ stats[1,4]=1
 mov=2
 mmov=mov
 view=4
-
+face=face006
 unit=merchant001_0
 name="merchaNt"
 
