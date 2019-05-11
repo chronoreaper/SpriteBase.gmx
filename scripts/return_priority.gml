@@ -25,7 +25,8 @@ for(var i=0;i<array_length_1d(arg_char.skill);i++){
             case 8:num=2 break;//fire
             case 9://heal
                 var inst=return_skill_has_target(9,arg_char)
-                if inst!=noone{
+                if inst!=noone
+                if inst>0{
                     if inst.mhp-inst.hp>=floor(arg_char.stats[2,4])
                         num=15
                     if inst.hp<=inst.mhp/2
