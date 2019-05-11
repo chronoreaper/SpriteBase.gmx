@@ -284,6 +284,8 @@
     <script>scripts\addStatus.gml</script>
     <script>scripts\findStatus.gml</script>
     <script>scripts\dispellStatus.gml</script>
+    <script>scripts\return_max_faces.gml</script>
+    <script>scripts\return_face.gml</script>
     <script>scripts\return_wep_range.gml</script>
     <script>scripts\return_wep_crit.gml</script>
     <script>scripts\return_wep_sound.gml</script>
