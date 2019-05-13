@@ -46,7 +46,7 @@ stats[1,2]=0.8
 stats[1,3]=0.8
 stats[1,4]=0.8
 
-mov=2
+mov=1
 mmov=mov
 view=3
 unit=eyebat001_0
