@@ -209,6 +209,8 @@
       </sprites>
     </sprites>
     <sprites name="in game menu">
+      <sprite>sprites\icons</sprite>
+      <sprite>sprites\menuIcon</sprite>
       <sprite>sprites\miniselectmenu</sprite>
     </sprites>
     <sprites name="Boss">
