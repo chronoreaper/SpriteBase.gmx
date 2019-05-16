@@ -208,7 +208,8 @@
         <sprite>sprites\shieldSprite</sprite>
       </sprites>
     </sprites>
-    <sprites name="in game menu">
+    <sprites name="in game icons">
+      <sprite>sprites\mouse</sprite>
       <sprite>sprites\icons</sprite>
       <sprite>sprites\menuIcon</sprite>
       <sprite>sprites\miniselectmenu</sprite>

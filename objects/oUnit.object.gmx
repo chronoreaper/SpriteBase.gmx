@@ -388,6 +388,10 @@ depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
 if hp&lt;=0{
     var inst=instance_create(x,y,oFade);
     inst.sprite_index=sprite_index
+    if face&gt;0{
+    inst=instance_create(x,y,oFade);
+    inst.sprite_index=face
+    }
     instance_destroy()
 }
 if dmg!=hp{
@@ -424,7 +428,7 @@ if dmg!=hp{
 if visible
 if draw&gt;0
 if marker&gt;0
-if oControler.phase&lt;3||oControler.currentTurn&lt;0{
+if oControler.phase&lt;2||oControler.currentTurn&lt;0{
     var txt=""
     var col=c_white
     switch marker{
