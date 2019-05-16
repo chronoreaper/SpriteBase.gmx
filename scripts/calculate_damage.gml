@@ -70,7 +70,7 @@ if true
         }
     //show reduced damage
     if reducedDmg>0{
-        var txt2=instance_create(arg_targ.x+7-22*dsin(-view_angle),arg_targ.y+7-22*dcos(-view_angle),DmgWord);    
+        var txt2=instance_create(arg_targ.x+7-24*dsin(-view_angle),arg_targ.y+7-24*dcos(-view_angle),DmgWord);    
         txt2.text="-"+string(reducedDmg)
         txt2.colour=c_ltgray
     }

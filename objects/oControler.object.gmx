@@ -1332,11 +1332,15 @@ else if phase=5{//before turn ends after attacking
             <string>///#3 move controler
 if menu=-1
 {
+//NEW!
+xx=floor(xx/15)*15
+yy=floor(yy/15)*15
 if phase&lt;=0
 ||phase=3
 ||phase=7
 ||phase=11
 ||phase=9
+
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0||
 (debugging=1&amp;&amp;eventScene){
 xx=clamp(xx,0,room_width-15)
@@ -1548,10 +1552,11 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
     //instance_activate_all()
     instance_activate_region(view_xview-view_wview,view_yview-view_wview,view_wview*2,view_wview*2,true)
     instance_activate_region(selected.x-view_wview,selected.y-view_wview,view_wview*2,view_wview*2,true)
+    //boss heal
     if selected.marker=1
     if selected.combat&lt;=0
     {
-        selected.hp=min(selected.hp+selected.lv,selected.mhp)
+        selected.hp=min(selected.hp+ceil(selected.lv/2),selected.mhp)
     }
     /*
     phase
@@ -1562,10 +1567,29 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
         var close=noone
         var c=selected
         var toItem=false
+        var command=-1;
+        /*
+        commands
+        0 boss only, follow link, or become new lead
+        1 moves in a straight line, turns when needed
+        2 follows link, or moves to link's target
+        3 follows link
+        4 follows link, or moves to what link was last hit by, or fends of monster
+        5 run
+        */
+        switch c.ai{
+            case -1:command=0 break;
+            case 1:command=1 break;
+            case 2:command=2 break;
+            case 3:command=3 break;
+            case 4:command=4 break;
+            case 5:command=1 break;
+        }
+        //get closest
         with (oChar){
             var u=id
-            if team!=c.team
-            if (c.ai!=2||object_is_ancestor(object_index,oMonster))
+            if oControler.allyMatrix[# c.team,team]&lt;0//team!=c.team
+            //if (c.ai!=2||object_is_ancestor(object_index,oMonster))
             //abs(close.x-c.x)+abs(close.y-c.y)&gt;abs(x-c.x)+abs(y-c.y)
             {
                 add_all_to_map()
@@ -1580,8 +1604,10 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                 }
             }
         }
+        
+        switch command{
         //following ai for wurm boss
-        if c.ai=-1
+        case 0:{
             if instance_exists(c.link)
                 close=c.link  
             else{
@@ -1590,23 +1616,44 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                 c.marker=1
                 c.close=noone
                 //c.wait=1
-            }
-        //move in a straight line ai for wurm boss
-        else if c.ai=1{
-            //if there is an object in way
-            if instance_place(c.x+15*cos(degtorad(c.dir*90)),c.y-15*sin(degtorad(c.dir*90)),oObj){
-                //turn 90 left or right
-                var rand=choose(1,-1)
-                if instance_place(c.x+15*cos(degtorad((c.dir+rand)*90)),c.y-15*sin(degtorad((c.dir+rand)*90)),oObj)
-                    rand*=-1
-                close=instance_create(c.x+30*cos(degtorad((c.dir+rand)*90)),c.y-30*sin(degtorad((c.dir+rand)*90)),oTempTarg)
-            }
-            else{
-                close=instance_create(c.x+30*cos(degtorad((c.dir)*90)),c.y-30*sin(degtorad((c.dir)*90)),oTempTarg)
                 }
-        }
+            }break;
+        case 1:{
+                //if there is an object in way
+                if instance_place(c.x+15*cos(degtorad(c.dir*90)),c.y-15*sin(degtorad(c.dir*90)),oUnit)
+                ||c.x+15*cos(degtorad(c.dir*90))&lt;0+15*3
+                ||c.x+15*cos(degtorad(c.dir*90))&gt;room_width-15*3
+                ||c.y-15*sin(degtorad(c.dir*90))&lt;0+15*3
+                ||c.y-15*sin(degtorad(c.dir*90))&gt;room_height-15*3{
+                    //turn 90 left or right
+                    var rand=choose(1,-1)
+                    if instance_place(c.x+15*cos(degtorad((c.dir+rand)*90)),c.y-15*sin(degtorad((c.dir+rand)*90)),oObj)
+                        rand*=-1
+                    close=instance_create(c.x+15*(c.mov+1)*cos(degtorad((c.dir+rand)*90)),c.y-15*(c.mov+1)*sin(degtorad((c.dir+rand)*90)),oTempTarg)
+                }
+                else{
+                    close=instance_create(c.x+15*(c.mov+1)*cos(degtorad((c.dir)*90)),c.y-15*(c.mov+1)*sin(degtorad((c.dir)*90)),oTempTarg)
+                    }
+                }
+                /*
+                //move in a straight line ai for wurm boss
+                else if c.ai=1{
+                    //if there is an object in way
+                    if instance_place(c.x+15*cos(degtorad(c.dir*90)),c.y-15*sin(degtorad(c.dir*90)),oObj){
+                        //turn 90 left or right
+                        var rand=choose(1,-1)
+                        if instance_place(c.x+15*cos(degtorad((c.dir+rand)*90)),c.y-15*sin(degtorad((c.dir+rand)*90)),oObj)
+                            rand*=-1
+                        close=instance_create(c.x+30*cos(degtorad((c.dir+rand)*90)),c.y-30*sin(degtorad((c.dir+rand)*90)),oTempTarg)
+                    }
+                    else{
+                        close=instance_create(c.x+30*cos(degtorad((c.dir)*90)),c.y-30*sin(degtorad((c.dir)*90)),oTempTarg)
+                        }
+                }*/
+            break
+
         //linked ai that follows and attacks
-        else if c.ai=2{
+        case 2:{
             if instance_exists(c.link){
                 //NOTE aggro is reset at the start of each turn
                 if c.link.aggro!=noone&amp;&amp;instance_exists(c.link.aggro){
@@ -1618,47 +1665,47 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
             else{
                 c.link=noone
             }
-        }
-        else if c.ai=3{//just follows
+            }break
+        case 3:{//just follows
             if instance_exists(c.link){
                 close=c.link
             }
             else{
                 c.link=noone
             }
-        }  
-        else if c.ai=4{//follows and revenge against last hit or targets nearest
+            }break; 
+        case 4:{//follows and revenge against last hit or targets nearest
             if instance_exists(c.link){
                 //NOTE aggro is reset at the start of each turn
                 if c.link.lastHitBy!=noone&amp;&amp;instance_exists(c.link.lastHitBy){
                     close=c.link.lastHitBy
                 }
-                else if (abs(c.link.x-c.x)/15+abs(c.link.y-c.y)/15&gt;=4)||
-                    close!=noone&amp;&amp;((abs(close.x-c.x)/15+abs(close.y-c.y)/15&gt;=4)
+                else if (abs(c.link.x-c.x)/15+abs(c.link.y-c.y)/15&gt;=c.mov+1)||
+                    close!=noone&amp;&amp;((abs(close.x-c.x)/15+abs(close.y-c.y)/15&gt;=c.mov+1)
                     ||!object_is_ancestor(close.object_index,oMonster))
                     close=c.link
             }
             else{
                 c.link=noone
             }
-        } else if c.ai=5{//just randomly move for merchant
-            //if there is an object in way
-            if instance_place(c.x+15*cos(degtorad(c.dir*90)),c.y-15*sin(degtorad(c.dir*90)),oUnit)
-            ||c.x+15*cos(degtorad(c.dir*90))&lt;0+15*3
-            ||c.x+15*cos(degtorad(c.dir*90))&gt;room_width-15*3
-            ||c.y-15*sin(degtorad(c.dir*90))&lt;0+15*3
-            ||c.y-15*sin(degtorad(c.dir*90))&gt;room_height-15*3{
-                //turn 90 left or right
-                var rand=choose(1,-1)
-                if instance_place(c.x+15*cos(degtorad((c.dir+rand)*90)),c.y-15*sin(degtorad((c.dir+rand)*90)),oObj)
-                    rand*=-1
-                close=instance_create(c.x+15*(c.mov+1)*cos(degtorad((c.dir+rand)*90)),c.y-15*(c.mov+1)*sin(degtorad((c.dir+rand)*90)),oTempTarg)
+        }break;
+        case 5:
+            var fx=close.x
+            var fy=close.y
+            var further=0
+            for (var i=-c.mov;i&lt;=c.mov;i++)
+            for (var j=-c.mov;j&lt;=c.mov;j++){
+                if point_distance(c.x+i*15,c.y+j*15,close.x,close.y)&gt;further
+                if !place_meeting(c.x+i*15,c.y+j*15,oUnit)
+                    {
+                        fx=c.x+i*15
+                        fy=c.y+j*15
+                        further=point_distance(c.x+i*15,c.y+j*15,close.x,close.y)
+                    }
             }
-            else{
-                close=instance_create(c.x+15*(c.mov+1)*cos(degtorad((c.dir)*90)),c.y-15*(c.mov+1)*sin(degtorad((c.dir)*90)),oTempTarg)
-                }
+            close=instance_create(fx,fy,oTempTarg);
+            break
         }
-        
         if close!=noone{
             //move towards it
              add_all_to_map()
@@ -1671,7 +1718,7 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                     if floor(path_get_length(c.path)/15)&gt;c.mov
                     {//travels furthest
                         mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
-                        path_get_point_y(c.path,c.mov),false)
+                            path_get_point_y(c.path,c.mov),false)
                        }
                     else {//travels one before target
                     mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,
@@ -1679,6 +1726,18 @@ if ds_map_find_value(aiTurns, currentTurn)&lt;0
                         path_get_point_y(c.path,path_get_number(c.path)-2),false)
                     }
                 }//travels towards an item
+                else{//traveling towards an item
+                    if floor(path_get_length(c.path)/15)&gt;c.mov
+                    {//travels furthest
+                        mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
+                            path_get_point_y(c.path,c.mov),false)
+                       }
+                    else {//travels totarget
+                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,
+                        path_get_point_x(c.path,path_get_number(c.path)-1),
+                        path_get_point_y(c.path,path_get_number(c.path)-1),false)
+                    }
+                }
                 //start the path
                 //see if visable or not
                 if (c.draw=0
