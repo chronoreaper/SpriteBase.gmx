@@ -2,6 +2,7 @@ var arg_source=argument0
 var arg_targ=argument1
 var arg_slot=menuSel
 var arg_skill=arg_source.skill[arg_slot]
+var basexp=3
 /* 1 = usable
  0 = cant use
 */
@@ -94,7 +95,7 @@ switch floor(arg_skill){
             arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.alarm[0]=6
             var base =return_dmg(arg_source.stats[2,0],0,return_skill_type(arg_skill),arg_source,arg_targ);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
                 if dmg>0{
                 //effect
                 var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -214,7 +215,7 @@ switch floor(arg_skill){
                 while cinst!=noone{
                     if (cinst!=arg_source){
                         //var dmg=return_dmg(20,0,cinst.stats[2,2]);
-                        calculate_damage(arg_source,cinst,arg_source.stats[2,0]+7,return_skill_acc(arg_skill,0,arg_source,cinst),return_skill_type(arg_skill),3,1)
+                        calculate_damage(arg_source,cinst,arg_source.stats[2,0]+7,return_skill_acc(arg_skill,0,arg_source,cinst),return_skill_type(arg_skill),1,1)
                     }
                     instance_deactivate_object(cinst);
                     cinst=instance_place(x,y,oUnit);
@@ -236,7 +237,7 @@ switch floor(arg_skill){
             arg_source.intg+=1
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
             
             addStatus(0,arg_targ,4,0.02,ceil(arg_source.lv/2))
             
@@ -313,7 +314,7 @@ switch floor(arg_skill){
             eff.sprite_index=crossSlash
             var base =return_dmg(return_wep_dmg(arg_source.item[arg_source.wep],arg_source,abs(arg_source.x-arg_targ.x)+abs(arg_source.y-arg_targ.y))*2
                                 ,arg_source.stats[2,3],return_skill_type(arg_skill),arg_source,arg_targ);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp+1,1)
             if arg_source.draw>0{
                 if dmg>0
                     audio_play_sound(sHitSlash,50,false)
@@ -331,7 +332,6 @@ switch floor(arg_skill){
             arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             arg_source.item[arg_source.wep]-=0.01
             return_wep_dur(arg_source,0)//this has an additional -0.01
-            arg_source.xp+=5
             arg_source.tecg+=1
             arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
@@ -349,7 +349,7 @@ switch floor(arg_skill){
                                 ,arg_source.stats[2,3],return_skill_type(arg_skill),arg_source,arg_targ);
             var dmg =calculate_damage(arg_source,arg_targ,base,
                 return_skill_acc(arg_skill,abs(arg_source.x-arg_targ.x)/15+abs(arg_source.y-arg_targ.y)/15,arg_source,arg_targ)
-                ,return_skill_type(arg_skill),5,1)
+                ,return_skill_type(arg_skill),basexp+1,1)
             if arg_source.draw>0{
                 if dmg>0
                     audio_play_sound(sHitSlash,50,false)
@@ -388,7 +388,7 @@ switch floor(arg_skill){
             var value=floor(arg_source.stats[2,4])
             addStatus(0,arg_targ,1,0.03,value)
             arg_source.sp-=5
-            arg_source.xp+=4
+            arg_source.xp+=basexp+1
             arg_source.spg+=1
             arg_source.resg+=1
 
@@ -432,7 +432,7 @@ switch floor(arg_skill){
             arg_source.intg+=1
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
             
             var val=1//ceil(arg_source.lv/2)
             addStatus(0,arg_targ,6,0.02,val)
@@ -467,7 +467,7 @@ switch floor(arg_skill){
             arg_source.intg+=1
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
             //lower atk and int
             var val=ceil(arg_source.lv/2)
             if arg_targ.stats[2,0]-val<=0
@@ -507,7 +507,7 @@ switch floor(arg_skill){
             arg_source.intg+=1
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
             
             //lower def and res
             var val=ceil(arg_source.lv/2)
@@ -549,7 +549,7 @@ switch floor(arg_skill){
             arg_source.intg+=1
             arg_source.spg+=1
             var base =return_dmg(arg_source.stats[2,1],0,return_skill_type(arg_skill),arg_source,arg_targ);
-            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),5,1)
+            var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
             
             //lower res
             var val=ceil(arg_source.lv)
@@ -580,6 +580,7 @@ switch floor(arg_skill){
         if arg_source.sp>=6 {
         if arg_targ!=noone{
             arg_source.sp-=6
+            arg_source.xp+=max(basexp-1,1)
             arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90)
             //arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5
             //arg_source.ay=-sin(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5

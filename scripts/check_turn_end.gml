@@ -120,7 +120,7 @@ if fin=1{
         if instance_exists(inst){
             inst.draw=0
             //stats
-            inst.xp+=irandom(turnsSurvive*2)+turnsSurvive
+            inst.xp+=irandom(turnsSurvive)+turnsSurvive
             inst.hpg+=random(turnsSurvive*0.1)
             inst.spg+=random(turnsSurvive*0.1)
             inst.strg+=random(turnsSurvive*0.1)

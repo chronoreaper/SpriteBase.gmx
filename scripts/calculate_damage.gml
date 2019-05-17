@@ -76,13 +76,14 @@ if true
     }
     if !object_is_ancestor(arg_targ.object_index,oObj)
     if arg_targ.team!=arg_source.team{
-        arg_source.xp+=arg_xp
-        if arg_targ.hp=0{
+        var totalxp=arg_xp
+        if arg_targ.hp<=0{
             var more=0
             with arg_targ
                 more=return_power()
-            arg_source.xp+=floor(more/10)
+            totalxp+=ceil(more/10)
             }
+        arg_source.xp+=totalxp
         arg_source.aggro=arg_targ
         }
 return dmg
