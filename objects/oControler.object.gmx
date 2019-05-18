@@ -242,6 +242,7 @@ if !place_meeting(rx*15,ry*15,oUnit)
     }    
 }*/
 //enemies
+if room=room0
 repeat((room_width/15+room_height/15)/4){
 var rx=irandom(room_width/15)
 var ry=irandom(room_height/15)
@@ -259,7 +260,7 @@ if !place_meeting(rx*15,ry*15,oUnit)
         var inst=instance_create(rx*15,ry*15,
         choose(oFighter,oArcher,oMage,oHealer));
         inst.team=1
-        inst.ai=2
+        inst.ai=6
         inst.draw=0
         }
     }
@@ -1523,10 +1524,10 @@ if menu=-1
         //selected=c
         if selected!=noone{
             var c=selected
-            if selected.draw=0
+            /*if selected.draw=0
                 room_speed=1000
             else
-                room_speed=30
+                room_speed=30*/
             
             if selected.mov&gt;0
             phase=0
@@ -1596,6 +1597,27 @@ if menu=-1
             case 3:command=3 break;
             case 4:command=4 break;
             case 5:command=1 break;
+            case 6:
+                //if hp&lt;50% run
+                if c.hp/c.mhp&lt;=0.5
+                    command=5
+                //attacks
+                else 
+                    command=2
+                //if near ally, follow
+                if c.link=noone{
+                    var dis=3
+                    for(var i=-dis;i&lt;=dis;i+=1)
+                    for(var j=-dis;j&lt;=dis;j+=1){
+                        var in=instance_place(c.x+i*15,c.y+j*15,oChar)
+                        if in!=noone
+                        if in.team=c.team
+                        if in.link==noone
+                        if in!=c
+                            c.link=in
+                    }
+                }
+                break;
         }
         //get closest
         with (oChar){
