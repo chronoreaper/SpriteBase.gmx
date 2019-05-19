@@ -50,5 +50,5 @@ repeat(100){
 }
 var inst=instance_create(arg_x+60*2+15*0,arg_y+2*60+15*0,oGreatTree);
 inst.team=2
-inst.ai=6
+inst.ai=7
 inst.marker=1

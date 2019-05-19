@@ -18,16 +18,12 @@ switch arg_skill{
             {
                 var c=arg_source
                 var targ=inst
-                draw_set_font(pixelFont)
-                draw_sprite_ext(atkInfo,0,xx+7+10*dsin(view_angle),yy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
-                draw_set_colour(c_black)
-                draw_set_halign(fa_center)
-                draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
-                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle),ceil(arg_source.lv/2)+2,1,1,-view_angle)
+                var itext="heal "+string(ceil(return_skill_num(arg_source,targ)))
+                draw_sprite_ext(infoSprite,0,xx+7,yy+7,1,1,-view_angle,-1,1)
                 draw_set_font(pixelBlock)
                 draw_set_colour(c_lime)
-                draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"heal",1,1,-view_angle)
-                draw_set_halign(fa_left)
+                draw_text_transformed(xx+7+15*dcos(45-view_angle),yy+7-15*dsin(45-view_angle),itext
+                    ,1,1,-view_angle)        
             }
         }
     break;
@@ -53,16 +49,12 @@ switch arg_skill{
                 {
                     var c=arg_source
                     var targ=inst
-                    draw_set_font(pixelFont)
-                    draw_sprite_ext(atkInfo,0,xxx+7+10*dsin(view_angle),yyy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
-                    draw_set_colour(c_black)
-                    draw_set_halign(fa_center)
-                    draw_text_transformed(xxx+7-26*dsin(-view_angle),yyy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
-                    draw_text_transformed(xxx+7-20*dsin(-view_angle),yyy+7-20*dcos(view_angle),ceil(return_dmg(10+arg_source.lv,0,return_skill_type(arg_skill),arg_source,inst)),1,1,-view_angle)
+                    var itext="attack "+string(ceil(return_skill_num(arg_source,targ)))
+                    draw_sprite_ext(infoSprite,0,xxx+7,yyy+7,1,1,-view_angle,-1,1)
                     draw_set_font(pixelBlock)
-                    draw_set_colour(c_red)
-                    draw_text_transformed(xxx+7-37*dsin(-view_angle),yyy+7-37*dcos(view_angle),"target",1,1,-view_angle)
-                    draw_set_halign(fa_left)
+                    draw_set_colour(c_ltgray)
+                    draw_text_transformed(xxx+7+15*dcos(45-view_angle),yyy+7-15*dsin(45-view_angle),itext
+                        ,1,1,-view_angle)    
                 }
             }
             
@@ -91,20 +83,12 @@ switch arg_skill{
                 {
                     var c=arg_source
                     var targ=inst
-                    draw_set_font(pixelFont)
-                    draw_sprite_ext(atkInfo,0,xxx+7+10*dsin(view_angle),yyy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
-                    draw_set_colour(c_black)
-                    draw_set_halign(fa_center)
-                    draw_text_transformed(xxx+7-26*dsin(-view_angle),yyy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
-                    /*if inst.weakness[return_skill_type(arg_skill)]>1
-                        draw_set_colour(c_orange)
-                    else if inst.weakness[return_skill_type(arg_skill)]<1
-                        draw_set_colour(c_ltgray)*/
-                    draw_text_transformed(xxx+7-20*dsin(-view_angle),yyy+7-20*dcos(view_angle),ceil(return_dmg(10+arg_source.lv,0,return_skill_type(arg_skill),arg_source,inst)),1,1,-view_angle)
+                    var itext="attack "+string(ceil(return_skill_num(arg_source,targ)))
+                    draw_sprite_ext(infoSprite,0,xxx+7,yyy+7,1,1,-view_angle,-1,1)
                     draw_set_font(pixelBlock)
-                    draw_set_colour(c_red)
-                    draw_text_transformed(xxx+7-37*dsin(-view_angle),yyy+7-37*dcos(view_angle),"target",1,1,-view_angle)
-                    draw_set_halign(fa_left)
+                    draw_set_colour(c_ltgray)
+                    draw_text_transformed(xxx+7+15*dcos(45-view_angle),yyy+7-15*dsin(45-view_angle),itext
+                        ,1,1,-view_angle)   
                 }
             }
         }break;
@@ -121,16 +105,17 @@ switch arg_skill{
             {
                 var c=arg_source
                 var targ=inst
-                draw_set_font(pixelFont)
-                draw_sprite_ext(atkInfo,0,xx+7+10*dsin(view_angle),yy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
-                draw_set_colour(c_black)
-                draw_set_halign(fa_center)
-                draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
-                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), ceil(return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-inst.x)+abs(c.y-inst.y)),c.stats[2,3],return_skill_type(arg_skill),c,inst)),1,1,-view_angle)
+                var itext="attack "+string(ceil(return_skill_num(arg_source,targ)))
+                draw_sprite_ext(infoSprite,0,xx+7,yy+7,1,1,-view_angle,-1,1)
                 draw_set_font(pixelBlock)
-                draw_set_colour(c_red)
-                draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"attack",1,1,-view_angle)
-                draw_set_halign(fa_left)
+                draw_set_colour(c_ltgray)
+                draw_text_transformed(xx+7+15*dcos(45-view_angle),yy+7-15*dsin(45-view_angle),itext
+                    ,1,1,-view_angle) 
+                      
+                itext="heal "+string(floor(0.5*return_dmg(arg_source.stats[2,0],0,return_skill_type(arg_skill),arg_source,inst)))
+                draw_sprite_ext(infoSprite,0,c.x+7,c.y+7,1,1,-view_angle,-1,1)
+                draw_text_transformed(c.x+7+15*dcos(45-view_angle),c.y+7-15*dsin(45-view_angle),itext
+                    ,1,1,-view_angle)   
             }
         }
     case 5:
@@ -139,27 +124,23 @@ switch arg_skill{
             draw_sprite_ext(AOE_range2,0,xx,yy,1,1,0,c_lime,1)
         }
         else{
-            var inst=instance_place(xx,yy,oUnit)
-            if inst!=noone
-            if (inst.draw>0)
-            if return_check_skill_target(arg_source,inst,return_skill_targ_type(arg_skill))
+            for (var xxx=-15*3+xx;xxx<=15*3+xx;xxx+=15)
+            for (var yyy=-15*3+yy;yyy<=15*3+yy;yyy+=15)
             {
-                var c=arg_source
-                var targ=inst
-                draw_set_font(pixelFont)
-                draw_sprite_ext(atkInfo,0,xx+7+10*dsin(view_angle),yy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
-                draw_set_colour(c_black)
-                draw_set_halign(fa_center)
-                draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
-                /*if inst.weakness[return_skill_type(arg_skill)]>1
-                    draw_set_colour(c_orange)
-                else if inst.weakness[return_skill_type(arg_skill)]<1
-                    draw_set_colour(c_ltgray)*/
-                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle),c.lv,1,1,-view_angle)
-                draw_set_font(pixelBlock)
-                draw_set_colour(c_lime)
-                draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"heal",1,1,-view_angle)
-                draw_set_halign(fa_left)
+                var inst=instance_place(xxx,yyy,oUnit)
+                if inst!=noone
+                if (inst.draw>0)
+                if return_check_skill_target(arg_source,inst,return_skill_targ_type(arg_skill))
+                {
+                    var c=arg_source
+                    var targ=inst
+                    draw_set_font(pixelBlock)
+                    draw_set_colour(c_ltgray)
+                    var itext="heal "+string(return_skill_num(arg_source,noone))
+                    draw_sprite_ext(infoSprite,0,xxx+7,yyy+7,1,1,-view_angle,-1,1)
+                    draw_text_transformed(xxx+7+15*dcos(45-view_angle),yyy+7-15*dsin(45-view_angle),itext
+                        ,1,1,-view_angle)  
+                }
             }
         }
     break;
@@ -302,20 +283,12 @@ switch arg_skill{
             {
                 var c=arg_source
                 var targ=inst
-                draw_set_font(pixelFont)
-                draw_sprite_ext(atkInfo,0,xx+7+10*dsin(view_angle),yy+7-10*dcos(view_angle),1,1,-view_angle,-1,1)
-                draw_set_colour(c_black)
-                draw_set_halign(fa_center)
-                draw_text_transformed(xx+7-26*dsin(-view_angle),yy+7-26*dcos(view_angle),string(return_skill_acc(arg_skill,abs(c.x-inst.x)+abs(c.y-inst.y),arg_source,targ))+"%",1,1,-view_angle)
-                /*if inst.weakness[return_skill_type(arg_skill)]>1
-                    draw_set_colour(c_orange)
-                else if inst.weakness[return_skill_type(arg_skill)]<1
-                    draw_set_colour(c_ltgray)*/
-                draw_text_transformed(xx+7-20*dsin(-view_angle),yy+7-20*dcos(view_angle), ceil(return_dmg(c.stats[2,1]+2,0,return_skill_type(arg_skill),c,inst)),1,1,-view_angle)
+                var itext="attack "+string(ceil(return_skill_num(arg_source,inst)))
+                draw_sprite_ext(infoSprite,0,xx+7,yy+7,1,1,-view_angle,-1,1)
                 draw_set_font(pixelBlock)
-                draw_set_colour(c_red)
-                draw_text_transformed(xx+7-37*dsin(-view_angle),yy+7-37*dcos(view_angle),"attack",1,1,-view_angle)
-                draw_set_halign(fa_left)
+                draw_set_colour(c_ltgray)
+                draw_text_transformed(xx+7+15*dcos(45-view_angle),yy+7-15*dsin(45-view_angle),itext
+                    ,1,1,-view_angle)   
             }
         }
     break;

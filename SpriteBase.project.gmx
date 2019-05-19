@@ -325,6 +325,7 @@
     <script>scripts\return_skill_type.gml</script>
     <script>scripts\return_skill_des.gml</script>
     <script>scripts\return_skill_eff.gml</script>
+    <script>scripts\return_skill_num.gml</script>
     <script>scripts\return_skill_acc.gml</script>
     <script>scripts\return_skill_onhit_eff.gml</script>
     <script>scripts\return_skill_area_type.gml</script>
