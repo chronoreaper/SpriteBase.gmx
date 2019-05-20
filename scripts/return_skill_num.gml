@@ -1,6 +1,6 @@
 var arg_source=argument0
 var arg_targ=argument1
-var arg_slot=menuSel
+var arg_slot=oControler.menuSel
 var arg_skill=arg_source.skill[arg_slot]
 /* 1 = usable
  0 = cant use
@@ -33,11 +33,11 @@ switch floor(arg_skill){
     case 15://freeze
         return return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
     case 16://shock
-        return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ); 
+        return return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ); 
     case 17://wind
-        return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
+        return return_dmg(arg_source.stats[2,1]+2,0,return_skill_type(arg_skill),arg_source,arg_targ);
    case 19://flux
-        return_dmg(arg_source.stats[2,1],0,return_skill_type(arg_skill),arg_source,arg_targ);
+        return return_dmg(arg_source.stats[2,1],0,return_skill_type(arg_skill),arg_source,arg_targ);
    case 21://blessing
         return ceil(arg_source.lv/2)     
 }

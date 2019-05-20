@@ -52,10 +52,10 @@ switch floor(arg_skill){
         str="lowers target#movemeNt#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 16:
-        str="lowers target#[atk]and[int]#attack#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="lowers target#[atk]aNd[int]#attack#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 17:
-        str="lowers target#[def]and[res]#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
+        str="lowers target#[def]aNd[res]#<Mag>#[iNt]#raNge "+string(abs(return_skill_range(arg_skill)))
         break;
     case 18:
         str="takes the skills#of those killed"

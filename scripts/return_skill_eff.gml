@@ -46,7 +46,7 @@ switch floor(arg_skill){
                 var cinst=instance_place(x,y,oUnit);
                 while cinst!=noone{
                     if (cinst!=arg_source){
-                        var dmg=return_skill_num(arg_source,arg_targ)
+                        var dmg=return_skill_num(arg_source,cinst)
                         calculate_damage(arg_source,cinst,dmg,return_skill_acc(arg_skill,0,arg_source,cinst),return_skill_type(arg_skill),1,1)
                     }
                     instance_deactivate_object(cinst);

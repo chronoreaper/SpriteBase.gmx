@@ -58,11 +58,11 @@ draw_set_colour(colour)
 draw_set_alpha(alpha)
 draw_set_font(pixelBlock)
 draw_text_transformed(x+10*dsin(view_angle),y+7-10*dcos(view_angle),text,1,1,-view_angle);
-y-=0.2*dcos(view_angle)
+y-=0.2*dcos(view_angle)*(30/max(fps,1))
 x-=0.2*dsin(-view_angle)
 draw_set_alpha(1)
 draw_set_halign(fa_left)
-alpha-=0.1
+alpha-=0.1*(30/max(fps,1))
 if alpha=0
 instance_destroy();
 </string>

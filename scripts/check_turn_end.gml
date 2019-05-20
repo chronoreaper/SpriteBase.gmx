@@ -163,6 +163,26 @@ if fin=1{
                     hp=0                
             }
             
+            //check if near a passive object
+            var inst=instance_create(x,y,oEff);
+            inst.sprite_index=AOE_range1s
+            inst.visible=false
+            var near_camp=0
+            with inst{
+                if place_meeting(x,y,oCampfire)
+                    near_camp=1
+            }
+            if near_camp{
+                hp=min(mhp,hp+2)
+                sp=min(msp,sp+2)
+                var txt=instance_create(x+7-23*dsin(-view_angle),y+7-23*dcos(-view_angle),DmgWord);
+                txt.text=string(2)
+                txt.colour=c_lime
+                txt=instance_create(x+7-15*dsin(-view_angle),y+7-15*dcos(-view_angle),DmgWord);
+                txt.text=string(2)
+                txt.colour=c_aqua
+            }
+            
             aggro=noone
             if sp>msp
                 sp=msp

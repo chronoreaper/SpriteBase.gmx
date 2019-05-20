@@ -150,6 +150,7 @@
       <sprite>sprites\house01_1</sprite>
       <sprite>sprites\house01_2</sprite>
       <sprite>sprites\house01_3</sprite>
+      <sprite>sprites\campFire</sprite>
       <sprite>sprites\fence01</sprite>
     </sprites>
     <sprites name="items">
@@ -212,6 +213,7 @@
       <sprite>sprites\mouse</sprite>
       <sprite>sprites\icons</sprite>
       <sprite>sprites\menuIcon</sprite>
+      <sprite>sprites\sprite199</sprite>
       <sprite>sprites\miniselectmenu</sprite>
     </sprites>
     <sprites name="Boss">
@@ -249,6 +251,7 @@
     </sprites>
     <sprites name="area of effect">
       <sprite>sprites\AOE_range2</sprite>
+      <sprite>sprites\AOE_range1s</sprite>
     </sprites>
     <sprite>sprites\blank</sprite>
     <sprite>sprites\cruser</sprite>
@@ -294,6 +297,7 @@
     <script>scripts\addStatus.gml</script>
     <script>scripts\findStatus.gml</script>
     <script>scripts\dispellStatus.gml</script>
+    <script>scripts\unit_description.gml</script>
     <script>scripts\return_max_faces.gml</script>
     <script>scripts\return_face.gml</script>
     <script>scripts\return_wep_range.gml</script>
@@ -408,6 +412,7 @@
       <object>objects\oAncientWall</object>
       <object>objects\oRecyclingBin</object>
       <object>objects\oBench</object>
+      <object>objects\oCampfire</object>
       <object>objects\oChest</object>
       <object>objects\oHouse</object>
       <object>objects\oFence</object>

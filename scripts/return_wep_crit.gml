@@ -11,6 +11,10 @@ switch floor(arg_wep){
         if arg_targ.hp/arg_targ.mhp <= 0.5
             return 2
         return 1
+    case 14://great sword
+        if arg_sel.x=arg_sel.xx&&arg_sel.y=arg_sel.yy
+            return 2
+        return 1
     case 15://great bow
         if arg_sel.x=arg_sel.xx&&arg_sel.y=arg_sel.yy
             return 2

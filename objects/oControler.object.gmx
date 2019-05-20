@@ -157,6 +157,7 @@ inst=instance_create(x+15,y+15,oHealer);
 ds_list_add(unitList,inst)
 inst=instance_create(x,y+15,oMage);
 ds_list_add(unitList,inst)*/
+inst=instance_create(x,y,oCampfire);
 //inst.ai=0 
 var sx=15;
 var sy=15;
@@ -1524,10 +1525,10 @@ if menu=-1
         //selected=c
         if selected!=noone{
             var c=selected
-            /*if selected.draw=0
+            if selected.draw=0
                 room_speed=1000
             else
-                room_speed=30*/
+                room_speed=30
             
             if selected.mov&gt;0
             phase=0
@@ -2820,8 +2821,21 @@ draw_text(178,28,"N")
 draw_set_colour(c_white)
 if ds_map_find_value(aiTurns, currentTurn)&lt;0
 {
+    var waitCount;
+    waitCount=0
+    var count=0
+    while ds_map_find_value(aiTurns, currentTurn+count)&lt;0
+        &amp;&amp;waitCount&lt;ds_list_size(aiTurns)
+        {
+        count++
+        waitCount++;
+        if currentTurn+count&gt;playerMax{
+            count=-currentTurn
+        }
+    }
+    waitCount--
 draw_text(10,10,"wait")
-draw_rectangle(10,20,10+(unitLeft/ds_list_size(unitList))*90,23,false)
+draw_rectangle(10,20,10+(unitLeft/ds_list_size(unitList))*40+40*waitCount,23,false)
 }
 draw_set_halign(fa_right)
 draw_text(358,10,"wasd: move coNtroler")
@@ -3128,13 +3142,13 @@ else if menuSelect&lt;0
         if mouse_check_button(mb_left)
         ||keyboard_check_pressed(keys[4]){
             menu=-1
-            var rx=irandom(room_width/15)
-            var ry=irandom(room_height/15)
+            var rx=irandom(room_width/15)-1
+            var ry=irandom(room_height/15)-1
             while place_meeting(rx*15,ry*15,oUnit){
-                rx=irandom(room_width/15)
-                ry=irandom(room_height/15)
+                rx=irandom(room_width/15)-1
+                ry=irandom(room_height/15)-1
             }
-                var inst=instance_create(x,y,return_unit(unitSelect[i],3,i));
+                var inst=instance_create(rx*15,ry*15,return_unit(unitSelect[i],3,i));
                 ds_list_add(unitList,inst)
                 xx=inst.xx
                 yy=inst.yy
@@ -3358,6 +3372,9 @@ if selected=noone{
         }
         //draw_set_alpha(1)
         path_delete(path)
+        //special Cases
+        if c.object_index=oCampfire
+            draw_sprite_ext(AOE_range1s,0,c.x,c.y,1,1,0,c_lime,0.5)
     }
     selected=noone
 }

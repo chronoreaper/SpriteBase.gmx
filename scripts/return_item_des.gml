@@ -47,12 +47,10 @@ switch floor(arg_item){
         str="critical hit#wheN target#is below 50%#[tec]#mt: 1#wt: "+string(return_item_wt(arg_item))
         break;
     case 14://great sword
-        str="deals more#damage the#less you#
-            move.#critical hit#wheN staNding#still.#[atk]#mt: 10#wt: "+string(return_item_wt(arg_item))
+        str="deals more damage#the less you#move.#critical hit#wheN staNdiNg#still.#[atk]#mt: 10#wt: "+string(return_item_wt(arg_item))
         break;
     case 15://great bow
-        str="deals more#damage the#further the#
-            target.#critical hit#wheN staNding#still.#[tec]#mt: 7#wt: "+string(return_item_wt(arg_item))
+        str="deals more damage#the further the#target.#critical hit#wheN staNdiNg#still.#[tec]#mt: 7#wt: "+string(return_item_wt(arg_item))
         break;
     case 16://cross bow
         str="hits twice#does not#scale high#with lv.#[tec]#mt: 7#wt: "+string(return_item_wt(arg_item))
