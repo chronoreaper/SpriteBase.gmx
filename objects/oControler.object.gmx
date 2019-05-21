@@ -1525,10 +1525,13 @@ if menu=-1
         //selected=c
         if selected!=noone{
             var c=selected
+            if !debugging{
             if selected.draw=0
                 room_speed=1000
             else
                 room_speed=30
+            }
+            else room_speed=30
             
             if selected.mov&gt;0
             phase=0
@@ -1725,6 +1728,7 @@ if menu=-1
             }
         }break;
         case 5:
+            if close!=noone&amp;&amp;instance_exists(close){
             var fx=close.x
             var fy=close.y
             var further=0
@@ -1739,6 +1743,7 @@ if menu=-1
                     }
             }
             close=instance_create(fx,fy,oTempTarg);
+            }
             break
         }
         if close!=noone{
@@ -1881,7 +1886,7 @@ if menu=-1
                             var inst=instance_place(i+c.x,j+c.y,oUnit)
                             if inst!=noone
                             if !object_is_ancestor(inst.object_index,oObj)
-                            if inst.team!=c.team
+                            if allyMatrix[# c.team,inst.team]&lt;0
                             if (c.ai!=2||object_is_ancestor(inst.object_index,oMonster))
                             if(c.ai!=3||object_is_ancestor(inst.object_index,oMonster))
                             if (c.ai!=4||object_is_ancestor(inst.object_index,oMonster))
