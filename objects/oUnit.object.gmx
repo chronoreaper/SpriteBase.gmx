@@ -387,11 +387,13 @@ depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
             <string>///check if dead
 if hp&lt;=0{
     var inst=instance_create(x,y,oFade);
-    inst.sprite_index=sprite_index+dir+round(view_angle/90)
+    inst.sprite_index=unit+dir+round(view_angle/90)
+    inst.image_angle=-view_angle
     if face&gt;0{
     inst=instance_create(x,y,oFade);
     inst.sprite_index=face
     inst.image_index=dir+round(view_angle/90)
+    inst.image_angle=-view_angle
     }
     instance_destroy()
 }

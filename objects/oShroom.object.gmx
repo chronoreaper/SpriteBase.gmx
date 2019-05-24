@@ -55,7 +55,7 @@ mov=1
 mmov=mov
 view=4
 unit=shroom001_0
-name="shroom"
+name="Shroom"
 
 dmg=hp
 </string>

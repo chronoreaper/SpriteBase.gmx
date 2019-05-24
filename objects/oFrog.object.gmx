@@ -50,7 +50,7 @@ mov=2
 mmov=mov
 view=4
 unit=frog001_0
-name="frog"
+name="Frog"
 
 dmg=hp
 </string>

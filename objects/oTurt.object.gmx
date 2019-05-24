@@ -54,7 +54,7 @@ mov=1
 mmov=mov
 view=3
 unit=turt001_0
-name="turt"
+name="Turt"
 
 dmg=hp
 </string>

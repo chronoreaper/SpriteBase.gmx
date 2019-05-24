@@ -299,11 +299,11 @@ switch floor(arg_skill){
         }
         return 0
     case 10:
-        if frac(arg_source.item[arg_source.wep])>=0.03 
+        if frac(arg_source.item[arg_source.wep])>=0.02
         if return_wep_range(arg_source.item[arg_source.wep])=1{
         if arg_targ!=noone{
             arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
-            arg_source.item[arg_source.wep]-=0.02
+            arg_source.item[arg_source.wep]-=0.01
             return_wep_dur(arg_source,0)
             arg_source.xp+=5
             arg_source.strg+=1

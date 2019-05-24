@@ -50,7 +50,7 @@ mov=1
 mmov=mov
 view=3
 unit=cyclops001_0
-name="cyclops"
+name="Cyclops"
 
 dmg=hp
 </string>

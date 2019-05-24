@@ -11,7 +11,7 @@ return type
 switch index{
     case 0:
         switch returnType{
-            case 0:return "fighter"
+            case 0:return "Fighter"
             case 1:return fighter001_0
             case 2:
                 hp[playerIndex]=15
@@ -27,7 +27,7 @@ switch index{
     break
     case 1:
         switch returnType{
-            case 0:return "archer"
+            case 0:return "Archer"
             case 1:return archer001_0
             case 2:
                 hp[playerIndex]=12
@@ -43,7 +43,7 @@ switch index{
     break
     case 2:
         switch returnType{
-            case 0:return "mage"
+            case 0:return "Mage"
             case 1:return mage001_0
             case 2:
                 hp[playerIndex]=10
@@ -59,7 +59,7 @@ switch index{
     break
     case 3:
         switch returnType{
-            case 0:return "healer"
+            case 0:return "Healer"
             case 1:return healer001_0
             case 2:
                 hp[playerIndex]=9

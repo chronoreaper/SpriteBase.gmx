@@ -51,7 +51,7 @@ mov=2
 mmov=mov
 view=4
 unit=boar001_0
-name="boar"
+name="Boar"
 
 dmg=hp
 </string>

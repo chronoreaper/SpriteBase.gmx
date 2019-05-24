@@ -41,8 +41,8 @@ stats[2,3]=2
 stats[2,4]=5
 
 //per level
-hpp=0.9
-spp=1.6
+hpp=1
+spp=1.8
 stats[1,0]=0.6
 stats[1,1]=1
 stats[1,2]=0.8
@@ -55,7 +55,7 @@ view=4
 
 face=face004
 unit=healer001_0
-name="healer"
+name="Healer"
 
 dmg=hp
 </string>

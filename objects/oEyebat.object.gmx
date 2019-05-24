@@ -50,7 +50,7 @@ mov=1
 mmov=mov
 view=3
 unit=eyebat001_0
-name="eyebat"
+name="Eyebat"
 
 dmg=hp
 </string>

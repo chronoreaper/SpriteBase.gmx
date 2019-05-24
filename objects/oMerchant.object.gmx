@@ -57,7 +57,7 @@ mmov=mov
 view=4
 face=face006
 unit=merchant001_0
-name="merchaNt"
+name="Merchant"
 
 dmg=hp
 </string>

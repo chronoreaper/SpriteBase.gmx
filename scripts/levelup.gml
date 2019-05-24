@@ -12,20 +12,20 @@ stp[0]=floor(random(hpp)*10)/10
 stp[1]=floor(random(spp)*10)/10
 for (var i=0;i<5;i++)
     stp[i+2]=floor(random(stats[1,i]*10))/10
-var cTurn=-1
+var unt=id;
 with oControler
-    cTurn=ds_map_find_value(aiTurns, currentTurn)
-if cTurn>=0{
-show_debug_message(object_get_name(object_index)+" Leveled up!")
-show_debug_message("level:"+string(lv-1)+"->"+string(lv))
-show_debug_message("HP:"+string(mhp)+" + "+string(stp[0])+" + "+string(hpg/sum))
-show_debug_message("SP:"+string(msp)+" + "+string(stp[1])+" + "+string(spg/sum))
-show_debug_message("ATK:"+string(stats[2,0])+" + "+string(stp[2])+" + "+string(strg/sum))
-show_debug_message("INT:"+string(stats[2,1])+" + "+string(stp[3])+" + "+string(intg/sum))
-show_debug_message("DEF:"+string(stats[2,2])+" + "+string(stp[4])+" + "+string(defg/sum))
-show_debug_message("TEC:"+string(stats[2,3])+" + "+string(stp[5])+" + "+string(tecg/sum))
-show_debug_message("RES:"+string(stats[2,4])+" + "+string(stp[6])+" + "+string(resg/sum))
-}
+    if ds_map_find_value(aiTurns, unt.team)>=0
+    {
+    message_create(unt.name+" Leveled up!")
+    message_create("LV:"+string(unt.lv-1)+"->"+string(unt.lv))
+    message_create("HP:"+string(floor(unt.mhp))+"->"+string(floor(unt.mhp+stp[0]+unt.hpg/sum)))
+    message_create("SP:"+string(floor(unt.msp))+"->"+string(floor(unt.msp+stp[1]+unt.spg/sum)))
+    message_create("ATK:"+string(floor(unt.stats[2,0]))+"->"+string(floor(unt.stats[2,0]+stp[2]+unt.strg/sum)))
+    message_create("INT:"+string(floor(unt.stats[2,1]))+"->"+string(floor(unt.stats[2,1]+stp[3]+unt.intg/sum)))
+    message_create("DEF:"+string(floor(unt.stats[2,2]))+"->"+string(floor(unt.stats[2,2]+stp[4]+unt.defg/sum)))
+    message_create("TEC:"+string(floor(unt.stats[2,3]))+"->"+string(floor(unt.stats[2,3]+stp[5]+unt.tecg/sum)))
+    message_create("RES:"+string(floor(unt.stats[2,4]))+"->"+string(floor(unt.stats[2,4]+stp[6]+unt.resg/sum)))
+    }
 hp+=stp[0]
 mhp+=stp[0]
 sp+=stp[1]

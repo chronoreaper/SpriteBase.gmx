@@ -33,8 +33,10 @@ if true
     else if arg_targ.weakness[arg_type]<1
         txt.colour=c_ltgray
     */    
-    if arg_dmg>=0
+    if arg_dmg>=0{
         dmg=ceil(arg_dmg*arg_multi);
+        dmg=max(dmg,1)//guarentees 1 dmg
+        }
     else
         dmg=floor(arg_dmg*arg_multi);
     var shieldIndex=findStatus(arg_targ,1)
@@ -74,18 +76,32 @@ if true
         txt2.text="-"+string(reducedDmg)
         txt2.colour=c_ltgray
     }
+    //info
+    with oControler
+        if ds_map_find_value(aiTurns, arg_source.team)>=0
+        ||ds_map_find_value(aiTurns, arg_targ.team)>=0
+            message_create(arg_source.name+" deals "+txt.text+" to "+arg_targ.name)  
+    var totalxp=arg_xp
     if !object_is_ancestor(arg_targ.object_index,oObj)
     if arg_targ.team!=arg_source.team{
-        var totalxp=arg_xp
         if arg_targ.hp<=0{
+
             var more=0
             with arg_targ
                 more=return_power()
             totalxp+=ceil(more/10)
+            
+            with oControler
+            if ds_map_find_value(aiTurns, arg_source.team)>=0
+            ||ds_map_find_value(aiTurns, arg_targ.team)>=0{
+                message_create(arg_targ.name+" has been defeated")  
+                message_create(arg_source.name+" gained "+string(totalxp)+ "xp")  
+                }  
+                
             }
         arg_source.xp+=totalxp
         arg_source.aggro=arg_targ
-        }
+        }  
 return dmg
 }
 else{

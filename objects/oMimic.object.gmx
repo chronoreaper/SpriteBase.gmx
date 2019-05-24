@@ -52,7 +52,7 @@ mov=1
 mmov=mov
 view=3
 unit=mimic001_0
-name="mimic"
+name="Mimic"
 
 dmg=hp
 </string>

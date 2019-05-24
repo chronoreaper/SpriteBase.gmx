@@ -56,7 +56,7 @@ view=4
 
 face=face001
 unit=fighter001_0
-name="fighter"
+name="Fighter"
 
 dmg=hp
 </string>

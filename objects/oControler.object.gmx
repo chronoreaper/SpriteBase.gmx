@@ -34,6 +34,10 @@ window_set_size(360*3,240*3+3)
 playerMax=2
 playerMin=0
 
+logVisable=0
+for (var i=0;i&lt;20;i++)
+    log[i]=""
+
 window_set_cursor( cr_none)
 
 for (var i=0;i&lt;playerMax;i++){
@@ -125,8 +129,6 @@ gridF1= ds_grid_create((room_width)/15+1,(room_height)/15+1);
 ds_grid_clear(gridF1,-1)
 gridF2= ds_grid_create((room_width)/15+1,(room_height)/15+1);
 ds_grid_clear(gridF2,-1)
-message=""
-messTimer=0
 infoTime=0
 target=noone
 globalvar hour,minu;//1 turn = 10 min
@@ -177,10 +179,10 @@ inst2.ai=4
 inst2.link=inst
 inst2.xp=40
 
-/*inst=instance_create(x+15*36,y-15*17,oDragon1)
+inst=instance_create(x+15*36,y-15*17,oDragon1)
 inst.team=2
 inst.marker=1
-*/
+
 create_boss_area(x-15*20,y-15*15,0,0)
 inst=instance_create(x-15*19,y-12*15,oWurm)
 inst.team=2
@@ -257,13 +259,14 @@ if !place_meeting(rx*15,ry*15,oUnit)
         inst.team=2
         inst.draw=0
         }
-    else{
+    else if irandom(2){
         var inst=instance_create(rx*15,ry*15,
         choose(oFighter,oArcher,oMage,oHealer));
         inst.team=1
         inst.ai=6
         inst.draw=0
         }
+    else instance_create(rx*15,ry*15,oCampfire);
     }
 }
 </string>
@@ -622,7 +625,7 @@ if selected!=noone{
                 item[space]+=inst.use
             }
             if ds_map_find_value(aiTurns, currentTurn)&gt;=0
-            message_create("obtaiN "+return_item_name(inst.item+inst.use))
+            message_create(selected.name+" obtain "+return_item_name(inst.item+inst.use))
             alarm[0]=15
             with inst
                 instance_destroy()
@@ -954,7 +957,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         ||keyboard_check_pressed(keys[4])
         if menuSel&gt;0{
             switch menuSel{//menuOp[menuSel-1]{
-                case 1:phase=3 break;
+                case 1:phase=3;delay=4;break;
                 case 2:phase=10 menuSel=0 break
                 case 3:phase=6 menuSel=1 break;
                 case 4:
@@ -993,7 +996,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             target=inst
                         }
                     }
-                }else message_create("Not in raNge")
+                }else message_create("Not iN raNge")
             }
         }
     }//end phase 3
@@ -1080,7 +1083,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             phase=8
             alarm[0]=30
         }else message_create("caNNot throw there")
-        }else message_create("Not in raNge")
+        }else message_create("Not iN raNge")
     }
     else if phase=9{//use/equip item
         var item_range=return_item_range(c.item[menuSel]);
@@ -1108,7 +1111,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                 phase=8
                  //skill usage range stuff   
             }else message_create("No valid target")
-        }else message_create("Not in raNge")
+        }else message_create("Not iN raNge")
     }
     else if phase=10{//use skill
     var maxSkill=array_length_1d(selected.skill)
@@ -1185,7 +1188,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                         phase=8
                          //skill usage range stuff   
                     }else message_create("No valid target")
-                }else message_create("Not in raNge")
+                }else message_create("Not iN raNge")
             }else message_create("No target")
         }
     }
@@ -1275,6 +1278,7 @@ var multi=return_wep_crit(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y),c,ta
 var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-target.x)+abs(c.y-target.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,target);
 var xpgain=3;
 if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),3,multi)&gt;0{
+    //return_wep_onhit_eff(c.item[c.wep],c,target)
     //create eff
     if (!(c.draw=0
     &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)
@@ -2514,7 +2518,7 @@ draw_background_stretched(greenBackground,0,0,room_width,room_height)
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
-        <whoName>oControler</whoName>
+        <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
@@ -2541,21 +2545,28 @@ if instance_exists(selected)
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
 {
     var cur=selected
+    draw_set_font(pixelFont)
     if currentTurn=cur.team
         image_blend=playerColour[3]
     else if allyMatrix[# cur.team,currentTurn]&lt;0 image_blend=playerColour[2];
     else if allyMatrix[# cur.team,currentTurn]&gt;0
             image_blend=playerColour[1]
+   var des=unit_description(cur.object_index)
    draw_set_colour(c_white)
    draw_rectangle(2+bx,203,75+bx,231,false)
    draw_rectangle(76+bx,197,135+bx,231,false)
    draw_rectangle(136+bx,203,208+bx,231,false)
+   if des!="0"
+   draw_rectangle(209+bx,197,311+bx,231,false)
    draw_set_colour(c_dkgray)
    draw_rectangle(3+bx,204,74+bx,230,false)
    draw_rectangle(77+bx,198,134+bx,230,false)
    draw_rectangle(137+bx,204,207+bx,230,false)
-      draw_set_colour(c_ltgray)
-   draw_set_font(pixelFont)
+   if des!="0"
+   draw_rectangle(210+bx,198,310+bx,230,false)
+   draw_set_colour(c_ltgray)
+   if des!="0"
+   draw_text_ext(212+bx,200+bx,des,6,98)
    draw_sprite_ext(hpBar,0,5+bx,223,min((cur.xp/cur.mxp)*68,68),2.5,0,c_teal,1)
    var text=""
    if object_is_ancestor(cur.object_index,oObj)
@@ -2636,31 +2647,31 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
             draw_set_colour(c_red)
        else if findStatus(id,15)!=-1
             draw_set_colour(c_orange)
-       draw_text(78+bx,200,"atk:"+string(floor(stats[2,0])));
+       draw_text(78+bx,200,"ATK:"+string(floor(stats[2,0])));
        draw_set_colour(c_ltgray)
        if findStatus(id,11)!=-1
             draw_set_colour(c_red)
        else if findStatus(id,16)!=-1
             draw_set_colour(c_orange)
-       draw_text(78+bx,206,"int:"+string(floor(stats[2,1])));
+       draw_text(78+bx,206,"InT:"+string(floor(stats[2,1])));
        draw_set_colour(c_ltgray)
        if findStatus(id,12)!=-1
             draw_set_colour(c_red)
        else if findStatus(id,17)!=-1
             draw_set_colour(c_orange)
-       draw_text(78+bx,212,"def:"+string(floor(stats[2,2])));
+       draw_text(78+bx,212,"DEF:"+string(floor(stats[2,2])));
        draw_set_colour(c_ltgray)
        if findStatus(id,13)!=-1
             draw_set_colour(c_red)
        else if findStatus(id,18)!=-1
             draw_set_colour(c_orange)
-       draw_text(78+bx,218,"res:"+string(floor(stats[2,4])));
+       draw_text(78+bx,218,"RES:"+string(floor(stats[2,4])));
        draw_set_colour(c_ltgray)
        if findStatus(id,14)!=-1
             draw_set_colour(c_red)
        else if findStatus(id,19)!=-1
             draw_set_colour(c_orange)
-       draw_text(78+bx,224,"tec:"+string(floor(stats[2,3])));
+       draw_text(78+bx,224,"TEC:"+string(floor(stats[2,3])));
        //draw_text(78+bx,206,"luc:"+string(ceil(luc)));       
        draw_text(138+bx,212,return_item_name(item[wep]));
        draw_text(138+bx,224,return_power());//might be changed with luck or move etc
@@ -2675,25 +2686,25 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
             if status[i]!=0{
                 var tx=""
                 switch floor(status[i]){
-                    case 1:tx+="shield"break;
-                    case 2:tx+="boost"break;
-                    case 3:tx+="poisoN"break;
-                    case 4:tx+="burN"break;
-                    case 5:tx+="rooted"break;
-                    case 6:tx+="slow"break;
+                    case 1:tx+="SHIELD"break;
+                    case 2:tx+="BOOST"break;
+                    case 3:tx+="POISON"break;
+                    case 4:tx+="BURN"break;
+                    case 5:tx+="ROOTED"break;
+                    case 6:tx+="SLOW"break;
                     case 7:break;
                     case 8:break;
                     case 9:break;
-                    case 10:tx+="atk dowN"break;
-                    case 11:tx+="iNt dowN"break;
-                    case 12:tx+="def dowN"break;
-                    case 13:tx+="res dowN"break;
-                    case 14:tx+="tec dowN"break;
-                    case 15:tx+="atk up"break;
-                    case 16:tx+="iNt up"break;
-                    case 17:tx+="def up"break;
-                    case 18:tx+="res up"break;
-                    case 19:tx+="tec up"break;
+                    case 10:tx+="ATK DOWN"break;
+                    case 11:tx+="INT DOWN"break;
+                    case 12:tx+="DEF DOWN"break;
+                    case 13:tx+="RES DOWN"break;
+                    case 14:tx+="TEC DOWN"break;
+                    case 15:tx+="ATK UP"break;
+                    case 16:tx+="INT UP"break;
+                    case 17:tx+="DEF UP"break;
+                    case 18:tx+="RES UP"break;
+                    case 19:tx+="TEC UP"break;
                 }
                 tx+=" "
                 tx+=string(frac(status[i])*100)
@@ -2725,42 +2736,28 @@ selected=temp
           <argument>
             <kind>1</kind>
             <string>///#3 draw message
-if messTimer&gt;0
+if logVisable&gt;0
 {
+    var vx=view_wport;
     draw_set_font(pixelFont)
-    draw_set_alpha(messTimer)
+    draw_set_alpha(logVisable/4)
     draw_set_colour(c_dkgray)
-    draw_rectangle(180-string_width(message)-8,10,180+string_width(message)+8,23,false)
-    draw_set_colour(c_teal)
-    draw_rectangle(180-string_width(message)-6,10,180+string_width(message)+6,23,false)
-    draw_set_halign(fa_center)
-    draw_set_colour(c_dkgray)
-    draw_text_transformed(180,12,message,2,2,0)
-    draw_set_halign(fa_left)
-    messTimer-=0.1
+    draw_set_alpha(0.6)
+    var height=0
+    for (var i=0;i&lt;array_length_1d(log);i++){
+        height+=string_height_ext(log[i],6,110)+1
+    }
+    draw_rectangle(vx-120,235-height,vx-2,235,false)
+    draw_set_alpha(logVisable)
+    draw_set_colour(c_ltgray)
+    height=0
+    for (var i=0;i&lt;array_length_1d(log);i++){
+        height+=string_height_ext(log[i],6,110)+1
+        draw_text_ext(vx-116,236-height,log[i],6,110)
+        }
+    logVisable-=0.02
     draw_set_alpha(1)
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///#4 draw info over unit
 </string>
           </argument>
         </arguments>
@@ -3147,11 +3144,11 @@ else if menuSelect&lt;0
         if mouse_check_button(mb_left)
         ||keyboard_check_pressed(keys[4]){
             menu=-1
-            var rx=irandom(room_width/15)-1
-            var ry=irandom(room_height/15)-1
+            var rx=1+irandom(room_width/15-2)
+            var ry=1+irandom(room_height/15-2)
             while place_meeting(rx*15,ry*15,oUnit){
-                rx=irandom(room_width/15)-1
-                ry=irandom(room_height/15)-1
+                rx=1+irandom(room_width/15-2)
+                ry=1+irandom(room_height/15-2)
             }
                 var inst=instance_create(rx*15,ry*15,return_unit(unitSelect[i],3,i));
                 ds_list_add(unitList,inst)
@@ -3180,10 +3177,11 @@ else if unitSelect[i]&lt;0
  draw_sprite_ext(return_unit(unitSelect[i],1,0),0,(1+i)*(view_wview/5),60,2,2,0,-1,1)
  draw_sprite_ext(return_face(return_unit(unitSelect[i],1,0),0),0,(1+i)*(view_wview/5),60,2,2,0,-1,1)
  draw_set_colour(c_orange)
- draw_text_transformed((1+i)*(view_wview/5)+6,view_hview-170,"Class ",2,2,0)
- draw_text_transformed((1+i)*(view_wview/5),view_hview-84,"Skill",2,2,0)
- draw_text_transformed((1+i)*(view_wview/5),view_hview-60,"weapoN",2,2,0)
+ draw_text_transformed((1+i)*(view_wview/5)+6,view_hview-170,"CLASS ",2,2,0)
+ draw_text_transformed((1+i)*(view_wview/5),view_hview-84,"SKILL",2,2,0)
+ draw_text_transformed((1+i)*(view_wview/5),view_hview-60,"WEAPON",2,2,0)
  draw_set_colour(c_ltgray)
+ if menuSelect!=0
  draw_text_transformed((1+i)*(view_wview/5),view_hview-158,return_unit(unitSelect[i],0,0),1,1,0)
  draw_text((1+i)*(view_wview/5),view_hview-151,string(unitSelect[i]+1)+"/"+string(cc))
  //draw_text((1+i)*(view_wview/5),view_hview-90,returnSkill(unitSkill[i],0,0,unitSelect[i]))
@@ -3192,7 +3190,7 @@ else if unitSelect[i]&lt;0
  //var p=return_Wep(unitWep[i],3,0,unitSelect[i])
  draw_text((1+i)*(view_wview/5),view_hview-73,string(unitFace[i])+"/"+string(m))
  draw_text((1+i)*(view_wview/5),view_hview-44,string(unitWep[i]+1)+"/"+string(p+1))
- draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"ready",2,2,0)
+ draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"READY",2,2,0)
  draw_set_colour(c_white)
  return_unit(unitSelect[i],2,i)
  var ab=a[i],ib=int[i],db=d[i],tb=t[i],lb=l[i]
@@ -3224,7 +3222,7 @@ draw_text((1+i)*(view_wview/5)-17,view_hview-105,"TEC:");
      case 0: draw_text((1+i)*(view_wview/5),view_hview-158,"-"+return_unit(unitSelect[i],0,0)+"-")break;
      //case 1: draw_text((1+i)*(view_wview/5),view_hview-90,"-"+returnSkill(unitSkill[i],0,0,unitSelect[i])+"-")break;
     // case 2: draw_text((1+i)*(view_wview/5),view_hview-61,"-"+return_Wep(unitWep[i],0,0,unitSelect[i])+"-")break;
-     case 3: draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"-ready-",2,2,0)break;
+     case 3: draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"-READY-",2,2,0)break;
  }
 }
 </string>

@@ -51,7 +51,7 @@ mmov=mov
 view=5
 size=2
 unit=Dragon001_0
-name="DragoN"
+name="Dragon"
 dmg=hp
 skill[0]=3
 </string>

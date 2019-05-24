@@ -56,7 +56,7 @@ mov=1
 mmov=mov
 view=4
 unit=slime001
-name="slime"
+name="Slime"
 
 dmg=hp
 </string>
