@@ -54,6 +54,7 @@ name="Wurm"
 link=noone
 dmg=hp
 skill[0]=2
+skill[1]=4
 </string>
           </argument>
         </arguments>

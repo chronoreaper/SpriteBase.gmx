@@ -9,9 +9,9 @@ switch floor(arg_skill){
     case 1:
         return ceil(arg_source.lv/2)+2
     case 2:
-        return return_dmg(10+arg_source.lv,0,return_skill_type(arg_skill),arg_source,arg_targ);
+        return return_dmg(8+arg_source.lv,0,return_skill_type(arg_skill),arg_source,arg_targ);
     case 3:
-        return return_dmg(10+arg_source.lv,0,return_skill_type(arg_skill),arg_source,arg_targ);
+        return return_dmg(8+arg_source.lv,0,return_skill_type(arg_skill),arg_source,arg_targ);
     case 4:
         return return_dmg(arg_source.stats[2,0],0,return_skill_type(arg_skill),arg_source,arg_targ);
     case 5:

@@ -54,6 +54,7 @@ unit=Dragon001_0
 name="Dragon"
 dmg=hp
 skill[0]=3
+skill[1]=4
 </string>
           </argument>
         </arguments>
