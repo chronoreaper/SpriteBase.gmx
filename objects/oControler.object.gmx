@@ -1421,10 +1421,12 @@ if mouse_check_button_pressed(mb_left)
     controler=0
 //view angle
 }
+if global.production=0{
 if keyboard_check_pressed(keys[6])
     viewTurn--
 else if keyboard_check_pressed(keys[7])
     viewTurn++
+}
 
 if view_angle!=viewTurn*90
     view_angle-=9*sign(view_angle-viewTurn*90)
@@ -2748,7 +2750,7 @@ if logVisable&gt;0
     for (var i=0;i&lt;array_length_1d(log);i++){
         height+=string_height_ext(log[i],6,110)+1
     }
-    draw_rectangle(vx,190-height,vx+120,200,false)
+    draw_rectangle(vx,190-height,vx+120,190,false)
     draw_set_alpha(logVisable)
     draw_set_colour(c_ltgray)
     height=0
@@ -2780,14 +2782,6 @@ if logVisable&gt;0
           <argument>
             <kind>1</kind>
             <string>///#5 draw menus
-if global.production=2{
-draw_set_colour(c_fuchsia)
-draw_set_font(pixelFont)
-draw_set_alpha(1)
-//draw_text(200,10,"loop: "+string(score))
-draw_text(2,10,"time: "+string(hour)+":"+string(minu)+"0")
-draw_text(2,20,"turNs survived: "+string(turnsSurvive))
-draw_text(2,30,string("RNG: "+string(randNum[randPos])))
 draw_text(2,40,"FPS: "+string(fps))
 turnTime++
 var unitLeft=0;
@@ -2800,6 +2794,14 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
             unitLeft++;
         }
 }
+if global.production=2{
+draw_set_colour(c_fuchsia)
+draw_set_font(pixelFont)
+draw_set_alpha(1)
+//draw_text(200,10,"loop: "+string(score))
+draw_text(2,10,"time: "+string(hour)+":"+string(minu)+"0")
+draw_text(2,20,"turNs survived: "+string(turnsSurvive))
+draw_text(2,30,string("RNG: "+string(randNum[randPos])))
 draw_text(2,50,"uNit to move: "+string(unitLeft)+"/"+string(ds_list_size(unitList)))
 var over=instance_place(xx,yy,oUnit)
 if over!=noone
