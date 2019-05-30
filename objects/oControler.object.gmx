@@ -986,7 +986,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             ds_list_add(unitList,inst)
                             phase=8
                             alarm[0]=2
-                            menuSelect=0
+                            menuSelect=1
                         }
                         else{
                             phase=4
@@ -1214,7 +1214,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             if mouse_check_button_pressed(mb_left)
             ||keyboard_check_pressed(keys[4])
             if eventOver.item[menuSel]&gt;0||(eventOver.team=selected.team){
-                menuSel2=0
+                menuSel2=1
             }
         }else
         {//trading
