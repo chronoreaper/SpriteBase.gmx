@@ -931,6 +931,19 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 
         //change base menu selection
         if controler=0{
+            /*if mouse_wheel_up()
+            ||keyboard_check_pressed(keys[0])
+                menuSel++
+            else if mouse_wheel_down()
+            ||keyboard_check_pressed(keys[2])
+                menuSel--
+                
+            if mouse_x-view_xview&gt;270
+            &amp;&amp; mouse_y-view_yview&gt;150
+            &amp;&amp; mouse_y-view_yview&lt;165+60
+            {
+            menuSel=4-floor((mouse_y-view_yview-150)/20)//+array_length_1d(menuOp)
+            }*/
             if abs(angle_difference(point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle,90))&lt;45
                 menuSel=1
             else if abs(angle_difference(point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle,0))&lt;45

@@ -216,7 +216,6 @@
       <sprite>sprites\sprite199</sprite>
       <sprite>sprites\miniselectmenu</sprite>
       <sprite>sprites\menuBar</sprite>
-      <sprite>sprites\menuBarUnselected</sprite>
       <sprite>sprites\numberBar</sprite>
       <sprite>sprites\numberBarUnselected</sprite>
     </sprites>
