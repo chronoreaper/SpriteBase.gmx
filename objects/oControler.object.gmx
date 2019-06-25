@@ -314,10 +314,12 @@ menuSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=0
+global.production=1
 debugging=0
 debugObj=0
 debug1=0;
+if global.production=1
+    randomize()
 </string>
           </argument>
         </arguments>
@@ -1028,7 +1030,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226
             {
-            menuSel=maxSkill-floor((mouse_y-view_yview-219+70)/7)
+            menuSel=maxItem-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
             menuSel=clamp(menuSel,1,maxItem-1)
