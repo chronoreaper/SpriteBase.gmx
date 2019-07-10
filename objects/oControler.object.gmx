@@ -314,7 +314,7 @@ menuSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=1
+global.production=0
 debugging=0
 debugObj=0
 debug1=0;

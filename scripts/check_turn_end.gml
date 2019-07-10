@@ -44,6 +44,10 @@ if fin=1{
         inst.wait=0
         inst.mov=inst.mmov
         selected=inst
+        //snap to grid
+        inst.x = round(inst.x/15)*15
+        inst.y = round(inst.y/15)*15 
+        
         update_fog()
         selected=noone
         for (var j=0;j<array_length_1d(inst.status);j++){
@@ -155,6 +159,12 @@ if fin=1{
         if round(team)=turn{
             var unit=id
             //start of every turn action
+            
+            //snap to grid
+            
+            x = round(x/15)*15
+            y = round(y/15)*15
+            
             if summon=0{
                 sp+=1
             }else{
