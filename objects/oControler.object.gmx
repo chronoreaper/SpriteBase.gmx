@@ -178,7 +178,7 @@ inst2.team=1
 inst2.ai=4
 inst2.link=inst
 inst2.xp=40
-
+/*
 inst=instance_create(x+15*36,y-15*17,oDragon1)
 inst.team=2
 inst.marker=1
@@ -205,7 +205,7 @@ inst=inst2
 }
 create_city_dungeon(x+15*12,y+15*10)
 add_all_to_map()
-show_debug_overlay(true)
+show_debug_overlay(true)*/
 generate_map()
 for (var i=0;i&lt;ds_list_size(unitList);i++){
     selected=ds_list_find_value(unitList,i)
@@ -1030,7 +1030,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226*/
             {
-            menuSel=floor((180-(point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(maxItem*5))
+            menuSel=floor((180-(point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(15))
             //maxItem-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
@@ -1044,12 +1044,8 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             ||keyboard_check_pressed(keys[2])
                 menuSel2++
             if controler=0
-            if mouse_x-view_xview&gt;=230
-            &amp;&amp;mouse_x-view_xview&lt;270
-            &amp;&amp; mouse_y-view_yview&gt;219-menuSel*7-7
-            &amp;&amp; mouse_y-view_yview&lt;226-menuSel*7
             {
-            menuSel2=floor((mouse_y-view_yview-219+menuSel*7+7)/7)
+            menuSel=floor((180-(point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(15))
             }
             menuSel2=min(1,menuSel2)
             menuSel2=max(0,menuSel2)
@@ -1143,7 +1139,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226*/
             {
-            menuSel=floor(((point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(maxSkill*5))
+            menuSel=floor(((point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(15))
            // menuSel=maxSkill-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
@@ -1219,11 +1215,12 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             keyboard_check_pressed(keys[2])
                 menuSel--
             //change item menu selection
-            if mouse_x-view_xview&gt;270
+            /*if mouse_x-view_xview&gt;270
             &amp;&amp; mouse_y-view_yview&gt;219-70
-            &amp;&amp; mouse_y-view_yview&lt;226
+            &amp;&amp; mouse_y-view_yview&lt;226*/
             {
-            menuSel=shopItem-floor((mouse_y-view_yview-219+70)/7)
+            menuSel=floor(((point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(15))
+            //menuSel=shopItem-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
             menuSel=clamp(menuSel,1,shopItem-1)
@@ -1243,12 +1240,13 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                 menuSel2--
                 //change item menu selection
             if controler=0
-            if mouse_x-view_xview&gt;270-90
+            /*if mouse_x-view_xview&gt;270-90
             &amp;&amp;mouse_x-view_xview&lt;270
             &amp;&amp; mouse_y-view_yview&gt;219-70
-            &amp;&amp; mouse_y-view_yview&lt;226
+            &amp;&amp; mouse_y-view_yview&lt;226*/
             {
-                menuSel2=maxItem-floor((mouse_y-view_yview-219+70)/7)
+                menuSel2=floor(((point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(15))
+                //menuSel2=maxItem-floor((mouse_y-view_yview-219+70)/7)
             }
             menuSel2=clamp(menuSel2,1,maxItem-1)
             if mouse_check_button_pressed(mb_left)
