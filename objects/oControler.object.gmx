@@ -1026,11 +1026,12 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                 menuSel--
             //change item menu selection
             if controler=0
-            if mouse_x-view_xview&gt;270
+            /*if mouse_x-view_xview&gt;270
             &amp;&amp; mouse_y-view_yview&gt;219-70
-            &amp;&amp; mouse_y-view_yview&lt;226
+            &amp;&amp; mouse_y-view_yview&lt;226*/
             {
-            menuSel=maxItem-floor((mouse_y-view_yview-219+70)/7)
+            menuSel=floor((180-(point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(maxItem*5))
+            //maxItem-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
             menuSel=clamp(menuSel,1,maxItem-1)
@@ -1138,11 +1139,12 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                 menuSel--
             //change item menu selection
             if controler=0
-            if mouse_x-view_xview&gt;270
+            /*if mouse_x-view_xview&gt;270
             &amp;&amp; mouse_y-view_yview&gt;219-70
-            &amp;&amp; mouse_y-view_yview&lt;226
+            &amp;&amp; mouse_y-view_yview&lt;226*/
             {
-            menuSel=maxSkill-floor((mouse_y-view_yview-219+70)/7)
+            menuSel=floor(((point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(maxSkill*5))
+           // menuSel=maxSkill-floor((mouse_y-view_yview-219+70)/7)
             }
             //else menuSel=0
             menuSel=clamp(menuSel,0,maxSkill-1)
