@@ -239,7 +239,7 @@ switch floor(arg_skill){
             var base =return_skill_num(arg_source,arg_targ)
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
             
-            addStatus(0,arg_targ,4,0.02,ceil(arg_source.lv/2))
+            addStatus(1,0,arg_targ,4,0.02,ceil(arg_source.lv/2))//burn
             
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -384,7 +384,7 @@ switch floor(arg_skill){
         if arg_source.sp>=5 {
         if arg_targ!=noone{
             var value=return_skill_num(arg_source,arg_targ)
-            addStatus(0,arg_targ,1,0.03,value)
+            addStatus(0,0,arg_targ,1,0.03,value)
             arg_source.sp-=5
             arg_source.xp+=basexp+1
             arg_source.spg+=1
@@ -433,7 +433,7 @@ switch floor(arg_skill){
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
             
             var val=1//ceil(arg_source.lv/2)
-            addStatus(0,arg_targ,6,0.02,val)
+            addStatus(0,0,arg_targ,6,0.02,val)
             
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -470,11 +470,11 @@ switch floor(arg_skill){
             var val=ceil(arg_source.lv/2)
             if arg_targ.stats[2,0]-val<=0
                 val=arg_targ.stats[2,0]-1
-            arg_targ.stats[2,0]-=addStatus(0,arg_targ,10,0.02,val)
+            arg_targ.stats[2,0]-=addStatus(0,0,arg_targ,10,0.02,val)
             val=ceil(arg_source.lv/2)
              if arg_targ.stats[2,1]-val<=0
                 val=arg_targ.stats[2,1]-1
-             arg_targ.stats[2,1]-=addStatus(0,arg_targ,11,0.02,val)
+             arg_targ.stats[2,1]-=addStatus(0,0,arg_targ,11,0.02,val)
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2
@@ -511,11 +511,11 @@ switch floor(arg_skill){
             var val=ceil(arg_source.lv/2)
             if arg_targ.stats[2,2]-val<=0
                val=arg_targ.stats[2,2]-1
-            arg_targ.stats[2,2]-=addStatus(0,arg_targ,12,0.02,val)
+            arg_targ.stats[2,2]-=addStatus(0,0,arg_targ,12,0.02,val)
             val=ceil(arg_source.lv/2)
             if arg_targ.stats[2,4]-val<=0
                val=arg_targ.stats[2,4]-1
-            arg_targ.stats[2,4]-=addStatus(0,arg_targ,13,0.02,val)
+            arg_targ.stats[2,4]-=addStatus(0,0,arg_targ,13,0.02,val)
             
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -553,7 +553,7 @@ switch floor(arg_skill){
             var val=ceil(arg_source.lv)
             if arg_targ.stats[2,4]-val<=0
                val=arg_targ.stats[2,4]-1
-            arg_targ.stats[2,4]-=addStatus(0,arg_targ,13,0.02,val)
+            arg_targ.stats[2,4]-=addStatus(0,0,arg_targ,13,0.02,val)
             
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
@@ -591,16 +591,16 @@ switch floor(arg_skill){
                 val=-return_skill_num(arg_source,arg_targ)
                 if arg_targ.stats[2,i]-val<=0
                    val=arg_targ.stats[2,i]-1
-                arg_targ.stats[2,i]-=addStatus(0,arg_targ,15+i,0.03,val)
+                arg_targ.stats[2,i]-=addStatus(0,0,arg_targ,15+i,0.03,val)
             }
             val=-return_skill_num(arg_source,arg_targ)
                 if arg_targ.stats[2,3]-val<=0
                    val=arg_targ.stats[2,3]-1
-                arg_targ.stats[2,3]-=addStatus(0,arg_targ,19,0.03,val)
+                arg_targ.stats[2,3]-=addStatus(0,0,arg_targ,19,0.03,val)
             val=-return_skill_num(arg_source,arg_targ)
                 if arg_targ.stats[2,4]-val<=0
                    val=arg_targ.stats[2,4]-1
-                arg_targ.stats[2,4]-=addStatus(0,arg_targ,18,0.03,val)
+                arg_targ.stats[2,4]-=addStatus(0,0,arg_targ,18,0.03,val)
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);
             eff.sprite_index=sourcedir2

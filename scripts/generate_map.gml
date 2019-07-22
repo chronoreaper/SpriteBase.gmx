@@ -37,20 +37,26 @@ repeat(2*(width+height)){
            // else dist=1
             break;
     }
-    if xx>width-2
+    /*if xx>width-2
         xx=1
     if xx<1
         xx=width-2
     if yy>height-2
         yy=1
     if yy<1
-        yy=height-2
+        yy=height-2*/
+    xx= clamp(xx,2,width-2)
+    yy= clamp(yy,2,height-2)
     dist--
     if (dist<=0){
-        var rand_w = irandom(9)+1
-        var rand_h = irandom(9)+1
-        ds_grid_set_region(map,xx - floor(rand_w/2),yy - floor(rand_h/2),
-        xx + ceil(rand_w/2),yy - ceil(rand_h/2),0)
+        var rand_w = irandom(3)+2
+        var rand_h = irandom(3)+2
+        ds_grid_set_region(map,
+        max(xx - floor(rand_w/2),1),
+        max(yy - floor(rand_h/2),1),
+        min(xx + ceil(rand_w/2),width-2),
+        min(yy + ceil(rand_h/2),height-2),
+        0)
         
         dist=irandom(6)*2+4
         dir+=choose(1,-1);
@@ -61,13 +67,19 @@ repeat(2*(width+height)){
     }
 }
 }
-for (var j=0;j<height;j++)
+for (var j=0;j<height;j++){
+s=''
 for (var i=0;i<width;i++)
 {
+    
     if ds_grid_get(map,i,j)==1{
         var inst=instance_create(i*15,j*15,choose(oTree));
         inst.visible=false
-    }
+        s+='0'
+    }else
+        s+='1'
+}
+show_debug_message(s)
 }
 //create objects
 repeat((width+height)*15){

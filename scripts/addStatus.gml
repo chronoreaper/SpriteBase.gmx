@@ -1,8 +1,10 @@
 var arg_stack=argument0
-var arg_targ=argument1
-var arg_status=argument2
-var arg_dur=argument3
-var arg_str=argument4
+var arg_dur_stack= argument1
+
+var arg_targ=argument2
+var arg_status=argument3
+var arg_dur=argument4
+var arg_str=argument5
 
 var index=findStatus(arg_targ,arg_status)
 //returns the str value
@@ -24,8 +26,16 @@ if index=-1{//not in the list yet
     }
 }
 else{
+    //duration
+    if arg_dur_stack=0{
     if frac(arg_targ.status[index])<arg_dur
+        arg_targ.status[index]=arg_dur
+    }
+    else{
         arg_targ.status[index]=floor(arg_targ.status[index])+arg_dur
+    }
+    
+    //strength
     if arg_stack=0{
     if abs(arg_targ.statusStr[index])<abs(arg_str){
         var toReturn=arg_targ.statusStr[index];
