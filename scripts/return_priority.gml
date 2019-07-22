@@ -14,7 +14,8 @@ for(var i=0;i<array_length_1d(arg_char.skill);i++){
             case 3:num=10 break//water breath
             case 5://redemption
             var inst=return_skill_has_target(5,arg_char)
-                if inst!=noone{
+                if inst!=noone
+                if inst>0{
                     if inst.mhp-inst.hp>=floor(arg_char.lv*2+5)
                         num=10
                     if inst.hp<=inst.mhp/2

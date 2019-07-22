@@ -1280,7 +1280,7 @@ var multi=return_wep_crit(c.item[c.wep],abs(c.x-target.x)+abs(c.y-target.y),c,ta
 var dmg=return_dmg(return_wep_dmg(c.item[c.wep],c,abs(c.x-target.x)+abs(c.y-target.y)),c.stats[2,3],return_wep_type(c.item[c.wep]),c,target);
 var xpgain=3;
 if calculate_damage(c,target,dmg,acc,return_wep_type(c.item[c.wep]),3,multi)&gt;0{
-    //return_wep_onhit_eff(c.item[c.wep],c,target)
+    return_wep_onhit_eff(c.item[c.wep],c,target)
     //create eff
     if (!(c.draw=0
     &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)

@@ -56,7 +56,7 @@ if true
     //on hit effect
     arg_targ.hp-=dmg
     arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.hp)
-    return_wep_onhit_eff(arg_source.item[arg_source.wep],arg_source,arg_targ)
+    //return_wep_onhit_eff(arg_source.item[arg_source.wep],arg_source,arg_targ)
     return_skill_onhit_eff(arg_source,arg_targ)
     arg_targ.image_blend=c_red
     if dmg<0{

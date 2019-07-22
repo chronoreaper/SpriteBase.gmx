@@ -239,7 +239,7 @@ switch floor(arg_skill){
             var base =return_skill_num(arg_source,arg_targ)
             var dmg =calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0,arg_source,arg_targ),return_skill_type(arg_skill),basexp,1)
             
-            addStatus(1,0,arg_targ,4,0.02,ceil(arg_source.lv/2))//burn
+            addStatus(1,0,arg_targ,4,0.02,ceil(arg_source.lv/2)+1)//burn
             
             //effect
             var eff=instance_create(arg_targ.x+7,arg_targ.y+7,oEff);

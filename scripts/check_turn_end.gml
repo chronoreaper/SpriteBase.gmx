@@ -102,7 +102,11 @@ if fin=1{
     if !tile_layer_find(10000,rx*15,ry*15)
         {
         var inst;
-        if irandom(1){
+        if turnsSurvive % 20 = 0{
+        inst=instance_create(rx*15,ry*15,oDragon1)
+        inst.team=2
+        }
+        else if irandom(1){
         inst=instance_create(rx*15,ry*15,
         choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops,oEyebat));
         inst.team=2
@@ -208,7 +212,7 @@ if fin=1{
                             break;
                         case 4:
                             status[j]-=0.01
-                            var dmg=ceil(frac(status[j])*100+statusStr[j])
+                            var dmg=ceil(statusStr[j])
                             var txt=instance_create(x+7-15*dsin(-view_angle),y+7-15*dcos(-view_angle),DmgWord);
                             txt.text=string(dmg)
                             hp=max(hp-dmg,0)

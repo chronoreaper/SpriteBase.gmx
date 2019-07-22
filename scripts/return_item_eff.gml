@@ -4,7 +4,7 @@ var arg_slot=menuSel
 var arg_item=arg_unit.item[arg_slot]
 switch floor(arg_item){
     case 1: 
-        with arg_unit{
+        with arg_target{
         if draw>0
             audio_play_sound(sHeal,50,false)
         hp+=4
@@ -31,7 +31,7 @@ switch floor(arg_item){
         txt.colour=c_lime
         break;
     case 5: 
-        with arg_unit{
+        with arg_target{
         if draw>0
             audio_play_sound(sHeal,50,false)
         hp+=5
@@ -46,7 +46,7 @@ switch floor(arg_item){
         txt.colour=c_lime
         break;
     case 22: 
-        with arg_unit{
+        with arg_target{
         if draw>0
             audio_play_sound(sHeal,50,false)
         hp+=7

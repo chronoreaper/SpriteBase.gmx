@@ -29,10 +29,10 @@ else{
     //duration
     if arg_dur_stack=0{
     if frac(arg_targ.status[index])<arg_dur
-        arg_targ.status[index]=arg_dur
+        arg_targ.status[index]=floor(arg_targ.status[index])+arg_dur
     }
     else{
-        arg_targ.status[index]=floor(arg_targ.status[index])+arg_dur
+        arg_targ.status[index]=min(arg_targ.status[index]+arg_dur,floor(arg_targ.status[index])+0.09)
     }
     
     //strength
