@@ -304,8 +304,8 @@ if path_position=1||path_position=0
             <string>///visibility
 if x&gt;=view_xview
 &amp;&amp; x&lt;=view_xview+view_wview
-&amp;&amp; y&gt;=view_yview
-&amp;&amp; y&lt;=view_yview+view_hview
+&amp;&amp; y&gt;=view_yview+view_hview/2-view_wview/2
+&amp;&amp; y&lt;=view_yview+view_hview/2+view_wview/2
 {
 if object_is_ancestor(object_index,oObj){
     var cx=x
