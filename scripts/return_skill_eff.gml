@@ -59,12 +59,12 @@ switch floor(arg_skill){
         }
         return 0
     case 3:
-        if arg_source.sp>=8 {
+        if arg_source.sp>=10 {
         if arg_targ!=noone{
             arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90);
             if arg_source.dir>3
                 arg_source.dir=0
-            arg_source.sp-=8
+            arg_source.sp-=10
             arg_source.spg+=0.1
             var inst=instance_create(arg_source.x+7,arg_source.y+7,oEff);
             inst.sprite_index=water_breath
@@ -166,6 +166,7 @@ switch floor(arg_skill){
                  arg_source.sp=ceil(total_sp/2)
                 var temp=instance_create(arg_source.x,arg_source.y,arg_source.object_index);
                 temp.hp=1//floor(total_hp/2)
+                temp.dmg=1
                 temp.sp=floor(total_sp/2)
                 temp.mhp=1//arg_source.mhp
                 temp.msp=arg_source.msp
@@ -261,13 +262,13 @@ switch floor(arg_skill){
         }
         return 0
     case 9:
-        if arg_source.sp>=8 {
+        if arg_source.sp>=6 {
         if arg_targ!=noone{
             //var base =-floor(arg_source.stats[2,4]);
             //calculate_damage(arg_source,arg_targ,base,return_skill_acc(arg_skill,0),return_skill_type(arg_skill),8,1)
             var value=return_skill_num(arg_source,arg_targ);
             arg_targ.hp+=value
-            arg_source.sp-=8
+            arg_source.sp-=6
             arg_source.xp+=8
             arg_source.spg+=1
             arg_source.resg+=1
@@ -381,11 +382,11 @@ switch floor(arg_skill){
         }
         return 0
     case 13://shield
-        if arg_source.sp>=5 {
+        if arg_source.sp>=3 {
         if arg_targ!=noone{
             var value=return_skill_num(arg_source,arg_targ)
             addStatus(0,0,arg_targ,1,0.03,value)
-            arg_source.sp-=5
+            arg_source.sp-=3
             arg_source.xp+=basexp+1
             arg_source.spg+=1
             arg_source.resg+=1
@@ -575,9 +576,9 @@ switch floor(arg_skill){
         }
         return 0 
     case 21://blessing
-        if arg_source.sp>=6 {
+        if arg_source.sp>=5 {
         if arg_targ!=noone{
-            arg_source.sp-=6
+            arg_source.sp-=5
             arg_source.xp+=max(basexp-1,1)
             arg_source.dir=round(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)/90)
             //arg_source.ax=cos(degtorad(point_direction(arg_source.x+7,arg_source.y+7,arg_targ.x+7,arg_targ.y+7)))*5

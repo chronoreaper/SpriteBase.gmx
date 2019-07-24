@@ -5,10 +5,10 @@ switch floor(arg_wep){
     case 2: return floor(arg_sel.stats[2,0])+0;//dagger
     case 4: return floor(arg_sel.stats[2,0])+1;
     case 6: return floor(arg_sel.stats[2,0])+2;
-    case 7: return (floor(arg_sel.stats[2,3])+2)*power(0.8,arg_dist);//bow
+    case 7: return (floor(arg_sel.stats[2,3])+2)*power(0.8,arg_dist-1);//bow
     case 8: return floor(arg_sel.stats[2,0])+3;//sword
     case 9: return floor(arg_sel.stats[2,0])+2;//club
-    case 11: return (floor((arg_sel.stats[2,3]+arg_sel.stats[2,1])/2)+2)*power(0.8,arg_dist);//spirit bow
+    case 11: return (floor((arg_sel.stats[2,3]+arg_sel.stats[2,1])/2)+2)*power(0.8,arg_dist-1);//spirit bow
     case 12: return floor(arg_sel.stats[2,0])+5;//iron Sword
     case 13: return floor(arg_sel.stats[2,3])+1;//kranbit
     case 14: 

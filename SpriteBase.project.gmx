@@ -364,7 +364,7 @@
     <shader type="GLSLES">shaders\shader1.shader</shader>
   </shaders>
   <objects name="objects">
-    <object>objects\oMenu</object>
+    <object>objects\oGenerateMap</object>
     <object>objects\oControler</object>
     <objects name="Map Maker">
       <object>objects\room_block</object>

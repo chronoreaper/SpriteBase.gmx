@@ -1206,6 +1206,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             /*if mouse_x-view_xview&gt;270
             &amp;&amp; mouse_y-view_yview&gt;219-70
             &amp;&amp; mouse_y-view_yview&lt;226*/
+            if controler=0
             {
             menuSel=floor(((point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(15))
             //menuSel=shopItem-floor((mouse_y-view_yview-219+70)/7)

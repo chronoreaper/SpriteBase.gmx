@@ -31,7 +31,7 @@ switch floor(arg_skill){
         str="burns target#<Mag>#[int]#range "+string(abs(return_skill_range(arg_skill)))
         break;
     case 9:
-        str="heals an ally [luc]#range "+string(abs(return_skill_range(arg_skill)))
+        str="heals an ally [res]#range "+string(abs(return_skill_range(arg_skill)))
         break;
     case 10:
         str="strong<Phy>attack using melee weapon#range "+string(abs(return_skill_range(arg_skill)))

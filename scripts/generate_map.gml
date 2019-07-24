@@ -58,7 +58,7 @@ repeat(2*(width+height)){
         min(yy + ceil(rand_h/2),height-2),
         0)
         
-        dist=irandom(6)*2+4
+        dist=irandom(6)+4
         dir+=choose(1,-1);
         if dir<0
             dir=3

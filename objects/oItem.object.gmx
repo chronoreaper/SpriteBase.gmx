@@ -110,7 +110,7 @@ if point_direction(x,y,xx,yy)&lt;7{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
+            <string>depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))+1
 if abs(xx-x)&gt;1
    x+=(xx-x)/3
 else
