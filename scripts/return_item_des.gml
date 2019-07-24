@@ -47,7 +47,7 @@ switch floor(arg_item){
         str="critical hit when target is below 50%#[tec]#mt: 1#wt: "+string(return_item_wt(arg_item))
         break;
     case 14://great sword
-        str="deals more damage the less you move.#critical hit when standing still.#[atk]#mt: 10#wt: "+string(return_item_wt(arg_item))
+        str="deals more damage the less you move.#critical hit when standing still.#[atk]#mt: 8#wt: "+string(return_item_wt(arg_item))
         break;
     case 15://great bow
         str="deals more damage the further the target.#critical hit when standing still.#[tec]#mt: 7#wt: "+string(return_item_wt(arg_item))+"#range 5"
