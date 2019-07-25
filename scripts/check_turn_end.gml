@@ -100,9 +100,10 @@ if fin=1{
     if !place_meeting(rx*15,ry*15,oUnit)
     if ds_grid_get(gridF1,rx,ry)<1
     if !tile_layer_find(10000,rx*15,ry*15)
+    if ds_grid_get(map,rx,ry)=0
         {
         var inst;
-        if turnsSurvive % 20 = 0{
+        if turnsSurvive % 15 = 0{
         inst=instance_create(rx*15,ry*15,oDragon1)
         inst.team=2
         }

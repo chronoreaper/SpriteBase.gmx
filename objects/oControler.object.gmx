@@ -26,6 +26,10 @@
           <argument>
             <kind>1</kind>
             <string>image_speed=0.1
+var width=room_width/15;
+var height=room_height/15;
+map=ds_grid_create(width,height)
+
 playerColour[1]=c_lime
 playerColour[2]=c_red
 playerColour[3]=c_blue
@@ -163,7 +167,7 @@ inst=instance_create(x,y,oCampfire);
 //inst.ai=0 
 var sx=15;
 var sy=15;
-inst=instance_create(x-15*sx,y+15*sy,oMerchant)
+/*inst=instance_create(x-15*sx,y+15*sy,oMerchant)
 inst.team=1
 inst.ai=5
 inst.xp=40
@@ -2147,7 +2151,7 @@ if floor(menu)=99{
         var rx=irandom(room_width/15)
         var ry=irandom(room_height/15)
         if !place_meeting(rx*15,ry*15,oUnit)
-        //if ds_grid_get(gridF1,rx,ry)&lt;1
+        if ds_grid_get(map,rx,ry)=0
             {
             if irandom(4)
             {

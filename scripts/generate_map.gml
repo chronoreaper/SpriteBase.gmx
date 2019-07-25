@@ -1,6 +1,6 @@
 var width=room_width/15;
 var height=room_height/15
-var map=ds_grid_create(width,height)
+//var map=ds_grid_create(width,height)
 //var gridMap=ds_grid_create(width*2+1,height*2+1)
 //ds_grid_clear(gridMap,0)
 ds_grid_clear(map,1)
@@ -112,5 +112,5 @@ var ry=irandom(room_height/15)//room_height/15);
         }
     }
 }
-ds_grid_destroy(map)
+//ds_grid_destroy(map)
 //ds_grid_destroy(gridMap)
