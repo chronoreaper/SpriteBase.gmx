@@ -1039,8 +1039,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             {
             menuSel=floor((180-(point_direction(c.x+7,c.y+7,mouse_x,mouse_y)+view_angle))/(15))
             }
-            menuSel2=min(1,menuSel2)
-            menuSel2=max(0,menuSel2)
+            menuSel2=clamp(menuSel2,1,0)
         }
         
         if mouse_check_button_pressed(mb_left)

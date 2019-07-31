@@ -103,9 +103,26 @@ if fin=1{
     if ds_grid_get(map,rx,ry)=0
         {
         var inst;
+        var inst2;
         if turnsSurvive % 15 = 0{
-        inst=instance_create(rx*15,ry*15,oDragon1)
-        inst.team=2
+            if irandom(1){
+                inst=instance_create(rx*15,ry*15,oDragon1)
+                inst.team=2
+                inst.marker=1
+                }
+            else{
+                inst=instance_create(rx*15,ry*15,oWurm)
+                inst.team=2
+                inst.ai=1
+                inst.marker=1
+                repeat(9){
+                    inst2=instance_create(rx*15,ry*15,oWurm)
+                    inst2.team=2
+                    inst2.ai=-1
+                    inst2.link=inst
+                    inst=inst2
+                    }
+                }
         }
         else if irandom(1){
         inst=instance_create(rx*15,ry*15,
@@ -119,7 +136,7 @@ if fin=1{
             inst.team=1
             inst.ai=6
             }
-            else if irandom(2){
+            else if irandom(5){
                 inst=instance_create(rx*15,ry*15,
                 choose(oChest));
                 inst.team=0.1

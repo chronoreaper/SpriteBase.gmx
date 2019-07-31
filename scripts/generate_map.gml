@@ -49,8 +49,8 @@ repeat(2*(width+height)){
     yy= clamp(yy,2,height-2)
     dist--
     if (dist<=0){
-        var rand_w = irandom(3)+2
-        var rand_h = irandom(3)+2
+        var rand_w = irandom(2)+2
+        var rand_h = irandom(2)+2
         ds_grid_set_region(map,
         max(xx - floor(rand_w/2),1),
         max(yy - floor(rand_h/2),1),
@@ -92,7 +92,7 @@ var ry=irandom(room_height/15)//room_height/15);
         ||ds_grid_get(gridMap,rx,ry+1)=1
         ||ds_grid_get(gridMap,rx,ry-1)=1
         ||ds_grid_get(gridMap,rx-1,ry)=1*/
-        if irandom(35)=0{
+        if irandom(50)=0{
             var inst=instance_create(rx*15,ry*15,choose(oChest));
             inst.visible=false
             inst.dir=irandom(3)
