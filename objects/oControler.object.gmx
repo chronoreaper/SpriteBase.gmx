@@ -2122,12 +2122,13 @@ if camTurnDir!=0
           <argument>
             <kind>1</kind>
             <string>///generate map
+var rx,ry;
 if floor(menu)=99{
     generate_map()
     
     var rx=irandom(room_width/30)+1
     var ry=irandom(room_height/30)+1
-    while place_meeting(rx*15,ry*15,oUnit){
+    while (place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)){
         rx=1+irandom(room_width/15-2)
         ry=1+irandom(room_height/15-2)
     }
@@ -2146,9 +2147,13 @@ if floor(menu)=99{
         
         //random stuff
         if room=room0
-        repeat((room_width/15+room_height/15)/4){
-        var rx=irandom(room_width/15)
-        var ry=irandom(room_height/15)
+        repeat((room_width/15+room_height/15)/15){
+        rx=irandom(room_width/15)
+        ry=irandom(room_height/15)
+        while place_meeting(rx*15,ry*15,oUnit){
+            rx=1+irandom(room_width/15-2)
+            ry=1+irandom(room_height/15-2)
+        }
         if !place_meeting(rx*15,ry*15,oUnit)
         if ds_grid_get(map,rx,ry)=0
             {

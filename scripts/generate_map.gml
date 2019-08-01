@@ -76,8 +76,12 @@ for (var i=0;i<width;i++)
         var inst=instance_create(i*15,j*15,choose(oTree));
         inst.visible=false
         s+='0'
-    }else
+    }else{
         s+='1'
+        //if (i%4==0 && j%4==0)
+        if irandom(10)=0
+         tile_add(tilesprite2,15*(1+irandom(9)),15*0,15,15,i*15+15*irandom(1),j*15+15*irandom(1),100000)
+    }
 }
 show_debug_message(s)
 }

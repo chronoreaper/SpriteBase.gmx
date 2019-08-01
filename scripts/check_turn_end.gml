@@ -96,7 +96,11 @@ if fin=1{
     //spawn monsters
     var rx=irandom(room_width/15)//room_width/15);
     var ry=irandom(room_height/15)//room_height/15);
-    //if irandom(1)=0
+    while (place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)){
+        rx=1+irandom(room_width/15-2)
+        ry=1+irandom(room_height/15-2)
+    }
+    if irandom(1)=0
     if !place_meeting(rx*15,ry*15,oUnit)
     if ds_grid_get(gridF1,rx,ry)<1
     if !tile_layer_find(10000,rx*15,ry*15)
