@@ -78,6 +78,17 @@ if viewSprite&lt;0
     viewSprite+=4
 viewSprite=viewSprite%4
 draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1,-view_angle,image_blend,1)
+//draw oobjects not in view
+var d=0;
+var cx=x
+var cy=y
+with oControler{
+    if ds_grid_get(gridF1,cx/15,cy/15)&lt;1
+        d=1
+}
+if d
+    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1-c,-view_angle+wave,1,0.5)
+
 </string>
           </argument>
         </arguments>
