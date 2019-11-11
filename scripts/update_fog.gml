@@ -14,14 +14,17 @@ for (var i=-v;i<=v;i+=1){
             var c=0//how many collisions with objects
             var on=place_meeting((arx+i)*15+0,(ary+j)*15+0,oBlock);
             var inst=collision_line(arx*15+7,ary*15+7,(arx+i)*15+7,(ary+j)*15+7,oBlock,false,true)
-            while (inst!=noone){
+            var inst2=collision_line(arx*15+7+1,ary*15+7+1,(arx+i)*15+7+1,(ary+j)*15+7+1,oBlock,false,true)
+            while (inst!=noone||inst2!=noone){
                 c++
                 instance_deactivate_object(inst)
+                instance_deactivate_object(inst2)
                 inst=collision_line(arx*15+7,ary*15+7,(arx+i)*15+7,(ary+j)*15+7,oBlock,false,true)
+                inst2=collision_line(arx*15+7+1,ary*15+7+1,(arx+i)*15+7+1,(ary+j)*15+7+1,oBlock,false,true)
             }
             instance_activate_object(oBlock)
-            if (c=1&&on=1)
-            ||c=0||(abs(i)+abs(j)<=1)
+            if (c=1&&on=1)||
+            c=0||(abs(i)+abs(j)<=1)
             if arx+i>0
             if ary+j>0
             if arx+i<ds_grid_width(gridF1)-1

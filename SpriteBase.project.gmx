@@ -152,6 +152,10 @@
       <sprite>sprites\house01_3</sprite>
       <sprite>sprites\campFire</sprite>
       <sprite>sprites\fence01</sprite>
+      <sprite>sprites\stairs01_1</sprite>
+      <sprite>sprites\stairs01_2</sprite>
+      <sprite>sprites\stairs01_3</sprite>
+      <sprite>sprites\stairs01_4</sprite>
     </sprites>
     <sprites name="items">
       <sprite>sprites\juicebox</sprite>
@@ -373,6 +377,7 @@
     <object>objects\oEff</object>
     <object>objects\DmgWord</object>
     <object>objects\oItem</object>
+    <object>objects\oEvent</object>
     <object>objects\oObj</object>
     <object>objects\oBlock</object>
     <object>objects\oBlock4</object>
@@ -385,6 +390,9 @@
     <object>objects\oMonster</object>
     <object>objects\oTempTarg</object>
     <object>objects\oUnit</object>
+    <objects name="events">
+      <object>objects\oStairs</object>
+    </objects>
     <objects name="item">
       <object>objects\oJuicebox</object>
       <object>objects\oDagger</object>

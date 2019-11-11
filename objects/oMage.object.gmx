@@ -49,7 +49,7 @@ stats[1,4]=1.5
 
 mov=3
 mmov=mov
-view=4
+view=6
 
 face=face003
 unit=mage001_0

@@ -386,8 +386,12 @@ depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
             <kind>1</kind>
             <string>///check if dead
 if hp&lt;=0{
+    var viewSprite=dir+round(view_angle/90)
+    if viewSprite&lt;0
+        viewSprite+=4
+    viewSprite=viewSprite%4
     var inst=instance_create(x,y,oFade);
-    inst.sprite_index=unit+round(view_angle/90)
+    inst.sprite_index=unit+viewSprite
     inst.image_angle=-view_angle
     if face&gt;0{
     inst=instance_create(x,y,oFade);
@@ -504,8 +508,9 @@ else if oControler.allyMatrix[# team,oControler.currentTurn]&gt;0
     colour=oControler.playerColour[1]
 else colour=oControler.playerColour[0];
     */
-if object_is_ancestor(object_index,oObj)
+if object_is_ancestor(object_index,oObj){
     colour=oControler.playerColour[0];
+    }
 else
     draw_sprite_ext(marker1,0,x-7*(size-1),y-7*(size-1),size,size,0,colour,1)
 /*if dmg!=hp{

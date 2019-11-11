@@ -51,7 +51,7 @@ stats[1,4]=2
 
 mov=3
 mmov=mov
-view=4
+view=6
 
 face=face004
 unit=healer001_0

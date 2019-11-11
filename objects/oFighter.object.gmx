@@ -52,7 +52,7 @@ stats[1,4]=1
 
 mov=3
 mmov=mov
-view=4
+view=6
 
 face=face001
 unit=fighter001_0

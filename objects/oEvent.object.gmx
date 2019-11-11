@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>oUnit</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,14 +25,32 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited()
-skill[0]=12
-str=0
-int=0
-tec=0
-luc=0
-mov=0
-team=0.1
+            <string>image_speed=0
+dir=0
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///set depth
+depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))+2
 </string>
           </argument>
         </arguments>
@@ -55,37 +73,11 @@ team=0.1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if visible||debugging=1
-if draw&gt;0
-||debugging=1{
-//draw_set_colour(c_black)
-//draw_set_alpha(0.5)
-//draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
-//ax+x+6.5+sprite_get_width(sprite_index)/2,ay+y+7+sprite_get_width(sprite_index)/2,false)
-//draw_set_alpha(1)
-if !object_is_ancestor(object_index,oDeco4)&amp;&amp;!object_is_ancestor(object_index,oBlock4){
-var viewSprite=dir
-}
-else{
-var viewSprite=dir+round(view_angle/90)
+            <string>var viewSprite=dir+round(view_angle/90)
 if viewSprite&lt;0
     viewSprite+=4
 viewSprite=viewSprite%4
-}
-draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1-c,-view_angle+wave,image_blend,1)
-
-//draw oobjects not in view
-var d=0;
-var cx=x
-var cy=y
-with oControler{
-    if ds_grid_get(gridF1,cx/15,cy/15)&lt;1
-        d=1
-}
-if d
-    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1-c,-view_angle+wave,1,0.5)
-
-}
+draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1,-view_angle,image_blend,1)
 </string>
           </argument>
         </arguments>

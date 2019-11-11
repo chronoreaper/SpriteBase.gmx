@@ -1428,6 +1428,7 @@ if mouse_check_button_pressed(mb_left)
     controler=0
 //view angle
 }
+
 if global.production=0{
 if keyboard_check_pressed(keys[6])
     viewTurn--
@@ -2246,60 +2247,6 @@ draw_sprite_ext(sprite_index,image_index,x,y,1,1,image_angle,-1,0.5)
       </action>
     </event>
     <event eventtype="8" enumb="73">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw shadow
-/*
--1 cant see
-0 visited
-0&lt; visable
-*/
-var px=x/15
-var py=y/15
-var p=0
-var vx=view_xview[p]/15,vy=view_yview[p]/15;
-var fx=floor(view_xview[p]/15),fy=floor(view_yview[p]/15);
-var vh=view_hview[p]/15,vw=view_wview[p]/15-16//0
-for (var i=0;i&lt;room_width/15;i++)
-for (var j=0;j&lt;room_height/15;j++){
-        if ds_grid_get(gridF1,clamp(i,0,room_width/15),clamp(j,0,room_height/15))&lt;1
-        if debugging=0
-        {
-          draw_sprite_ext(hitbox,0,(i)*15,(j)*15,1,1,0,0,0.5-ds_grid_get(gridF1,i,j))
-        }
-        /*if ds_grid_get(gridF1,i,j)&gt;0{
-           ds_grid_multiply(gridF1,i,j,0.70)
-           }
-        else{
-            //mp_grid_add_cell(grid,i,j)
-        }*/
-
-//ds_grid_multiply_region(gridF1,0,0,100,100,min(-1,0.95))
-}
-if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
-if ds_grid_get(gridF1,round(xx/15),round(yy/15))&lt;=0
-    draw_sprite_ext(sprite_index,image_index,x,y,1,1,image_angle,-1,1)
-
-draw_self()
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -3724,6 +3671,60 @@ switch area_type{
             <kind>1</kind>
             <string>///last
 //draw_self()
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw shadow
+/*
+-1 cant see
+0 visited
+0&lt; visable
+*/
+var px=x/15
+var py=y/15
+var p=0
+var vx=view_xview[p]/15,vy=view_yview[p]/15;
+var fx=floor(view_xview[p]/15),fy=floor(view_yview[p]/15);
+var vh=view_hview[p]/15,vw=view_wview[p]/15-16//0
+for (var i=0;i&lt;room_width/15;i++)
+for (var j=0;j&lt;room_height/15;j++){
+        if ds_grid_get(gridF1,clamp(i,0,room_width/15),clamp(j,0,room_height/15))&lt;1
+        if debugging=0
+        {
+          draw_sprite_ext(hitbox,0,(i)*15,(j)*15,1,1,0,0,0.5-ds_grid_get(gridF1,i,j))
+        }
+        /*if ds_grid_get(gridF1,i,j)&gt;0{
+           ds_grid_multiply(gridF1,i,j,0.70)
+           }
+        else{
+            //mp_grid_add_cell(grid,i,j)
+        }*/
+
+//ds_grid_multiply_region(gridF1,0,0,100,100,min(-1,0.95))
+}
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
+if ds_grid_get(gridF1,round(xx/15),round(yy/15))&lt;=0
+    draw_sprite_ext(sprite_index,image_index,x,y,1,1,image_angle,-1,1)
+
+draw_self()
+}
 </string>
           </argument>
         </arguments>

@@ -54,7 +54,7 @@ stats[1,4]=1.7
 
 mov=3
 mmov=mov
-view=4
+view=6
 
 face=face005
 unit=hero001_0
