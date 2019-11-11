@@ -456,6 +456,7 @@
     <timeline>timelines\timeline0</timeline>
   </timelines>
   <rooms name="rooms">
+    <room>rooms\room2</room>
     <room>rooms\room0</room>
     <room>rooms\testRoom</room>
   </rooms>
