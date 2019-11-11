@@ -354,6 +354,7 @@
     <script>scripts\get_random.gml</script>
     <script>scripts\update_view_zone.gml</script>
     <script>scripts\generate_map.gml</script>
+    <script>scripts\generate_map_old_old.gml</script>
     <script>scripts\generate_map_old.gml</script>
     <script>scripts\create_area.gml</script>
     <script>scripts\create_boss_area.gml</script>
@@ -456,8 +457,8 @@
     <timeline>timelines\timeline0</timeline>
   </timelines>
   <rooms name="rooms">
-    <room>rooms\room2</room>
     <room>rooms\room0</room>
+    <room>rooms\room2</room>
     <room>rooms\testRoom</room>
   </rooms>
   <help>

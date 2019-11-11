@@ -32,6 +32,7 @@ mhp=hp
 stats[2,2]=20
 unit=choose(tree,tree2)
 sprite_index=unit
+wave=random(2)-1
 name="Tree"
 
 dmg=hp

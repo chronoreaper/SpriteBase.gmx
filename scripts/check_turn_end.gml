@@ -96,7 +96,8 @@ if fin=1{
     //spawn monsters
     var rx=irandom(room_width/15)//room_width/15);
     var ry=irandom(room_height/15)//room_height/15);
-    while (place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)){
+    while (place_meeting(rx*15,ry*15,oUnit)
+    ||ds_grid_get(map,rx,ry)){
         rx=1+irandom(room_width/15-2)
         ry=1+irandom(room_height/15-2)
     }
