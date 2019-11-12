@@ -646,6 +646,10 @@ if selected!=noone{
     if xp&gt;=mxp
         levelup()
     }
+    if floor(selected.team)=0
+    if place_meeting(selected.x,selected.y,oStairs){
+        next_floor()
+    }
     phase=0
     instance_activate_all()
     update_fog()
@@ -2850,6 +2854,10 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
             unitLeft++;
         }
 }
+draw_set_colour(c_fuchsia)
+draw_set_font(pixelFont)
+draw_set_alpha(1)
+draw_text(2,10,"Floor: "+string(level))
 if global.production=2{
 draw_set_colour(c_fuchsia)
 draw_set_font(pixelFont)
