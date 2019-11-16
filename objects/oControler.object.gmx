@@ -648,14 +648,18 @@ if selected!=noone{
     }
     if floor(selected.team)=0
     if place_meeting(selected.x,selected.y,oStairs){
-        next_floor()
+        level++;
+        menu = 98;
+        instance_create(x,y,oNextFloor)
     }
     phase=0
+    if menu =-1{
     instance_activate_all()
     update_fog()
     selected=noone
     check_turn_end()
     add_all_to_map()
+    }
     }
 }
 //for ai

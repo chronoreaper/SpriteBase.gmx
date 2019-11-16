@@ -378,6 +378,7 @@
     <object>objects\oEff</object>
     <object>objects\oNextFloor</object>
     <object>objects\DmgWord</object>
+    <object>objects\oTriggerObj</object>
     <object>objects\oItem</object>
     <object>objects\oEvent</object>
     <object>objects\oObj</object>

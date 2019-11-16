@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>oTriggerObj</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -110,7 +110,8 @@ if point_direction(x,y,xx,yy)&lt;7{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))+1
+            <string>event_inherited()
+depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))+1
 if abs(xx-x)&gt;1
    x+=(xx-x)/3
 else
@@ -141,7 +142,8 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index,image_index,x+7,y+7,1,1,-view_angle,-1,1)
+            <string>if visible
+draw_sprite_ext(sprite_index,image_index,x+7,y+7,1,1,-view_angle,-1,1)
 </string>
           </argument>
         </arguments>

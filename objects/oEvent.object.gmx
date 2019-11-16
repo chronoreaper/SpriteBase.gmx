@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>oTriggerObj</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -50,6 +50,7 @@ dir=0
           <argument>
             <kind>1</kind>
             <string>///set depth
+event_inherited()
 depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))+2
 </string>
           </argument>
@@ -73,7 +74,8 @@ depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))+2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var viewSprite=dir+round(view_angle/90)
+            <string>if visible{
+var viewSprite=dir+round(view_angle/90)
 if viewSprite&lt;0
     viewSprite+=4
 viewSprite=viewSprite%4
@@ -88,7 +90,7 @@ with oControler{
 }
 if d
     draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1,-view_angle,1,0.5)
-
+}
 </string>
           </argument>
         </arguments>

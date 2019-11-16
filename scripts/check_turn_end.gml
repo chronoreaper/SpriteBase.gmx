@@ -101,7 +101,7 @@ if fin=1{
         rx=1+irandom(room_width/15-2)
         ry=1+irandom(room_height/15-2)
     }
-    if irandom(1)=0
+    if irandom(1)=3//never happens
     if !place_meeting(rx*15,ry*15,oUnit)
     if ds_grid_get(gridF1,rx,ry)<1
     if !tile_layer_find(10000,rx*15,ry*15)
@@ -148,7 +148,7 @@ if fin=1{
             }
         }
         //inst.view=0
-        if instance_exists(inst){
+        if inst!=noone&&instance_exists(inst){
             inst.draw=0
             //stats
             inst.xp+=irandom(turnsSurvive)+turnsSurvive
@@ -193,7 +193,7 @@ if fin=1{
             y = round(y/15)*15
             
             if summon=0{
-                sp+=1
+                //sp+=1
             }else{
                 sp--
                 if sp<=0

@@ -1,6 +1,3 @@
-level++;
-menu = 98;
-instance_create(x,y)
 var xc = floor(room_width/30)*15
 var yc = floor(room_height/30)*15
 //set units to starting area
@@ -50,6 +47,7 @@ for(var i=0;i<ds_list_size(allUnits);i++){
     else
         instance_destroy()
 }
+
 //destroy everything else
 with oObj{
     instance_destroy()
@@ -61,6 +59,7 @@ with oEvent{
     instance_destroy()
 }
 
+//update unit list
 ds_list_sort(unitList,true)
 if ds_list_size(unitList)>0{
     if ds_map_find_value(aiTurns, currentTurn)>=0
@@ -77,6 +76,13 @@ if ds_list_size(unitList)>0{
         }
     }
 }
-else{
-     alarm[10]=1//currentTurn++;//next turn
-}
+
+//make next floor
+generate_map(xc-7*15,yc-7*15,0)
+
+ds_grid_clear(gridF1,-1)
+ds_grid_clear(gridF2,-1)
+for (var k=0;k<ds_list_size(unitList);k++){
+    selected=ds_list_find_value(unitList,k)
+    update_fog()
+}selected=noone
