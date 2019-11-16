@@ -6,7 +6,7 @@
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>oEvent</parentName>
-  <maskName>&lt;undefined&gt;</maskName>
+  <maskName>hitbox</maskName>
   <events>
     <event eventtype="8" enumb="0">
       <action>

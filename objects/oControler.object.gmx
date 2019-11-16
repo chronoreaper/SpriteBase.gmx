@@ -328,10 +328,11 @@ else
           <argument>
             <kind>1</kind>
             <string>///check end turn
+show_debug_message("control alarm 10")
 if selected=noone{
 phase=0
-selected=noone
-update_fog()
+//update_fog()
+//selected=noone
 check_turn_end()
 add_all_to_map()
 }
@@ -379,28 +380,6 @@ alarm[9]=2
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="8">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string></string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="2" enumb="4">
       <action>
         <libid>1</libid>
@@ -419,6 +398,7 @@ alarm[9]=2
           <argument>
             <kind>1</kind>
             <string>///check turn end
+show_debug_message("control alarm 4")
 with selected{
     wait=1
     hpg+=(abs(xx-x)+abs(yy-y))*0.05
@@ -430,8 +410,8 @@ with selected{
         levelup()
     }
     phase=0
-    selected=noone
     update_fog()
+    selected=noone
     check_turn_end()
     add_all_to_map()
 </string>
@@ -460,6 +440,7 @@ with selected{
 /*instance_activate_all()
     alarm[9]=3
     alarm[4]=2*/
+    show_debug_message("control alarm 3")
 instance_activate_all()
 with selected{
 wait=1
@@ -498,6 +479,7 @@ add_all_to_map()
           <argument>
             <kind>1</kind>
             <string>//end turn pick up item
+show_debug_message("control alarm 2")
 if selected!=noone{
 var inst=instance_place(selected.x,selected.y,oItem)
 if inst!=noone
@@ -560,6 +542,7 @@ else{
           <argument>
             <kind>1</kind>
             <string>//end item throw
+show_debug_message("control alarm 1")
 with selected{
 wait=1
 tecg+=1

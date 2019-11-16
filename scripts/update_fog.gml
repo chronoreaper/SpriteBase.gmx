@@ -5,8 +5,9 @@ if ds_map_find_value(aiTurns,selected.team)>=0
 {
 //fog
 var v=selected.view//max(1,selected.view+round(-2*cos((hour*6+minu)*pi/(12*6))+2))
-var arx=round(selected.xx/15),ary=round(selected.yy/15);
+var arx=floor(selected.xx/15),ary=floor(selected.yy/15);
 //with oControler
+instance_activate_all()
 {
 for (var i=-v;i<=v;i+=1){
     for (var j=-v;j<=v;j+=1){

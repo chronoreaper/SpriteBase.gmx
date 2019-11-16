@@ -7,17 +7,17 @@ ds_grid_clear(map,0)
 var layout=array_create(11);
 switch pattren{
 case 0:
-layout[0] ="xxxxxxxxxxx"
-layout[1] ="x---------x"
-layout[2] ="x----s----x"
-layout[3] ="x---------x"
+layout[0] ="---xxxxx---"
+layout[1] ="--xx---xx--"
+layout[2] ="-xx--s--xx-"
+layout[3] ="xx-------xx"
 layout[4] ="x---------x"
 layout[5] ="x---------x"
 layout[6] ="x---------x"
-layout[7] ="x---------x"
-layout[8] ="x---------x"
-layout[9] ="x---------x"
-layout[10]="xxxxxxxxxxx"
+layout[7] ="xx-------xx"
+layout[8] ="-xx-----xx-"
+layout[9] ="--xx---xx--"
+layout[10]="---xxxxx---"
 for (var my=0;my<array_length_1d(layout);my++){
     for(var mx=0;mx<string_length(layout[my]);mx++){
         switch (string_char_at(layout[my],mx+1)){
