@@ -1,4 +1,5 @@
 mp_grid_clear_all(grid)
 with(oUnit){
-    mp_grid_add_instances(grid,id,false)
+    if z = 0
+        mp_grid_add_instances(grid,id,false)
 }

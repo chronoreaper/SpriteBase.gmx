@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed=0
-dir=0
+            <string>dir=0
+name = "event"
 </string>
           </argument>
         </arguments>
@@ -74,12 +74,15 @@ depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))+2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if visible{
-var viewSprite=dir+round(view_angle/90)
-if viewSprite&lt;0
-    viewSprite+=4
-viewSprite=viewSprite%4
-draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1,-view_angle,image_blend,1)
+            <string>if visible||debugging{
+
+draw_set_colour(c_black)
+draw_set_alpha(0.5)
+draw_ellipse(x+7-sprite_get_width(sprite_index)/2,y+7-sprite_get_width(sprite_index)/2,
+x+6+sprite_get_width(sprite_index)/2,y+6+sprite_get_width(sprite_index)/2,false)
+draw_set_alpha(1)
+
+draw_sprite_ext(sprite_index,image_index,x+7,y+7,1,1,-view_angle,image_blend,1)
 //draw oobjects not in view
 var d=0;
 var cx=x
@@ -89,7 +92,7 @@ with oControler{
         d=1
 }
 if d
-    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1,-view_angle,1,0.5)
+    draw_sprite_ext(sprite_index,image_index,x+7,y+7,1,1,-view_angle,1,0.5)
 }
 </string>
           </argument>

@@ -8,6 +8,30 @@
   <parentName>oEvent</parentName>
   <maskName>hitbox</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_inherited()
+name = "stairs"
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -30,7 +54,23 @@ draw_set_alpha(0.5)
 draw_ellipse(x+6-sprite_get_width(sprite_index)/2,y+10-sprite_get_width(sprite_index)/2,
 x+7+sprite_get_width(sprite_index)/2,y+10+sprite_get_width(sprite_index)/2,false)
 draw_set_alpha(1)
-event_inherited()
+if visible||debugging = 1{
+var viewSprite=dir+round(view_angle/90)
+if viewSprite&lt;0
+    viewSprite+=4
+viewSprite=viewSprite%4
+draw_sprite_ext(sprite_index+viewSprite,0,x+7,y+7,1,1,-view_angle,image_blend,1)
+//draw oobjects not in view
+var d=0;
+var cx=x
+var cy=y
+with oControler{
+    if ds_grid_get(gridF1,cx/15,cy/15)&lt;1
+        d=1
+}
+if d
+    draw_sprite_ext(sprite_index+viewSprite,0,x+7,y+7,1,1,-view_angle,1,0.5)
+}
 </string>
           </argument>
         </arguments>

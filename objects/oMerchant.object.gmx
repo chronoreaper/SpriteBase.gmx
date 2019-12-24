@@ -26,31 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
-var rand;
-skill[0]=12
-for (var i=1;i&lt;10;i++){
-    rand=irandom(7)+1;
-    item[i]=rand+return_item_usage_default(rand)
-    }
 
-hp=20
+hp=4
 mhp=hp
-sp=3
-msp=sp
-stats[2,0]=1
-stats[2,1]=3
-stats[2,2]=7
-stats[2,3]=1
-stats[2,4]=3
-
-//per level
-hpp=2.2
-spp=0.5
-stats[1,0]=0.7
-stats[1,1]=1
-stats[1,2]=3
-stats[1,3]=0.7
-stats[1,4]=1
 
 mov=2
 mmov=mov
@@ -60,36 +38,6 @@ unit=merchant001_0
 name="Merchant"
 
 dmg=hp
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>event_inherited()
-if oControler.selected=noone{
-    var rand;
-    for (var i=1;i&lt;10;i++){
-    rand=irandom(20)+1;
-    item[i]=rand+return_item_usage_default(rand)
-    }
-}
 </string>
           </argument>
         </arguments>

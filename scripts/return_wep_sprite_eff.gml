@@ -1,23 +1,13 @@
-var arg_wep=argument0
-switch floor(arg_wep){
-    case 2:return slash;//dagger
-    case 7:return stab;//bow
-    case 8:return slashsweep;//sword
-    case 9:return slashsweep;//club
-    case 11:return stab;//spirit bow
-    case 12:return slashsweep;//iron sword
-    case 13:return slash;//kranbit
-    case 14:return slashsweep;//great sword
-    case 15:return stab;//great bow
-    case 16:return stab;//cross bow
-    case 17:return stab;//spear
-    case 18:return stab;//shurikin
-    case 19:return slashsweep;//battle axe
-    case 20:return stab;//gael bolg
-    case 21:return slash;//axe
-    case 50:return windSlash;//xcalabur
-    //monster weapons
-    case -1:return poison_splash;
+var arg_unit=argument0
+switch floor(arg_unit){
+    case fighter001_0: return slashsweep;
+    case archer001_0: return stab;
+    case hero001_0: return windSlash;
+    case mage001_0: return magicBurnEff;
+    case healer001_0: return healEff;
+    case Dragon001_0: return water_breath;
+    case eyebat001_0: return fluxEff;
+    case shroom001_0: return poison_splash;
     default: return blank;//no wep
 }
 

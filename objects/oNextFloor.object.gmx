@@ -33,6 +33,45 @@ fadeOut=0
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if fadeOut=0{
+    alpha1+=0.2
+    if alpha1&gt;3{
+        fadeOut = 1  
+        with (oControler){
+            next_floor()
+            add_all_to_map()
+            }
+        }
+}
+else{
+    alpha1-=0.1
+    if alpha1&lt;=0{
+        oControler.menu=-1
+        instance_destroy()
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
@@ -53,23 +92,11 @@ fadeOut=0
             <string>draw_set_colour(c_black)
 if fadeOut=0{
     draw_set_alpha(alpha1)
-    alpha1+=0.2
     draw_rectangle(-1,-1,view_wport+1,view_hport+1,false)
-    if alpha1&gt;3{
-        fadeOut = 1  
-        with (oControler)
-            next_floor()
-            add_all_to_map()
-        }
 }
 else{
     draw_set_alpha(alpha1)
-    alpha1-=0.1
     draw_rectangle(-1,-1,view_wport+1,view_hport+1,false)
-    if alpha1&lt;=0{
-        oControler.menu=-1
-        instance_destroy()
-    }
 }
 </string>
           </argument>

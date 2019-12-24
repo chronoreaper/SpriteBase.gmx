@@ -152,10 +152,16 @@
       <sprite>sprites\house01_3</sprite>
       <sprite>sprites\campFire</sprite>
       <sprite>sprites\fence01</sprite>
+      <sprite>sprites\ruinWall2</sprite>
+      <sprite>sprites\ruinWall3</sprite>
       <sprite>sprites\stairs01_1</sprite>
       <sprite>sprites\stairs01_2</sprite>
       <sprite>sprites\stairs01_3</sprite>
       <sprite>sprites\stairs01_4</sprite>
+      <sprite>sprites\doorlock01_0</sprite>
+      <sprite>sprites\orb</sprite>
+      <sprite>sprites\block_up</sprite>
+      <sprite>sprites\block_down</sprite>
     </sprites>
     <sprites name="items">
       <sprite>sprites\juicebox</sprite>
@@ -182,6 +188,8 @@
       <sprite>sprites\gael_bolg</sprite>
       <sprite>sprites\axe</sprite>
       <sprite>sprites\herb</sprite>
+      <sprite>sprites\key</sprite>
+      <sprite>sprites\coin</sprite>
     </sprites>
     <sprites name="eff">
       <sprite>sprites\spawn_eff</sprite>
@@ -195,11 +203,13 @@
       <sprite>sprites\bite</sprite>
       <sprite>sprites\water_breath</sprite>
       <sprite>sprites\laser_beam</sprite>
+      <sprite>sprites\sprite226</sprite>
       <sprite>sprites\angelic</sprite>
       <sprite>sprites\dashSlash</sprite>
       <sprite>sprites\healEff</sprite>
       <sprite>sprites\poison_splash</sprite>
       <sprite>sprites\magicBurnEff</sprite>
+      <sprite>sprites\fireTrap</sprite>
       <sprite>sprites\root_eff</sprite>
       <sprite>sprites\freezeEff</sprite>
       <sprite>sprites\shockEff</sprite>
@@ -207,6 +217,7 @@
       <sprite>sprites\fluxEff</sprite>
       <sprite>sprites\windEff</sprite>
       <sprite>sprites\buffEff</sprite>
+      <sprite>sprites\teleportTile</sprite>
       <sprites name="status">
         <sprite>sprites\statuses</sprite>
         <sprite>sprites\rootedSprite</sprite>
@@ -255,10 +266,30 @@
         <sprite>sprites\prant001_2</sprite>
         <sprite>sprites\prant001_3</sprite>
       </sprites>
+      <sprites name="robot">
+        <sprite>sprites\robot_startup</sprite>
+        <sprite>sprites\robot_001_0</sprite>
+        <sprite>sprites\robot001_1</sprite>
+        <sprite>sprites\robot001_2</sprite>
+        <sprite>sprites\robot001_3</sprite>
+        <sprite>sprites\robot002_0</sprite>
+        <sprite>sprites\robot002_1</sprite>
+        <sprite>sprites\robot002_2</sprite>
+        <sprite>sprites\robot002_3</sprite>
+        <sprite>sprites\robotHand_0</sprite>
+        <sprite>sprites\robotHand_1</sprite>
+        <sprite>sprites\robotHand_2</sprite>
+        <sprite>sprites\robotHand_3</sprite>
+      </sprites>
     </sprites>
     <sprites name="area of effect">
       <sprite>sprites\AOE_range2</sprite>
       <sprite>sprites\AOE_range1s</sprite>
+      <sprite>sprites\AOE_rangeBreath</sprite>
+    </sprites>
+    <sprites name="menu">
+      <sprite>sprites\new_character_but</sprite>
+      <sprite>sprites\character_creation</sprite>
     </sprites>
     <sprite>sprites\blank</sprite>
     <sprite>sprites\cruser</sprite>
@@ -270,18 +301,22 @@
     <sprite>sprites\lettersBlock</sprite>
     <sprite>sprites\Listofsprite</sprite>
     <sprite>sprites\ListOfItems</sprite>
+    <sprite>sprites\hpbar3</sprite>
+    <sprite>sprites\hpbarBack</sprite>
+    <sprite>sprites\hpNum</sprite>
     <sprite>sprites\hpBar</sprite>
     <sprite>sprites\hpBar2</sprite>
     <sprite>sprites\sprite60</sprite>
     <sprite>sprites\diamond</sprite>
     <sprite>sprites\hitbox</sprite>
+    <sprite>sprites\hitbox2</sprite>
+    <sprite>sprites\squareEff</sprite>
     <sprite>sprites\hitbox3</sprite>
     <sprite>sprites\infoSprite</sprite>
     <sprite>sprites\levelupsprite</sprite>
     <sprite>sprites\atkInfo</sprite>
     <sprite>sprites\unit_marker</sprite>
     <sprite>sprites\compassArrow</sprite>
-    <sprite>sprites\hitbox2</sprite>
     <sprite>sprites\box14x14</sprite>
     <sprite>sprites\box7x7</sprite>
     <sprite>sprites\sprite47</sprite>
@@ -298,68 +333,33 @@
   </paths>
   <scripts name="scripts">
     <script>scripts\add_all_to_map.gml</script>
-    <script>scripts\return_priority.gml</script>
-    <script>scripts\return_skill_has_target.gml</script>
-    <script>scripts\return_dmg.gml</script>
     <script>scripts\addStatus.gml</script>
     <script>scripts\findStatus.gml</script>
     <script>scripts\dispellStatus.gml</script>
     <script>scripts\unit_description.gml</script>
     <script>scripts\return_max_faces.gml</script>
     <script>scripts\return_face.gml</script>
+    <script>scripts\return_wep_aoe.gml</script>
     <script>scripts\return_wep_range.gml</script>
-    <script>scripts\return_wep_crit.gml</script>
     <script>scripts\return_wep_sound.gml</script>
-    <script>scripts\return_wep_type.gml</script>
-    <script>scripts\return_wep_onhit_eff.gml</script>
-    <script>scripts\return_wep_dmg.gml</script>
-    <script>scripts\return_item_range.gml</script>
-    <script>scripts\return_stat_gain.gml</script>
-    <script>scripts\return_multi_atk.gml</script>
-    <script>scripts\return_wep_acc.gml</script>
     <script>scripts\return_wep_sprite_eff.gml</script>
-    <script>scripts\return_item_des.gml</script>
-    <script>scripts\return_item_name.gml</script>
-    <script>scripts\return_item_wt.gml</script>
-    <script>scripts\return_item_usage.gml</script>
-    <script>scripts\return_item_targ_type.gml</script>
-    <script>scripts\return_item_eff.gml</script>
-    <script>scripts\return_wep_dur.gml</script>
-    <script>scripts\return_item_obj.gml</script>
-    <script>scripts\return_item_usage_default.gml</script>
-    <script>scripts\return_arm_reduction.gml</script>
-    <script>scripts\draw_weapon.gml</script>
-    <script>scripts\return_skill_name.gml</script>
-    <script>scripts\return_skill_range.gml</script>
-    <script>scripts\return_skill_cost.gml</script>
-    <script>scripts\return_skill_targ_type.gml</script>
-    <script>scripts\return_skill_type.gml</script>
-    <script>scripts\return_skill_des.gml</script>
-    <script>scripts\return_skill_eff.gml</script>
-    <script>scripts\return_skill_num.gml</script>
-    <script>scripts\return_skill_acc.gml</script>
+    <script>scripts\return_attack_type.gml</script>
+    <script>scripts\no_rotate_attack.gml</script>
     <script>scripts\return_skill_onhit_eff.gml</script>
-    <script>scripts\return_skill_area_type.gml</script>
-    <script>scripts\draw_skill_area_type.gml</script>
-    <script>scripts\return_check_skill_target.gml</script>
-    <script>scripts\gain_skill_per_level.gml</script>
-    <script>scripts\return_power.gml</script>
+    <script>scripts\return_skill_def_eff.gml</script>
+    <script>scripts\draw_weapon.gml</script>
     <script>scripts\return_unit.gml</script>
     <script>scripts\return_unit_in_range.gml</script>
-    <script>scripts\check_inventory_space.gml</script>
-    <script>scripts\check_skill_space.gml</script>
     <script>scripts\message_create.gml</script>
     <script>scripts\calculate_damage.gml</script>
     <script>scripts\update_fog.gml</script>
     <script>scripts\check_turn_end.gml</script>
-    <script>scripts\luck.gml</script>
     <script>scripts\path_drawer.gml</script>
-    <script>scripts\levelup.gml</script>
     <script>scripts\get_random.gml</script>
     <script>scripts\update_view_zone.gml</script>
     <script>scripts\generate_map.gml</script>
-    <script>scripts\generate_map_old_old.gml</script>
     <script>scripts\generate_map_old.gml</script>
+    <script>scripts\get_layout.gml</script>
     <script>scripts\create_area.gml</script>
     <script>scripts\create_boss_area.gml</script>
     <script>scripts\create_city_dungeon.gml</script>
@@ -372,6 +372,9 @@
   <objects name="objects">
     <object>objects\oGenerateMap</object>
     <object>objects\oControler</object>
+    <objects name="menu">
+      <object>objects\oCharCreation</object>
+    </objects>
     <objects name="Map Maker">
       <object>objects\room_block</object>
     </objects>
@@ -388,37 +391,43 @@
     <object>objects\oDeco</object>
     <object>objects\oDeco4</object>
     <object>objects\oFade</object>
+    <object>objects\oFade2</object>
     <object>objects\oChar</object>
     <object>objects\oSummon</object>
     <object>objects\oMonster</object>
     <object>objects\oTempTarg</object>
-    <object>objects\oUnit</object>
-    <objects name="events">
-      <object>objects\oStairs</object>
-    </objects>
-    <objects name="item">
+    <objects name="old Items">
       <object>objects\oJuicebox</object>
-      <object>objects\oDagger</object>
       <object>objects\oFirstAid</object>
+      <object>objects\oDagger</object>
       <object>objects\oScrewDriver</object>
-      <object>objects\oHotDog</object>
       <object>objects\oRock</object>
-      <object>objects\oBow</object>
+      <object>objects\oHotDog</object>
       <object>objects\oSword</object>
       <object>objects\oXcalabur</object>
+      <object>objects\oBow</object>
       <object>objects\oClub</object>
-      <object>objects\oStick</object>
       <object>objects\oIronSword</object>
-      <object>objects\oKranbit</object>
+      <object>objects\oStick</object>
       <object>objects\oGreatSword</object>
+      <object>objects\oKranbit</object>
       <object>objects\oGreatBow</object>
       <object>objects\oCrossBow</object>
       <object>objects\oSpear</object>
-      <object>objects\oShurikin</object>
       <object>objects\oBattleAxe</object>
       <object>objects\oGaelBolg</object>
       <object>objects\oAxe</object>
+      <object>objects\oShurikin</object>
+    </objects>
+    <object>objects\oUnit</object>
+    <objects name="events">
+      <object>objects\oFire</object>
+      <object>objects\oStairs</object>
+      <object>objects\oTeleporter</object>
+    </objects>
+    <objects name="item">
       <object>objects\oHerb</object>
+      <object>objects\oKey</object>
     </objects>
     <objects name="objects">
       <object>objects\oBuilding</object>
@@ -434,7 +443,11 @@
       <object>objects\oCampfire</object>
       <object>objects\oChest</object>
       <object>objects\oHouse</object>
+      <object>objects\oLockDoor</object>
+      <object>objects\oOrb</object>
+      <object>objects\oBlockStop</object>
       <object>objects\oFence</object>
+      <object>objects\oRuinWall</object>
     </objects>
     <objects name="units">
       <object>objects\oFighter</object>
@@ -450,8 +463,8 @@
       <object>objects\oFrog</object>
       <object>objects\oTurt</object>
       <object>objects\oCyclops</object>
-      <object>objects\oMimic</object>
       <object>objects\oEyebat</object>
+      <object>objects\oMimic</object>
       <objects name="Boss">
         <object>objects\oWurm</object>
         <object>objects\oDragon1</object>

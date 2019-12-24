@@ -144,6 +144,61 @@ with oControler{
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw hpbar
+event_inherited()
+//if oControler.phase=0
+if (visible&amp;&amp; draw&gt;0)
+||debugging=1
+{
+var angle = 105
+var dist = 20 //+ (dmg != hp)*(irandom(1)*3-3)
+var itext = hp
+var colour;
+var alpha= 0.1;
+
+if !place_meeting(oControler.x,oControler.y,oChar)
+|| instance_place(oControler.x,oControler.y,oChar) == id
+|| oControler.selected=id
+|| oControler.phase=5
+|| oControler.phase=4
+   alpha = 1
+colour=oControler.playerColour[team]
+
+draw_sprite_ext(hpbarBack,0,x+7+dist*dcos(angle-view_angle),
+    y+7-dist*dsin(angle-view_angle),2+10,1,-view_angle,0,alpha)
+draw_sprite_ext(hpbar3,0,x+7+dist*dcos(angle-view_angle),
+    y+7-dist*dsin(angle-view_angle),1+(dmg/mhp)*10,1,-view_angle,c_ltgray,alpha)
+draw_sprite_ext(hpbar3,0,x+7+dist*dcos(angle-view_angle),
+    y+7-dist*dsin(angle-view_angle),1+(hp/mhp)*10,1,-view_angle,colour,alpha)
+draw_set_font(pixelSquish)
+draw_set_colour(c_white)
+draw_set_alpha(alpha)
+draw_text_transformed(x+7+(dist)*dcos(angle+5-view_angle),
+    y+7-(dist)*dsin(angle+5-view_angle),itext
+    ,1,1,-view_angle)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
   </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>

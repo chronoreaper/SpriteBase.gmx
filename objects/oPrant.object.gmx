@@ -26,25 +26,10 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
-weakness[4]=2
 
-hp=17
+hp=2
 mhp=hp
-sp=3
-msp=sp
-stats[2,0]=2
-stats[2,1]=1
-stats[2,2]=1
-stats[2,3]=1
-stats[2,4]=1
-//per level
-hpp=0.9
-spp=0.3
-stats[1,0]=2
-stats[1,1]=1
-stats[1,2]=0.6
-stats[1,3]=0
-stats[1,4]=0.3
+
 mov=1
 mmov=mov
 view=4

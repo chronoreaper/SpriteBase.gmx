@@ -27,24 +27,8 @@
             <kind>1</kind>
             <string>event_inherited()
 
-lv=5
-hp=30
+hp=5
 mhp=hp
-sp=10
-msp=sp
-stats[2,0]=6
-stats[2,1]=1
-stats[2,2]=6
-stats[2,3]=1
-stats[2,4]=3
-//per level
-hpp=3
-spp=1
-stats[1,0]=2
-stats[1,1]=1
-stats[1,2]=2
-stats[1,3]=0
-stats[1,4]=0.8
 
 mov=1
 mmov=mov
@@ -53,8 +37,32 @@ unit=wurm001_0
 name="Wurm"
 link=noone
 dmg=hp
-skill[0]=2
-skill[1]=4
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_inherited()
+if instance_number(oWurm) &lt;=1
+    instance_create(floor(x/15)*15,floor(y/15)*15,oStairs)
 </string>
           </argument>
         </arguments>

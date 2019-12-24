@@ -26,29 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
-item[1]=7+return_item_usage_default(7)
-skill[1]=11
-skill[0]=14
-wep=1
 
-hp=12
+hp=4
 mhp=hp
-sp=10
-msp=sp
-stats[2,0]=3
-stats[2,1]=2
-stats[2,2]=2
-stats[2,3]=3
-stats[2,4]=3
-
-//per level
-hpp=1.2
-spp=1.2
-stats[1,0]=2
-stats[1,1]=1
-stats[1,2]=1
-stats[1,3]=2
-stats[1,4]=1
 
 mov=3
 mmov=mov

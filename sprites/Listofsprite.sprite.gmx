@@ -17,8 +17,8 @@
     <TextureGroup0>1</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>100</width>
-  <height>100</height>
+  <width>105</width>
+  <height>105</height>
   <frames>
     <frame index="0">images\Listofsprite_0.png</frame>
     <frame index="1">images\Listofsprite_1.png</frame>
@@ -30,5 +30,7 @@
     <frame index="7">images\Listofsprite_7.png</frame>
     <frame index="8">images\Listofsprite_8.png</frame>
     <frame index="9">images\Listofsprite_9.png</frame>
+    <frame index="10">images\Listofsprite_10.png</frame>
+    <frame index="11">images\Listofsprite_11.png</frame>
   </frames>
 </sprite>

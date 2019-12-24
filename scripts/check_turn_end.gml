@@ -14,15 +14,6 @@ for (var i=0;i<ds_list_size(unitList);i++){
         ds_list_add(list,char)
         }
 }
-/*with (oChar)
-{
-    if team=ct
-    if hp>0{
-        if wait=0
-            fin=0
-        ds_list_add(list,id)
-    }
-}*/
 if fin=1{
     turnTime=0
     currentNumber=0
@@ -54,20 +45,10 @@ if fin=1{
                 if inst.status[j]!=0{
                     //status effects
                     switch floor(inst.status[j]){
-                        case 6:inst.status[j]-=0.01 break;
-                        case 10:inst.status[j]-=0.01 break;
-                        case 11:inst.status[j]-=0.01 break;
-                        case 12:inst.status[j]-=0.01 break;
-                        case 13:inst.status[j]-=0.01 break;
-                        case 14:inst.status[j]-=0.01 break;
-                        case 15:inst.status[j]-=0.01 break;
-                        case 16:inst.status[j]-=0.01 break;
-                        case 17:inst.status[j]-=0.01 break;
-                        case 18:inst.status[j]-=0.01 break;
-                        case 19:inst.status[j]-=0.01 break;
+                        default: break
                             
                     }
-                    if frac(inst.status[j])=0||frac(inst.status[j])=1||inst.statusStr[j]==0
+                    if inst.statusStr[j]==0
                     {
                         dispellStatus(inst,j)
                         inst.status[j]=0
@@ -101,76 +82,30 @@ if fin=1{
         rx=1+irandom(room_width/15-2)
         ry=1+irandom(room_height/15-2)
     }
-    if irandom(1)=3//never happens
-    if !place_meeting(rx*15,ry*15,oUnit)
-    if ds_grid_get(gridF1,rx,ry)<1
-    if !tile_layer_find(10000,rx*15,ry*15)
-    if ds_grid_get(map,rx,ry)=0
-        {
-        var inst;
-        var inst2;
-        if turnsSurvive % 15 = 0{
-            if irandom(1){
-                inst=instance_create(rx*15,ry*15,oDragon1)
-                inst.team=2
-                inst.marker=1
-                }
-            else{
-                inst=instance_create(rx*15,ry*15,oWurm)
-                inst.team=2
-                inst.ai=1
-                inst.marker=1
-                repeat(9){
-                    inst2=instance_create(rx*15,ry*15,oWurm)
-                    inst2.team=2
-                    inst2.ai=-1
-                    inst2.link=inst
-                    inst=inst2
-                    }
-                }
-        }
-        else if irandom(1){
-        inst=instance_create(rx*15,ry*15,
-        choose(oSlime,oBoar,oFrog,oTurt,oShroom,oCyclops,oEyebat));
-        inst.team=2
-        }
-        else{
-            if irandom(1){
-            inst=instance_create(rx*15,ry*15,
-            choose(oFighter,oArcher,oMage,oHealer));
-            inst.team=1
-            inst.ai=6
-            }
-            else if irandom(5){
-                inst=instance_create(rx*15,ry*15,
-                choose(oChest));
-                inst.team=0.1
-            }
-        }
-        //inst.view=0
-        if inst!=noone&&instance_exists(inst){
-            inst.draw=0
-            //stats
-            inst.xp+=irandom(turnsSurvive)+turnsSurvive
-            inst.hpg+=random(turnsSurvive*0.1)
-            inst.spg+=random(turnsSurvive*0.1)
-            inst.strg+=random(turnsSurvive*0.1)
-            inst.intg+=random(turnsSurvive*0.1)
-            inst.tecg+=random(turnsSurvive*0.1)
-            }
-        }
         rx=irandom(room_width/15)//room_width/15);
         ry=irandom(room_height/15)//room_height/15);
+        if turnsSurvive > 10
+        if irandom(1)=0
         if !place_meeting(rx*15,ry*15,oUnit)
         if ds_grid_get(gridF1,rx,ry)<1
-        if !tile_layer_find(10000,rx*15,ry*15){
-            if irandom(2){
-                inst=instance_create(rx*15,ry*15,
-                choose(oHerb,oStick,oRock))
-                inst.use=return_item_usage_default(inst.item)
+        if !tile_layer_find(10000,rx*15,ry*15)
+        if ds_grid_get(map,rx,ry)=0
+            {
+            var inst;
+            var inst2;
+            
+            if irandom(1){
+            inst=instance_create(rx*15,ry*15,
+                irandom_range(oSlime,oEyebat));
+            inst.team=2
             }
-        }
-        
+            
+            //inst.view=0
+            if inst!=noone&&instance_exists(inst){
+                inst.draw=0
+                }
+            }
+      
     }
     //clear old units
     ds_list_clear(unitList)
@@ -192,14 +127,7 @@ if fin=1{
             x = round(x/15)*15
             y = round(y/15)*15
             
-            if summon=0{
-                //sp+=1
-            }else{
-                sp--
-                if sp<=0
-                    hp=0                
-            }
-            
+           
             //check if near a passive object
             var inst=instance_create(x,y,oEff);
             inst.sprite_index=AOE_range1s
@@ -211,40 +139,32 @@ if fin=1{
             }
             if near_camp{
                 hp=min(mhp,hp+2)
-                sp=min(msp,sp+2)
                 var txt=instance_create(x+7-23*dsin(-view_angle),y+7-23*dcos(-view_angle),DmgWord);
                 txt.text=string(2)
                 txt.colour=c_lime
-                txt=instance_create(x+7-15*dsin(-view_angle),y+7-15*dcos(-view_angle),DmgWord);
-                txt.text=string(2)
-                txt.colour=c_aqua
+            }
+            //check for events
+            inst = instance_place(x,y,oEvent)
+            if inst!=noone{
+                switch inst.object_index{
+                    case oFire:
+                        hp--
+                        var txt=instance_create(x+7-23*dsin(-view_angle),y+7-23*dcos(-view_angle),DmgWord);
+                        txt.text = "1"
+                        break;
+                }
             }
             
+            
             aggro=noone
-            if sp>msp
-                sp=msp
-            if combat>0
-                combat--
             wait=0
             for (var j=0;j<array_length_1d(status);j++){
                 if status[j]!=0{
                     //status effects
                     switch floor(status[j]){
-                        case 1:
-                            status[j]-=0.01
-                            break;
-                        case 4:
-                            status[j]-=0.01
-                            var dmg=ceil(statusStr[j])
-                            var txt=instance_create(x+7-15*dsin(-view_angle),y+7-15*dcos(-view_angle),DmgWord);
-                            txt.text=string(dmg)
-                            hp=max(hp-dmg,0)
-                            break;
-                        case 6:
-                            mov-=statusStr[j] 
-                            break;
+                        default: break;
                     }
-                    if frac(status[j])=0||statusStr[j]==0
+                    if statusStr[j]==0
                     {
                         dispellStatus(id,j)
                         status[j]=0
@@ -281,4 +201,5 @@ if fin=1{
          alarm[10]=1//currentTurn++;//next turn
     }
 }
+
 ds_list_destroy(list)
