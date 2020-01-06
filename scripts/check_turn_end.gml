@@ -7,6 +7,8 @@ for (var i=0;i<ds_list_size(unitList);i++){
     var char=ds_list_find_value(unitList,i)
         if instance_exists(char){
         instance_activate_object(char)
+        char.x = round(char.x/15)*15
+        char.y = round(char.y/15)*15 
         if char.hp>0{
         if char.wait=0
             fin=0
@@ -78,32 +80,24 @@ if fin=1{
     var rx=irandom(room_width/15)//room_width/15);
     var ry=irandom(room_height/15)//room_height/15);
     while (place_meeting(rx*15,ry*15,oUnit)
-    ||ds_grid_get(map,rx,ry)){
+    ||ds_grid_get(map,rx,ry)<0){
         rx=1+irandom(room_width/15-2)
         ry=1+irandom(room_height/15-2)
     }
-        rx=irandom(room_width/15)//room_width/15);
-        ry=irandom(room_height/15)//room_height/15);
-        if turnsSurvive > 10
-        if irandom(1)=0
+        //rx=irandom(room_width/15)//room_width/15);
+        //ry=irandom(room_height/15)//room_height/15);
+        if turnsSurvive > 6
+        if turnsSurvive%2 == 0
         if !place_meeting(rx*15,ry*15,oUnit)
         if ds_grid_get(gridF1,rx,ry)<1
         if !tile_layer_find(10000,rx*15,ry*15)
-        if ds_grid_get(map,rx,ry)=0
+        if ds_grid_get(map,rx,ry)>=0
             {
             var inst;
-            var inst2;
-            
-            if irandom(1){
             inst=instance_create(rx*15,ry*15,
                 irandom_range(oSlime,oEyebat));
             inst.team=2
-            }
-            
-            //inst.view=0
-            if inst!=noone&&instance_exists(inst){
-                inst.draw=0
-                }
+            inst.draw=0
             }
       
     }

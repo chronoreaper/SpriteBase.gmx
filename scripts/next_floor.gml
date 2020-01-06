@@ -22,7 +22,7 @@ instance_activate_all()
 for(var i=0;i<ds_list_size(allUnits);i++){
     var c=ds_list_find_value(allUnits,i);
     instance_activate_object(c)
-    if floor(c.team)=turn{
+    if round(c.team)=turn{
         var unit=c.id;
         //snap to grid
         
@@ -38,7 +38,8 @@ for(var i=0;i<ds_list_size(allUnits);i++){
             c.statusStr[j]=0
         }
         if c.hp>0
-        with (oControler){
+        //with (oControler)
+        {
             ds_list_add(unitList,unit)
             selected=unit
             update_fog()
@@ -48,18 +49,8 @@ for(var i=0;i<ds_list_size(allUnits);i++){
     else{
         with (c)
             instance_destroy()
+        i--;
         }
-}
-
-//destroy everything else
-with oObj{
-    instance_destroy()
-}
-with oItem{
-    instance_destroy()
-}
-with oEvent{
-    instance_destroy()
 }
 
 tile_layer_delete(10000)

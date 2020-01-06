@@ -28,6 +28,8 @@
             <string>alpha1=0
 alpha2=0
 fadeOut=0
+selection=0
+des="description"
 </string>
           </argument>
         </arguments>
@@ -50,13 +52,55 @@ fadeOut=0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if fadeOut=0{
-    alpha1+=0.2
-    if alpha1&gt;3{
+            <string>var chosen;
+chosen[0]=0
+chosen[1]=0
+chosen[2]=0
+chosen[3]=0
+chosen[4]=0
+if fadeOut=0{
+    if alpha1&lt;5
+        alpha1+=0.2
+    else if alpha1 = 5{//runs once
+    
+        //destroy everything else
+        with oObj{
+            instance_destroy()
+        }
+        with oItem{
+            instance_destroy()
+        }
+        with oEvent{
+            instance_destroy()
+        }
+    
+        for(i=0;i&lt;6-oControler.unitStarted;i++){
+            var inst=instance_create((view_wport/(2*(6-oControler.unitStarted)))*(1+i*2),view_hport/2,oBonusSelect);
+            inst.selection = getBonusChoice(chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+            chosen[i] = inst.selection
+            if inst.selection = 0
+                with inst
+                    instance_destroy()
+        }
+        var inst=instance_create((view_wport/2),view_hport*(3/4)+20,oBonusSelect);
+        inst.selection = -99//does nothing
+        inst.sprite_index = skipBonus
+        alpha1++
+    }
+    if selection!=0
+    //if alpha1&gt;=5
+    {
+        with oBonusSelect
+            instance_destroy()
+        oControler.playerGold[0] -= get_bonus_eff(selection,2)
+        var k = get_bonus_eff(selection,0)
         fadeOut = 1  
         with (oControler){
             next_floor()
             add_all_to_map()
+            }
+        if (k&gt;0){
+            get_bonus_eff(selection,4)
             }
         }
 }
@@ -90,13 +134,29 @@ else{
           <argument>
             <kind>1</kind>
             <string>draw_set_colour(c_black)
-if fadeOut=0{
-    draw_set_alpha(alpha1)
+//if fadeOut=0
+{
+    /*draw_set_alpha(alpha1)
     draw_rectangle(-1,-1,view_wport+1,view_hport+1,false)
+
+    draw_set_halign(fa_center)
+    draw_set_font(pixelBlock)
+    draw_set_colour(c_white)*/
+
 }
-else{
+//else
+{
     draw_set_alpha(alpha1)
     draw_rectangle(-1,-1,view_wport+1,view_hport+1,false)
+    draw_set_alpha(alpha1-1)
+    draw_set_halign(fa_center)
+    draw_set_font(pixelBlock)
+    draw_set_colour(c_white)
+    draw_text_transformed(view_wport/2,20,"level " + string(oControler.level),2,2,0)
+    draw_set_alpha(alpha1-3)
+    draw_text_transformed(view_wport/2,45,"choose",2,2,0)
+    draw_text_transformed(view_wport/2,65,"Gold:"+string(oControler.playerGold[0]),1,1,0)
+    draw_text((view_wport/2),view_hport*(3/4)+0,des)
 }
 </string>
           </argument>

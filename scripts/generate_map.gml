@@ -146,6 +146,14 @@ repeat(min(floor(level/3)*2,8)){
     inst.colourId = floor(teleCount/2)
     teleCount++
 }
+//create coin
+rx = irandom_range(xmin,xmax)
+ry = irandom_range(ymin,ymax)
+while (place_meeting(rx*15,ry*15,oEvent) || place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)<0){
+    rx = irandom_range(xmin,xmax)
+    ry = irandom_range(ymin,ymax)
+}
+var inst=instance_create(rx*15,ry*15,oCoin);
 
 
 //create enemies

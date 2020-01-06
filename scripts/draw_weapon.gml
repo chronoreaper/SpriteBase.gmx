@@ -5,7 +5,6 @@ if dir2>=4
 
 var wepSprite=blank    
 switch floor(unit){
-    case fighter001_0:wepSprite=sword break;
     case archer001_0:wepSprite=bow break;
     case cyclops001_0:wepSprite=club break;
 

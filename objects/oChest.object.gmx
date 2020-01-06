@@ -32,6 +32,7 @@ mhp=hp
 unit=chest_r
 name="Chest"
 
+item = oCoin
 dmg=hp
 </string>
           </argument>
@@ -56,7 +57,7 @@ dmg=hp
           <argument>
             <kind>1</kind>
             <string>event_inherited()
-instance_create(x,y,oKey)
+instance_create(x,y,item)
 </string>
           </argument>
         </arguments>

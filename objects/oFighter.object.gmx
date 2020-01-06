@@ -35,7 +35,6 @@ mov=3
 mmov=mov
 view=6
 
-face=face001
 unit=fighter001_0
 name="Fighter"
 

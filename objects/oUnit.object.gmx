@@ -70,7 +70,6 @@ mmov=mov
 view=0
 
 unit=0
-face=0
 
 image_speed=0
 
@@ -92,6 +91,59 @@ size=1
 upixelW = shader_get_uniform(shader1, "pixelW");
 texelW = texture_get_texel_width(sprite_get_texture(sprite_index,0));
 texelH = texture_get_texel_height(sprite_get_texture(sprite_index,0));
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if findStatus(id,1)&gt;=0{
+    instance_create(x,y,oKey)
+}
+if findStatus(id,2)&gt;=0{
+    instance_create(x,y,oCoin)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///snap to grid
+x = round(x/15)*15
+y = round(y/15)*15 
 </string>
           </argument>
         </arguments>
@@ -138,7 +190,8 @@ image_blend=c_white
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ax=0
+            <string>///reset attack position
+ax=0
 ay=0
 </string>
           </argument>
@@ -300,12 +353,6 @@ if hp&lt;=0{
     var inst=instance_create(x,y,oFade);
     inst.sprite_index=unit+viewSprite
     inst.image_angle=-view_angle
-    if face&gt;0{
-    inst=instance_create(x,y,oFade);
-    inst.sprite_index=face
-    inst.image_index=dir+round(view_angle/90)
-    inst.image_angle=-view_angle
-    }
     instance_destroy()
 }
 if dmg!=hp
@@ -411,27 +458,11 @@ if draw&gt;0
 //draw health bars
 var colour;
     colour=oControler.playerColour[team]
-    /**
-if oControler.currentTurn=team
-    colour=oControler.playerColour[3]
-else if oControler.allyMatrix[# team,oControler.currentTurn]&lt;0 colour=oControler.playerColour[2];
-else if oControler.allyMatrix[# team,oControler.currentTurn]&gt;0
-    colour=oControler.playerColour[1]
-else colour=oControler.playerColour[0];
-    */
 if object_is_ancestor(object_index,oObj){
     colour=oControler.playerColour[0];
     }
 else
     draw_sprite_ext(marker1,0,x-7*(size-1),y-7*(size-1),size,size,0,colour,1)
-/*if dmg!=hp{
-   if image_blend!=c_red{
-      alpha=5
-   if abs(dmg-hp)&gt;0.5
-      dmg+=sign(hp-dmg)/2//5//round(((mhp/2)/(hp-dmg)))
-   else dmg=hp
-   }
-}*/
 if floor(hp)&lt;floor(mhp){
     alpha=5
 if wait!=0
@@ -484,18 +515,13 @@ if dir2=1||dir2=2
     draw_weapon()
 if oControler.selected=id
 {
-   /* shader_set(shader1)
-    texelW = texture_get_texel_width(sprite_get_texture(sprite_index,0));
-    texelH = texture_get_texel_height(sprite_get_texture(sprite_index,0));
-    shader_set_uniform_f(upixelW,texelW)
-    shader_set_uniform_f(upixelH,texelH)
-    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
-    shader_reset()*/
+
+    //shader_set(shader1)
+    //draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
+    //shader_reset()
 }
 //else
 draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
-if face!=0
-    draw_sprite_ext(face,viewSprite,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
 //draw inactive
 {
     //if !object_is_ancestor(object_index,oObj)
@@ -507,8 +533,6 @@ if face!=0
         //if oControler.selected=noone
         {
             draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,1,0.5)
-            if face!=0
-            draw_sprite_ext(face,viewSprite,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,1,0.5)
         }
     }
 }
@@ -516,12 +540,13 @@ if face!=0
 if dir2!=1
 if dir2!=2
     draw_weapon()
-if findStatus(id,2)!=-1
+if findStatus(id,3)!=-1
     draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,size,size,-view_angle,-1,0.5)
 //loop through the status
 var sub=-1
 switch floor(status[floor(stCt)]){
     case 1:sub=4 break;
+    case 2:sub=5 break;
 }
 if floor(status[floor(stCt)])==0
     stCt++

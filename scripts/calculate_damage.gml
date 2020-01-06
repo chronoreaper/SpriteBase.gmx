@@ -1,5 +1,6 @@
 var arg_source=argument0
 var arg_targ=argument1
+var arg_dmg=argument2
 
 if arg_targ.object_index = oTempTarg{//attacks the ground
     return_skill_onhit_eff(arg_source,arg_targ)
@@ -10,12 +11,17 @@ var txt=instance_create(arg_targ.x+7-23*dsin(-view_angle),arg_targ.y+7-23*dcos(-
 arg_targ.lastHitBy=arg_source;
 var cp=2;
 
-arg_targ.combat=cp
-arg_source.combat=cp
+//arg_targ.combat=cp
+//arg_source.combat=cp
 
-var dmg=arg_source.pow;
+var dmg=0;
+if arg_dmg = 0
+    dmg =arg_source.pow*check_wep_dmg(arg_source.unit);
+else
+    dmg = arg_dmg
 var reducedDmg = 0
-var shieldIndex=findStatus(arg_targ,1)
+var shieldIndex=findStatus(arg_targ,3)
+
 if dmg>0{
     if shieldIndex!=-1{
         if arg_targ.statusStr[shieldIndex]>dmg{
@@ -34,7 +40,8 @@ if dmg>0{
 //on hit effect
 arg_targ.hp-=dmg
 arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.mhp)
-return_skill_onhit_eff(arg_source,arg_targ)
+if arg_dmg=0
+    return_skill_onhit_eff(arg_source,arg_targ)
 return_skill_def_eff(arg_source,arg_targ)
 arg_targ.image_blend=c_red
 if dmg<0{
@@ -43,11 +50,17 @@ if dmg<0{
     txt.colour=c_lime
 }
 arg_targ.alarm[1]=4
-txt.text=string(dmg)
+if dmg!=0{
+    txt.text=string(dmg)
+    }
+else{
+    txt.visible=false
+}
+
 
 //show reduced damage
 if reducedDmg>0{
-    var txt2=instance_create(arg_targ.x+7-24*dsin(-view_angle),arg_targ.y+7-24*dcos(-view_angle),DmgWord);    
+    var txt2=instance_create(arg_targ.x+7-30*dsin(-view_angle),arg_targ.y+7-30*dcos(-view_angle),DmgWord);    
     txt2.text="-"+string(reducedDmg)
     txt2.colour=c_ltgray
 }
@@ -70,7 +83,7 @@ if arg_targ.team!=arg_source.team{
             }  
             
         }
-    arg_source.aggro=arg_targ
+    //arg_source.aggro=arg_targ
     }  
 return dmg
 }

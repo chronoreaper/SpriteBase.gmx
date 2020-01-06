@@ -34,7 +34,6 @@ mov=3
 mmov=mov
 view=6
 
-face=face007
 unit=guard001_0
 name="Guard"
 

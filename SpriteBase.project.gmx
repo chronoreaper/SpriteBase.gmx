@@ -65,7 +65,7 @@
         <sprite>sprites\hero001_2</sprite>
         <sprite>sprites\hero001_3</sprite>
       </sprites>
-      <sprites name="mage">
+      <sprites name="fire_mage">
         <sprite>sprites\mage001_0</sprite>
         <sprite>sprites\mage001_1</sprite>
         <sprite>sprites\mage001_2</sprite>
@@ -113,15 +113,24 @@
         <sprite>sprites\guard001_2</sprite>
         <sprite>sprites\guard001_3</sprite>
       </sprites>
-    </sprites>
-    <sprites name="Face">
-      <sprite>sprites\face001</sprite>
-      <sprite>sprites\face002</sprite>
-      <sprite>sprites\face003</sprite>
-      <sprite>sprites\face004</sprite>
-      <sprite>sprites\face005</sprite>
-      <sprite>sprites\face006</sprite>
-      <sprite>sprites\face007</sprite>
+      <sprites name="Defender">
+        <sprite>sprites\defender001_0</sprite>
+        <sprite>sprites\defender001_1</sprite>
+        <sprite>sprites\defender001_2</sprite>
+        <sprite>sprites\defender001_3</sprite>
+      </sprites>
+      <sprites name="ice_mage">
+        <sprite>sprites\ice_mage001_0</sprite>
+        <sprite>sprites\ice_mage001_1</sprite>
+        <sprite>sprites\ice_mage001_2</sprite>
+        <sprite>sprites\ice_mage001_3</sprite>
+      </sprites>
+      <sprites name="thunder_mage">
+        <sprite>sprites\thunder_mage001_0</sprite>
+        <sprite>sprites\thunder_mage001_1</sprite>
+        <sprite>sprites\thunder_mage001_2</sprite>
+        <sprite>sprites\thunder_mage001_3</sprite>
+      </sprites>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
@@ -207,6 +216,7 @@
       <sprite>sprites\angelic</sprite>
       <sprite>sprites\dashSlash</sprite>
       <sprite>sprites\healEff</sprite>
+      <sprite>sprites\multiHealSprite</sprite>
       <sprite>sprites\poison_splash</sprite>
       <sprite>sprites\magicBurnEff</sprite>
       <sprite>sprites\fireTrap</sprite>
@@ -290,6 +300,8 @@
     <sprites name="menu">
       <sprite>sprites\new_character_but</sprite>
       <sprite>sprites\character_creation</sprite>
+      <sprite>sprites\bonusMenu</sprite>
+      <sprite>sprites\skipBonus</sprite>
     </sprites>
     <sprite>sprites\blank</sprite>
     <sprite>sprites\cruser</sprite>
@@ -343,10 +355,12 @@
     <script>scripts\return_wep_range.gml</script>
     <script>scripts\return_wep_sound.gml</script>
     <script>scripts\return_wep_sprite_eff.gml</script>
+    <script>scripts\check_wep_dmg.gml</script>
     <script>scripts\return_attack_type.gml</script>
     <script>scripts\no_rotate_attack.gml</script>
     <script>scripts\return_skill_onhit_eff.gml</script>
     <script>scripts\return_skill_def_eff.gml</script>
+    <script>scripts\get_eff.gml</script>
     <script>scripts\draw_weapon.gml</script>
     <script>scripts\return_unit.gml</script>
     <script>scripts\return_unit_in_range.gml</script>
@@ -365,6 +379,10 @@
     <script>scripts\create_city_dungeon.gml</script>
     <script>scripts\next_floor.gml</script>
     <script>scripts\return_item_number.gml</script>
+    <script>scripts\find_char_in_list.gml</script>
+    <script>scripts\get_bonus_eff.gml</script>
+    <script>scripts\getBonusChoice.gml</script>
+    <script>scripts\script38.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader1.shader</shader>
@@ -374,6 +392,7 @@
     <object>objects\oControler</object>
     <objects name="menu">
       <object>objects\oCharCreation</object>
+      <object>objects\oBonusSelect</object>
     </objects>
     <objects name="Map Maker">
       <object>objects\room_block</object>
@@ -428,6 +447,7 @@
     <objects name="item">
       <object>objects\oHerb</object>
       <object>objects\oKey</object>
+      <object>objects\oCoin</object>
     </objects>
     <objects name="objects">
       <object>objects\oBuilding</object>
@@ -452,10 +472,13 @@
     <objects name="units">
       <object>objects\oFighter</object>
       <object>objects\oGuard</object>
+      <object>objects\oDefender</object>
       <object>objects\oArcher</object>
       <object>objects\oMage</object>
       <object>objects\oHealer</object>
       <object>objects\oHero</object>
+      <object>objects\oIceMage</object>
+      <object>objects\oThunderMage</object>
       <object>objects\oMerchant</object>
       <object>objects\oSlime</object>
       <object>objects\oShroom</object>

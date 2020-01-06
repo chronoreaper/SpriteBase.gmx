@@ -35,7 +35,6 @@ mov=3
 mmov=mov
 view=6
 
-face=face004
 unit=healer001_0
 name="Healer"
 

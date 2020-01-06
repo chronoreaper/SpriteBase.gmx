@@ -33,7 +33,6 @@ mhp=hp
 mov=2
 mmov=mov
 view=4
-face=face006
 unit=merchant001_0
 name="Merchant"
 

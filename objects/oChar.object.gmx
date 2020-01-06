@@ -188,7 +188,11 @@ draw_sprite_ext(hpbar3,0,x+7+dist*dcos(angle-view_angle),
 draw_sprite_ext(hpbar3,0,x+7+dist*dcos(angle-view_angle),
     y+7-dist*dsin(angle-view_angle),1+(hp/mhp)*10,1,-view_angle,colour,alpha)
 draw_set_font(pixelSquish)
-draw_set_colour(c_white)
+if findStatus(id,3)&gt;=0{//there is a shield
+    draw_set_colour(c_orange)
+    itext = statusStr[findStatus(id,3)]
+}else
+    draw_set_colour(c_white)
 draw_set_alpha(alpha)
 draw_text_transformed(x+7+(dist)*dcos(angle+5-view_angle),
     y+7-(dist)*dsin(angle+5-view_angle),itext

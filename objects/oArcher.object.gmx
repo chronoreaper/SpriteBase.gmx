@@ -36,7 +36,6 @@ view=6
 
 unit=archer001_0
 name="Archer"
-face= face002
 dmg=hp
 </string>
           </argument>

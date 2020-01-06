@@ -4,7 +4,7 @@ var arg_targ=argument1
 var arg_status=argument2
 /**
 1 - key
-
+2 - coin
 */
 var arg_str=argument3
 

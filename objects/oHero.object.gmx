@@ -34,7 +34,6 @@ mov=3
 mmov=mov
 view=6
 
-face=face005
 unit=hero001_0
 name="Hero"
 
