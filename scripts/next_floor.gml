@@ -5,12 +5,12 @@ for (var i=0;i<ds_list_size(unitList);i++){
     var char=ds_list_find_value(unitList,i)
         if instance_exists(char){
             instance_activate_object(char)
-            char.xx = xc + (i mod 2)*15
-            char.yy = yc + (floor(i/2))*15
+            char.xx = xc + (i mod 3)*15-15
+            char.yy = yc + (floor(i/3))*15-15
             char.x = char.xx
             char.y = char.yy 
             char.wait=0
-            //char.hp=clamp(char.hp+7+level-turnsSurvive,char.hp,char.mhp)
+            char.hp=min(char.hp+1,char.mhp)
         }
 }
 //clear old units
@@ -68,6 +68,10 @@ if ds_list_size(unitList)>0{
             yy=y
             view_xview=inst.xx-view_wview/2
             view_yview=inst.yy-view_hview/2
+            oCamera.xx = x
+            oCamera.yy = y
+            oCamera.x = x
+            oCamera.y = y
         }
     }
 }

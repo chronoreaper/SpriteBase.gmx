@@ -3,16 +3,17 @@ var height=room_height/15;
 //var map=ds_grid_create(width,height)
 //var gridMap=ds_grid_create(width*2+1,height*2+1)
 //ds_grid_clear(gridMap,0)
+tile_layer_delete(100000)
 ds_grid_clear(map,-1)
 repeat(1){
 var dir=irandom(3);
 var dist=2+irandom(3)//how long until a room
 var xx=round(width/2)
 var yy=round(height/2);
-var xmin = max(xx - (2+ceil(level/2)),1)
-var xmax = min(xx + (2+ceil(level/2)),room_width - 15)
-var ymin = max(yy - (2+ceil(level/2)),1)
-var ymax = min(yy + (2+ceil(level/2)),room_height - 15)
+var xmin = max(xx - (4+ceil(level/2)),1)
+var xmax = min(xx + (4+ceil(level/2)),room_width - 15)
+var ymin = max(yy - (4+ceil(level/2)),1)
+var ymax = min(yy + (4+ceil(level/2)),room_height - 15)
 ds_grid_set_region(map,
         max(xx - floor(1),1),
         max(yy - floor(1),1),
@@ -87,6 +88,7 @@ for (var i=0;i<width;i++)
             var inst=instance_create(i*15,j*15,choose(oTree));
             inst.visible=false
             isroad = 0
+            tile_add(tilesprite2,15*(3),15*1,15,15,i*15,j*15,100000)
         }
         s+='_'
     }
@@ -106,8 +108,14 @@ var ry = irandom_range(ymin,ymax)
 var stairs = 0
 while(!stairs){
     if ds_grid_get(map,rx,ry) >= 0
-    if abs(rx - round(width/2)) + abs(ry - round(height/2)) > ceil(level/2)+2{
+    if abs(rx - round(width/2)) + abs(ry - round(height/2)) > ceil(level/2)+4{
         if level%5=0{
+        var obj = oGreatTree;
+            if ds_list_size(bossList)>0{
+                var rand = irandom(ds_list_size(bossList)-1)
+                obj = ds_list_find_value(bossList,rand)
+                ds_list_delete(bossList,rand)
+                }
             inst=instance_create(rx*15,ry*15,
                 choose(oDragon1,oWurm));
                 inst.team=2
@@ -115,7 +123,7 @@ while(!stairs){
                 
                 if inst.object_index = oWurm{
                     inst.ai=1
-                    repeat(4){
+                    repeat(2+ceil(level/5)*2){
                         inst2=instance_create(rx*15,ry*15,oWurm)
                         inst2.team=2
                         inst2.ai=-1
@@ -125,8 +133,9 @@ while(!stairs){
                 }
                 
             }
-        else
+        else{
             instance_create(rx*15,ry*15,oStairs)
+            }
         stairs = 1
     }
     rx = irandom_range(xmin,xmax)
@@ -147,13 +156,15 @@ repeat(min(floor(level/3)*2,8)){
     teleCount++
 }
 //create coin
-rx = irandom_range(xmin,xmax)
-ry = irandom_range(ymin,ymax)
-while (place_meeting(rx*15,ry*15,oEvent) || place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)<0){
+repeat(ceil(level/3)){
     rx = irandom_range(xmin,xmax)
     ry = irandom_range(ymin,ymax)
+    while (place_meeting(rx*15,ry*15,oEvent) || place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)<0){
+        rx = irandom_range(xmin,xmax)
+        ry = irandom_range(ymin,ymax)
+    }
+    var inst=instance_create(rx*15,ry*15,oCoin);
 }
-var inst=instance_create(rx*15,ry*15,oCoin);
 
 
 //create enemies
@@ -165,7 +176,7 @@ while(enemies < level){
      if abs(rx - round(width/2)) + abs(ry - round(height/2)) > 2+(ceil(level/2)>1){//so that enemies dont spawn next to you
         if !place_meeting(rx*15,ry*15,oUnit)
         if irandom(2)=0{
-            var inst=instance_create(rx*15,ry*15,irandom_range(oSlime,oEyebat));
+            var inst=instance_create(rx*15,ry*15,get_monster_spawn(level,0));
             inst.visible=false
             inst.team=2
             inst.dir=irandom(3)

@@ -171,7 +171,7 @@ var angle = 105
 var dist = 20 //+ (dmg != hp)*(irandom(1)*3-3)
 var itext = hp
 var colour;
-var alpha= 0.1;
+var alpha= 0.0;
 
 if !place_meeting(oControler.x,oControler.y,oChar)
 || instance_place(oControler.x,oControler.y,oChar) == id
@@ -188,9 +188,14 @@ draw_sprite_ext(hpbar3,0,x+7+dist*dcos(angle-view_angle),
 draw_sprite_ext(hpbar3,0,x+7+dist*dcos(angle-view_angle),
     y+7-dist*dsin(angle-view_angle),1+(hp/mhp)*10,1,-view_angle,colour,alpha)
 draw_set_font(pixelSquish)
-if findStatus(id,3)&gt;=0{//there is a shield
+var sId = findStatus(id,3)
+if sId&gt;=0{//there is a shield
     draw_set_colour(c_orange)
-    itext = statusStr[findStatus(id,3)]
+    if statusStr[sId] &gt; hp
+        statusStr[sId] = hp
+    itext = statusStr[sId]
+    draw_sprite_ext(hpbar3,0,x+7+dist*dcos(angle-view_angle),
+        y+7-dist*dsin(angle-view_angle),1+(statusStr[sId]/mhp)*10,1,-view_angle,c_orange,alpha)
 }else
     draw_set_colour(c_white)
 draw_set_alpha(alpha)

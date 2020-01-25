@@ -20,6 +20,7 @@
     <sound>sound\sUp</sound>
     <sound>sound\sWindDmg</sound>
     <sound>sound\TempBGM1</sound>
+    <sound>sound\TempBGM2</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Units">
@@ -70,6 +71,12 @@
         <sprite>sprites\mage001_1</sprite>
         <sprite>sprites\mage001_2</sprite>
         <sprite>sprites\mage001_3</sprite>
+      </sprites>
+      <sprites name="barrier mage">
+        <sprite>sprites\barrier_mage001_0</sprite>
+        <sprite>sprites\barrier_mage001_1</sprite>
+        <sprite>sprites\barrier_mage001_2</sprite>
+        <sprite>sprites\barrier_mage001_3</sprite>
       </sprites>
       <sprites name="healer">
         <sprite>sprites\healer001_0</sprite>
@@ -131,6 +138,18 @@
         <sprite>sprites\thunder_mage001_2</sprite>
         <sprite>sprites\thunder_mage001_3</sprite>
       </sprites>
+      <sprites name="Prant">
+        <sprite>sprites\prant001_0</sprite>
+        <sprite>sprites\prant001_1</sprite>
+        <sprite>sprites\prant001_2</sprite>
+        <sprite>sprites\prant001_3</sprite>
+      </sprites>
+      <sprites name="algertle">
+        <sprite>sprites\algertle001_0</sprite>
+        <sprite>sprites\algertle001_1</sprite>
+        <sprite>sprites\algertle001_2</sprite>
+        <sprite>sprites\algertle001_3</sprite>
+      </sprites>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
@@ -171,6 +190,7 @@
       <sprite>sprites\orb</sprite>
       <sprite>sprites\block_up</sprite>
       <sprite>sprites\block_down</sprite>
+      <sprite>sprites\iceBlock</sprite>
     </sprites>
     <sprites name="items">
       <sprite>sprites\juicebox</sprite>
@@ -271,10 +291,6 @@
         <sprite>sprites\sprite138</sprite>
         <sprite>sprites\sprite139</sprite>
         <sprite>sprites\sprite140</sprite>
-        <sprite>sprites\prant001_0</sprite>
-        <sprite>sprites\prant001_1</sprite>
-        <sprite>sprites\prant001_2</sprite>
-        <sprite>sprites\prant001_3</sprite>
       </sprites>
       <sprites name="robot">
         <sprite>sprites\robot_startup</sprite>
@@ -348,9 +364,11 @@
     <script>scripts\addStatus.gml</script>
     <script>scripts\findStatus.gml</script>
     <script>scripts\dispellStatus.gml</script>
+    <script>scripts\unit_default_values.gml</script>
     <script>scripts\unit_description.gml</script>
     <script>scripts\return_max_faces.gml</script>
     <script>scripts\return_face.gml</script>
+    <script>scripts\return_atk_name.gml</script>
     <script>scripts\return_wep_aoe.gml</script>
     <script>scripts\return_wep_range.gml</script>
     <script>scripts\return_wep_sound.gml</script>
@@ -372,6 +390,7 @@
     <script>scripts\get_random.gml</script>
     <script>scripts\update_view_zone.gml</script>
     <script>scripts\generate_map.gml</script>
+    <script>scripts\get_monster_spawn.gml</script>
     <script>scripts\generate_map_old.gml</script>
     <script>scripts\get_layout.gml</script>
     <script>scripts\create_area.gml</script>
@@ -380,15 +399,17 @@
     <script>scripts\next_floor.gml</script>
     <script>scripts\return_item_number.gml</script>
     <script>scripts\find_char_in_list.gml</script>
+    <script>scripts\find_char_in_menu_list.gml</script>
     <script>scripts\get_bonus_eff.gml</script>
     <script>scripts\getBonusChoice.gml</script>
-    <script>scripts\script38.gml</script>
+    <script>scripts\move_camera.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader1.shader</shader>
   </shaders>
   <objects name="objects">
     <object>objects\oGenerateMap</object>
+    <object>objects\oCamera</object>
     <object>objects\oControler</object>
     <objects name="menu">
       <object>objects\oCharCreation</object>
@@ -464,6 +485,7 @@
       <object>objects\oChest</object>
       <object>objects\oHouse</object>
       <object>objects\oLockDoor</object>
+      <object>objects\oIceBlock</object>
       <object>objects\oOrb</object>
       <object>objects\oBlockStop</object>
       <object>objects\oFence</object>
@@ -476,6 +498,7 @@
       <object>objects\oArcher</object>
       <object>objects\oMage</object>
       <object>objects\oHealer</object>
+      <object>objects\oBarrier_Mage</object>
       <object>objects\oHero</object>
       <object>objects\oIceMage</object>
       <object>objects\oThunderMage</object>
@@ -488,13 +511,14 @@
       <object>objects\oCyclops</object>
       <object>objects\oEyebat</object>
       <object>objects\oMimic</object>
+      <object>objects\oAlgertle</object>
+      <object>objects\oPrant</object>
       <objects name="Boss">
         <object>objects\oWurm</object>
         <object>objects\oDragon1</object>
         <objects name="great tree">
           <object>objects\oGreatTree</object>
           <object>objects\oVine</object>
-          <object>objects\oPrant</object>
         </objects>
       </objects>
     </objects>

@@ -2,11 +2,13 @@ var arg_stack=argument0
 
 var arg_targ=argument1
 var arg_status=argument2
+var arg_str=argument3
 /**
+statuses
 1 - key
 2 - coin
+3 - shield
 */
-var arg_str=argument3
 
 var index=findStatus(arg_targ,arg_status)
 //returns the str value

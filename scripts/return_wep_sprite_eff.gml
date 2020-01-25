@@ -4,6 +4,8 @@ switch floor(arg_unit){
     case archer001_0: return stab;
     case hero001_0: return windSlash;
     case mage001_0: return magicBurnEff;
+    case ice_mage001_0: return freezeEff;
+    case thunder_mage001_0: return shockEff;
     case healer001_0: return healEff;
     case Dragon001_0: return water_breath;
     case eyebat001_0: return fluxEff;

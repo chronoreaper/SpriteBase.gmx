@@ -64,7 +64,7 @@ switch index{
             case 0:return "Ice Mage"
             case 1:return ice_mage001_0
             case 2:
-                hp[playerIndex]=4
+                hp[playerIndex]=3
                 break;
             case 3:return oIceMage break;
         }
@@ -74,9 +74,19 @@ switch index{
             case 0:return "Thunder Mage"
             case 1:return thunder_mage001_0
             case 2:
-                hp[playerIndex]=4
+                hp[playerIndex]=3
                 break;
             case 3:return oThunderMage break;
         }
+    case 7:
+        switch returnType{
+            case 0:return "Barrier Mage"
+            case 1:return barrier_mage001_0
+            case 2:
+                hp[playerIndex]=3
+                break;
+            case 3:return oBarrier_Mage break;
+        }
     break
 }
+return -1

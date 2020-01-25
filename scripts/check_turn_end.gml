@@ -79,10 +79,14 @@ if fin=1{
     //spawn monsters
     var rx=irandom(room_width/15)//room_width/15);
     var ry=irandom(room_height/15)//room_height/15);
-    while (place_meeting(rx*15,ry*15,oUnit)
-    ||ds_grid_get(map,rx,ry)<0){
+    var count=0;
+    while ((place_meeting(rx*15,ry*15,oUnit)
+    ||ds_grid_get(map,rx,ry)<0)
+    ||ds_grid_get(gridF1,rx,ry)>=1)
+    &&count<1000{
         rx=1+irandom(room_width/15-2)
         ry=1+irandom(room_height/15-2)
+        count++
     }
         //rx=irandom(room_width/15)//room_width/15);
         //ry=irandom(room_height/15)//room_height/15);
@@ -95,7 +99,7 @@ if fin=1{
             {
             var inst;
             inst=instance_create(rx*15,ry*15,
-                irandom_range(oSlime,oEyebat));
+                get_monster_spawn(level,0));
             inst.team=2
             inst.draw=0
             }
@@ -108,6 +112,7 @@ if fin=1{
     //show_debug_message(ds_list_size(allUnits))
     //add units to list
     //with(oChar)
+    instance_activate_all()
     for(var i=0;i<ds_list_size(allUnits);i++){
         var c=ds_list_find_value(allUnits,i);
         instance_activate_object(c)
@@ -156,6 +161,7 @@ if fin=1{
                 if status[j]!=0{
                     //status effects
                     switch floor(status[j]){
+                        case 3:statusStr[j]--;
                         default: break;
                     }
                     if statusStr[j]==0
@@ -186,8 +192,7 @@ if fin=1{
                 y=inst.yy
                 xx=x
                 yy=y
-                view_xview=inst.xx-view_wview/2
-                view_yview=inst.yy-view_hview/2
+                move_camera(inst.xx,inst.yy)
             }
         }
     }

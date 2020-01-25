@@ -9,14 +9,14 @@ chosen[4] = argument4;
 var rand_list = ds_list_create()
 var tax = ds_list_size(oControler.unitList)-1
 
-if oControler.playerGold[0]>=0+tax{//cost 0
+if oControler.playerGold[0]>=1{//cost 1 no tax
 if tryAdding(1,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
     ds_list_add(rand_list,1)
 if tryAdding(2,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
     ds_list_add(rand_list,2)
 }
 
-if oControler.playerGold[0]>=1+tax{//cost 1
+if oControler.playerGold[0]>=1+floor(tax/2){//cost 1
     //if ds_list_size(oControler.unitList)<4
     {
     if !find_char_in_list(oFighter)
@@ -34,6 +34,15 @@ if oControler.playerGold[0]>=1+tax{//cost 1
     if !find_char_in_list(oDefender)
     if tryAdding(-6,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
         ds_list_add(rand_list,-6)
+    if !find_char_in_list(oIceMage)
+    if tryAdding(-7,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+        ds_list_add(rand_list,-7)
+    if !find_char_in_list(oThunderMage)
+    if tryAdding(-8,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+        ds_list_add(rand_list,-8)
+    if !find_char_in_list(oBarrier_Mage)
+    if tryAdding(-9,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+        ds_list_add(rand_list,-9)
     }
 }
 
@@ -41,7 +50,7 @@ if oControler.playerGold[0]>=2+tax{//cost 2
 
 }
 
-if oControler.playerGold[0]>=3+tax{//cost 3
+if oControler.playerGold[0]>=3+floor(tax/2){//cost 3
     //if ds_list_size(oControler.unitList)<4
     {
     if !find_char_in_list(oHero)

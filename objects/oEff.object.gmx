@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>depth=-9999
 rotate=1
+imageRotation=1
 </string>
           </argument>
         </arguments>
@@ -72,7 +73,7 @@ rotate=1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index,image_index,x,y,1,1,-view_angle*rotate+image_angle,image_blend,1)
+            <string>draw_sprite_ext(sprite_index,image_index,x,y,1,1,-view_angle+image_angle*rotate,image_blend,1)
 </string>
           </argument>
         </arguments>

@@ -267,7 +267,8 @@ if x&gt;=view_xview
 &amp;&amp; y&gt;=view_yview+view_hview/2-view_wview/2
 &amp;&amp; y&lt;=view_yview+view_hview/2+view_wview/2
 {
-if object_is_ancestor(object_index,oObj){
+if object_is_ancestor(object_index,oObj)
+    ||object_is_ancestor(object_index,oEvent){
     var cx=x
     var cy=y
     var d=1
@@ -353,6 +354,9 @@ if hp&lt;=0{
     var inst=instance_create(x,y,oFade);
     inst.sprite_index=unit+viewSprite
     inst.image_angle=-view_angle
+    if path_speed&gt;0
+        with inst
+            path_start(path0,5,0,0)
     instance_destroy()
 }
 if dmg!=hp
@@ -470,7 +474,7 @@ if wait!=0
 }
 if alpha&gt;0
 {
-    if hp&lt;dmg{
+   if hp&lt;dmg{
     draw_sprite_ext(healthBar,58*(dmg/mhp),x-7*(size-1),y-7*(size-1),size,size,0,colour,alpha)
    //draw_sprite_ext(healthBar,58*(hp/mhp),x,y,1,1,0,colour,alpha)
    }
@@ -478,7 +482,6 @@ if alpha&gt;0
    //draw_sprite_ext(healthBar,58*(hp/mhp),x,y,1,1,0,c_green,alpha)
    draw_sprite_ext(healthBar,58*(dmg/mhp),x-7*(size-1),y-7*(size-1),size,size,0,colour,alpha)
    }
-   
     //if hp&lt;dmg{
    //draw_sprite_ext(hpBar,0,x,y-11,(dmg/mhp)*13,1,0,c_red,alpha)
   // draw_sprite_ext(hpBar,0,x,y-11,(hp/mhp)*13,1,0,c_lime,alpha)}

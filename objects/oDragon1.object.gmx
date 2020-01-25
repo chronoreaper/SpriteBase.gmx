@@ -27,9 +27,9 @@
             <kind>1</kind>
             <string>event_inherited()
 
-hp=22
+hp=3+oControler.level
 mhp=hp
-pow=2
+pow=1
 mov=1
 mmov=mov
 view=5

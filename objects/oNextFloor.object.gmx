@@ -29,7 +29,7 @@
 alpha2=0
 fadeOut=0
 selection=0
-des="description"
+des=""
 </string>
           </argument>
         </arguments>
@@ -156,7 +156,8 @@ else{
     draw_set_alpha(alpha1-3)
     draw_text_transformed(view_wport/2,45,"choose",2,2,0)
     draw_text_transformed(view_wport/2,65,"Gold:"+string(oControler.playerGold[0]),1,1,0)
-    draw_text((view_wport/2),view_hport*(3/4)+0,des)
+    draw_text((view_wport/2),view_hport*(3/4)-2,des)
+    des=""
 }
 </string>
           </argument>

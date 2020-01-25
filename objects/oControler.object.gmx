@@ -25,7 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>psudoRight = 0
+            <string>bossList = ds_list_create()
+ds_list_add(bossList,oDragon1)
+ds_list_add(bossList,oWurm)
+instance_create(x-view_wview/2,y-view_hview/2,oCamera)
+psudoRight = 0
 mouse_xprevious = mouse_x
 mouse_yprevious = mouse_y
 image_speed=0.1
@@ -46,11 +50,11 @@ global.colourSwitch[1]=0
 global.colourSwitch[2]=0
 global.colourSwitch[3]=0
 
-window_set_size(360*3,240*3+3)
+window_set_size(view_wview*3,view_hview*3+3)
 playerMax=4
 playerMin=0
 
-maxChar = 7
+maxChar = 8
 
 unitStarted=0
 
@@ -278,6 +282,7 @@ playerSelect=0
 globalvar debugging;
 global.production=0
 global.mobile=0
+global.vertical = 0
 debugging=0
 debugObj=0
 debug1=0;
@@ -393,6 +398,7 @@ if selected!=noone{
 
     xx=x
     yy=y
+    //move_camera(x,y)
     }
     
     //events  
@@ -423,6 +429,8 @@ if selected!=noone{
                 c.y = y
                 c.xx=c.x
                 c.yy=c.y
+                if c.draw&gt;0
+                    move_camera(c.xx,c.yy)
             }
         }
     }
@@ -514,8 +522,7 @@ if mouse_check_button_released(mb_right)
                 y=inst.yy
                 xx=x
                 yy=y
-                view_xview=inst.x-view_wview/2
-                view_yview=inst.y-view_hview/2
+                move_camera(xx,yy)
             }else{
                 var lim=0;
                 while (lim&lt;ds_list_size(unitList)&amp;&amp;instance_exists(inst)&amp;&amp;inst.wait=1){
@@ -529,8 +536,7 @@ if mouse_check_button_released(mb_right)
                 y=inst.yy
                 xx=x
                 yy=y
-                view_xview=inst.xx-view_wview/2
-                view_yview=inst.yy-view_hview/2
+                move_camera(xx,yy)
             }
         }
         /*var inst=ds_list_find_value(unitList,0)
@@ -588,10 +594,19 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     {
         add_all_to_map()
         mp_grid_clear_cell(grid,c.x/15,c.y/15)
+        
+            for (var i=0;i&lt;ds_list_size(unitList);i++){
+            var char=ds_list_find_value(unitList,i)
+                if instance_exists(char){
+                    mp_grid_clear_cell(grid,char.x/15,char.y/15)
+                }
+            }
+        
+        
             if mp_grid_get_cell(grid,xx/15,yy/15)=0
             {
             if (mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,xx+7.5,yy+7.5,false)
-            &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0)  
+            &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0&amp;&amp;!place_meeting(xx,yy,oUnit))  
             ||(c.x==xx&amp;&amp;c.y==yy)
                 {
     
@@ -641,8 +656,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     if mouse_check_button_released(mb_right)
     ||keyboard_check_pressed(keys[5]){
         if phase!=0{
-        view_xview=c.x-view_wview/2
-        view_yview=c.y-view_hview/2
+            move_camera(c.x,c.y)
         }
         if phase=0{
             phase=0
@@ -659,8 +673,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             y=yy
             xprevious=x
             yprevious=y
-            view_xview=x-view_wview/2
-            view_yview=y-view_hview/2
+            move_camera(x,y)
             }
             phase=0
             {
@@ -674,19 +687,25 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     }
     
     else if phase=1{
+    if global.mobile{
+        move_camera(c.x,c.y)
+        }
     if (c.path_position=1)||path_get_length(c.path)&lt;1
         ||path_get_number(c.path)&lt;1
         {
                phase=3
                menuSel=0
                add_all_to_map()
+               move_camera(c.x,c.y)
         }
         menuSel=0
     }
     else if phase=3{//attack   
         if mouse_check_button_released(mb_left)
         ||keyboard_check_pressed(keys[4]){
-            if ((abs(xx-c.x)+abs(yy-c.y))/15&lt;=0){//end turn
+            if ((abs(xx-c.x)+abs(yy-c.y))/15&lt;=0)
+            //&amp;&amp;c.pow&gt;0
+            {//end turn
                 alarm[0]=2
                 phase=2.1
             }
@@ -792,8 +811,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                         y=yy
                         xprevious=x
                         yprevious=y
-                        view_xview=x-view_wview/2
-                        view_yview=y-view_hview/2
+                        move_camera(x,y)
                         }
                         phase=0
                         if !global.mobile{
@@ -829,11 +847,13 @@ if (selected.draw=0
 &amp;&amp;debugging=0{
     alarm[0]=1
     }
-else
+else{
     alarm[0]=max(13)
+    }
 //calculate dmg
 
 var atk_area=instance_create(target.x,target.y,oTempTarg);
+atk_area.depth=10000//-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
 var targ = target
 if return_wep_aoe(c.unit)&gt;0{
     atk_area.x = c.x+7
@@ -1033,12 +1053,14 @@ if phase=0
 if selected=noone
 if !eventScene
 {
-    var inst=instance_place(x,y,oChar)
+    var inst=instance_place(xx,yy,oChar)
     if inst!=noone
     if !object_is_ancestor(inst.object_index,oObj)
     if inst.team=currentTurn
     if inst.wait=0{
         selected=inst
+        if controler=1 || global.mobile=1
+        move_camera(selected.x,selected.y)
     }
 }
 }
@@ -1116,17 +1138,21 @@ if menu=-1
             else{ 
                 phase=3
                 if !ds_grid_get(gridF1,selected.x/15,selected.y/15)&lt;0.2||debugging=1
-                if (selected.x&lt;view_xview+15*3
-                || selected.x&gt;view_xview+view_wview-15*3
-                || selected.y&lt;view_yview+15*3
-                || selected.y&gt;view_yview+view_hview-15*3)
+                if (selected.x&lt;view_xview+15
+                || selected.x&gt;view_xview+view_wview-15
+                || selected.y&lt;view_yview+15
+                || selected.y&gt;view_yview+view_hview-15)
                 {
+                    show_debug_message('move cam')
                     xx=selected.x
                     yy=selected.y
                     x=xx
                     y=yy
-                    view_xview=xx-view_wview/2
-                    view_yview=yy-view_hview/2
+                    move_camera(xx,yy)
+                    //oCamera.x = xx
+                    //oCamera.y = yy
+                    //view_xview = xx - view_wview/2
+                    //view_yview = yy - view_hview/2
                 }
             }
             instance_activate_region(view_xview-15,view_yview+view_hview/2-view_wview/2-15,view_wview+30,view_wview+30,true)
@@ -1157,7 +1183,7 @@ if menu=-1
     if selected.marker=1
     if selected.combat&lt;=0
     {
-        selected.hp=min(selected.hp+1,selected.mhp)
+        //selected.hp=min(selected.hp+1,selected.mhp)
     }
     /*
     phase
@@ -1392,18 +1418,21 @@ if menu=-1
                         xx=cx
                         yy=cy
                    }
-                   if (cx&lt;view_xview+15*3
-                    || cx&gt;view_xview+view_wview-15*3
-                    || cy&lt;view_yview+15*3
-                    || cy&gt;view_yview+view_hview-15*3)
+                   if (cx&lt;view_xview+15
+                    || cx&gt;view_xview+view_wview-15
+                    || cy&lt;view_yview+15
+                    || cy&gt;view_yview+view_hview-15)
+                    //if !ds_grid_get(gridF1,selected.x/15,selected.y/15)&lt;0.2||debugging=1
                     //||debugging=1
                     {
+                        show_debug_message('move cam2')
                         xx=cx
                         yy=cy
                         x=xx
                         y=yy
-                        view_xview=xx-view_wview/2
-                        view_yview=yy-view_hview/2
+                        move_camera(xx,yy)
+                        //oCamera.x = xx
+                        //oCamera.y = yy
                     }
                    phase=1
                 }
@@ -1621,6 +1650,23 @@ if camTurnDir!=0
     camTurnDir=0
 }
 }
+//if !ds_map_find_value(aiTurns, currentTurn)&lt;0
+//if menu=-1
+{
+    if x &lt;= view_xview + 15
+        move_camera(oCamera.xx-15,oCamera.yy)
+    else if x &gt;= view_xview + view_wview - 15
+        move_camera(oCamera.xx+15,oCamera.yy)
+    if y &lt;= view_yview //+ 15
+        move_camera(oCamera.xx,oCamera.yy-15)
+    else if y &gt;= view_yview + view_hview - 15
+        move_camera(oCamera.xx,oCamera.yy+15)
+}
+/*if keyboard_check_released(oControler.keys[5])
+||mouse_check_button_released(mb_right){
+oCamera.xx = x
+oCamera.yy = y
+}
 </string>
           </argument>
         </arguments>
@@ -1661,8 +1707,7 @@ if floor(menu)=99{
     //ds_list_add(unitList,inst)
     xx=inst.xx
     yy=inst.yy
-    view_xview=inst.xx-view_wview/2
-    view_yview=inst.yy-view_hview/2
+    move_camera(xx,yy)
     var temp=instance_create(inst.x,inst.y,oEff);
     temp.sprite_index=spawn_eff
     for (var k=0;k&lt;ds_list_size(unitList);k++){
@@ -1670,6 +1715,9 @@ if floor(menu)=99{
         update_fog()
     }selected=noone
     menu=-1
+    audio_play_sound(TempBGM2,100,true)
+
+
 }
 if menu=-1
 if (mouse_check_button(mb_left)||keyboard_check(keys[4])
@@ -1702,6 +1750,55 @@ if psudoRight=30{
     }
     //end turn
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///map activation when turn ends
+/*if alarm_get(0)=1{
+    instance_activate_all()
+    alarm[9]=2
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///audio
+//if audio_sound_get_track_position(TempBGM1)&gt;40
+//    audio_sound_set_track_position(TempBGM1,0)
+
 </string>
           </argument>
         </arguments>
@@ -1754,6 +1851,8 @@ ds_grid_destroy(allyMatrix)
           <argument>
             <kind>1</kind>
             <string>///draw mouse
+if !global.mobile
+||!global.production
 draw_sprite(mouse,mouse_check_button(mb_left),device_mouse_x_to_gui(0),device_mouse_y_to_gui(0))
 </string>
           </argument>
@@ -1802,15 +1901,12 @@ if phase=3{
         }
     else if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range
         { 
-            if inst!=noone
-            if inst!=c{
+            if (inst!=noone&amp;&amp; inst!=c)
+            || (inst = noone &amp;&amp;return_attack_type(c.unit)=1)
+            || (inst = noone &amp;&amp;return_attack_type(c.unit)=3){
                 ix=x
                 iy=y
-                if c.pow&gt;0
-                    itext="attack"
-                else if c.pow&lt;0 
-                    itext="heal"
-                else itext="support"
+                itext =return_atk_name(c.unit)
             }
         }
     }
@@ -1960,10 +2056,11 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
         //image_blend=playerColour[c.team]
     
        draw_set_colour(c_dkgray)
+       var String = c.name + " - "+unit_description(c.object_index)
        draw_rectangle(2,view_hport-14-count*11,
-            string_width(c.name)+5,view_hport-3-count*11,false)
+            string_width(String)+5,view_hport-3-count*11,false)
        draw_set_colour(c_white)
-       draw_text_transformed(3,view_hport-11-count*11,string_upper(c.name),1,1,0)
+       draw_text_transformed(3,view_hport-11-count*11,string_upper(String),1,1,0)
        
        instance_deactivate_object(selected)
        
@@ -2020,6 +2117,7 @@ selected=temp
             <kind>1</kind>
             <string>///#3 draw message
 if logVisable&gt;0
+if global.production=0
 {
     var vx=5;
     draw_set_font(pixelFont)
@@ -2250,10 +2348,30 @@ else if menu=1{
                 ||keyboard_check_pressed(keys[4])
                 ||keyboard_check_pressed(keys[6]){
                     unitSelect[j]++
+                    while find_char_in_menu_list(return_unit(unitSelect[j],1,0),j)
+                        &amp;&amp;unitSelect[j]&lt;cc
+                        unitSelect[j]++
+                    if unitSelect[j]&gt;=cc
+                        unitSelect[j]=0
+                    while find_char_in_menu_list(return_unit(unitSelect[j],1,0),j)
+                        &amp;&amp;unitSelect[j]&lt;cc
+                        unitSelect[j]++
                 }
-                else if keyboard_check_pressed(keys[7]){
+               /* else if keyboard_check_pressed(keys[7]){
                     unitSelect[j]--
-                }
+                }*/
+                
+                //set limit
+                if unitSelect[j]&gt;=cc
+                    unitSelect[j]=0
+                else if unitSelect[j]&lt;0
+                    unitSelect[j]=cc-1
+                
+                break;
+            case 2:
+                if mouse_check_button_released(mb_left)
+                ||keyboard_check_pressed(keys[4])
+                    unitSelect[j]=-1
                 break;
             case 3:
                 if mouse_check_button_released(mb_left)
@@ -2262,21 +2380,24 @@ else if menu=1{
                     with(oCharCreation)
                         instance_destroy()
                     if global.mobile{
-                        view_wview = 180
-                        view_hview = 120
+                        if global.vertical = 1{
+                            view_wview = 120
+                            view_hview = 180
+                        }else{
+                            view_wview = 180
+                            view_hview = 120
+                        }
                         }
                     }
                 break;
         } 
-        //set limit
-        if unitSelect[j]&gt;=cc
-            unitSelect[j]=0
-        else if unitSelect[j]&lt;0
-            unitSelect[j]=cc-1
      }else{//no unit yet
         if mouse_check_button_released(mb_left)
         ||keyboard_check_pressed(keys[4]){
             unitSelect[j]=0
+            while find_char_in_menu_list(return_unit(unitSelect[j],1,0),j)
+                &amp;&amp;unitSelect[j]&lt;cc
+                unitSelect[j]++
         }
      }
      
@@ -2293,10 +2414,12 @@ else if menu=1{
          draw_set_colour(c_orange)
          draw_text_transformed((1+i)*(view_wview/5)+6,view_hview-170,"CLASS ",2,2,0)
          draw_set_colour(c_ltgray)
+         draw_text_ext((1+i)*(view_wview/5),view_hview-120,unit_description(return_unit(unitSelect[i],3,i)),7,40)
          if menuSelect!=0
          ||i!=j
          draw_text_transformed((1+i)*(view_wview/5),view_hview-158,return_unit(unitSelect[i],0,0),1,1,0)
          draw_text((1+i)*(view_wview/5),view_hview-151,string(unitSelect[i]+1)+"/"+string(cc))
+         draw_text_transformed((1+i)*(view_wview/5),view_hview-45,"REMOVE",2,2,0)
          draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"READY",2,2,0)
          draw_set_colour(c_white)
          return_unit(unitSelect[i],2,i)
@@ -2306,7 +2429,7 @@ else if menu=1{
          switch menuSelect{
              case 0: draw_text((1+i)*(view_wview/5),view_hview-158,"-"+return_unit(unitSelect[i],0,0)+"-")break;
              //case 1: draw_text((1+i)*(view_wview/5),view_hview-90,"-"+returnSkill(unitSkill[i],0,0,unitSelect[i])+"-")break;
-            // case 2: draw_text((1+i)*(view_wview/5),view_hview-61,"-"+return_Wep(unitWep[i],0,0,unitSelect[i])+"-")break;
+             case 2: draw_text_transformed((1+i)*(view_wview/5),view_hview-45,"-REMOVE-",2,2,0)break;
              case 3: draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"-READY-",2,2,0)break;
          }
        }else{// no unit yet
@@ -2410,11 +2533,21 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 var c=selected
 var path=path_add()
 mp_grid_clear_cell(grid,c.x/15,c.y/15)
+
+for (var i=0;i&lt;ds_list_size(unitList);i++){
+    var char=ds_list_find_value(unitList,i)
+        if instance_exists(char){
+            mp_grid_clear_cell(grid,char.x/15,char.y/15)
+        }
+    }
+
+
 //show where you can move
     for (var i=-c.mov*15;i&lt;=c.mov*15;i+=15){
         for (var j=-c.mov*15;j&lt;=c.mov*15;j+=15){
         if mp_grid_path(grid,path,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
-        if path_get_number(path)-1&lt;=c.mov{
+        if path_get_number(path)-1&lt;=c.mov
+        if!place_meeting(c.x+i,c.y+j,oUnit){
             draw_set_colour(c_aqua)
             draw_set_alpha(0.5)
             draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
@@ -2463,6 +2596,14 @@ if selected=noone{
         var c=selected
         var path=path_add()
         mp_grid_clear_cell(grid,c.x/15,c.y/15)
+        
+        for (var i=0;i&lt;ds_list_size(unitList);i++){
+            var char=ds_list_find_value(unitList,i)
+                if instance_exists(char){
+                    mp_grid_clear_cell(grid,char.x/15,char.y/15)
+                }
+            }
+        
         //show where you can move
         //draw_set_colour(c_teal)
         //draw_set_alpha(0.5)
@@ -2470,7 +2611,8 @@ if selected=noone{
         for (var i=-range*15;i&lt;=range*15;i+=15){
             for (var j=-range*15;j&lt;=range*15;j+=15){
             if mp_grid_path(grid,path,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
-            if path_get_number(path)-1&lt;=c.mov{
+            if path_get_number(path)-1&lt;=c.mov
+            if!place_meeting(c.x+i,c.y+j,oUnit){
                 draw_sprite_ext(box7x7,0,i+c.x+3,j+c.y+3,1,1,0,c_aqua,0.5)
                 //draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
                 }

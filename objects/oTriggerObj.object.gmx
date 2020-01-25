@@ -35,7 +35,7 @@ var cx=x
 var cy=y
 var d=1
 with oControler
-if ds_grid_get(gridF1,cx/15,cy/15)&lt;1
+if ds_grid_get(gridF1,cx/15,cy/15)&lt;0
     d=0
 visible=d||debugging
 }
