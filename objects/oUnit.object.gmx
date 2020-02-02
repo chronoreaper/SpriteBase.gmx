@@ -461,7 +461,7 @@ if draw&gt;0
 
 //draw health bars
 var colour;
-    colour=oControler.playerColour[team]
+colour=oControler.playerColour[team]
 if object_is_ancestor(object_index,oObj){
     colour=oControler.playerColour[0];
     }

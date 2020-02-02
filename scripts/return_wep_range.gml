@@ -6,7 +6,7 @@ switch floor(arg_unit){
     case ice_mage001_0: return 2;
     case thunder_mage001_0: return 2;
     case healer001_0: return 2;
-    case barrier_mage001_0: return 1;
+    case barrier_mage001_0: return 2;
     case eyebat001_0: return 2;
     case shroom001_0: return 2;
     case Dragon001_0: return 2;

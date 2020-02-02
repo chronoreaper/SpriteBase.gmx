@@ -77,7 +77,6 @@ viewW = view_wview
 viewH = view_hview
     
 hit=0
-gridAlpha=0.1
 miss=0
 cur=0
 hold=0
@@ -300,6 +299,29 @@ global.tutorial = 0
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// options
+option_zoom = true
+gridAlpha=0.1
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="2" enumb="10">
       <action>
@@ -419,33 +441,14 @@ if selected!=noone{
     if findStatus(selected,2)&lt;0{
         with inst
             instance_destroy()
+            audio_play_sound(sCoin,50,false)
         addStatus(1,selected,2,1)
-    }
-    
-    inst = instance_place(selected.x,selected.y,oTeleporter)
-    var c = selected
-    if inst!=noone{
-        with (oTeleporter){
-            if id != inst
-            if !place_meeting(x,y,oUnit)
-            if colourId = inst.colourId{
-                c.x = x
-                c.y = y
-                c.xx=c.x
-                c.yy=c.y
-                if c.draw&gt;0
-                    move_camera(c.xx,c.yy)
-                oControler.x = c.x
-                oControler.y = c.y
-                oControler.xx = c.x
-                oControler.yy =c.y
-            }
-        }
     }
     
     //stairs
     if floor(selected.team)=0
     if place_meeting(selected.x,selected.y,oStairs){
+        audio_play_sound(sStairs,50,false)
         level++;
         menu = 98;
         instance_create(x,y,oNextFloor)
@@ -464,6 +467,28 @@ if selected!=noone{
         }
     }
     
+    inst = instance_place(selected.x,selected.y,oTeleporter)
+    var c = selected
+    if inst!=noone{
+        with (oTeleporter){
+            if id != inst
+            if !place_meeting(x,y,oUnit)
+            if colourId = inst.colourId{
+                audio_play_sound(sHeal,50,false)
+                c.x = x
+                c.y = y
+                c.xx=c.x
+                c.yy=c.y
+                if c.draw&gt;0
+                    move_camera(c.xx,c.yy)
+                oControler.x = c.x
+                oControler.y = c.y
+                oControler.xx = c.x
+                oControler.yy =c.y
+            }
+        }
+    }
+       
     
     phase=0
     if menu =-1{
@@ -880,8 +905,10 @@ if return_wep_aoe(c.unit)&gt;0{
         targ = instance_place(x,y,oChar)
 }
 while (targ!=noone){
+    path_clear_points(path0)
     if (targ!=c)
-    if calculate_damage(c,targ,0)&gt;0{
+    if calculate_damage(c,targ,0)&gt;0||true
+    {
         //create eff
         if (!(c.draw=0
         &amp;&amp; ds_grid_get(gridF1,targ.x/15,targ.y/15)&lt;0.2)
@@ -956,15 +983,22 @@ xx=clamp(xx,0,room_width-15)
 yy=clamp(yy,0,room_height-15)
 if controler=0{
 if !global.mobile||mouse_check_button(mb_left){
-    xx=floor(mouse_x/15)*15
-    yy=floor(mouse_y/15)*15}
+    if ds_grid_get(gridF1,clamp(floor(mouse_x/15),0,room_width/15),clamp(floor(mouse_y/15),0,room_height/15))&gt;-1
+    ||debugging=1
+        {
+        xx=floor(mouse_x/15)*15
+        yy=floor(mouse_y/15)*15
+        }
+    }
 }
 var del=4
 if !eventScene||debugging=1
 {
 if delay=0
 {
-        del=max(1,del-hold)
+    var xpre = xx
+    var ypre = yy
+    del=max(1,del-hold)
     if keyboard_check(keys[0]){
         yy-=15*round(dcos(-view_angle))
         xx-=15*round(dsin(-view_angle))
@@ -1017,6 +1051,12 @@ if delay=0
     if keyboard_check(keys[4])
     ||keyboard_check(keys[5]){
         controler=1
+    }
+    if ds_grid_get(gridF1,clamp(floor(xx/15),0,room_width/15),clamp(floor(yy/15),0,room_height/15))&lt;=-1
+    if debugging=0
+    {
+        xx = xpre
+        yy = ypre
     }
 }
 else if delay&gt;0 delay--
@@ -1152,7 +1192,6 @@ if menu=-1
                 || selected.y&lt;view_yview+15
                 || selected.y&gt;view_yview+view_hview-15)
                 {
-                    show_debug_message('move cam')
                     xx=selected.x
                     yy=selected.y
                     x=xx
@@ -1434,7 +1473,6 @@ if menu=-1
                     //if !ds_grid_get(gridF1,selected.x/15,selected.y/15)&lt;0.2||debugging=1
                     //||debugging=1
                     {
-                        show_debug_message('move cam2')
                         xx=cx
                         yy=cy
                         x=xx
@@ -1630,12 +1668,14 @@ else{
     }
 }
 
-if selected!=noone&amp;&amp;ds_map_find_value(aiTurns, currentTurn)&gt;=0{
-     viewW = 180
-     viewH = 120
-}else{
-    viewW = 360
-    viewH = 240
+if option_zoom &amp;&amp; !global.mobile &amp;&amp; debugging=0{
+    if selected!=noone&amp;&amp;ds_map_find_value(aiTurns, currentTurn)&gt;=0{
+         viewW = 180
+         viewH = 120
+    }else{
+        viewW = 360
+        viewH = 240
+    }
 }
 
 if keyboard_check(ord('R')){
@@ -1690,13 +1730,14 @@ if camTurnDir!=0
 //if !ds_map_find_value(aiTurns, currentTurn)&lt;0
 //if menu=-1
 {
-    if x &lt;= view_xview + 15
+    var bound = min(view_hview, view_wview)/2
+    if x &lt;= view_xview + view_wview/2 - bound + 15
         move_camera(oCamera.xx-15,oCamera.yy)
-    else if x &gt;= view_xview + view_wview - 15
+    else if x &gt;= view_xview + view_wview/2 + bound - 15
         move_camera(oCamera.xx+15,oCamera.yy)
-    if y &lt;= view_yview //+ 15
+    if y &lt;= view_yview + view_hview/2 - bound + 15
         move_camera(oCamera.xx,oCamera.yy-15)
-    else if y &gt;= view_yview + view_hview - 15
+    else if y &gt;= view_yview + view_hview/2 + bound - 15
         move_camera(oCamera.xx,oCamera.yy+15)
 }
 /*if keyboard_check_released(oControler.keys[5])
@@ -1833,9 +1874,15 @@ if psudoRight=30{
           <argument>
             <kind>1</kind>
             <string>///audio
-//if audio_sound_get_track_position(TempBGM1)&gt;40
-//    audio_sound_set_track_position(TempBGM1,0)
-
+if level%5 = 0{
+    if audio_is_playing(TempBGM3){
+        audio_stop_sound(TempBGM3)
+        audio_play_sound(TempBGM2,100,true)
+    }
+}else if audio_is_playing(TempBGM2){
+    audio_stop_sound(TempBGM2)
+    audio_play_sound(TempBGM3,100,true)
+}
 </string>
           </argument>
         </arguments>
@@ -1940,7 +1987,8 @@ if phase=3{
         { 
             if (inst!=noone&amp;&amp; inst!=c)
             || (inst = noone &amp;&amp;return_attack_type(c.unit)=1)
-            || (inst = noone &amp;&amp;return_attack_type(c.unit)=3){
+            || (inst = noone &amp;&amp;return_attack_type(c.unit)=3)
+            if !object_is_ancestor(inst.object_index,oBlock){
                 ix=x
                 iy=y
                 itext =return_atk_name(c.unit)
@@ -2208,7 +2256,11 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
             unitLeft++;
         }
 }
-draw_set_colour(c_fuchsia)
+
+if turnsSurvive &gt; 4 + level
+    draw_set_colour(c_red)
+else
+    draw_set_colour(c_fuchsia)
 draw_set_font(pixelFont)
 draw_set_halign(fa_left)
 draw_set_alpha(1)
@@ -2708,7 +2760,8 @@ switch atk_type{
         if i!=0||j!=0{
             draw_set_colour(c_orange)
             var inst=instance_place(i+c.x,j+c.y,oUnit)
-            if inst!=noone{
+            if inst!=noone
+            if !object_is_ancestor(inst.object_index,oBlock){
                 if c.pow&gt;0
                 draw_set_colour(c_red)
                 else draw_set_colour(c_lime)

@@ -36,7 +36,8 @@ view=5
 size=2
 unit=greatTree001
 name="Great Tree"
-dmg=hp
+dmg=hpbar3
+
 </string>
           </argument>
         </arguments>
@@ -108,8 +109,7 @@ ay=0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///draw
-if visible||debugging=1
+            <string>if visible||debugging=1
 {
 
 if draw&gt;0
@@ -130,17 +130,8 @@ if draw&gt;0
 
 //draw health bars
 var colour;
-if oControler.currentTurn=team
-    colour=oControler.playerColour[3]
-else if oControler.allyMatrix[# team,oControler.currentTurn]&lt;0 colour=oControler.playerColour[2];
-else if oControler.allyMatrix[# team,oControler.currentTurn]&gt;0
-    colour=oControler.playerColour[1]
-else colour=oControler.playerColour[0];
-    
-if object_is_ancestor(object_index,oObj)
-    colour=oControler.playerColour[0];
-else
-    draw_sprite_ext(marker1,0,x-0*(size-1),y-0*(size-1),size,size,0,colour,1)
+colour=oControler.playerColour[team]    
+draw_sprite_ext(marker1,0,x-0*(size-1),y-0*(size-1),size,size,0,colour,1)
 /*if dmg!=hp{
    if image_blend!=c_red{
       alpha=5

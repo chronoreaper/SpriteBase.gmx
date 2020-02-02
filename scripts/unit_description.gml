@@ -4,7 +4,7 @@ switch arg_unit{
     case oArcher:return      "HP:4 POW:1 RANGE:3 MOV:3"
     case oMage:return        "HP:3 POW:1 RANGE:2 MOV:3 CREATES FIRE ON ATTACK"
     case oHealer:return      "HP:3 POW:1 RANGE:2 MOV:3 HEALS TARGET HP EQUAL TO POW"
-    case oBarrier_Mage:return"HP:3 POW:2 RANGE:1 MOV:3 SHIELDS TARGET EQUAL TO POW"
+    case oBarrier_Mage:return"HP:3 POW:2 RANGE:2 MOV:3 SHIELDS TARGET EQUAL TO POW"
     case oHero:return        "HP:6 POW:2 RANGE:2 MOV:3"
     case oDefender:return    "HP:6 POW:2 RANGE:1 MOV:2 PUSHES TARGET"
     case oIceMage:return     "HP:3 POW:1 RANGE:2 MOV:3 CREATES ICE BLOCK ON ATTACK"

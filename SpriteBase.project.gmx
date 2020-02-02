@@ -5,6 +5,7 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound">
+    <sound>sound\sStairs</sound>
     <sound>sound\sBoost</sound>
     <sound>sound\sDown</sound>
     <sound>sound\sFire</sound>
@@ -22,6 +23,7 @@
     <sound>sound\TempBGM1</sound>
     <sound>sound\TempBGM2</sound>
     <sound>sound\TempBGM3</sound>
+    <sound>sound\sCoin</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Units">

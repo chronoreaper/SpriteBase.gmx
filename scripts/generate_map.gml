@@ -50,14 +50,16 @@ repeat(ceil(level/2)*20 + 23){
     dist--
     if (dist<=0){
         //room
-        /*var rand_w = irandom(2)+2
-        var rand_h = irandom(2)+2
+        if irandom(8)=0{
+        var rand_w = irandom(2)+1
+        var rand_h = irandom(2)+1
         ds_grid_set_region(map,
         max(xx - floor(rand_w/2),1),
         max(yy - floor(rand_h/2),1),
         min(xx + ceil(rand_w/2),width-2),
         min(yy + ceil(rand_h/2),height-2),
-        0)*/
+        0)
+        }
         
         dist=irandom(3)+2
         dir = irandom(3)
@@ -70,38 +72,6 @@ repeat(ceil(level/2)*20 + 23){
 }
 }
 
-xx=round(width/2)
-yy=round(height/2);
-
-for (var j=0;j<height;j++){
-s=''
-for (var i=0;i<width;i++)
-{
-    var isroad = 1
-    if ds_grid_get(map,i,j)==-1{
-        var path = 0
-        for (var l=-1;l<=1;l++)
-        for (var k=-1;k<=1;k++)
-            if ds_grid_get(map,clamp(i+l,0,width-1),clamp(j+k,0,height-1))>=0
-                path = 1
-        if path{
-            var inst=instance_create(i*15,j*15,choose(oTree));
-            inst.visible=false
-            isroad = 0
-            tile_add(tilesprite2,15*(3),15*1,15,15,i*15,j*15,100000)
-        }
-        s+='_'
-    }
-    if isroad 
-    if ds_grid_get(map,i,j)>=0{
-        s+=string(ds_grid_get(map,i,j))
-        //if (i%4==0 && j%4==0)
-        if irandom(10)=0
-         tile_add(tilesprite2,15*(1+irandom(9)),15*0,15,15,i*15+15*irandom(1),j*15+15*irandom(1),100000)
-    }
-}
-show_debug_message(s)
-}
 //create stairs
 var rx = irandom_range(xmin,xmax)
 var ry = irandom_range(ymin,ymax)
@@ -116,8 +86,7 @@ while(!stairs){
                 obj = ds_list_find_value(bossList,rand)
                 ds_list_delete(bossList,rand)
                 }
-            inst=instance_create(rx*15,ry*15,
-                choose(oDragon1,oWurm));
+                var inst=instance_create(rx*15,ry*15,obj);
                 inst.team=2
                 inst.marker=1
                 
@@ -137,6 +106,12 @@ while(!stairs){
             instance_create(rx*15,ry*15,oStairs)
             }
         stairs = 1
+        ds_grid_set_region(map,
+            max(rx - floor(1),1),
+            max(ry - floor(1),1),
+            min(rx + ceil(1),width-2),
+            min(ry + ceil(1),height-2),
+            0)
     }
     rx = irandom_range(xmin,xmax)
     ry = irandom_range(ymin,ymax)
@@ -185,6 +160,38 @@ while(enemies < level){
     }
 }
 
+xx=round(width/2)
+yy=round(height/2);
+
+for (var j=0;j<height;j++){
+s=''
+for (var i=0;i<width;i++)
+{
+    var isroad = 1
+    if ds_grid_get(map,i,j)==-1{
+        var path = 0
+        for (var l=-1;l<=1;l++)
+        for (var k=-1;k<=1;k++)
+            if ds_grid_get(map,clamp(i+l,0,width-1),clamp(j+k,0,height-1))>=0
+                path = 1
+        if path{
+            var inst=instance_create(i*15,j*15,choose(oTree));
+            inst.visible=false
+            isroad = 0
+            tile_add(tilesprite2,15*(3),15*1,15,15,i*15,j*15,100000)
+        }
+        s+='_'
+    }
+    if isroad 
+    if ds_grid_get(map,i,j)>=0{
+        s+=string(ds_grid_get(map,i,j))
+        //if (i%4==0 && j%4==0)
+        if irandom(10)=0
+         tile_add(tilesprite2,15*(1+irandom(9)),15*0,15,15,i*15+15*irandom(1),j*15+15*irandom(1),100000)
+    }
+}
+show_debug_message(s)
+}
 
 //ds_grid_destroy(map)
 //ds_grid_destroy(gridMap)
