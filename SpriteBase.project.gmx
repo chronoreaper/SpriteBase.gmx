@@ -21,6 +21,7 @@
     <sound>sound\sWindDmg</sound>
     <sound>sound\TempBGM1</sound>
     <sound>sound\TempBGM2</sound>
+    <sound>sound\TempBGM3</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Units">

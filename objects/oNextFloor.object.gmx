@@ -30,6 +30,12 @@ alpha2=0
 fadeOut=0
 selection=0
 des=""
+select=0
+bonusChoices = 6-oControler.unitStarted
+for (var i = 0 ;i &lt; bonusChoices + 1;i ++)
+    bonus[i] = noone
+    
+lastSelected = 0
 </string>
           </argument>
         </arguments>
@@ -74,17 +80,17 @@ if fadeOut=0{
             instance_destroy()
         }
     
-        for(i=0;i&lt;6-oControler.unitStarted;i++){
-            var inst=instance_create((view_wport/(2*(6-oControler.unitStarted)))*(1+i*2),view_hport/2,oBonusSelect);
-            inst.selection = getBonusChoice(chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
-            chosen[i] = inst.selection
-            if inst.selection = 0
-                with inst
+        for(i=0;i&lt;bonusChoices;i++){
+            bonus[i]=instance_create((view_wport/(2*(6-oControler.unitStarted)))*(1+i*2),view_hport/2,oBonusSelect);
+            bonus[i].selection = getBonusChoice(chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+            chosen[i] = bonus[i].selection
+            if bonus[i].selection = 0
+                with bonus[i]
                     instance_destroy()
         }
-        var inst=instance_create((view_wport/2),view_hport*(3/4)+20,oBonusSelect);
-        inst.selection = -99//does nothing
-        inst.sprite_index = skipBonus
+        bonus[bonusChoices]=instance_create((view_wport/2),view_hport*(3/4)+20,oBonusSelect);
+        bonus[bonusChoices].selection = -99//does nothing
+        bonus[bonusChoices].sprite_index = skipBonus
         alpha1++
     }
     if selection!=0
@@ -109,6 +115,102 @@ else{
     if alpha1&lt;=0{
         oControler.menu=-1
         instance_destroy()
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///menu options
+if oControler.controler=1{
+    for (var i = 0; i &lt; bonusChoices; i++)
+        if (bonus[i]!=noone &amp;&amp; instance_exists(bonus[i])){
+            if (select == i){
+                bonus[i].over = true
+            }
+            else
+                bonus[i].over = false
+        }
+}
+var i = bonusChoices
+if (bonus[i]!=noone &amp;&amp; instance_exists(bonus[i])){
+    if (select == i){
+        bonus[i].over = true
+    }
+    else
+        bonus[i].over = false
+}
+if (keyboard_check_pressed(oControler.keys[0])){
+    if select = bonusChoices{
+        select = lastSelected
+        //make sure you are not on noone
+        var count = bonusChoices
+        while (count &gt; 0){
+            if bonus[select] == noone || !instance_exists(bonus[select]){
+                select --;
+            }else{
+                count = 0
+            }
+            count --;
+        }  
+    }
+}
+else if (keyboard_check_pressed(oControler.keys[1])){
+    if select &lt; bonusChoices{
+        select --;
+        if select &lt; 0{
+            select = bonusChoices - 1
+        }
+        //make sure you are not on noone
+        var count = bonusChoices
+        while (count &gt; 0){
+            if bonus[select] == noone || !instance_exists(bonus[select]){
+                select --;
+            }else{
+                count = 0
+            }
+            count --;
+        }    
+    }
+}
+else if (keyboard_check_pressed(oControler.keys[2])){
+    if select &lt; bonusChoices {
+        lastSelected = select
+        select = bonusChoices
+    }
+}
+else if (keyboard_check_pressed(oControler.keys[3])){
+    if select &lt; bonusChoices{
+        select ++;
+        if select &gt;= bonusChoices{
+            select = 0 
+        }
+        //make sure you are not on noone
+        var count = bonusChoices
+        while (count &gt; 0){
+            if bonus[select] == noone || !instance_exists(bonus[select]){
+                select ++;
+            }else{
+                count = 0
+            }
+            count --;
+        }    
     }
 }
 </string>

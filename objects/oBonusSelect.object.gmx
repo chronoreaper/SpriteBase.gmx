@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>depth=-2
 selection=-1
+over = false
 </string>
           </argument>
         </arguments>
@@ -49,16 +50,26 @@ selection=-1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if point_in_rectangle(device_mouse_x_to_gui(0),device_mouse_y_to_gui(0),
-    x-sprite_get_width(sprite_index)/2,y-sprite_get_height(sprite_index)/2,
-    x+sprite_get_width(sprite_index)/2,y+sprite_get_height(sprite_index)/2){
-if selection=-99
-    oNextFloor.des = ""
-else
-    oNextFloor.des = get_bonus_eff(selection,-1)
-if mouse_check_button_released(mb_left){
-    oNextFloor.selection = selection
+            <string>if oControler.controler=0{
+    if point_in_rectangle(device_mouse_x_to_gui(0),device_mouse_y_to_gui(0),
+        x-sprite_get_width(sprite_index)/2,y-sprite_get_height(sprite_index)/2,
+        x+sprite_get_width(sprite_index)/2,y+sprite_get_height(sprite_index)/2){
+        over = true
+        }
+    else {
+        over = false
+    }
 }
+
+if over  
+{
+    if selection=-99
+        oNextFloor.des = ""
+    else
+        oNextFloor.des = get_bonus_eff(selection,-1)
+    if mouse_check_button_released(mb_left)|| keyboard_check_pressed(oControler.keys[4]){
+        oNextFloor.selection = selection
+    }
 }
 </string>
           </argument>
@@ -85,13 +96,8 @@ if mouse_check_button_released(mb_left){
             <string>var sprite= 0
 var cost = 0
 var name = ""
-var over = false
 draw_sprite(sprite_index,image_index,x,y)
 draw_set_halign(fa_center)
-if point_in_rectangle(device_mouse_x_to_gui(0),device_mouse_y_to_gui(0),
-    x-sprite_get_width(sprite_index)/2,y-sprite_get_height(sprite_index)/2,
-    x+sprite_get_width(sprite_index)/2,y+sprite_get_height(sprite_index)/2)
-    over = true
 
 if selection!=-99{
 if over{

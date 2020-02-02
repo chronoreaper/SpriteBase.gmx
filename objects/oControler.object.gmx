@@ -72,7 +72,10 @@ for (var i=0;i&lt;playerMax;i++){
     range[i]=0
     des[i]=0
     }
-
+    
+viewW = view_wview
+viewH = view_hview
+    
 hit=0
 gridAlpha=0.1
 miss=0
@@ -292,6 +295,7 @@ else
     {
     show_debug_overlay(1)
     }
+global.tutorial = 0
 </string>
           </argument>
         </arguments>
@@ -431,6 +435,10 @@ if selected!=noone{
                 c.yy=c.y
                 if c.draw&gt;0
                     move_camera(c.xx,c.yy)
+                oControler.x = c.x
+                oControler.y = c.y
+                oControler.xx = c.x
+                oControler.yy =c.y
             }
         }
     }
@@ -941,8 +949,8 @@ if phase&lt;=0
 ||phase=11
 ||phase=9
 
-if ds_map_find_value(aiTurns, currentTurn)&gt;=0||
-(debugging=1&amp;&amp;eventScene){
+if (ds_map_find_value(aiTurns, currentTurn)&gt;=0&amp;&amp;!eventScene)||
+(debugging=1){
 room_speed=30
 xx=clamp(xx,0,room_width-15)
 yy=clamp(yy,0,room_height-15)
@@ -1045,6 +1053,7 @@ if abs(yy-y)&gt;1
    y+=(yy-y)/2
 else
     y=yy
+
 
 //select unit
 if mouse_check_button_released(mb_left)
@@ -1595,12 +1604,40 @@ switch phase{
             <kind>1</kind>
             <string>///camera movement
 if global.production=0{
-/*if keyboard_check(vk_right)//||keyboard_check(keys[7])
-    //camTurnDir=1
-    view_angle+=2*/
-/*if keyboard_check(vk_left)//||keyboard_check(keys[6])
-view_angle-=2
-//camTurnDir=-1*/
+
+if viewW = 180{
+    if view_wview &gt; viewW{
+        view_wview-=(view_wview-viewW)/2
+        view_hview-=(view_hview-viewH)/2
+        eventScene = true
+    }
+    else{
+        view_wview = 180
+        view_hview = 120
+        eventScene = false
+    }  
+}
+else{
+    if view_wview &lt; viewW{
+        view_wview-=(view_wview-viewW)/2
+        view_hview-=(view_hview-viewH)/2
+        eventScene = true
+    }
+    else{
+        view_wview = 360
+        view_hview = 240
+        eventScene = false
+    }
+}
+
+if selected!=noone&amp;&amp;ds_map_find_value(aiTurns, currentTurn)&gt;=0{
+     viewW = 180
+     viewH = 120
+}else{
+    viewW = 360
+    viewH = 240
+}
+
 if keyboard_check(ord('R')){
     view_angle=0
     viewTurn=0
@@ -1715,7 +1752,7 @@ if floor(menu)=99{
         update_fog()
     }selected=noone
     menu=-1
-    audio_play_sound(TempBGM2,100,true)
+    audio_play_sound(TempBGM3,100,true)
 
 
 }
