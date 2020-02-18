@@ -10,10 +10,11 @@ var dir=irandom(3);
 var dist=2+irandom(3)//how long until a room
 var xx=round(width/2)
 var yy=round(height/2);
-var xmin = max(xx - (4+ceil(level/2)),1)
-var xmax = min(xx + (4+ceil(level/2)),room_width - 15)
-var ymin = max(yy - (4+ceil(level/2)),1)
-var ymax = min(yy + (4+ceil(level/2)),room_height - 15)
+var room_radius = 4+ceil(level/3)
+var xmin = max(xx - (room_radius),1)
+var xmax = min(xx + (room_radius),room_width - 15)
+var ymin = max(yy - (room_radius),1)
+var ymax = min(yy + (room_radius),room_height - 15)
 ds_grid_set_region(map,
         max(xx - floor(1),1),
         max(yy - floor(1),1),

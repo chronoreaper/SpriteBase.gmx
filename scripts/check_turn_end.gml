@@ -90,7 +90,7 @@ if fin=1{
     }
         //rx=irandom(room_width/15)//room_width/15);
         //ry=irandom(room_height/15)//room_height/15);
-        if turnsSurvive > 4 + level
+        if turnsSurvive > 5 + level
         if turnsSurvive%2 == 0
         if !place_meeting(rx*15,ry*15,oUnit)
         if ds_grid_get(gridF1,rx,ry)<1

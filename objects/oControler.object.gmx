@@ -284,7 +284,7 @@ playerSelect=0
 globalvar debugging;
 global.production=0
 global.mobile=0
-global.vertical = 0
+global.vertical = (room = room3)
 debugging=0
 debugObj=0
 debug1=0;
@@ -294,7 +294,14 @@ else
     {
     show_debug_overlay(1)
     }
-global.tutorial = 0
+
+if global.vertical = 1{
+    view_hview = 180
+    view_wview= 120
+    view_hport = 180
+    view_wview = 120
+    display_set_gui_size(240,360);
+}
 </string>
           </argument>
         </arguments>
@@ -318,6 +325,29 @@ global.tutorial = 0
             <string>/// options
 option_zoom = true
 gridAlpha=0.1
+warningZone = false
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///tutorial
+global.tutorial = 0
 </string>
           </argument>
         </arguments>
@@ -375,10 +405,11 @@ add_all_to_map()
             <string>///activate things
 if menu = -1{
 instance_deactivate_all(true)
-instance_activate_region(xx-15-view_wview/2,yy+view_hview/2-view_wview/2-15,view_wview+30,view_wview+30,true)
-instance_activate_region(view_xview-15,view_yview+view_hview/2-view_wview/2-15,view_wview+30,view_wview+30,true)
+var radius = max(view_wview,view_hview)
+instance_activate_region(xx-15-view_wview/2,yy+view_hview/2-view_wview/2-15,radius+30,radius+30,true)
+instance_activate_region(view_xview-15,view_yview+view_hview/2-view_wview/2-15,radius+30,radius+30,true)
 if selected!=noone
-    instance_activate_region(selected.x-15-view_wview/2,selected.y+view_hview/2-view_wview/2-15,view_wview+30,view_wview+30,true)
+    instance_activate_region(selected.x-15-view_wview/2,selected.y+view_hview/2-view_wview/2-15,radius+30,radius+30,true)
 }
 else 
 instance_activate_all()
@@ -641,6 +672,8 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             if (mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,xx+7.5,yy+7.5,false)
             &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0&amp;&amp;!place_meeting(xx,yy,oUnit))  
             ||(c.x==xx&amp;&amp;c.y==yy)
+            //NEW!
+            &amp;&amp; ds_grid_get(gridF1,clamp(floor(mouse_x/15),0,room_width/15),clamp(floor(mouse_y/15),0,room_height/15))&gt;-1    
                 {
     
                 if c.mov&gt;=path_get_number(c.path)-1{
@@ -837,7 +870,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                         loop=1
                         selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
                         target=inst
-                    } else{
+                    } else     if ds_grid_get(gridF1,clamp(floor(mouse_x/15),0,room_width/15),clamp(floor(mouse_y/15),0,room_height/15))&gt;-1{
                         if 1{
                         with selected{
                         x=xx
@@ -1985,10 +2018,10 @@ if phase=3{
         }
     else if abs(xx-c.x)/15+abs(yy-c.y)/15&lt;=range
         { 
-            if (inst!=noone&amp;&amp; inst!=c)
+            if (inst!=noone&amp;&amp; inst!=c &amp;&amp; !object_is_ancestor(inst.object_index,oBlock))
             || (inst = noone &amp;&amp;return_attack_type(c.unit)=1)
             || (inst = noone &amp;&amp;return_attack_type(c.unit)=3)
-            if !object_is_ancestor(inst.object_index,oBlock){
+            {
                 ix=x
                 iy=y
                 itext =return_atk_name(c.unit)
@@ -2257,7 +2290,7 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
         }
 }
 
-if turnsSurvive &gt; 4 + level
+if turnsSurvive &gt; 5 + level
     draw_set_colour(c_red)
 else
     draw_set_colour(c_fuchsia)
@@ -2347,7 +2380,7 @@ draw_set_font(pixelFont)
           <argument>
             <kind>1</kind>
             <string>///start menu
-if menu=0{
+if menu&lt;50{
     if mouse_check_button_pressed(mb_left)
     || mouse_check_button_pressed(mb_right){
         controler=0
@@ -2360,7 +2393,8 @@ if menu=0{
     ||keyboard_check_pressed(keys[4])
     ||keyboard_check_pressed(keys[5])
         controler=1
-    
+}
+if menu=0{    
     draw_set_font(pixelBlock)
     draw_set_halign(fa_center)
     draw_set_color(c_ltgray)
@@ -2376,13 +2410,13 @@ if menu=0{
     else if keyboard_check_pressed(keys[0]){
         menuSelect=max(0,menuSelect-1)
         }
-    draw_text_transformed(180,160,"New game",2,2,0)
-    draw_text_transformed(180,180,"stats",2,2,0)
-    draw_text_transformed(180,200,"optioNs",2,2,0)
-    draw_text_transformed(180,220,"quit",2,2,0)
+    draw_text_transformed(view_wview/2,view_hview-80,"New game",2,2,0)
+    draw_text_transformed(view_wview/2,view_hview-60,"stats",2,2,0)
+    draw_text_transformed(view_wview/2,view_hview-40,"optioNs",2,2,0)
+    draw_text_transformed(view_wview/2,view_hview-20,"quit",2,2,0)
     draw_set_colour(c_white)
     switch menuSelect{
-        case 0: draw_text_transformed(180,160,"-New game-",2,2,0)
+        case 0: draw_text_transformed(view_wview/2,view_hview-80,"-New game-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4]){
             //instance_create((1+0)*(view_wview/5),
@@ -2390,9 +2424,14 @@ if menu=0{
             menu=1
             }
             break;
-        case 1: draw_text_transformed(180,180,"-stats-",2,2,0)break;
-        case 2: draw_text_transformed(180,200,"-optioNs-",2,2,0)break;
-        case 3: draw_text_transformed(180,220,"-quit-",2,2,0)
+        case 1: draw_text_transformed(view_wview/2,view_hview-60,"-stats-",2,2,0)break;
+        case 2: draw_text_transformed(view_wview/2,view_hview-40,"-optioNs-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+            menu=2
+            }
+            break;
+        case 3: draw_text_transformed(view_wview/2,view_hview-20,"-quit-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4])
                 game_end()
@@ -2470,11 +2509,13 @@ else if menu=1{
                         instance_destroy()
                     if global.mobile{
                         if global.vertical = 1{
-                            view_wview = 120
-                            view_hview = 180
+                            view_wview[0] = 120
+                            view_hview[0] = 180
                         }else{
-                            view_wview = 180
-                            view_hview = 120
+                            view_wview[0] = 180
+                            view_hview[0] = 120
+                            view_wport=view_wview[0]
+                            view_hport = view_hport[0]
                         }
                         }
                     }
@@ -2509,7 +2550,7 @@ else if menu=1{
          draw_text_transformed((1+i)*(view_wview/5),view_hview-158,return_unit(unitSelect[i],0,0),1,1,0)
          draw_text((1+i)*(view_wview/5),view_hview-151,string(unitSelect[i]+1)+"/"+string(cc))
          draw_text_transformed((1+i)*(view_wview/5),view_hview-45,"REMOVE",2,2,0)
-         draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"READY",2,2,0)
+         draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"START",2,2,0)
          draw_set_colour(c_white)
          return_unit(unitSelect[i],2,i)
          //draw stats
@@ -2519,7 +2560,7 @@ else if menu=1{
              case 0: draw_text((1+i)*(view_wview/5),view_hview-158,"-"+return_unit(unitSelect[i],0,0)+"-")break;
              //case 1: draw_text((1+i)*(view_wview/5),view_hview-90,"-"+returnSkill(unitSkill[i],0,0,unitSelect[i])+"-")break;
              case 2: draw_text_transformed((1+i)*(view_wview/5),view_hview-45,"-REMOVE-",2,2,0)break;
-             case 3: draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"-READY-",2,2,0)break;
+             case 3: draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"-START-",2,2,0)break;
          }
        }else{// no unit yet
          draw_set_colour(c_dkgray)
@@ -2535,6 +2576,68 @@ else if menu=1{
        } 
      
     }
+}
+else if menu=2{
+
+    draw_set_font(pixelBlock)
+    draw_set_halign(fa_center)
+    draw_set_color(c_ltgray)
+    if controler=0
+    if mouse_x-view_xview&gt;120
+    if mouse_x-view_xview&lt;240
+    if mouse_y-view_yview&gt;160
+        menuSelect=floor((mouse_y-view_yview-160)/20)
+    else menuSelect=-1
+    if keyboard_check_pressed(keys[2]){
+        menuSelect=min(3,menuSelect+1)
+        }
+    else if keyboard_check_pressed(keys[0]){
+        menuSelect=max(0,menuSelect-1)
+        }
+        
+    /// options
+    var options;
+    if option_zoom
+        options[0] = "Zoom WheN Select: true"
+    else
+        options[0] = "Zoom WheN Select: false"
+    options[1] ="Grid Alpha: " + string(gridAlpha)
+    if warningZone
+        options[2] = "WarNing ZoNe: true"
+    else
+        options[2] = "WarNing ZoNe: false"
+    draw_text_transformed(180,160,options[0],2,2,0)
+    draw_text_transformed(180,180,options[1],2,2,0)
+    draw_text_transformed(180,200,options[2],2,2,0)
+    draw_text_transformed(180,220,"back",2,2,0)
+    draw_set_colour(c_white)
+    switch menuSelect{
+        case 0: draw_text_transformed(180,160,"-"+options[0]+"-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4])
+                option_zoom=!option_zoom
+            break;
+        case 1: draw_text_transformed(180,180,"-"+options[1]+"-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+                gridAlpha+=0.1
+                if gridAlpha&gt;1
+                    gridAlpha = 0
+                }
+                break
+        case 2: draw_text_transformed(180,200,"-"+options[2]+"-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+                warningZone=!warningZone
+            }
+            break;
+        case 3: draw_text_transformed(180,220,"-back-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4])
+                menu=0
+            break;
+    }
+    draw_set_halign(fa_left)
 }
 </string>
           </argument>
@@ -2677,7 +2780,8 @@ path_delete(path)
             <string>///draw move dist over unit when not selecting any
 if menu=-1
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0
-if selected=noone{
+if selected=noone
+if warningZone{
     add_all_to_map()
     selected=instance_place(xx,yy,oUnit);
     if selected!=noone

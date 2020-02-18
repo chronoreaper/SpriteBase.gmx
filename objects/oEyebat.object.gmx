@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>event_inherited()
 
+idle = 1
 hp=2
 mhp=hp
 
