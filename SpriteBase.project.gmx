@@ -378,6 +378,7 @@
     <script>scripts\return_wep_sprite_eff.gml</script>
     <script>scripts\check_wep_dmg.gml</script>
     <script>scripts\return_attack_type.gml</script>
+    <script>scripts\return_attack_target.gml</script>
     <script>scripts\no_rotate_attack.gml</script>
     <script>scripts\return_skill_onhit_eff.gml</script>
     <script>scripts\return_skill_def_eff.gml</script>

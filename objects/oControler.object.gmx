@@ -671,9 +671,9 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
             {
             if (mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,xx+7.5,yy+7.5,false)
             &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0&amp;&amp;!place_meeting(xx,yy,oUnit))  
-            ||(c.x==xx&amp;&amp;c.y==yy)
+            ||(floor(c.x)==floor(xx)&amp;&amp;floor(c.y)==floor(yy))
             //NEW!
-            &amp;&amp; ds_grid_get(gridF1,clamp(floor(mouse_x/15),0,room_width/15),clamp(floor(mouse_y/15),0,room_height/15))&gt;-1    
+            &amp;&amp; ds_grid_get(gridF1,clamp(floor(xx/15),0,room_width/15),clamp(floor(yy/15),0,room_height/15))&gt;-1  
                 {
     
                 if c.mov&gt;=path_get_number(c.path)-1{
@@ -683,7 +683,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                        }
                    phase=1
                    }else {
-                   //message_create("too far")     
+                   //deselect     
                     phase=0
                     add_all_to_map()
                     if !global.mobile{
@@ -800,7 +800,9 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit)
                             &amp;&amp; inst!=noone
                             &amp;&amp; inst!=selected
-                            &amp;&amp; !object_is_ancestor(inst.object_index,oBlock){
+                            &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                            &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                            ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
                                 //good target
                             }
                             else
@@ -812,7 +814,9 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             }else if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit){
                                 if inst!=noone
                                 &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock){
+                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
                                     //good target
                                 }
                                 else if inst = noone{//target the ground
@@ -834,7 +838,9 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             }else if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit){
                                 if inst!=noone
                                 &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock){
+                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
                                     //good target
                                 }
                                 else 
@@ -848,7 +854,9 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                             if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit){
                                 if inst!=noone
                                 &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock){
+                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
                                     //good target
                                 }
                                 else if inst = noone{//target the ground
@@ -2021,6 +2029,8 @@ if phase=3{
             if (inst!=noone&amp;&amp; inst!=c &amp;&amp; !object_is_ancestor(inst.object_index,oBlock))
             || (inst = noone &amp;&amp;return_attack_type(c.unit)=1)
             || (inst = noone &amp;&amp;return_attack_type(c.unit)=3)
+            if(inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+            ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1)
             {
                 ix=x
                 iy=y
@@ -2739,7 +2749,7 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
         for (var j=-c.mov*15;j&lt;=c.mov*15;j+=15){
         if mp_grid_path(grid,path,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
         if path_get_number(path)-1&lt;=c.mov
-        if!place_meeting(c.x+i,c.y+j,oUnit){
+        if!place_meeting(c.x+i,c.y+j,oUnit)||instance_place(c.x+i,c.y+j,oUnit)=c{
             draw_set_colour(c_aqua)
             draw_set_alpha(0.5)
             draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
@@ -2864,15 +2874,22 @@ switch atk_type{
         if i!=0||j!=0{
             draw_set_colour(c_orange)
             var inst=instance_place(i+c.x,j+c.y,oUnit)
-            if inst!=noone
-            if !object_is_ancestor(inst.object_index,oBlock){
-                if c.pow&gt;0
-                draw_set_colour(c_red)
-                else draw_set_colour(c_lime)
-            }
-            draw_set_alpha(0.7)
-            draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
-            draw_set_alpha(1)
+            if inst!=noone{
+                if !object_is_ancestor(inst.object_index,oBlock)
+                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                    if c.pow&gt;0
+                    draw_set_colour(c_red)
+                    else draw_set_colour(c_lime)
+                    draw_set_alpha(0.7)
+                    draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
+                    draw_set_alpha(1)
+                }
+            }else{
+                draw_set_alpha(0.7)
+                draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
+                draw_set_alpha(1)
+                }
             }
         }
     }
