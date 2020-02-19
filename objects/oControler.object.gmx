@@ -767,7 +767,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         menuSel=0
     }
     else if phase=3{//attack   
-        if mouse_check_button_released(mb_left)
+        if (mouse_check_button_released(mb_left)&amp;&amp;ds_grid_get(gridF1,clamp(floor(mouse_x/15),0,room_width/15),clamp(floor(mouse_y/15),0,room_height/15))&gt;-1)
         ||keyboard_check_pressed(keys[4]){
             if ((abs(xx-c.x)+abs(yy-c.y))/15&lt;=0)
             //&amp;&amp;c.pow&gt;0
@@ -794,7 +794,8 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
                     } else message_create("Need Key")
                 } 
                 
-                if normalAttack{//normal attack
+                if normalAttack
+                {//normal attack
                     switch atk_type{
                         case 0:
                             if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit)
