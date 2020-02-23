@@ -26,8 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>depth=-2
-selection=-1
+selection=-99
 over = false
+confirm=false
 </string>
           </argument>
         </arguments>
@@ -50,7 +51,18 @@ over = false
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if oControler.controler=0{
+            <string>if over  
+{
+    if mouse_check_button_pressed(mb_left)&amp;&amp;global.mobile
+    {
+        if confirm
+            oNextFloor.selection = selection
+        else
+            confirm = true
+    }
+}
+
+if oControler.controler=0{
     if point_in_rectangle(device_mouse_x_to_gui(0),device_mouse_y_to_gui(0),
         x-sprite_get_width(sprite_index)/2,y-sprite_get_height(sprite_index)/2,
         x+sprite_get_width(sprite_index)/2,y+sprite_get_height(sprite_index)/2){
@@ -58,19 +70,22 @@ over = false
         }
     else {
         over = false
+        confirm = false
     }
 }
 
 if over  
 {
     if selection=-99
-        oNextFloor.des = ""
+        oNextFloor.des = "skips boNus"
     else
         oNextFloor.des = get_bonus_eff(selection,-1)
-    if mouse_check_button_released(mb_left)|| keyboard_check_pressed(oControler.keys[4]){
+        
+    if (!global.mobile&amp;&amp;mouse_check_button_released(mb_left))||keyboard_check_pressed(oControler.keys[4]){
         oNextFloor.selection = selection
     }
 }
+
 </string>
           </argument>
         </arguments>
@@ -129,15 +144,15 @@ draw_text(x,y+33,get_bonus_eff(selection,2))
 draw_sprite_ext(get_bonus_eff(selection,3),0,x,y+15,2,2,0,-1,1)
 draw_set_halign(fa_left)
 }
-
 else{
     draw_set_colour(c_orange)
-    if over
+    if over{
         draw_rectangle(x-sprite_get_width(sprite_index)/2,
         y-sprite_get_height(sprite_index)/2,
         x+sprite_get_width(sprite_index)/2-1,
         y+sprite_get_height(sprite_index)/2,
         false)
+    }
     draw_set_colour(c_white)
     draw_text(x,y-2,"skip boNus");
 }

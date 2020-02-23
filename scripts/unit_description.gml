@@ -34,6 +34,7 @@ switch arg_unit{
     
     //objects
     case oCoin:return       "USE TO SPEND ON BONUSES"
+    case oHealthPack:return "PICK UP TO HEAL 1 HP"
     case oChest:return      "USE A KEY TO UNLOCK"
     case oStairs:return     "END YOUR TURN ON THIS TO GO TO THE NEXT FLOOR"
     case oFire:return       "UNITS ON THIS TAKES 1 DAMAGE AT START OF TURN"

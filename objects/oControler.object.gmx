@@ -282,8 +282,8 @@ playerSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=1
-global.mobile=1
+global.production=0
+global.mobile=0
 global.vertical = 0//(room == room3)
 debugging=0
 debugObj=0
@@ -382,6 +382,31 @@ button[2]=0 //s
 button[3]=0 //d
 button[4]=0 //sel
 button[5]=0 //back
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///surfaces
+var ratio = 2
+globalvar mapRatio;
+mapRatio = ratio/15;
+map_surface = surface_create(room_width*mapRatio+1,room_height*mapRatio+1)
 </string>
           </argument>
         </arguments>
@@ -511,6 +536,17 @@ if selected!=noone{
             instance_destroy()
             audio_play_sound(sCoin,50,false)
         addStatus(1,selected,2,1)
+    }
+    
+    inst = instance_place(selected.x,selected.y,oHealthPack)
+    if inst!=noone{
+        with inst
+            instance_destroy()
+            audio_play_sound(sHeal,50,false)
+        selected.hp=min(selected.hp+1,selected.mhp)
+        var txt=instance_create(selected.x+7-23*dsin(-view_angle),selected.y+7-23*dcos(-view_angle),DmgWord);
+        txt.text="1"
+        txt.colour=c_lime
     }
     
     //stairs
@@ -2177,7 +2213,8 @@ if phase=3{
             if (inst!=noone&amp;&amp; inst!=c &amp;&amp; !object_is_ancestor(inst.object_index,oBlock))
             || (inst = noone &amp;&amp;return_attack_type(c.unit)=1)
             || (inst = noone &amp;&amp;return_attack_type(c.unit)=3)
-            if(inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+            if inst = noone
+            ||(inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
             ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1)
             {
                 ix=x
@@ -2845,7 +2882,7 @@ if menu=-1{
     }
     else if global.tutStairs = 1{
         message="Get to STAIRS to go to the next floor."
-        if (menu = NEXTFLOORMENU){
+        if (level &gt;1 ){
             global.tutStairs = 2
         }
     }
@@ -2858,6 +2895,61 @@ if message != ""{
     draw_text_ext(view_wview-103,7,message
     ,7,95)
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw_map
+if surface_exists(map_surface){
+    surface_set_target(map_surface);
+    if alarm_get(9)=1
+        draw_clear_alpha(c_white,0);
+
+    with (oObj){
+        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=0{
+            draw_set_colour(c_white)
+            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
+        }
+    }
+    with (oEvent){
+        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=0{
+            draw_set_colour(c_aqua)
+            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
+        }
+    }
+    with (oItem){
+        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=1{
+            draw_set_colour(c_orange)
+            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
+        }
+    }
+    with (oChar){
+        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=1{
+            draw_set_colour(oControler.playerColour[team])
+           draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
+        }
+    }
+    surface_reset_target()
+}else{
+    map_surface = surface_create(room_width*mapRatio+1,room_height*mapRatio+1)
+}
+draw_surface(map_surface,display_get_gui_width()-surface_get_width(map_surface)-2,20)
 </string>
           </argument>
         </arguments>
@@ -3186,7 +3278,7 @@ switch atk_area{
 /*
 -1 cant see
 0 visited
-0&amp;lt; visable
+0&lt;; visable
 */
 var px=x/15
 var py=y/15

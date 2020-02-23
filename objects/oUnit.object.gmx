@@ -515,18 +515,27 @@ if viewSprite&lt;0
 viewSprite=viewSprite%4
 }
 
+var shaderAlpha=dsin(((animation%60 + 1)/60)*360)+1
+
 var dir2=abs(dir+round(view_angle/90))
 if dir2&gt;=4
     dir2-=4
-if dir2=1||dir2=2
+if dir2=1||dir2=2{
     draw_weapon()
+    if oControler.selected=id
+    {
+        shader_set(shader1)
+        draw_weapon2(shaderAlpha)
+        shader_reset()
+    }
+}
     
 draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
 if oControler.selected=id
 {
 
     shader_set(shader1)
-    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1.0,1.0-c,-view_angle+wave,image_blend,dsin(((animation%60 + 1)/60)*360)+1)
+    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1.0,1.0-c,-view_angle+wave,image_blend,shaderAlpha)
     shader_reset()
 }
 //else
@@ -547,8 +556,15 @@ if oControler.selected=id
 }
 
 if dir2!=1
-if dir2!=2
+if dir2!=2{
     draw_weapon()
+    if oControler.selected=id
+    {
+        shader_set(shader1)
+        draw_weapon2(shaderAlpha)
+        shader_reset()
+    }
+}
 if findStatus(id,3)!=-1
     draw_sprite_ext(shieldSprite,0,x+7+ax,y+7+ay,size,size,-view_angle,-1,0.5)
 //loop through the status

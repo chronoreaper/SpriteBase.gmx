@@ -1,5 +1,6 @@
 //instance_activate_all()
 //show_debug_message("char"+string(instance_number(oChar)))
+
 var fin=1
 var ct=currentTurn
 var list=ds_list_create()
@@ -200,5 +201,4 @@ if fin=1{
          alarm[10]=1//currentTurn++;//next turn
     }
 }
-
 ds_list_destroy(list)

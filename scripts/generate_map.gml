@@ -10,7 +10,7 @@ var dir=irandom(3);
 var dist=2+irandom(3)//how long until a room
 var xx=round(width/2)
 var yy=round(height/2);
-var room_radius = 2+ceil(level/3)
+var room_radius = 4+ceil(level/5)
 var xmin = max(xx - (room_radius),1)
 var xmax = min(xx + (room_radius),room_width - 15)
 var ymin = max(yy - (room_radius),1)
@@ -135,11 +135,22 @@ repeat(min(floor(level/3)*2,8)){
 repeat(ceil(level/3)){
     rx = irandom_range(xmin,xmax)
     ry = irandom_range(ymin,ymax)
-    while (place_meeting(rx*15,ry*15,oEvent) || place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)<0){
+    while (place_meeting(rx*15,ry*15,oItem)||place_meeting(rx*15,ry*15,oEvent) || place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)<0){
         rx = irandom_range(xmin,xmax)
         ry = irandom_range(ymin,ymax)
     }
     var inst=instance_create(rx*15,ry*15,oCoin);
+}
+
+//create health pack
+repeat(ceil(level/2)){
+    rx = irandom_range(xmin,xmax)
+    ry = irandom_range(ymin,ymax)
+    while (place_meeting(rx*15,ry*15,oItem)||place_meeting(rx*15,ry*15,oEvent) || place_meeting(rx*15,ry*15,oUnit)||ds_grid_get(map,rx,ry)<0){
+        rx = irandom_range(xmin,xmax)
+        ry = irandom_range(ymin,ymax)
+    }
+    var inst=instance_create(rx*15,ry*15,oHealthPack);
 }
 
 
@@ -187,7 +198,9 @@ for (var i=0;i<width;i++)
     if ds_grid_get(map,i,j)>=0{
         s+=string(ds_grid_get(map,i,j))
         //if (i%4==0 && j%4==0)
-        if irandom(10)=0
+        if irandom(3)=0
+         tile_add(tilesprite2,15*(6+irandom(6)),15*5,15,15,i*15+15*irandom(1),j*15+15*irandom(1),100000)
+        if irandom(5)=0
          tile_add(tilesprite2,15*(1+irandom(9)),15*0,15,15,i*15+15*irandom(1),j*15+15*irandom(1),100000)
     }
 }

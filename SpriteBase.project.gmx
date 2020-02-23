@@ -222,6 +222,7 @@
       <sprite>sprites\herb</sprite>
       <sprite>sprites\key</sprite>
       <sprite>sprites\coin</sprite>
+      <sprite>sprites\healthPack</sprite>
     </sprites>
     <sprites name="eff">
       <sprite>sprites\spawn_eff</sprite>
@@ -386,6 +387,7 @@
     <script>scripts\return_skill_def_eff.gml</script>
     <script>scripts\get_eff.gml</script>
     <script>scripts\draw_weapon.gml</script>
+    <script>scripts\draw_weapon2.gml</script>
     <script>scripts\return_unit.gml</script>
     <script>scripts\return_unit_in_range.gml</script>
     <script>scripts\message_create.gml</script>
@@ -476,6 +478,7 @@
       <object>objects\oHerb</object>
       <object>objects\oKey</object>
       <object>objects\oCoin</object>
+      <object>objects\oHealthPack</object>
     </objects>
     <objects name="objects">
       <object>objects\oBuilding</object>

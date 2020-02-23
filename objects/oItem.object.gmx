@@ -54,7 +54,22 @@ name=""
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited()
+            <string>//event_inherited()
+///visiablility in fog
+if x&gt;=view_xview
+&amp;&amp; x&lt;=view_xview+view_wview
+&amp;&amp; y&gt;=view_yview+view_hview/2-view_wview/2
+&amp;&amp; y&lt;=view_yview+view_hview/2+view_wview/2
+{
+var cx=x
+var cy=y
+var d=1
+with oControler
+if ds_grid_get(gridF1,cx/15,cy/15)&lt;1
+    d=0
+visible=d||debugging
+}
+
 depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))+2
 if abs(xx-x)&gt;1
    x+=(xx-x)/3
