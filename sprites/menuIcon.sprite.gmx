@@ -28,5 +28,7 @@
     <frame index="5">images\menuIcon_5.png</frame>
     <frame index="6">images\menuIcon_6.png</frame>
     <frame index="7">images\menuIcon_7.png</frame>
+    <frame index="8">images\menuIcon_8.png</frame>
+    <frame index="9">images\menuIcon_9.png</frame>
   </frames>
 </sprite>

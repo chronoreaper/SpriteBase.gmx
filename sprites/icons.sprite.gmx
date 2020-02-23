@@ -31,5 +31,7 @@
     <frame index="8">images\icons_8.png</frame>
     <frame index="9">images\icons_9.png</frame>
     <frame index="10">images\icons_10.png</frame>
+    <frame index="11">images\icons_11.png</frame>
+    <frame index="12">images\icons_12.png</frame>
   </frames>
 </sprite>

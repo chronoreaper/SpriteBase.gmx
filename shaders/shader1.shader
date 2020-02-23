@@ -28,15 +28,28 @@ uniform float pixelW;
 
 void main()
 {
-    vec4 texColor = texture2D(gm_BaseTexture, v_vTexcoord);
+    /*vec2 offsetx;
+    offsetx.x = pixelW;
+    vec2 offsety;
+    offsety.y = pixelH;
     
-    if (texColor.r == 0.0)
-    if (texColor.g == 0.0)
-    if (texColor.b == 0.0){
-        texColor.r = 1.0;
-        texColor.g = 1.0;
-        texColor.b = 1.0;   
-        }
+    float alpha = texture2D(gm_BaseTexture, v_vTexcoord).a;
+    
+    alpha = max(alpha, texture2D(gm_BaseTexture, v_vTexcoord + offsetx).a);
+    alpha = max(alpha, texture2D(gm_BaseTexture, v_vTexcoord + offsetx).a);
+    alpha = max(alpha, texture2D(gm_BaseTexture, v_vTexcoord + offsetx).a);
+    alpha = max(alpha, texture2D(gm_BaseTexture, v_vTexcoord + offsetx).a);
+    
+    gl_FragColor =  v_vColour * texture2D(gm_BaseTexture, v_vTexcoord);
+    gl_FragColor.a = alpha;*/
+    
+    
+    vec4 texColor = texture2D(gm_BaseTexture, v_vTexcoord);
+
+    if (texColor.rgb == vec3(0.0,0.0,0.0)){   
+        texColor.rgb = vec3(1.0,1.0,1.0);   
+    }
+    
     gl_FragColor =  v_vColour * texColor;
 }
 

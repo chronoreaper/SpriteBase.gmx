@@ -261,6 +261,8 @@
       <sprite>sprites\mouse</sprite>
       <sprite>sprites\icons</sprite>
       <sprite>sprites\menuIcon</sprite>
+      <sprite>sprites\backIcon</sprite>
+      <sprite>sprites\nextIcon</sprite>
       <sprite>sprites\sprite199</sprite>
       <sprite>sprites\miniselectmenu</sprite>
       <sprite>sprites\menuBar</sprite>
@@ -417,6 +419,7 @@
     <object>objects\oControler</object>
     <objects name="menu">
       <object>objects\oCharCreation</object>
+      <object>objects\oBackButton</object>
       <object>objects\oBonusSelect</object>
     </objects>
     <objects name="Map Maker">
@@ -537,6 +540,9 @@
     <room>rooms\room2</room>
     <room>rooms\testRoom</room>
   </rooms>
+  <constants number="1">
+    <constant name="NEXTFLOORMENU">98</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

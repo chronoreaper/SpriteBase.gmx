@@ -86,6 +86,7 @@ wm=irandom(3)+5
 marker=0
 size=1
 
+animation = 0
 //shaders stuff
 /*upixelH = shader_get_uniform(shader1, "pixelH");
 upixelW = shader_get_uniform(shader1, "pixelW");
@@ -325,6 +326,9 @@ else if wave&lt;=0
             <kind>1</kind>
             <string>///set depth
 depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
+animation++
+if animation&gt;120
+    animation=0
 </string>
           </argument>
         </arguments>
@@ -516,15 +520,17 @@ if dir2&gt;=4
     dir2-=4
 if dir2=1||dir2=2
     draw_weapon()
+    
+draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
 if oControler.selected=id
 {
 
-    //shader_set(shader1)
-    //draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
-    //shader_reset()
+    shader_set(shader1)
+    draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1.0,1.0-c,-view_angle+wave,image_blend,dsin(((animation%60 + 1)/60)*360)+1)
+    shader_reset()
 }
 //else
-draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
+
 //draw inactive
 {
     //if !object_is_ancestor(object_index,oObj)
