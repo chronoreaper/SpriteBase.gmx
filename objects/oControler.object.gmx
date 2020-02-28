@@ -36,6 +36,8 @@ image_speed=0.1
 var width=room_width/15;
 var height=room_height/15;
 map=ds_grid_create(width,height)
+moveAtkArea=ds_grid_create(12,12)
+atkArea=ds_grid_create(6,6)
 level = 1
 playerColour[0]=make_colour_hsv(163, 240, 250);//close to blue
 playerColour[1]=c_lime
@@ -102,17 +104,7 @@ aiTurns=ds_map_create()
 ds_map_add(aiTurns,0,0)
 ds_map_add(aiTurns,1,-1)
 ds_map_add(aiTurns,2,-1)
-allyMatrix=ds_grid_create(3,3)
-ds_grid_clear(allyMatrix,0)
-// 0 = netrual , -1 = enemy, 1 = ally
-//0 = player 1
-//1 = enemy
-//2 = allies
-allyMatrix[# 0,2]=-1
-allyMatrix[# 2,0]=-1
 
-allyMatrix[# 1,2]=-1
-allyMatrix[# 2,1]=-1
 xx=x
 yy=y
 
@@ -282,7 +274,7 @@ playerSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=1
+global.production=0
 global.mobile=1
 global.vertical = 0//(room == room3)
 debugging=0
@@ -2021,12 +2013,15 @@ if level%5 = 0{
           <argument>
             <kind>1</kind>
             <string>ds_list_destroy(unitList)
+ds_list_destroy(bossList)
 ds_list_destroy(allUnits)
 mp_grid_destroy(grid)
 ds_grid_destroy(gridF1)
 ds_grid_destroy(gridF2)
+ds_grid_destroy(map)
+ds_grid_destroy(moveAtkArea)
+ds_grid_destroy(atkArea)
 ds_map_destroy(aiTurns)
-ds_grid_destroy(allyMatrix)
 </string>
           </argument>
         </arguments>
@@ -2837,6 +2832,7 @@ if surface_exists(map_surface){
     surface_set_target(map_surface);
     if alarm_get(9)=1
         draw_clear_alpha(c_white,0);
+        draw_clear_alpha(c_black,0.1);
 
     with (oObj){
         if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=0{

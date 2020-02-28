@@ -145,8 +145,8 @@ draw_sprite_ext(get_bonus_eff(selection,3),0,x,y+15,2,2,0,-1,1)
 draw_set_halign(fa_left)
 }
 else{
-    draw_set_colour(c_orange)
     if over{
+        draw_set_colour(c_orange)
         draw_rectangle(x-sprite_get_width(sprite_index)/2,
         y-sprite_get_height(sprite_index)/2,
         x+sprite_get_width(sprite_index)/2-1,
