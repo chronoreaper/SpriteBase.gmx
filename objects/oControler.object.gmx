@@ -36,8 +36,8 @@ image_speed=0.1
 var width=room_width/15;
 var height=room_height/15;
 map=ds_grid_create(width,height)
-moveAtkArea=ds_grid_create(12,12)
-atkArea=ds_grid_create(6,6)
+moveAtkArea=ds_grid_create(12*2+1,12*2+1)
+atkArea=ds_grid_create(6*2+1,6*2+1)
 level = 1
 playerColour[0]=make_colour_hsv(163, 240, 250);//close to blue
 playerColour[1]=c_lime
@@ -275,7 +275,7 @@ playerSelect=0
             <string>///debugging
 globalvar debugging;
 global.production=0
-global.mobile=1
+global.mobile=0
 global.vertical = 0//(room == room3)
 debugging=0
 debugObj=0
@@ -321,6 +321,11 @@ if global.mobile{
             <string>/// options
 option_zoom = true
 gridAlpha=0.1
+// Quick end
+// 0 - end when you attack
+// 1 - end after move/attack
+// 2 -  same as 0, but also ends after you move if there are no further actions
+quickEnd = 1
 warningZone = false || !global.mobile
 </string>
           </argument>
@@ -395,10 +400,59 @@ button[5]=0 //back
           <argument>
             <kind>1</kind>
             <string>///surfaces
-var ratio = 2
+var ratio = 1
 globalvar mapRatio;
 mapRatio = ratio/15;
 map_surface = surface_create(room_width*mapRatio+1,room_height*mapRatio+1)
+mapSize = 2
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///global variable
+global.shaderAlpha = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// auto turn
+autoTurn = false
+//tells if the user/ai gives an input
+actionFlag = false
+autoTargx = x
+autoTargy = y
 </string>
           </argument>
         </arguments>
@@ -792,12 +846,15 @@ if button[5] == 1{
             <string>///#2 when a unit is selected
 if selected!=noone
 if menu=-1
+if !actionFlag
 {
+selected.shader=shaderSelect
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     //instance_deactivate_all(true)
     instance_activate_region(view_xview,view_yview,view_wview,view_hview,true)
     instance_activate_region(selected.x-view_wview/2,selected.y-view_hview/2,view_wview,view_hview,true)
     var c=selected
+    getMoveAndAttackRange(c)
     if c.mov&lt;=0
     if phase=0
         phase=2
@@ -805,72 +862,19 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     if button[4] == 1
     if phase=0
     {
-    {
-        add_all_to_map()
-        mp_grid_clear_cell(grid,c.x/15,c.y/15)
-        
-            for (var i=0;i&lt;ds_list_size(unitList);i++){
-            var char=ds_list_find_value(unitList,i)
-                if instance_exists(char){
-                    mp_grid_clear_cell(grid,char.x/15,char.y/15)
-                }
-            }
-        
-        
-            if mp_grid_get_cell(grid,xx/15,yy/15)=0
+        var mGridW=ceil(ds_grid_width(moveAtkArea)/2)
+        var gridValue = ds_grid_get(moveAtkArea,(xx-c.x)/15+mGridW,(yy-c.y)/15+mGridW)
+        if (gridValue &gt; 0)
+        {
+            //if(gridValue%2 ==1)
             {
-            if (mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,xx+7.5,yy+7.5,false)
-            &amp;&amp;ds_grid_get(gridF1,xx/15,yy/15)&gt;=0&amp;&amp;!place_meeting(xx,yy,oUnit))  
-            ||(floor(c.x)==floor(xx)&amp;&amp;floor(c.y)==floor(yy))
-            //NEW!
-            &amp;&amp; ds_grid_get(gridF1,clamp(floor(xx/15),0,room_width/15),clamp(floor(yy/15),0,room_height/15))&gt;-1  
-                {
-    
-                if c.mov&gt;=path_get_number(c.path)-1{
-                    //check to snap to grid
-                   with c{
-                       path_start(path,3,path_action_stop,false)
-                       }
-                   phase=1
-                   }else 
-                   if 0{
-                   //deselect     
-                    phase=0
-                    add_all_to_map()
-                    if !global.mobile{
-                    xx=selected.xx
-                    yy=selected.yy
-                    }
-                    selected=noone 
-                   }     
-               }
-               else {
-                   //message_create("too far")     
-                    phase=0
-                    add_all_to_map()
-                    if !global.mobile{
-                    xx=selected.xx
-                    yy=selected.yy
-                    }
-                    selected=noone 
-                   } 
-               //else message_create("caNNot move there")
-            }else {
-                   //message_create("too far")     
-                    phase=0
-                    add_all_to_map()
-                    if !global.mobile{
-                    xx=selected.xx
-                    yy=selected.yy
-                    }
-                    selected=noone 
-                   } 
-            //else message_create("caNNot move there")
+                actionFlag = true;
+                autoTargx = xx
+                autoTargy = yy
+            }
         }
     }
-
-
-    if button[5] == 1{
+    if button[5] == 1{//go back
         if phase!=0{
             move_camera(c.x,c.y)
         }
@@ -903,151 +907,18 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
     }
     
     else if phase=1{
-    if global.mobile{
-        move_camera(c.x,c.y)
-        }
-    if (c.path_position=1)||path_get_length(c.path)&lt;1
-        ||path_get_number(c.path)&lt;1
-        {
-               phase=3
-               menuSel=0
-               add_all_to_map()
-               move_camera(c.x,c.y)
-        }
         menuSel=0
     }
     else if phase=3{//attack   
         if (button[4] == 1){
-            if ((abs(xx-c.x)+abs(yy-c.y))/15&lt;=0)
-            //&amp;&amp;c.pow&gt;0
-            {//end turn
-                alarm[0]=2
-                phase=2.1
-            }
-            else{
-                var atk_type = return_attack_type(c.unit)
-                var inst = instance_place(xx,yy,oUnit);
-                var normalAttack = 1
-                
-                if inst!=noone
-                &amp;&amp; inst.object_index == oLockDoor
-                &amp;&amp; ((abs(xx-c.x)+abs(yy-c.y))/15&lt;=1){
-                    show_debug_message("door")
-                    if (c.statusStr[findStatus(c,1)]&gt;0){
-                        addStatus(1,c,1,-1)
-                        alarm[0]=2
-                        phase=2.1
-                        with inst
-                            instance_destroy()
-                        normalAttack = 0
-                    } else message_create("Need Key")
-                } 
-                
-                if normalAttack
-                {//normal attack
-                    switch atk_type{
-                        case 0:
-                            if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit)
-                            &amp;&amp; inst!=noone
-                            &amp;&amp; inst!=selected
-                            &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
-                            &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                            ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                                //good target
-                            }
-                            else
-                                inst = noone
-                            break;
-                        case 1: //no move, attack anywhere
-                            if (c.x != c.xx || c.y != c.yy){//moved
-                                inst = noone
-                            }else if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit){
-                                if inst!=noone
-                                &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
-                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                                    //good target
-                                }
-                                else if inst = noone{//target the ground
-                                    inst = instance_create(xx,yy,oTempTarg)
-                                    phase=4
-                                    loop=1
-                                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
-                                    target=inst
-                                } else 
-                                    inst = noone 
-                            }
-                            else {
-                                inst = noone//not in range
-                                }
-                            break;
-                        case 2: //no move
-                            if (c.x != c.xx || c.y != c.yy){//moved
-                                inst = noone
-                            }else if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit){
-                                if inst!=noone
-                                &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
-                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                                    //good target
-                                }
-                                else 
-                                    inst = noone 
-                            }
-                            else {
-                                inst = noone//not in range
-                                }
-                            break
-                        case 3: //attack anywhere
-                            if (abs(xx-c.x)+abs(yy-c.y))/15&lt;=return_wep_range(c.unit){
-                                if inst!=noone
-                                &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
-                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                                    //good target
-                                }
-                                else if inst = noone{//target the ground
-                                    inst = instance_create(xx,yy,oTempTarg)
-                                    phase=4
-                                    loop=1
-                                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
-                                    target=inst
-                                } else 
-                                    inst = noone 
-                            }
-                            else {
-                                inst = noone//not in range
-                                }
-                            break;
-                    }//end switch
-                    if inst!=noone{
-                        phase=4
-                        loop=1
-                        selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
-                        target=inst
-                    } else     if ds_grid_get(gridF1,clamp(floor(mouse_x/15),0,room_width/15),clamp(floor(mouse_y/15),0,room_height/15))&gt;-1{
-                        if 0{
-                        with selected{
-                        x=xx
-                        y=yy
-                        xprevious=x
-                        yprevious=y
-                        move_camera(x,y)
-                        }
-                        phase=0
-                        if !global.mobile{
-                            xx=selected.xx
-                            yy=selected.yy
-                            }
-                        add_all_to_map()
-                        if selected.mov&lt;=0
-                            selected=noone
-                            }
-                        message_create("No target")
-                    }
+            var mGridW=ceil(ds_grid_width(moveAtkArea)/2)
+            var gridValue = ds_grid_get(moveAtkArea,(xx-c.x)/15+mGridW,(yy-c.y)/15+mGridW)
+            if (gridValue &gt; 0)
+            {
+                {
+                    actionFlag = true;
+                    autoTargx = xx
+                    autoTargy = yy
                 }
             }
         }
@@ -1056,83 +927,7 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 }
 
 if phase=4{//damage step
-var c=selected
-//var inst=instance_place(xx,yy,oUnit);
-if instance_exists(target){
-//attacking "animation"
-c.ax=cos(degtorad(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)))*5
-c.ay=-sin(degtorad(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)))*5
-c.alarm[0]=6
-c.dir=round(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)/90)
-//timer before next action
-//var k=return_multi_atk(c.item[c.wep]);
-if (selected.draw=0
-&amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)
-&amp;&amp;debugging=0{
-    alarm[0]=1
-    }
-else{
-    alarm[0]=max(13)
-    }
-//calculate dmg
 
-var atk_area=instance_create(target.x,target.y,oTempTarg);
-atk_area.depth=10000//-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
-var targ = target
-if return_wep_aoe(c.unit)&gt;0{
-    atk_area.x = c.x+7
-    atk_area.y = c.y+7
-    atk_area.sprite_index = return_wep_sprite_eff(c.unit)
-    atk_area.mask_index = return_wep_sprite_eff(c.unit)
-    atk_area.image_angle=round(point_direction(c.x,c.y,target.x,target.y)/90)*90
-
-    var eff=instance_create(c.x+7,c.y+7,oEff);
-    eff.sprite_index=return_wep_sprite_eff(c.unit)
-    eff.image_angle=round(point_direction(c.x,c.y,target.x,target.y)/90)*90+view_angle
-    eff.rotate=!no_rotate_attack(eff.sprite_index)
-    audio_play_sound(return_wep_sound(c.unit),50,false)
-    
-    with (atk_area)
-        targ = instance_place(x,y,oChar)
-}
-while (targ!=noone){
-    path_clear_points(path0)
-    if (targ!=c)
-    if calculate_damage(c,targ,0)&gt;0||true
-    {
-        //create eff
-        if (!(c.draw=0
-        &amp;&amp; ds_grid_get(gridF1,targ.x/15,targ.y/15)&lt;0.2)
-        ||debugging)
-        if return_wep_aoe(c.unit)=0{
-            var eff=instance_create(targ.x+7,targ.y+7,oEff);
-            eff.sprite_index=return_wep_sprite_eff(c.unit)
-            eff.image_angle=point_direction(c.x,c.y,
-                    targ.x,targ.y)+view_angle
-            eff.rotate=!no_rotate_attack(eff.sprite_index)
-            audio_play_sound(return_wep_sound(c.unit),50,false)
-        }
-    }
-    else{
-        //if (!(c.draw=0
-        //&amp;&amp; ds_grid_get(gridF1,targ.x/15,targ.y/15)&lt;0.2)
-        //||debugging)
-        //    audio_play_sound(sMiss,50,false)
-    }
-    instance_deactivate_object(targ)
-    with (atk_area)
-        targ = instance_place(x,y,oChar)
-}
-instance_activate_all()
-
-//end damage calc
-phase=5    
-}
-else{
-    alarm[0]=2
-    loop=1
-    phase=5
-}
 }//end phase 4
 }
 </string>
@@ -1326,6 +1121,7 @@ if !eventScene
             <string>///#4 ai
 if ds_map_find_value(aiTurns, currentTurn)&lt;0
 if menu=-1
+if !actionFlag
 {
     if selected=noone
     if !eventScene
@@ -1516,100 +1312,14 @@ if menu=-1
         }
         
         if close!=noone{
-            //move towards it
-             add_all_to_map()
-             mp_grid_clear_cell(grid,c.x/15,c.y/15)
-             mp_grid_clear_cell(grid,close.x/15,close.y/15)
-            if mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,close.x+7.5,close.y+7.5,false){//checks if can move there
-                //compares mac movement to how much you need to move
-                //if (abs(close.x-c.x)+abs(close.y-c.y))/15&gt;c.mov
-                if !false{//not traveling towards an item
-                    if floor(path_get_length(c.path)/15)&gt;c.mov
-                    {//travels furthest
-                        mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
-                            path_get_point_y(c.path,c.mov),false)
-                       }
-                    else {//travels one before target
-                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,
-                        path_get_point_x(c.path,path_get_number(c.path)-2),
-                        path_get_point_y(c.path,path_get_number(c.path)-2),false)
-                    }
-                }//travels towards an item
-                else{//traveling towards an item
-                    if floor(path_get_length(c.path)/15)&gt;c.mov
-                    {//travels furthest
-                        mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
-                            path_get_point_y(c.path,c.mov),false)
-                       }
-                    else {//travels totarget
-                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,
-                        path_get_point_x(c.path,path_get_number(c.path)-1),
-                        path_get_point_y(c.path,path_get_number(c.path)-1),false)
-                    }
-                }
-                //start the path
-                //see if visable or not
-                if (c.draw=0
-                &amp;&amp; ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
-                &amp;&amp;!debugging)
-                ||keyboard_check(vk_space)
-                {
-                    with c{
-                       //path_start(path,999,path_action_stop,false)
-                       x=floor(path_get_x(path,1)/15)*15
-                       y=floor(path_get_y(path,1)/15)*15
-                       }
-                       phase=3
-                       menuSel=0
-                       add_all_to_map()
-                   }
-                else{
-                    var cx
-                   var cy
-                    with c{
-                   path_start(path,3,path_action_stop,false)
-                   cx=floor(path_get_x(path,1)/15)*15
-                   cy=floor(path_get_y(path,1)/15)*15
-                   }
-                   //if you cant see the ai, camera moves to ai
-                   if debugging{
-                        xx=cx
-                        yy=cy
-                   }
-                   if (cx&lt;view_xview+15
-                    || cx&gt;view_xview+view_wview-15
-                    || cy&lt;view_yview+15
-                    || cy&gt;view_yview+view_hview-15)
-                    //if !ds_grid_get(gridF1,selected.x/15,selected.y/15)&lt;0.2||debugging=1
-                    //||debugging=1
-                    {
-                        xx=cx
-                        yy=cy
-                        x=xx
-                        y=yy
-                        move_camera(xx,yy)
-                        //oCamera.x = xx
-                        //oCamera.y = yy
-                    }
-                   phase=1
-                }
-            }else phase=3
-             
-        
-        }else{ 
+            actionFlag = true;
+            autoTargx = close.x
+            autoTargy = close.y
+        }
+        else{ 
             alarm[0]=1 
             phase=8}
     }//end phase 0
-    if phase=1{
-        var c=selected
-        if (c.path_position=1)||path_get_length(c.path)&lt;1
-            ||path_get_number(c.path)&lt;1
-            {
-                   phase=3
-                   menuSel=0
-                   add_all_to_map()
-            }
-    }
     else if phase=3{
         var command=-1;
         var c=selected
@@ -1674,10 +1384,9 @@ if menu=-1
                         alarm[0]=1
                     }
                     else{//attack
-                        loop=1
-                        selected.dir=floor(point_direction(selected.x+7,selected.y+7,close.x+7,close.y+7)/90)
-                        target=close
-                        phase=4
+                        actionFlag = true;
+                        autoTargx = xx
+                        autoTargy = yy
                     }
                 }else alarm[0]=1//ai 2 no attack
             }
@@ -1714,18 +1423,413 @@ if menu=-1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///#5 ai debug Timer
-if global.production=0
-if currentTurn=2{
-switch phase{
-    case 0: timePhase0++; break;
-    case 1: timePhase1++; break;
-    case 3: timePhase3++; break;
-    case 4: timePhase4++; break;
-    case 5: timePhase5++; break;
-    case 8: timePhase8++; break;
-    case 11: timePhase11++; break;
-}
+            <string>///#5 actual action move and attack
+//autoTargx = x
+//autoTargy = y
+if selected!=noone
+if menu=-1
+//if actionFlag
+{
+    var c = selected
+    
+    mp_grid_clear_cell(grid,c.x/15,c.y/15)
+    
+    //switch phase
+    {
+        if phase = 0{//select and move
+            if !actionFlag{
+                autoTargx = xx
+                autoTargy = yy
+            }
+        
+            var inst = instance_place(autoTargx,autoTargy,oUnit);
+            var startPath = false
+            add_all_to_map();
+            //clear ally and self
+            mp_grid_clear_cell(grid,c.x/15,c.y/15)
+            for (var i=0;i&lt;ds_list_size(unitList);i++){
+            var char=ds_list_find_value(unitList,i)
+                if instance_exists(char){
+                    mp_grid_clear_cell(grid,char.x/15,char.y/15)
+                }
+            }
+
+            //if ds_grid_get(gridF1,clamp(floor(xx/15),0,room_width/15),clamp(floor(yy/15),0,room_height/15))&gt;-1 //not shadow
+            if mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,autoTargx+7.5,autoTargy+7.5,false) // can move there
+            &amp;&amp; !place_meeting(autoTargx,autoTargy,oUnit)
+            {
+                if floor(path_get_length(c.path)/15)&lt;=c.mov
+                    startPath = true
+                else
+                {//travels furthest
+                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
+                        path_get_point_y(c.path,c.mov),false)
+                    while(floor(path_get_length(c.path)/15)&gt;=1&amp;&amp;
+                    place_meeting(path_get_point_x(c.path,path_get_number(c.path)-1)-7.5
+                    ,path_get_point_y(c.path,path_get_number(c.path)-1)-7.5,oUnit)){
+                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,
+                        path_get_point_x(c.path,path_get_number(c.path)-2),
+                        path_get_point_y(c.path,path_get_number(c.path)-2),false)
+                    }
+                }
+            }
+            else if inst!=noone//if targeting a unit
+            &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+            //&amp;&amp;((c.pow&gt;0 &amp;&amp; inst.team!=c.team)|| (c.pow&lt;0 &amp;&amp; inst.team ==c.team))
+            {
+                mp_grid_clear_cell(grid,autoTargx/15,autoTargy/15)// clear targeted cell
+                
+                var mGridW=ceil(ds_grid_width(moveAtkArea)/2)
+                var aGridW=ceil(ds_grid_width(atkArea)/2)
+                var movX = x
+                var movY = y
+                
+                if ds_grid_get(moveAtkArea,mGridW+(autoTargx-c.x)/15,mGridW+(autoTargy - c.y)/15)&gt;0
+                {
+                //targ is in atk range
+                //atk range is reletive to targ
+                    var weight = 0
+                    var moveDis = c.mov+1
+                    setAtkRange(c)
+                    setMoveRangeNeg(c)
+                    //based area around targ
+                    ds_grid_multiply_grid_region(atkArea,moveAtkArea,0,0,ds_grid_width(moveAtkArea),ds_grid_height(moveAtkArea),
+                    (c.x - inst.x)/15 + aGridW - mGridW ,(c.y - inst.y)/15 + aGridW - mGridW)
+                    
+                    for (var i=0;i&lt;ds_grid_width(atkArea);i++){
+                    var s = ""
+                    for (var j=0;j&lt;ds_grid_width(atkArea);j++){
+                            var gridValue;
+                            var xOff =(i-aGridW)*15
+                            var yOff =(j-aGridW)*15
+                            var dis = abs(inst.x+xOff-c.x)/15 + abs(inst.y+yOff-c.y)/15
+                            gridValue = ds_grid_get(atkArea,i,j)
+                            s = s  + string(gridValue)
+                            if (gridValue &lt; 0)//make sure you can move there
+                            if ((abs(xOff)+abs(yOff))/15&gt;=weight)//make it furthest atk range
+                            &amp;&amp;!instance_place(inst.x+xOff,inst.y+yOff,oUnit)==c
+                            || (dis &lt;= moveDis) //move the least
+                            ||instance_place(inst.x+xOff,inst.y+yOff,oUnit)==c
+                            if !place_meeting(inst.x+xOff,inst.y+yOff,oUnit)
+                            ||instance_place(inst.x+xOff,inst.y+yOff,oUnit)==c
+                            {
+                                movX = inst.x+xOff
+                                movY = inst.y+yOff
+                                weight = (abs(xOff)+abs(yOff))/15
+                                moveDis = dis
+                            }
+                        }
+                        //show_debug_message(s)
+                    }
+                }
+                else
+                {
+                //move closer to target
+                    mp_grid_path(grid,path0,c.x+7,c.y+7,autoTargx+7,autoTargy+7,false)    
+                    var pathLen = path_get_length(path0)
+                    setMoveRangeNeg(c)
+                    var s = ""
+                    for (var i=0;i&lt;ds_grid_width(moveAtkArea);i++){
+                        for (var j=0;j&lt;ds_grid_width(moveAtkArea);j++){
+                            var gridValue;
+                            var xOff =(i-mGridW)*15
+                            var yOff =(j-mGridW)*15
+                            gridValue = ds_grid_get(moveAtkArea,i,j)
+                            s= s + string(gridValue)
+                            if (gridValue &lt; 0){
+                                if !place_meeting(c.x+xOff,c.y+yOff,oUnit){
+                                    if mp_grid_path(grid,path0,c.x+xOff+7,c.y+yOff+7,autoTargx+7,autoTargy+7,false){
+                                        if path_get_length(path0)&lt;=pathLen{
+                                            pathLen = path_get_number(path0)
+                                            movX = c.x+xOff
+                                            movY = c.y+yOff
+                                            autoTargx = movX
+                                            autoTargy = movY
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //if actionFlag
+                        //show_debug_message(s)
+                        s = ""
+                    }
+                }
+                if !place_meeting(movX,movY,oUnit)
+                {
+                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,movX+7.5,movY+7.5,false)
+                    startPath = true
+                }
+                else{
+                    mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,c.x+7.5,c.y+7.5,false)
+                    startPath = true
+                }
+            }
+            else
+            {
+                actionFlag=false
+            }
+            
+            if actionFlag
+            &amp;&amp;(startPath)
+            {
+                if quickEnd = 1 //&amp;&amp; ds_map_find_value(aiTurns, currentTurn)&gt;=0
+                    actionFlag++;
+                if (c.draw=0
+                &amp;&amp; ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
+                &amp;&amp;!debugging)
+                ||keyboard_check(vk_space)
+                {
+                    with c{
+                       x=floor(path_get_x(path,1)/15)*15
+                       y=floor(path_get_y(path,1)/15)*15
+                       }
+                       phase=3
+                       menuSel=0
+                       add_all_to_map()
+                   }
+                else{
+                    var cx
+                   var cy
+                    with c{
+                   path_start(path,3,path_action_stop,false)
+                   cx=floor(path_get_x(path,1)/15)*15
+                   cy=floor(path_get_y(path,1)/15)*15
+                   }
+                   //if you cant see the ai, camera moves to ai
+                   if debugging{
+                        xx=cx
+                        yy=cy
+                   }
+                   if (cx&lt;view_xview+15
+                    || cx&gt;view_xview+view_wview-15
+                    || cy&lt;view_yview+15
+                    || cy&gt;view_yview+view_hview-15)
+                    //if !ds_grid_get(gridF1,selected.x/15,selected.y/15)&lt;0.2||debugging=1
+                    //||debugging=1
+                    {
+                        xx=cx
+                        yy=cy
+                        x=xx
+                        y=yy
+                        move_camera(xx,yy)
+                    }
+                   phase=1
+                }
+            }else{
+                actionFlag = 0
+            }
+            }//break;
+        if phase = 1{//://move -&gt; attack
+            if global.mobile{
+                move_camera(c.x,c.y)
+                }
+            if (c.path_position=1)||path_get_length(c.path)&lt;1
+                ||path_get_number(c.path)&lt;1
+                {
+                       phase=3
+                       add_all_to_map()
+                       move_camera(c.x,c.y)
+                       actionFlag--;
+                }
+            }//break;
+        if phase= 3{//://attack
+            var atk_type = return_attack_type(c.unit)
+            var inst = instance_place(autoTargx,autoTargy,oUnit);
+            var normalAttack = 1
+            
+            //check if self
+            if (inst = c){                    
+                alarm[0]=2
+                phase=2.1
+                normalAttack = 0
+            }
+            // check if door
+            if inst!=noone
+            &amp;&amp; inst.object_index == oLockDoor
+            &amp;&amp; ((abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=1){
+                show_debug_message("door")
+                if (c.statusStr[findStatus(c,1)]&gt;0){
+                    addStatus(1,c,1,-1)
+                    alarm[0]=2
+                    phase=2.1
+                    with inst
+                        instance_destroy()
+                    normalAttack = 0
+                } else message_create("Need Key")
+            } 
+            
+            if normalAttack
+                {//normal attack
+                    switch atk_type{
+                        case 0:
+                            if inst!=noone
+                            &amp;&amp;(abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit) 
+                            &amp;&amp; inst!=selected
+                            &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                            &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                            ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                                //good target
+                            }
+                            else
+                                inst = noone
+                            break;
+                        case 1: //no move, attack anywhere
+                            if (c.x != c.xx || c.y != c.yy){//moved
+                                inst = noone
+                            }else if inst!=noone{
+                                if (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                &amp;&amp; inst!=selected
+                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                                    //good target
+                                }
+                                else inst = noone//target the ground
+
+                            }
+                            else {
+                                inst = instance_create(xx,yy,oTempTarg)
+                                phase=4
+                                loop=1
+                                selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                                target=inst
+                                }
+                            break;
+                        case 2: //no move
+                            if (c.x != c.xx || c.y != c.yy){//moved
+                                inst = noone
+                            }else if inst!=noone
+                                &amp;&amp; (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                &amp;&amp; inst!=selected
+                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                                    //good target
+                            }
+                            else {
+                                inst = noone//not in range
+                                }
+                            break
+                        case 3: //attack anywhere
+                            if inst!=noone{
+                                if (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                &amp;&amp; inst!=selected
+                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                                    //good target
+                                }
+                                else 
+                                    inst = noone 
+                            }
+                            else {
+                                inst = instance_create(xx,yy,oTempTarg)
+                                phase=4
+                                loop=1
+                                selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                                target=inst
+                                }
+                            break;
+                    }//end switch
+                    if actionFlag
+                    &amp;&amp; inst!=noone
+                    {
+                        phase=4
+                        loop=1
+                        selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                        target=inst
+                    }else{
+                        alarm[0]=2
+                        phase=2.1
+                        actionFlag=false
+                    }
+                }
+                
+            }//break;
+        if phase = 4{//://damage calculation
+            var c=selected
+            if instance_exists(target){
+            //attacking "animation"
+            c.ax=cos(degtorad(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)))*5
+            c.ay=-sin(degtorad(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)))*5
+            c.alarm[0]=6
+            c.dir=round(point_direction(selected.x+7,selected.y+7,target.x+7,target.y+7)/90)
+            if (selected.draw=0
+            &amp;&amp; ds_grid_get(gridF1,target.x/15,target.y/15)&lt;0.2)
+            &amp;&amp;debugging=0{
+                alarm[0]=1
+                }
+            else{
+                alarm[0]=max(13)
+                }
+            //calculate dmg
+            
+            var atk_area=instance_create(target.x,target.y,oTempTarg);
+            atk_area.depth=10000//-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
+            var targ = target
+            if return_wep_aoe(c.unit)&gt;0{
+                atk_area.x = c.x+7
+                atk_area.y = c.y+7
+                atk_area.sprite_index = return_wep_sprite_eff(c.unit)
+                atk_area.mask_index = return_wep_sprite_eff(c.unit)
+                atk_area.image_angle=round(point_direction(c.x,c.y,target.x,target.y)/90)*90
+            
+                var eff=instance_create(c.x+7,c.y+7,oEff);
+                eff.sprite_index=return_wep_sprite_eff(c.unit)
+                eff.image_angle=round(point_direction(c.x,c.y,target.x,target.y)/90)*90+view_angle
+                eff.rotate=!no_rotate_attack(eff.sprite_index)
+                audio_play_sound(return_wep_sound(c.unit),50,false)
+                
+                with (atk_area)
+                    targ = instance_place(x,y,oChar)
+            }
+            while (targ!=noone){
+                path_clear_points(path0)
+                if (targ!=c)
+                if calculate_damage(c,targ,0)&gt;0||true
+                {
+                    //create eff
+                    if (!(c.draw=0
+                    &amp;&amp; ds_grid_get(gridF1,targ.x/15,targ.y/15)&lt;0.2)
+                    ||debugging)
+                    if return_wep_aoe(c.unit)=0{
+                        var eff=instance_create(targ.x+7,targ.y+7,oEff);
+                        eff.sprite_index=return_wep_sprite_eff(c.unit)
+                        eff.image_angle=point_direction(c.x,c.y,
+                                targ.x,targ.y)+view_angle
+                        eff.rotate=!no_rotate_attack(eff.sprite_index)
+                        audio_play_sound(return_wep_sound(c.unit),50,false)
+                    }
+                }
+                else{
+                    //if (!(c.draw=0
+                    //&amp;&amp; ds_grid_get(gridF1,targ.x/15,targ.y/15)&lt;0.2)
+                    //||debugging)
+                    //    audio_play_sound(sMiss,50,false)
+                }
+                instance_deactivate_object(targ)
+                with (atk_area)
+                    targ = instance_place(x,y,oChar)
+            }
+            instance_activate_all()
+            
+            //end damage calc
+            phase=5  
+            actionFlag=false  
+            }
+            else{
+                alarm[0]=2
+                loop=1
+                phase=5
+                actionFlag=false
+            }
+        }//    break;
+        /*default: 
+            actionFlag = false
+            break;*/
+    }
+    getMoveAndAttackRange(c)
 }
 </string>
           </argument>
@@ -1955,10 +2059,15 @@ if psudoRight=30{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///map activation when turn ends
-/*if alarm_get(0)=1{
-    instance_activate_all()
-    alarm[9]=2
+            <string>///audio
+if level%5 = 0{
+    if audio_is_playing(TempBGM3){
+        audio_stop_sound(TempBGM3)
+        audio_play_sound(TempBGM2,100,true)
+    }
+}else if audio_is_playing(TempBGM2){
+    audio_stop_sound(TempBGM2)
+    audio_play_sound(TempBGM3,100,true)
 }
 </string>
           </argument>
@@ -1980,15 +2089,20 @@ if psudoRight=30{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///audio
-if level%5 = 0{
-    if audio_is_playing(TempBGM3){
-        audio_stop_sound(TempBGM3)
-        audio_play_sound(TempBGM2,100,true)
-    }
-}else if audio_is_playing(TempBGM2){
-    audio_stop_sound(TempBGM2)
-    audio_play_sound(TempBGM3,100,true)
+            <string>///global variable
+global.shaderAlpha++
+if global.shaderAlpha&gt;120
+    global.shaderAlpha = 0
+    
+if global.production=0
+if ds_map_find_value(aiTurns, currentTurn)&lt;0{
+switch phase{
+    case 0: timePhase0++; break;
+    case 1: timePhase1++; break;
+    case 3: timePhase3++; break;
+    case 4: timePhase4++; break;
+    case 5: timePhase5++; break;
+}
 }
 </string>
           </argument>
@@ -2340,6 +2454,65 @@ selected=temp
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///draw_map
+if surface_exists(map_surface){
+    surface_set_target(map_surface);
+    if alarm_get(9)=1
+        draw_clear_alpha(c_white,0);
+        //draw_clear_alpha(c_black,0.3);
+
+    with (oObj){
+        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=0{
+            draw_set_colour(c_white)
+            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
+        }
+    }
+    with (oEvent){
+        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=0{
+            draw_set_colour(c_aqua)
+            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
+        }
+    }
+    with (oItem){
+        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=1{
+            draw_set_colour(c_orange)
+            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
+        }
+    }
+    with (oChar){
+        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=1{
+            draw_set_colour(oControler.playerColour[team])
+           draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
+        }
+    }
+    surface_reset_target()
+}else{
+    map_surface = surface_create(room_width*mapRatio+1,room_height*mapRatio+1)
+}
+var dist = point_distance(0,0,room_width/15,room_height/15)
+draw_surface_ext(map_surface,display_get_gui_width()-surface_get_width(map_surface)*2-2-dcos(view_angle)*dist*0,
+                            2+surface_get_height(map_surface)/2+dsin(view_angle)*dist*0,
+                            mapSize,mapSize,view_angle*0,-1,1)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///#3 draw message
 if logVisable&gt;0
 if global.production=0
@@ -2409,14 +2582,11 @@ draw_text(2,10,"Floor: "+string(level))
 draw_text(2,20,"TURN: "+string(turnsSurvive))
 draw_sprite(coin,0,5,32)
 draw_text(13,30,string(playerGold[0]))
-if global.production=2{
+if global.production=0{
 draw_set_colour(c_fuchsia)
 draw_set_font(pixelFont)
 draw_set_alpha(1)
-//draw_text(200,10,"loop: "+string(score))
-draw_text(2,10,"time: "+string(hour)+":"+string(minu)+"0")
-draw_text(2,20,"turNs survived: "+string(turnsSurvive))
-draw_text(2,30,string("RNG: "+string(randNum[randPos])))
+draw_text(2,130,"Current Phase" +string(phase))
 draw_text(2,50,"uNit to move: "+string(unitLeft)+"/"+string(ds_list_size(unitList)))
 var over=instance_place(xx,yy,oUnit)
 if over!=noone
@@ -2428,8 +2598,7 @@ draw_text(2,90,"Phase MoviNg: "+string(timePhase1/30))
 draw_text(2,100,"Phase AttackiNg: "+string(timePhase3/30))
 draw_text(2,110,"AttackiNg1: "+string(timePhase4/30))
 draw_text(2,120,"AttackiNg2: "+string(timePhase5/30))
-draw_text(2,130,"Phase skill: "+string(timePhase11/30))
-draw_text(2,140,"using skill: "+string(timePhase8/30))
+draw_text(2,140,"action flag: "+string(actionFlag))
 }
 
 draw_set_font(pixelBlock)
@@ -2811,62 +2980,6 @@ if message != ""{
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw_map
-if surface_exists(map_surface){
-    surface_set_target(map_surface);
-    if alarm_get(9)=1
-        draw_clear_alpha(c_white,0);
-        draw_clear_alpha(c_black,0.1);
-
-    with (oObj){
-        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=0{
-            draw_set_colour(c_white)
-            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
-        }
-    }
-    with (oEvent){
-        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=0{
-            draw_set_colour(c_aqua)
-            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
-        }
-    }
-    with (oItem){
-        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=1{
-            draw_set_colour(c_orange)
-            draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
-        }
-    }
-    with (oChar){
-        if ds_grid_get(oControler.gridF1,x/15,y/15)&gt;=1{
-            draw_set_colour(oControler.playerColour[team])
-           draw_rectangle(x*mapRatio,y*mapRatio,x*mapRatio+15*mapRatio-1,y*mapRatio+15*mapRatio-1,false)
-        }
-    }
-    surface_reset_target()
-}else{
-    map_surface = surface_create(room_width*mapRatio+1,room_height*mapRatio+1)
-}
-draw_surface(map_surface,display_get_gui_width()-surface_get_width(map_surface)-2,20)
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -2939,15 +3052,18 @@ for (var i=floor(view_xview/15)*15-15;i&lt;floor(view_xview/15)*15+view_wview+15
     draw_line(i-1,0,i-1,room_height)
 draw_set_alpha(1)
 //draw selected
+if selected!=noone{
+path_drawer(selected.path)
+}
 if selected!=noone
 if phase=0
-if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging==1
+{
     /*draw_set_colour(c_yellow)
     draw_set_alpha(0.5)
     draw_rectangle(selected.x,selected.y,selected.x+13,selected.y+13,false)
     draw_set_alpha(1)*/
 var c=selected
-var path=path_add()
 mp_grid_clear_cell(grid,c.x/15,c.y/15)
 
 for (var i=0;i&lt;ds_list_size(unitList);i++){
@@ -2957,9 +3073,49 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
         }
     }
 
-
+draw_set_alpha(0.7)
 //show where you can move
-    for (var i=-c.mov*15;i&lt;=c.mov*15;i+=15){
+var mGridW=ceil(ds_grid_width(moveAtkArea)/2)
+for (var j=0;j&lt;ds_grid_width(moveAtkArea);j++)
+{
+    for (var i=0;i&lt;ds_grid_width(moveAtkArea);i++){
+        var gridValue;
+        var xOff =(i-mGridW)*15
+        var yOff =(j-mGridW)*15
+        gridValue = ds_grid_get(moveAtkArea,i,j)
+        if (gridValue &gt; 0)
+        {
+            var inst = instance_place(c.x+xOff,c.y+yOff,oUnit)
+            if(gridValue%2 ==0)//attack only
+            {
+                if !place_meeting(c.x+xOff,c.y+yOff,oBlock){
+                    if c.pow&gt;0{
+                        if (inst=noone||inst.team!=c.team){
+                            draw_set_colour(c_red)
+                            draw_rectangle(xOff+c.x,yOff+c.y,xOff+c.x+13,yOff+c.y+13,false)
+                            //inst.shader=shaderAttack
+                        }
+                    }
+                    else{
+                        if (inst=noone||inst.team == c.team){
+                            //inst.shader=shaderSupport
+                            draw_set_colour(c_lime)
+                            draw_rectangle(xOff+c.x,yOff+c.y,xOff+c.x+13,yOff+c.y+13,false)
+                        }
+                    }
+                }
+            }
+            else if !place_meeting(c.x+xOff,c.y+yOff,oUnit)||inst=c//move or move and attack
+            {
+                draw_set_colour(c_aqua)
+                draw_rectangle(xOff+c.x,yOff+c.y,xOff+c.x+13,yOff+c.y+13,false)
+            }
+        }
+    }
+}
+draw_set_alpha(1)
+path_drawer(c.path)
+/*    for (var i=-c.mov*15;i&lt;=c.mov*15;i+=15){
         for (var j=-c.mov*15;j&lt;=c.mov*15;j+=15){
         if mp_grid_path(grid,path,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
         if path_get_number(path)-1&lt;=c.mov
@@ -2977,8 +3133,7 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
             }
         }
     }
-
-path_delete(path)
+*/
 
 }
 </string>
@@ -3011,7 +3166,6 @@ if warningZone{
     if selected!=noone
     if selected.draw&gt;0{
         var c=selected
-        var path=path_add()
         mp_grid_clear_cell(grid,c.x/15,c.y/15)
         
         for (var i=0;i&lt;ds_list_size(unitList);i++){
@@ -3027,8 +3181,8 @@ if warningZone{
         var range=c.mov
         for (var i=-range*15;i&lt;=range*15;i+=15){
             for (var j=-range*15;j&lt;=range*15;j+=15){
-            if mp_grid_path(grid,path,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
-            if path_get_number(path)-1&lt;=c.mov
+            if mp_grid_path(grid,path0,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
+            if path_get_number(path0)-1&lt;=c.mov
             if!place_meeting(c.x+i,c.y+j,oUnit){
                 draw_sprite_ext(box7x7,0,i+c.x+3,j+c.y+3,1,1,0,c_aqua,0.5)
                 //draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
@@ -3036,7 +3190,6 @@ if warningZone{
             }
         }
         //draw_set_alpha(1)
-        path_delete(path)
         //special Cases
         if c.object_index=oCampfire
             draw_sprite_ext(AOE_range1s,0,c.x,c.y,1,1,0,c_lime,0.5)
@@ -3086,20 +3239,25 @@ switch atk_type{
         for (var j=-range*15;j&lt;=range*15;j+=15){
         if abs(i/15)+abs(j/15)&lt;=range
         if i!=0||j!=0{
-            draw_set_colour(c_orange)
             var inst=instance_place(i+c.x,j+c.y,oUnit)
             if inst!=noone{
                 if !object_is_ancestor(inst.object_index,oBlock)
                 &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
                 ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                    if c.pow&gt;0
-                    draw_set_colour(c_red)
-                    else draw_set_colour(c_lime)
+                    if c.pow&gt;0{
+                        draw_set_colour(c_red)
+                        inst.shader=shaderAttack
+                    }
+                    else{
+                        inst.shader=shaderSupport
+                        draw_set_colour(c_lime)
+                    }
                     draw_set_alpha(0.7)
                     draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
                     draw_set_alpha(1)
                 }
             }else{
+                draw_set_colour(c_orange)
                 draw_set_alpha(0.7)
                 draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
                 draw_set_alpha(1)

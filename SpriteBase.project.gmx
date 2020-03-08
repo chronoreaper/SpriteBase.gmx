@@ -354,6 +354,7 @@
     <sprite>sprites\box14x14</sprite>
     <sprite>sprites\box7x7</sprite>
     <sprite>sprites\sprite47</sprite>
+    <sprite>sprites\controlerArrow</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\tilesprite</background>
@@ -363,9 +364,16 @@
     <background>background\background5</background>
   </backgrounds>
   <paths name="paths">
+    <path>paths\path1</path>
     <path>paths\path0</path>
   </paths>
   <scripts name="scripts">
+    <scripts name="Auto move scripts">
+      <script>scripts\setAtkRange.gml</script>
+      <script>scripts\clearAllyAndSelf.gml</script>
+      <script>scripts\setMoveRangeNeg.gml</script>
+    </scripts>
+    <script>scripts\getMoveAndAttackRange.gml</script>
     <script>scripts\add_all_to_map.gml</script>
     <script>scripts\addStatus.gml</script>
     <script>scripts\findStatus.gml</script>
@@ -413,7 +421,10 @@
     <script>scripts\move_camera.gml</script>
   </scripts>
   <shaders name="shaders">
-    <shader type="GLSLES">shaders\shader1.shader</shader>
+    <shader type="GLSLES">shaders\shaderSelect.shader</shader>
+    <shader type="GLSLES">shaders\shaderAttack.shader</shader>
+    <shader type="GLSLES">shaders\shaderSupport.shader</shader>
+    <shader type="GLSLES">shaders\shaderCanSelect.shader</shader>
   </shaders>
   <objects name="objects">
     <object>objects\oGenerateMap</object>

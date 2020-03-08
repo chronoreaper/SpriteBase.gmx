@@ -86,7 +86,7 @@ wm=irandom(3)+5
 marker=0
 size=1
 
-animation = 0
+shader = -1
 //shaders stuff
 /*upixelH = shader_get_uniform(shader1, "pixelH");
 upixelW = shader_get_uniform(shader1, "pixelW");
@@ -120,6 +120,7 @@ texelH = texture_get_texel_height(sprite_get_texture(sprite_index,0));
 if findStatus(id,2)&gt;=0{
     instance_create(x,y,oCoin)
 }
+path_delete(path)
 </string>
           </argument>
         </arguments>
@@ -307,6 +308,29 @@ else if wave&lt;=0
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>shader=-1
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -326,9 +350,6 @@ else if wave&lt;=0
             <kind>1</kind>
             <string>///set depth
 depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
-animation++
-if animation&gt;120
-    animation=0
 </string>
           </argument>
         </arguments>
@@ -360,7 +381,7 @@ if hp&lt;=0{
     inst.image_angle=-view_angle
     if path_speed&gt;0
         with inst
-            path_start(path0,5,0,0)
+            path_start(path1,5,0,0)
     instance_destroy()
 }
 if dmg!=hp
@@ -459,6 +480,10 @@ if draw&gt;0
     || oControler.selected=id
     //if oControler.phase=0
     {
+        if oControler.selected=noone
+            shader = shaderCanSelect
+        else
+            shader = shaderSelect
         draw_sprite_ext(box14x14,0,x,y,1,1,0,c_yellow,0.5)
     }
 }
@@ -515,26 +540,26 @@ if viewSprite&lt;0
 viewSprite=viewSprite%4
 }
 
-var shaderAlpha=dsin(((animation%60 + 1)/60)*360)+1
+var shaderAlpha=dsin(((global.shaderAlpha%60 + 1)/60)*360)+1
 
 var dir2=abs(dir+round(view_angle/90))
 if dir2&gt;=4
     dir2-=4
 if dir2=1||dir2=2{
     draw_weapon()
-    if oControler.selected=id
+    if shader!=-1
     {
-        shader_set(shader1)
+        shader_set(shader)
         draw_weapon2(shaderAlpha)
         shader_reset()
     }
 }
     
 draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1,1-c,-view_angle+wave,image_blend,1)
-if oControler.selected=id
+if shader!=-1
 {
 
-    shader_set(shader1)
+    shader_set(shader)
     draw_sprite_ext(sprite_index+viewSprite,image_index,x+7+ax,y+7+ay,1.0,1.0-c,-view_angle+wave,image_blend,shaderAlpha)
     shader_reset()
 }
@@ -558,9 +583,9 @@ if oControler.selected=id
 if dir2!=1
 if dir2!=2{
     draw_weapon()
-    if oControler.selected=id
+    if shader!=-1
     {
-        shader_set(shader1)
+        shader_set(shader)
         draw_weapon2(shaderAlpha)
         shader_reset()
     }

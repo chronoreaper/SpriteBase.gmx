@@ -33,8 +33,8 @@ switch arg_eff{
             var posx = (arg_targ.x + (15*c + 4)*dcos(arg_source.dir*90))
             var posy = (arg_targ.y - (15*c + 4)*dsin(arg_source.dir*90))
             with arg_targ{
-                mp_linear_path(path0,posx,posy,1,0)
-                path_start(path0,5,0,0)
+                mp_linear_path(path1,posx,posy,1,0)
+                path_start(path1,5,0,0)
             }
             arg_targ.xx = posx
             arg_targ.yy = posy
@@ -54,8 +54,8 @@ switch arg_eff{
             var posx = round((arg_targ.x + 15*c*dcos(arg_source.dir*90))/15)*15
             var posy = round((arg_targ.y - 15*c*dsin(arg_source.dir*90))/15)*15
             with arg_targ{
-                mp_linear_path(path0,posx,posy,1,0)
-                path_start(path0,5,0,0)
+                mp_linear_path(path1,posx,posy,1,0)
+                path_start(path1,5,0,0)
                 }
             arg_targ.xx = posx
             arg_targ.yy = posy

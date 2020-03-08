@@ -1,6 +1,6 @@
 //instance_activate_all()
 //show_debug_message("char"+string(instance_number(oChar)))
-
+actionFlag=false  
 var fin=1
 var ct=currentTurn
 var list=ds_list_create()
@@ -20,7 +20,7 @@ for (var i=0;i<ds_list_size(unitList);i++){
 if fin=1{
     turnTime=0
     currentNumber=0
-    if currentTurn>=0{
+    if ds_map_find_value(aiTurns, currentTurn)>=0{
     timePhase0=0
     timePhase1=0
     timePhase3=0
