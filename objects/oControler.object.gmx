@@ -1523,9 +1523,10 @@ if menu=-1
                                 var dis = (abs(inst.x+xOff-c.x) + abs(inst.y+yOff-c.y))/15//c.mov
                                 var disTarg = (abs(xOff)+abs(yOff))/15//return_wep_range(c.unit)
                                 var disPath = (abs(inst.x+xOff-prevX) + abs(inst.y+yOff-prevY))/15
-                                var try = disPath * global.mobile
-                                + (return_wep_range(c.unit) - disTarg
-                                ) * !global.mobile
+                                var try = disPath 
+                                //* global.mobile
+                                //+ (return_wep_range(c.unit) - disTarg
+                                //) * !global.mobile
                                 gridValue = ds_grid_get(atkArea,i,j)
                                 s = s  + string(gridValue)
                                 if (gridValue &lt; 0)//make sure you can move there
@@ -1611,6 +1612,8 @@ if menu=-1
             {
                 if quickEnd || ds_map_find_value(aiTurns, currentTurn)&lt;0
                     actionFlag++;
+                if place_meeting(autoTargx,autoTargy,oUnit) &amp;&amp; !quickEnd
+                    actionFlag++
                 if (c.draw=0
                 &amp;&amp; ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
                 &amp;&amp;!debugging)
@@ -1778,8 +1781,10 @@ if menu=-1
                             selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
                             target=inst
                         }else{
-                            alarm[0]=2
-                            phase=2.1
+                            if ds_map_find_value(aiTurns, currentTurn)&lt;0{
+                                alarm[0]=2
+                                phase=2.1
+                            }
                             actionFlag=false
                         }
                     }
