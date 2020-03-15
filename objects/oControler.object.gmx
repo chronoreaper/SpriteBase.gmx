@@ -325,7 +325,7 @@ gridAlpha=0.1
 // 0 - end when you attack
 // 1 - end after move/attack
 // 2 -  same as 0, but also ends after you move if there are no further actions
-quickEnd = 1
+quickEnd = 1 &amp;&amp; global.mobile
 warningZone = false || !global.mobile
 </string>
           </argument>
@@ -866,7 +866,15 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
         var gridValue = ds_grid_get(moveAtkArea,(xx-c.x)/15+mGridW,(yy-c.y)/15+mGridW)
         if (gridValue &gt; 0)
         {
-            //if(gridValue%2 ==1)
+            if global.mobile{
+                if autoTargx==xx&amp;&amp;autoTargy=yy{
+                    actionFlag = true;
+                }else{
+                    autoTargx = xx
+                    autoTargy = yy
+                }
+            }
+            else
             {
                 actionFlag = true;
                 autoTargx = xx
@@ -1093,6 +1101,9 @@ if !eventScene
     if inst.team=currentTurn
     if inst.wait=0{
         selected=inst
+        autoTargx = xx
+        autoTargy = yy
+        actionFlag = false
         if controler=1 || global.mobile=1
         move_camera(selected.x,selected.y)
     }
@@ -1122,6 +1133,7 @@ if !eventScene
 if ds_map_find_value(aiTurns, currentTurn)&lt;0
 if menu=-1
 if !actionFlag
+if oCamera.x = oCamera.xx &amp;&amp; oCamera.y == oCamera.yy
 {
     if selected=noone
     if !eventScene
@@ -1431,13 +1443,13 @@ if menu=-1
 //if actionFlag
 {
     var c = selected
-    
+    var aiTurn = (ds_map_find_value(aiTurns, currentTurn)&gt;0)
     mp_grid_clear_cell(grid,c.x/15,c.y/15)
     
     //switch phase
     {
         if phase = 0{//select and move
-            if !actionFlag{
+            if !actionFlag &amp;&amp; ! global.mobile{
                 autoTargx = xx
                 autoTargy = yy
             }
@@ -1455,9 +1467,9 @@ if menu=-1
             }
 
             //if ds_grid_get(gridF1,clamp(floor(xx/15),0,room_width/15),clamp(floor(yy/15),0,room_height/15))&gt;-1 //not shadow
-            if mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,autoTargx+7.5,autoTargy+7.5,false) // can move there
-            &amp;&amp; !place_meeting(autoTargx,autoTargy,oUnit)
+            if !place_meeting(autoTargx,autoTargy,oUnit)
             {
+                mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,autoTargx+7.5,autoTargy+7.5,false) // can move there
                 if floor(path_get_length(c.path)/15)&lt;=c.mov
                     startPath = true
                 else
@@ -1471,60 +1483,84 @@ if menu=-1
                         path_get_point_x(c.path,path_get_number(c.path)-2),
                         path_get_point_y(c.path,path_get_number(c.path)-2),false)
                     }
+                    if floor(path_get_length(c.path)/15)&gt;=1
+                        startPath = true
                 }
             }
             else if inst!=noone//if targeting a unit
             &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
             //&amp;&amp;((c.pow&gt;0 &amp;&amp; inst.team!=c.team)|| (c.pow&lt;0 &amp;&amp; inst.team ==c.team))
-            {
-                mp_grid_clear_cell(grid,autoTargx/15,autoTargy/15)// clear targeted cell
+            {                
+                //mp_grid_clear_cell(grid,autoTargx/15,autoTargy/15)// clear targeted cell
                 
                 var mGridW=ceil(ds_grid_width(moveAtkArea)/2)
                 var aGridW=ceil(ds_grid_width(atkArea)/2)
-                var movX = x
-                var movY = y
+                var movX = c.x
+                var movY = c.y
                 
                 if ds_grid_get(moveAtkArea,mGridW+(autoTargx-c.x)/15,mGridW+(autoTargy - c.y)/15)&gt;0
+                &amp;&amp; inst!=c
                 {
                 //targ is in atk range
                 //atk range is reletive to targ
-                    var weight = 0
+                    var prevX = path_get_point_x(c.path,path_get_number(c.path)-1)
+                    var prevY = path_get_point_y(c.path,path_get_number(c.path)-1) 
+                    var weight = 99
                     var moveDis = c.mov+1
+                    var pathDis = c.mov+1
                     setAtkRange(c)
                     setMoveRangeNeg(c)
                     //based area around targ
                     ds_grid_multiply_grid_region(atkArea,moveAtkArea,0,0,ds_grid_width(moveAtkArea),ds_grid_height(moveAtkArea),
-                    (c.x - inst.x)/15 + aGridW - mGridW ,(c.y - inst.y)/15 + aGridW - mGridW)
-                    
-                    for (var i=0;i&lt;ds_grid_width(atkArea);i++){
-                    var s = ""
-                    for (var j=0;j&lt;ds_grid_width(atkArea);j++){
-                            var gridValue;
-                            var xOff =(i-aGridW)*15
-                            var yOff =(j-aGridW)*15
-                            var dis = abs(inst.x+xOff-c.x)/15 + abs(inst.y+yOff-c.y)/15
-                            gridValue = ds_grid_get(atkArea,i,j)
-                            s = s  + string(gridValue)
-                            if (gridValue &lt; 0)//make sure you can move there
-                            if ((abs(xOff)+abs(yOff))/15&gt;=weight)//make it furthest atk range
-                            &amp;&amp;!instance_place(inst.x+xOff,inst.y+yOff,oUnit)==c
-                            || (dis &lt;= moveDis) //move the least
-                            ||instance_place(inst.x+xOff,inst.y+yOff,oUnit)==c
-                            if !place_meeting(inst.x+xOff,inst.y+yOff,oUnit)
-                            ||instance_place(inst.x+xOff,inst.y+yOff,oUnit)==c
-                            {
-                                movX = inst.x+xOff
-                                movY = inst.y+yOff
-                                weight = (abs(xOff)+abs(yOff))/15
-                                moveDis = dis
+                    (c.x - inst.x)/15 + aGridW - mGridW ,(c.y - inst.y)/15 + aGridW - mGridW) 
+                    {
+                        for (var i=0;i&lt;ds_grid_width(atkArea);i++){
+                        var s = ""
+                            for (var j=0;j&lt;ds_grid_width(atkArea);j++){
+                                var gridValue;
+                                var xOff =(i-aGridW)*15
+                                var yOff =(j-aGridW)*15
+                                var dis = (abs(inst.x+xOff-c.x) + abs(inst.y+yOff-c.y))/15//c.mov
+                                var disTarg = (abs(xOff)+abs(yOff))/15//return_wep_range(c.unit)
+                                var disPath = (abs(inst.x+xOff-prevX) + abs(inst.y+yOff-prevY))/15
+                                var try = disPath * global.mobile
+                                + (return_wep_range(c.unit) - disTarg
+                                ) * !global.mobile
+                                gridValue = ds_grid_get(atkArea,i,j)
+                                s = s  + string(gridValue)
+                                if (gridValue &lt; 0)//make sure you can move there
+                                //if (disTarg&gt;=weight)//make it furthest atk range
+                                if try &lt;= weight
+                                if !place_meeting(inst.x+xOff,inst.y+yOff,oUnit)
+                                ||instance_place(inst.x+xOff,inst.y+yOff,oUnit)==c
+                                {
+                                    if (aiTurn)||1{
+                                        weight = try
+                                        movX = inst.x+xOff
+                                        movY = inst.y+yOff
+                                    }
+                                    else{
+                                        if disTarg &gt; weight// found new furthest
+                                            dis = moveDis
+                                        if dis &lt;= moveDis{
+                                                moveDis = dis
+                                                movX = inst.x+xOff
+                                                movY = inst.y+yOff
+                                            }
+                                        weight = disTarg
+                                    }
+                                    //pathDis = disPath
+                                    //moveDis = dis
+                                }
                             }
+                            //show_debug_message(s)
                         }
-                        //show_debug_message(s)
                     }
                 }
-                else
+                else if  inst!=c
                 {
                 //move closer to target
+                    mp_grid_clear_cell(grid,autoTargx/15,autoTargy/15)// clear targeted cell
                     mp_grid_path(grid,path0,c.x+7,c.y+7,autoTargx+7,autoTargy+7,false)    
                     var pathLen = path_get_length(path0)
                     setMoveRangeNeg(c)
@@ -1573,7 +1609,7 @@ if menu=-1
             if actionFlag
             &amp;&amp;(startPath)
             {
-                if quickEnd = 1 //&amp;&amp; ds_map_find_value(aiTurns, currentTurn)&gt;=0
+                if quickEnd || ds_map_find_value(aiTurns, currentTurn)&lt;0
                     actionFlag++;
                 if (c.draw=0
                 &amp;&amp; ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
@@ -1637,112 +1673,115 @@ if menu=-1
             var atk_type = return_attack_type(c.unit)
             var inst = instance_place(autoTargx,autoTargy,oUnit);
             var normalAttack = 1
+            if actionFlag &gt; 0
+            {
             
-            //check if self
-            if (inst = c){                    
-                alarm[0]=2
-                phase=2.1
-                normalAttack = 0
-            }
-            // check if door
-            if inst!=noone
-            &amp;&amp; inst.object_index == oLockDoor
-            &amp;&amp; ((abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=1){
-                show_debug_message("door")
-                if (c.statusStr[findStatus(c,1)]&gt;0){
-                    addStatus(1,c,1,-1)
+                //check if self
+                if (inst = c){                    
                     alarm[0]=2
                     phase=2.1
-                    with inst
-                        instance_destroy()
                     normalAttack = 0
-                } else message_create("Need Key")
-            } 
-            
-            if normalAttack
-                {//normal attack
-                    switch atk_type{
-                        case 0:
-                            if inst!=noone
-                            &amp;&amp;(abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit) 
-                            &amp;&amp; inst!=selected
-                            &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
-                            &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                            ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                                //good target
-                            }
-                            else
-                                inst = noone
-                            break;
-                        case 1: //no move, attack anywhere
-                            if (c.x != c.xx || c.y != c.yy){//moved
-                                inst = noone
-                            }else if inst!=noone{
-                                if (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
-                                &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
-                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                                    //good target
-                                }
-                                else inst = noone//target the ground
-
-                            }
-                            else {
-                                inst = instance_create(xx,yy,oTempTarg)
-                                phase=4
-                                loop=1
-                                selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
-                                target=inst
-                                }
-                            break;
-                        case 2: //no move
-                            if (c.x != c.xx || c.y != c.yy){//moved
-                                inst = noone
-                            }else if inst!=noone
-                                &amp;&amp; (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
-                                &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
-                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                                    //good target
-                            }
-                            else {
-                                inst = noone//not in range
-                                }
-                            break
-                        case 3: //attack anywhere
-                            if inst!=noone{
-                                if (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
-                                &amp;&amp; inst!=selected
-                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
-                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                                    //good target
-                                }
-                                else 
-                                    inst = noone 
-                            }
-                            else {
-                                inst = instance_create(xx,yy,oTempTarg)
-                                phase=4
-                                loop=1
-                                selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
-                                target=inst
-                                }
-                            break;
-                    }//end switch
-                    if actionFlag
-                    &amp;&amp; inst!=noone
-                    {
-                        phase=4
-                        loop=1
-                        selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
-                        target=inst
-                    }else{
+                }
+                // check if door
+                if inst!=noone
+                &amp;&amp; inst.object_index == oLockDoor
+                &amp;&amp; ((abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=1){
+                    show_debug_message("door")
+                    if (c.statusStr[findStatus(c,1)]&gt;0){
+                        addStatus(1,c,1,-1)
                         alarm[0]=2
                         phase=2.1
-                        actionFlag=false
+                        with inst
+                            instance_destroy()
+                        normalAttack = 0
+                    } else message_create("Need Key")
+                } 
+                
+                if normalAttack
+                    {//normal attack
+                        switch atk_type{
+                            case 0:
+                                if inst!=noone
+                                &amp;&amp;(abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit) 
+                                &amp;&amp; inst!=selected
+                                &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                                    //good target
+                                }
+                                else
+                                    inst = noone
+                                break;
+                            case 1: //no move, attack anywhere
+                                if (c.x != c.xx || c.y != c.yy){//moved
+                                    inst = noone
+                                }else if inst!=noone{
+                                    if (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                    &amp;&amp; inst!=selected
+                                    &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                    &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                    ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                                        //good target
+                                    }
+                                    else inst = noone//target the ground
+    
+                                }
+                                else {
+                                    inst = instance_create(xx,yy,oTempTarg)
+                                    phase=4
+                                    loop=1
+                                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                                    target=inst
+                                    }
+                                break;
+                            case 2: //no move
+                                if (c.x != c.xx || c.y != c.yy){//moved
+                                    inst = noone
+                                }else if inst!=noone
+                                    &amp;&amp; (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                    &amp;&amp; inst!=selected
+                                    &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                    &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                    ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                                        //good target
+                                }
+                                else {
+                                    inst = noone//not in range
+                                    }
+                                break
+                            case 3: //attack anywhere
+                                if inst!=noone{
+                                    if (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                    &amp;&amp; inst!=selected
+                                    &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
+                                    &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
+                                    ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
+                                        //good target
+                                    }
+                                    else 
+                                        inst = noone 
+                                }
+                                else {
+                                    inst = instance_create(xx,yy,oTempTarg)
+                                    phase=4
+                                    loop=1
+                                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                                    target=inst
+                                    }
+                                break;
+                        }//end switch
+                    
+                        if inst!=noone
+                        {
+                            phase=4
+                            loop=1
+                            selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                            target=inst
+                        }else{
+                            alarm[0]=2
+                            phase=2.1
+                            actionFlag=false
+                        }
                     }
                 }
                 
@@ -2570,8 +2609,10 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
         }
 }
 
-if turnsSurvive &gt; 5 + level
+if turnsSurvive &gt; 9 + floor(level/2)
     draw_set_colour(c_red)
+else if turnsSurvive &gt; 6 + floor(level/2)
+    draw_set_colour(c_orange)
 else
     draw_set_colour(c_fuchsia)
 draw_set_font(pixelFont)
@@ -3051,18 +3092,16 @@ for (var i=floor(view_yview/15)*15-15*5;i&lt;floor(view_yview/15)*15+view_wview+
 for (var i=floor(view_xview/15)*15-15;i&lt;floor(view_xview/15)*15+view_wview+15;i+=15)
     draw_line(i-1,0,i-1,room_height)
 draw_set_alpha(1)
-//draw selected
+//draw selected path
 if selected!=noone{
 path_drawer(selected.path)
 }
+
 if selected!=noone
 if phase=0
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging==1
 {
-    /*draw_set_colour(c_yellow)
-    draw_set_alpha(0.5)
-    draw_rectangle(selected.x,selected.y,selected.x+13,selected.y+13,false)
-    draw_set_alpha(1)*/
+// clear ally and self
 var c=selected
 mp_grid_clear_cell(grid,c.x/15,c.y/15)
 
@@ -3166,6 +3205,7 @@ if warningZone{
     if selected!=noone
     if selected.draw&gt;0{
         var c=selected
+        getMoveAndAttackRange(c)
         mp_grid_clear_cell(grid,c.x/15,c.y/15)
         
         for (var i=0;i&lt;ds_list_size(unitList);i++){
@@ -3174,18 +3214,41 @@ if warningZone{
                     mp_grid_clear_cell(grid,char.x/15,char.y/15)
                 }
             }
-        
+          
+        draw_set_alpha(0.7)
         //show where you can move
-        //draw_set_colour(c_teal)
-        //draw_set_alpha(0.5)
-        var range=c.mov
-        for (var i=-range*15;i&lt;=range*15;i+=15){
-            for (var j=-range*15;j&lt;=range*15;j+=15){
-            if mp_grid_path(grid,path0,c.x+7,c.y+7,c.x+i+7,c.y+j+7,false)
-            if path_get_number(path0)-1&lt;=c.mov
-            if!place_meeting(c.x+i,c.y+j,oUnit){
-                draw_sprite_ext(box7x7,0,i+c.x+3,j+c.y+3,1,1,0,c_aqua,0.5)
-                //draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
+        var mGridW=ceil(ds_grid_width(moveAtkArea)/2)
+        for (var j=0;j&lt;ds_grid_width(moveAtkArea);j++)
+        {
+            for (var i=0;i&lt;ds_grid_width(moveAtkArea);i++){
+                var gridValue;
+                var xOff =(i-mGridW)*15
+                var yOff =(j-mGridW)*15
+                gridValue = ds_grid_get(moveAtkArea,i,j)
+                if (gridValue &gt; 0)
+                {
+                    var inst = instance_place(c.x+xOff,c.y+yOff,oUnit)
+                    if(gridValue%2 ==0)//attack only
+                    {
+                        if !place_meeting(c.x+xOff,c.y+yOff,oBlock){
+                            if c.pow&gt;0{
+                                if (inst=noone||inst.team!=c.team){
+                                    draw_sprite_ext(box7x7,0,xOff+c.x+3,yOff+c.y+3,1,1,0,c_red,0.5)    
+                                    //inst.shader=shaderAttack
+                                }
+                            }
+                            else{
+                                if (inst=noone||inst.team == c.team){
+                                    //inst.shader=shaderSupport
+                                    draw_sprite_ext(box7x7,0,xOff+c.x+3,yOff+c.y+3,1,1,0,c_lime,0.5)    
+                                }
+                            }
+                        }
+                    }
+                    else if !place_meeting(c.x+xOff,c.y+yOff,oUnit)||inst=c//move or move and attack
+                    {
+                        draw_sprite_ext(box7x7,0,xOff+c.x+3,yOff+c.y+3,1,1,0,c_aqua,0.5) 
+                    }
                 }
             }
         }

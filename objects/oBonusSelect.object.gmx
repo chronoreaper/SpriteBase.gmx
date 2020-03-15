@@ -53,7 +53,7 @@ confirm=false
             <kind>1</kind>
             <string>if over  
 {
-    if mouse_check_button_pressed(mb_left)&amp;&amp;global.mobile
+    if mouse_check_button_released(mb_left)&amp;&amp;global.mobile
     {
         if confirm
             oNextFloor.selection = selection

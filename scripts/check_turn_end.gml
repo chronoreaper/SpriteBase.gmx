@@ -91,10 +91,10 @@ if fin=1{
     }
         //rx=irandom(room_width/15)//room_width/15);
         //ry=irandom(room_height/15)//room_height/15);
-        if turnsSurvive > 5 + level
+        if turnsSurvive > 9 + floor(level/2)
         if turnsSurvive%2 == 0
         if !place_meeting(rx*15,ry*15,oUnit)
-        if ds_grid_get(gridF1,rx,ry)<1
+        if ds_grid_get(gridF1,rx,ry)<=0.2
         if !tile_layer_find(10000,rx*15,ry*15)
         if ds_grid_get(map,rx,ry)>=0
             {
