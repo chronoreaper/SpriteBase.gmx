@@ -86,6 +86,12 @@ if fadeOut=0{
         oControler.turnsSurvive=0
         ds_grid_clear(oControler.gridF1,-1)
         ds_grid_clear(oControler.gridF2,-1)
+        view_wview[0] = 360
+        view_hview[0] = 240
+        oControler.x=0
+        oControler.y=0
+        oControler.xx=0
+        oControler.yy=0
     }
 }
 else{

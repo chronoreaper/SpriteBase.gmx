@@ -279,7 +279,7 @@ playerSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=0
+global.production=1
 global.mobile=0
 global.vertical = 0//(room == room3)
 debugging=0
@@ -2069,7 +2069,6 @@ if floor(menu)=99{
     menu=-1
     audio_play_sound(TempBGM3,100,true)
 
-
 }
 if menu=-1
 if (mouse_check_button(mb_left)||keyboard_check(keys[4])
@@ -2956,35 +2955,35 @@ else if menu=2{
     /// options
     var options;
     if option_zoom
-        options[0] = "Zoom WheN Select: true"
+        options[0] = "Zoom When Select: True"
     else
-        options[0] = "Zoom WheN Select: false"
+        options[0] = "Zoom When Select: False"
     options[1] ="Grid Alpha: " + string(gridAlpha)
     if warningZone
-        options[2] = "WarNing ZoNe: true"
+        options[2] = "Warning Zone: True"
     else
-        options[2] = "WarNing ZoNe: false"
+        options[2] = "Warning Zone: False"
     if quickEnd
-        options[3] = "quick eNd: true"
+        options[3] = "Quick End: True"
     else
-        options[3] = "quick eNd: false"   
+        options[3] = "Quick End: False"   
     if global.outline
-        options[4] = "outliNe: true"
+        options[4] = "Outline: True"
     else
-        options[4] = "outliNe: false" 
+        options[4] = "Outline: False" 
     if difficulty = 0
-        options[5] = "MODE: Casual" 
+        options[5] = "Difficulty: Casual" 
     else if difficulty = 1
-        options[5] = "MODE: Normal" 
+        options[5] = "Difficulty: Normal" 
     else   
-        options[5] = "MODE: Difficult" 
+        options[5] = "Difficulty: Hard" 
     draw_text_transformed(180,100,options[0],2,2,0)
     draw_text_transformed(180,120,options[1],2,2,0)
     draw_text_transformed(180,140,options[2],2,2,0)
     draw_text_transformed(180,160,options[3],2,2,0)
     draw_text_transformed(180,180,options[4],2,2,0)
     draw_text_transformed(180,200,options[5],2,2,0)
-    draw_text_transformed(180,220,"back",2,2,0)
+    draw_text_transformed(180,220,"Back",2,2,0)
     draw_set_colour(c_white)
     switch menuSelect{
         case 0: draw_text_transformed(180,100,"-"+options[0]+"-",2,2,0)
@@ -3026,7 +3025,7 @@ else if menu=2{
                     difficulty=0
             }
             break;
-        case 6: draw_text_transformed(180,220,"-back-",2,2,0)
+        case 6: draw_text_transformed(180,220,"-Back-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4])
                 menu=0
