@@ -58,6 +58,8 @@ team=0.1
             <string>if visible||debugging=1
 if draw&gt;0
 ||debugging=1{
+if !global.outline
+    shader_set(shaderNoBorder)
 //draw_set_colour(c_black)
 //draw_set_alpha(0.5)
 //draw_ellipse(ax+x+7-sprite_get_width(sprite_index)/2,ay+y+7-sprite_get_width(sprite_index)/2,
@@ -85,6 +87,7 @@ with oControler{
 if d
     draw_sprite_ext(sprite_index+viewSprite,image_index,x+7,y+7,1,1-c,-view_angle+wave,1,0.5)
 
+shader_reset()
 }
 </string>
           </argument>

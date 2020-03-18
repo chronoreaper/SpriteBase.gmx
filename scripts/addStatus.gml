@@ -8,6 +8,11 @@ statuses
 1 - key
 2 - coin
 3 - shield
+4 - ignite
+5 - shock
+6 - freeze
+7 - no attack
+8 - no move
 */
 
 var index=findStatus(arg_targ,arg_status)

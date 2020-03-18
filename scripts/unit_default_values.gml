@@ -20,7 +20,7 @@ switch arg_unit{
     case oHero:return        "HP:6 POW:2 RANGE:2 MOV:3"
     case oDefender:return    "HP:6 POW:2 RANGE:1 MOV:2 PUSHES TARGET"
     case oIceMage:return     "HP:3 POW:1 RANGE:2 MOV:3 CREATES ICE BLOCK ON ATTACK"
-    case oThunderMage:return "HP:3 POW:2 RANGE:2 MOV:3"  
+    case oThunderMage:return "HP:3 POW:1 RANGE:2 MOV:3"  
     
     //monsters
     case oSlime:return       "HP:2 POW:1 RANGE:1 MOV:1"  

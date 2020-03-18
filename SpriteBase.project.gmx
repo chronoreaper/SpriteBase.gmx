@@ -366,6 +366,7 @@
   <paths name="paths">
     <path>paths\path1</path>
     <path>paths\path0</path>
+    <path>paths\path2</path>
   </paths>
   <scripts name="scripts">
     <scripts name="Auto move scripts">
@@ -384,7 +385,6 @@
     <script>scripts\return_face.gml</script>
     <script>scripts\return_atk_name.gml</script>
     <script>scripts\return_wep_aoe.gml</script>
-    <script>scripts\return_wep_range.gml</script>
     <script>scripts\return_wep_sound.gml</script>
     <script>scripts\return_wep_sprite_eff.gml</script>
     <script>scripts\check_wep_dmg.gml</script>
@@ -425,6 +425,7 @@
     <shader type="GLSLES">shaders\shaderAttack.shader</shader>
     <shader type="GLSLES">shaders\shaderSupport.shader</shader>
     <shader type="GLSLES">shaders\shaderCanSelect.shader</shader>
+    <shader type="GLSLES">shaders\shaderNoBorder.shader</shader>
   </shaders>
   <objects name="objects">
     <object>objects\oGenerateMap</object>
@@ -440,6 +441,7 @@
     </objects>
     <object>objects\oEff</object>
     <object>objects\oNextFloor</object>
+    <object>objects\oGameOver</object>
     <object>objects\DmgWord</object>
     <object>objects\oTriggerObj</object>
     <object>objects\oItem</object>
@@ -554,7 +556,8 @@
     <room>rooms\room2</room>
     <room>rooms\testRoom</room>
   </rooms>
-  <constants number="1">
+  <constants number="2">
+    <constant name="GAMEOVERMENU">95</constant>
     <constant name="NEXTFLOORMENU">98</constant>
   </constants>
   <help>

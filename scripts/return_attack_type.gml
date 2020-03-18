@@ -7,8 +7,8 @@
 */
 var arg_unit = argument0
 switch arg_unit{
-    case mage001_0: return 3
-    case ice_mage001_0: return 3
+    //case mage001_0: return 3
+    //case ice_mage001_0: return 3
     //case healer001_0: return 2
     default: return 0
 }

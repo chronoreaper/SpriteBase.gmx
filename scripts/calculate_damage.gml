@@ -1,6 +1,7 @@
 var arg_source=argument0
 var arg_targ=argument1
-var arg_dmg=argument2
+var arg_dmg=argument2//how much damage it does
+//if 0 does based on unit damage
 
 if arg_targ.object_index = oTempTarg{//attacks the ground
     return_skill_onhit_eff(arg_source,arg_targ)
@@ -38,10 +39,10 @@ if dmg>0{
     }
 }
 //on hit effect
+if arg_dmg=0
+    dmg += return_skill_onhit_eff(arg_source,arg_targ)
 arg_targ.hp-=dmg
 arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.mhp)
-if arg_dmg=0
-    return_skill_onhit_eff(arg_source,arg_targ)
 return_skill_def_eff(arg_source,arg_targ)
 arg_targ.image_blend=c_red
 if dmg<0{

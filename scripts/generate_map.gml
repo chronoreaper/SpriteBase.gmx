@@ -92,7 +92,7 @@ while(!stairs){
                 inst.marker=1
                 
                 if inst.object_index = oWurm{
-                    inst.ai=1
+                    //inst.ai=1
                     repeat(2+ceil(level/5)*2){
                         inst2=instance_create(rx*15,ry*15,oWurm)
                         inst2.team=2

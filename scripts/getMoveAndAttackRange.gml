@@ -2,7 +2,7 @@ var arg_selected = argument0
 var c = arg_selected
 //Start
 
-var range = return_wep_range(c.unit)
+var range = c.range
 var wepAOE = return_wep_aoe(c.unit)
 //tempPath=path_add()
 

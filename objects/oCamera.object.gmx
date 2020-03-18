@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>xx=x
 yy=y
+idle=0
 </string>
           </argument>
         </arguments>
@@ -52,12 +53,17 @@ yy=y
             <string>if oControler.menu=-1{
     view_xview = x - view_wview/2
     view_yview = y - view_hview/2
-    if abs(xx-x)&gt;1
+    idle++
+    if abs(xx-x)&gt;1{
        x+=(xx-x)/2
+       idle=0
+       }
     else
         x=xx
-    if abs(yy-y)&gt;1
+    if abs(yy-y)&gt;1{
        y+=(yy-y)/2
+       idle=0
+       }
     else
         y=yy
 }

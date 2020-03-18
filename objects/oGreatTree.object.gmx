@@ -29,6 +29,7 @@
 
 hp=24
 mhp=hp
+dmg=hp
 
 mov=0
 mmov=mov

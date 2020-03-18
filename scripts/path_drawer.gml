@@ -6,10 +6,20 @@ var index=0
 if path_get_length(arg_path)>2
 //if path_get_number(arg_path)>2
     {
-    for (var i=1;i<path_get_number(arg_path);i++)
+    for (var i=0;i<path_get_number(arg_path);i++)
         {
         index=0
-        if i!=path_get_number(arg_path)-1
+        if i=0{
+            if path_get_point_x(arg_path,i)>path_get_point_x(arg_path,i+1)
+                index=12
+            else if path_get_point_x(arg_path,i)<path_get_point_x(arg_path,i+1)
+                index=10
+            else if path_get_point_y(arg_path,i)<path_get_point_y(arg_path,i+1)
+                index=13
+            else if path_get_point_y(arg_path,i)>path_get_point_y(arg_path,i+1)
+                index=11
+        }
+        else if i!=path_get_number(arg_path)-1
             {
                 if path_get_point_y(arg_path,i-1)=path_get_point_y(arg_path,i+1)
                     index=1

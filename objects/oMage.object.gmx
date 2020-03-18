@@ -29,7 +29,8 @@
 
 hp=3
 mhp=hp
-
+range=2
+mRange = range
 mov=3
 mmov=mov
 view=6

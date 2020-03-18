@@ -1,5 +1,5 @@
 var c = argument0
-var range = return_wep_range(c.unit)
+var range = c.range
 var wepAOE = return_wep_aoe(c.unit)
 var aGridW=ceil(ds_grid_width(atkArea)/2)
 
@@ -17,5 +17,15 @@ switch wepAOE{
         }
         break;
     case 1:
+        range = 3
+        for(var i=-range;i<=range;i++)
+        for(var j=-range;j<=range;j++)
+        {
+            if(abs(i)+abs(j)<=range)
+            if !( (abs(i)=3&&j=0)
+            || (abs(j)=3&&i=0) ){
+                ds_grid_set(atkArea,aGridW+i,aGridW+j,2)
+            }
+        }
         break;
 }

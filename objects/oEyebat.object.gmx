@@ -30,7 +30,8 @@
 idle = 1
 hp=2
 mhp=hp
-
+range=2
+mRange = range
 mov=1
 mmov=mov
 view=3

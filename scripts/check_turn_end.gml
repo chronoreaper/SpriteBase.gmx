@@ -48,6 +48,11 @@ if fin=1{
                 if inst.status[j]!=0{
                     //status effects
                     switch floor(inst.status[j]){
+                        case 4:inst.statusStr[j]--;
+                        case 5:inst.statusStr[j]--;
+                        case 6:inst.statusStr[j]--;
+                        case 7:inst.statusStr[j]--;
+                        case 8:inst.statusStr[j]--;
                         default: break
                             
                     }
@@ -91,7 +96,7 @@ if fin=1{
     }
         //rx=irandom(room_width/15)//room_width/15);
         //ry=irandom(room_height/15)//room_height/15);
-        if turnsSurvive > 9 + floor(level/2)
+        if turnsSurvive > dangerTurn
         if turnsSurvive%2 == 0
         if !place_meeting(rx*15,ry*15,oUnit)
         if ds_grid_get(gridF1,rx,ry)<=0.2
@@ -198,6 +203,11 @@ if fin=1{
         }
     }
     else{
+        if currentTurn = 0{
+            instance_create(0,0,oGameOver)
+            menu = GAMEOVERMENU
+        }
+        else
          alarm[10]=1//currentTurn++;//next turn
     }
 }

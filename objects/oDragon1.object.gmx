@@ -30,6 +30,8 @@
 hp=3+oControler.level
 mhp=hp
 pow=1
+range=2
+mRange = range
 mov=1
 mmov=mov
 view=5

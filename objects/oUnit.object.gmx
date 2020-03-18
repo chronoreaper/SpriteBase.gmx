@@ -57,15 +57,19 @@ name=""
 hp=1
 mhp=1
 pow=1
+
+range=1
+mRange = range
+
+mov=1
+mmov=mov
+
 action=0
 
 slowHP=0
 
 idle=0
 combat=0
-
-mov=1
-mmov=mov
 
 view=0
 
@@ -121,6 +125,7 @@ if findStatus(id,2)&gt;=0{
     instance_create(x,y,oCoin)
 }
 path_delete(path)
+
 </string>
           </argument>
         </arguments>
@@ -370,6 +375,33 @@ depth=-y*cos(degtorad(view_angle))+x*sin(degtorad(view_angle))
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///push movement
+if speed&gt;0{
+    if point_distance(x,y,xx,yy)&lt;=speed{
+        speed=0
+        alarm[2]=1
+        }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///check if dead
 if hp&lt;=0{
     var viewSprite=dir+round(view_angle/90)
@@ -379,10 +411,21 @@ if hp&lt;=0{
     var inst=instance_create(x,y,oFade);
     inst.sprite_index=unit+viewSprite
     inst.image_angle=-view_angle
-    if path_speed&gt;0
-        with inst
-            path_start(path1,5,0,0)
+    var mx = xx
+    var my = yy
+    if speed&gt;0//path_speed&gt;0
+        with inst{
+            move_towards_point( mx, my, 5 );
+            xx=mx
+            yy=my
+            //path_start(path2,5,0,0)
+            }
     instance_destroy()
+    
+    if ds_map_find_value(oControler.aiTurns, team)&lt;0
+        global.cur_score+=mhp+pow+mmov+mRange
+    else
+        global.cur_score-=mhp+pow+mmov+mRange
 }
 if dmg!=hp
 {
@@ -597,9 +640,16 @@ var sub=-1
 switch floor(status[floor(stCt)]){
     case 1:sub=4 break;
     case 2:sub=5 break;
+    case 4:sub=2 break;
+    case 5:sub=6 break;
+    case 6:sub=3 break;
+    case 7:sub=7 break;
+    case 8:sub=8 break;
 }
-if floor(status[floor(stCt)])==0
+if floor(status[floor(stCt)])==0{
     stCt++
+    sub=-1
+    }
 stCt+=0.02
 if stCt&gt;=array_length_1d(status)
     stCt=0

@@ -28,6 +28,11 @@
             <string>bossList = ds_list_create()
 ds_list_add(bossList,oDragon1)
 ds_list_add(bossList,oWurm)
+
+difficulty = 0//max 2
+warningTurn = 5
+dangerTurn = 10
+
 instance_create(x-view_wview/2,y-view_hview/2,oCamera)
 psudoRight = 0
 mouse_xprevious = mouse_x
@@ -327,6 +332,8 @@ gridAlpha=0.1
 // 2 -  same as 0, but also ends after you move if there are no further actions
 quickEnd = 1 &amp;&amp; global.mobile
 warningZone = false || !global.mobile
+global.outline = true
+global.musicVol=0
 </string>
           </argument>
         </arguments>
@@ -427,6 +434,7 @@ mapSize = 2
             <kind>1</kind>
             <string>///global variable
 global.shaderAlpha = 0
+global.cur_score=0
 </string>
           </argument>
         </arguments>
@@ -599,6 +607,7 @@ if selected!=noone{
     if floor(selected.team)=0
     if place_meeting(selected.x,selected.y,oStairs){
         audio_play_sound(sStairs,50,false)
+        global.cur_score+=level
         level++;
         menu = NEXTFLOORMENU;
         instance_create(x,y,oNextFloor)
@@ -612,6 +621,7 @@ if selected!=noone{
                 instance_activate_object(char)
                 if findStatus(char,2)&gt;=0{
                     playerGold[0]+=1
+                    global.cur_score += 5
                 }
             }
         }
@@ -1133,7 +1143,7 @@ if !eventScene
 if ds_map_find_value(aiTurns, currentTurn)&lt;0
 if menu=-1
 if !actionFlag
-if oCamera.x = oCamera.xx &amp;&amp; oCamera.y == oCamera.yy
+if oCamera.idle&gt;5
 {
     if selected=noone
     if !eventScene
@@ -1187,6 +1197,7 @@ if oCamera.x = oCamera.xx &amp;&amp; oCamera.y == oCamera.yy
             check_turn_end()
             }
     }
+    if oCamera.idle&gt;5
     if selected!=noone
     if instance_exists(selected)
     if alarm[9]&lt;=1
@@ -1282,7 +1293,8 @@ if oCamera.x = oCamera.xx &amp;&amp; oCamera.y == oCamera.yy
                 close=c.link  
             else{
                 c.link=noone
-                c.ai=1
+                //c.ai=1
+                c.ai=0
                 c.marker=1
                 c.close=noone
                 //c.wait=1
@@ -1353,7 +1365,7 @@ if oCamera.x = oCamera.xx &amp;&amp; oCamera.y == oCamera.yy
             (c.link.aggro!=noone&amp;&amp;instance_exists(c.link.aggro)))
             &amp;&amp;(c.ai!=5)
             {//continue attack
-                var range=return_wep_range(c.unit)
+                var range=c.range
                 var close=noone
                 //get where you can attack
                     for (var i=-range*15;i&lt;=range*15;i+=15){
@@ -1476,15 +1488,15 @@ if menu=-1
                 {//travels furthest
                     mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,path_get_point_x(c.path,c.mov),
                         path_get_point_y(c.path,c.mov),false)
-                    while(floor(path_get_length(c.path)/15)&gt;=1&amp;&amp;
+                    while(floor(path_get_length(c.path)/15)&gt;=2&amp;&amp;
                     place_meeting(path_get_point_x(c.path,path_get_number(c.path)-1)-7.5
                     ,path_get_point_y(c.path,path_get_number(c.path)-1)-7.5,oUnit)){
                     mp_grid_path(grid,c.path,c.x+7.5,c.y+7.5,
                         path_get_point_x(c.path,path_get_number(c.path)-2),
                         path_get_point_y(c.path,path_get_number(c.path)-2),false)
                     }
-                    if floor(path_get_length(c.path)/15)&gt;=1
-                        startPath = true
+                    //if floor(path_get_length(c.path)/15)&gt;=2
+                    startPath = true
                 }
             }
             else if inst!=noone//if targeting a unit
@@ -1512,7 +1524,7 @@ if menu=-1
                     setMoveRangeNeg(c)
                     //based area around targ
                     ds_grid_multiply_grid_region(atkArea,moveAtkArea,0,0,ds_grid_width(moveAtkArea),ds_grid_height(moveAtkArea),
-                    (c.x - inst.x)/15 + aGridW - mGridW ,(c.y - inst.y)/15 + aGridW - mGridW) 
+                    (c.x - autoTargx)/15 + aGridW - mGridW ,(c.y - autoTargy)/15 + aGridW - mGridW) 
                     {
                         for (var i=0;i&lt;ds_grid_width(atkArea);i++){
                         var s = ""
@@ -1520,9 +1532,9 @@ if menu=-1
                                 var gridValue;
                                 var xOff =(i-aGridW)*15
                                 var yOff =(j-aGridW)*15
-                                var dis = (abs(inst.x+xOff-c.x) + abs(inst.y+yOff-c.y))/15//c.mov
+                                var dis = (abs(autoTargx+xOff-c.x) + abs(autoTargy+yOff-c.y))/15//c.mov
                                 var disTarg = (abs(xOff)+abs(yOff))/15//return_wep_range(c.unit)
-                                var disPath = (abs(inst.x+xOff-prevX) + abs(inst.y+yOff-prevY))/15
+                                var disPath = (abs(autoTargx+xOff-prevX) + abs(autoTargy+yOff-prevY))/15
                                 var try = disPath 
                                 //* global.mobile
                                 //+ (return_wep_range(c.unit) - disTarg
@@ -1532,21 +1544,21 @@ if menu=-1
                                 if (gridValue &lt; 0)//make sure you can move there
                                 //if (disTarg&gt;=weight)//make it furthest atk range
                                 if try &lt;= weight
-                                if !place_meeting(inst.x+xOff,inst.y+yOff,oUnit)
-                                ||instance_place(inst.x+xOff,inst.y+yOff,oUnit)==c
+                                if !place_meeting(autoTargx+xOff,autoTargy+yOff,oUnit)
+                                ||instance_place(autoTargx+xOff,autoTargy+yOff,oUnit)==c
                                 {
                                     if (aiTurn)||1{
                                         weight = try
-                                        movX = inst.x+xOff
-                                        movY = inst.y+yOff
+                                        movX = autoTargx+xOff
+                                        movY = autoTargy+yOff
                                     }
                                     else{
                                         if disTarg &gt; weight// found new furthest
                                             dis = moveDis
                                         if dis &lt;= moveDis{
                                                 moveDis = dis
-                                                movX = inst.x+xOff
-                                                movY = inst.y+yOff
+                                                movX = autoTargx+xOff
+                                                movY = autoTargy+yOff
                                             }
                                         weight = disTarg
                                     }
@@ -1612,7 +1624,9 @@ if menu=-1
             {
                 if quickEnd || ds_map_find_value(aiTurns, currentTurn)&lt;0
                     actionFlag++;
-                if place_meeting(autoTargx,autoTargy,oUnit) &amp;&amp; !quickEnd
+                if place_meeting(autoTargx,autoTargy,oUnit) 
+                &amp;&amp; instance_place(autoTargx,autoTargy,oUnit)!=c
+                &amp;&amp; !quickEnd
                     actionFlag++
                 if (c.draw=0
                 &amp;&amp; ds_grid_get(gridF1,path_get_x(c.path,1)/15,path_get_y(c.path,1)/15)&lt;0.2
@@ -1702,10 +1716,15 @@ if menu=-1
                 
                 if normalAttack
                     {//normal attack
+                        setAtkRange(c)
+                        var aGridW=ceil(ds_grid_width(atkArea)/2)
+                        var inRange = ds_grid_get(atkArea,
+                                    (autoTargx-c.x)/15+aGridW,
+                                    (autoTargy-c.y)/15+aGridW)&gt;0
                         switch atk_type{
                             case 0:
                                 if inst!=noone
-                                &amp;&amp;(abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit) 
+                                &amp;&amp; inRange
                                 &amp;&amp; inst!=selected
                                 &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
                                 &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
@@ -1719,7 +1738,7 @@ if menu=-1
                                 if (c.x != c.xx || c.y != c.yy){//moved
                                     inst = noone
                                 }else if inst!=noone{
-                                    if (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                    if inRange
                                     &amp;&amp; inst!=selected
                                     &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
                                     &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
@@ -1733,7 +1752,7 @@ if menu=-1
                                     inst = instance_create(xx,yy,oTempTarg)
                                     phase=4
                                     loop=1
-                                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,autoTargx+7,autoTargy+7)/90)
                                     target=inst
                                     }
                                 break;
@@ -1741,7 +1760,7 @@ if menu=-1
                                 if (c.x != c.xx || c.y != c.yy){//moved
                                     inst = noone
                                 }else if inst!=noone
-                                    &amp;&amp; (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                    &amp;&amp; inRange
                                     &amp;&amp; inst!=selected
                                     &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
                                     &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
@@ -1754,7 +1773,7 @@ if menu=-1
                                 break
                             case 3: //attack anywhere
                                 if inst!=noone{
-                                    if (abs(inst.x-c.x)+abs(inst.y-c.y))/15&lt;=return_wep_range(c.unit)
+                                    if inRange
                                     &amp;&amp; inst!=selected
                                     &amp;&amp; !object_is_ancestor(inst.object_index,oBlock)
                                     &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
@@ -1768,7 +1787,7 @@ if menu=-1
                                     inst = instance_create(xx,yy,oTempTarg)
                                     phase=4
                                     loop=1
-                                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                                    selected.dir=floor(point_direction(selected.x+7,selected.y+7,autoTargx+7,autoTargy+7)/90)
                                     target=inst
                                     }
                                 break;
@@ -1778,7 +1797,7 @@ if menu=-1
                         {
                             phase=4
                             loop=1
-                            selected.dir=floor(point_direction(selected.x+7,selected.y+7,inst.x+7,inst.y+7)/90)
+                            selected.dir=floor(point_direction(selected.x+7,selected.y+7,autoTargx+7,autoTargy+7)/90)
                             target=inst
                         }else{
                             if ds_map_find_value(aiTurns, currentTurn)&lt;0{
@@ -1829,7 +1848,7 @@ if menu=-1
                     targ = instance_place(x,y,oChar)
             }
             while (targ!=noone){
-                path_clear_points(path0)
+                //path_clear_points(path2)
                 if (targ!=c)
                 if calculate_damage(c,targ,0)&gt;0||true
                 {
@@ -2148,6 +2167,8 @@ switch phase{
     case 5: timePhase5++; break;
 }
 }
+warningTurn = 6 + floor(level/2) - difficulty*2
+dangerTurn = 9 + floor(level/2) - difficulty*2
 </string>
           </argument>
         </arguments>
@@ -2261,7 +2282,7 @@ if selected!=noone
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0
 if phase=3{
     var c=selected
-    var range=return_wep_range(c.unit)
+    var range=c.range
     var inst=instance_place(xx,yy,oUnit)
     if inst!=noone
     &amp;&amp; inst.object_index = oLockDoor
@@ -2562,6 +2583,7 @@ if logVisable&gt;0
 if global.production=0
 {
     var vx=5;
+    draw_set_halign(fa_left)
     draw_set_font(pixelFont)
     draw_set_alpha(logVisable/4)
     draw_set_colour(c_dkgray)
@@ -2614,9 +2636,9 @@ for (var i=0;i&lt;ds_list_size(unitList);i++){
         }
 }
 
-if turnsSurvive &gt; 9 + floor(level/2)
+if turnsSurvive &gt; dangerTurn
     draw_set_colour(c_red)
-else if turnsSurvive &gt; 6 + floor(level/2)
+else if turnsSurvive &gt; warningTurn
     draw_set_colour(c_orange)
 else
     draw_set_colour(c_fuchsia)
@@ -2624,16 +2646,18 @@ draw_set_font(pixelFont)
 draw_set_halign(fa_left)
 draw_set_alpha(1)
 draw_text(2,40,"FPS: "+string(fps))
+
 draw_text(2,10,"Floor: "+string(level))
 draw_text(2,20,"TURN: "+string(turnsSurvive))
 draw_sprite(coin,0,5,32)
 draw_text(13,30,string(playerGold[0]))
+draw_text(2,50,"uNit to move: "+string(unitLeft)+"/"+string(ds_list_size(unitList)))
 if global.production=0{
 draw_set_colour(c_fuchsia)
 draw_set_font(pixelFont)
 draw_set_alpha(1)
 draw_text(2,130,"Current Phase" +string(phase))
-draw_text(2,50,"uNit to move: "+string(unitLeft)+"/"+string(ds_list_size(unitList)))
+
 var over=instance_place(xx,yy,oUnit)
 if over!=noone
     draw_text(2,60,"over : "+string(over.name)+" "+string(over))
@@ -2645,8 +2669,18 @@ draw_text(2,100,"Phase AttackiNg: "+string(timePhase3/30))
 draw_text(2,110,"AttackiNg1: "+string(timePhase4/30))
 draw_text(2,120,"AttackiNg2: "+string(timePhase5/30))
 draw_text(2,140,"action flag: "+string(actionFlag))
-}
+draw_set_halign(fa_right)
+draw_text(display_get_gui_width()-3,40,"Option zoom: "+string(option_zoom))
+draw_text(display_get_gui_width()-3,50,"gridAlpha: "+string(gridAlpha))
+draw_text(display_get_gui_width()-3,60,"quickEnd: "+string(quickEnd))
+draw_text(display_get_gui_width()-3,70,"warningZone: "+string(warningZone))
+draw_text(display_get_gui_width()-3,80,"outline: "+string(global.outline))
+draw_text(display_get_gui_width()-3,90,"difficulty: "+string(difficulty))
 
+}
+draw_set_halign(fa_right)
+draw_text(display_get_gui_width()-3,30,"Score: "+string(global.cur_score))
+draw_set_halign(fa_left)
 draw_set_font(pixelBlock)
 //draw compass
 if global.production=0{
@@ -2909,11 +2943,11 @@ else if menu=2{
     if controler=0
     if mouse_x-view_xview&gt;120
     if mouse_x-view_xview&lt;240
-    if mouse_y-view_yview&gt;160
-        menuSelect=floor((mouse_y-view_yview-160)/20)
+    if mouse_y-view_yview&gt;100
+        menuSelect=floor((mouse_y-view_yview-100)/20)
     else menuSelect=-1
     if keyboard_check_pressed(keys[2]){
-        menuSelect=min(3,menuSelect+1)
+        menuSelect=min(6,menuSelect+1)
         }
     else if keyboard_check_pressed(keys[0]){
         menuSelect=max(0,menuSelect-1)
@@ -2930,18 +2964,35 @@ else if menu=2{
         options[2] = "WarNing ZoNe: true"
     else
         options[2] = "WarNing ZoNe: false"
-    draw_text_transformed(180,160,options[0],2,2,0)
-    draw_text_transformed(180,180,options[1],2,2,0)
-    draw_text_transformed(180,200,options[2],2,2,0)
+    if quickEnd
+        options[3] = "quick eNd: true"
+    else
+        options[3] = "quick eNd: false"   
+    if global.outline
+        options[4] = "outliNe: true"
+    else
+        options[4] = "outliNe: false" 
+    if difficulty = 0
+        options[5] = "MODE: Casual" 
+    else if difficulty = 1
+        options[5] = "MODE: Normal" 
+    else   
+        options[5] = "MODE: Difficult" 
+    draw_text_transformed(180,100,options[0],2,2,0)
+    draw_text_transformed(180,120,options[1],2,2,0)
+    draw_text_transformed(180,140,options[2],2,2,0)
+    draw_text_transformed(180,160,options[3],2,2,0)
+    draw_text_transformed(180,180,options[4],2,2,0)
+    draw_text_transformed(180,200,options[5],2,2,0)
     draw_text_transformed(180,220,"back",2,2,0)
     draw_set_colour(c_white)
     switch menuSelect{
-        case 0: draw_text_transformed(180,160,"-"+options[0]+"-",2,2,0)
+        case 0: draw_text_transformed(180,100,"-"+options[0]+"-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4])
                 option_zoom=!option_zoom
             break;
-        case 1: draw_text_transformed(180,180,"-"+options[1]+"-",2,2,0)
+        case 1: draw_text_transformed(180,120,"-"+options[1]+"-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4]){
                 gridAlpha+=0.1
@@ -2949,13 +3000,33 @@ else if menu=2{
                     gridAlpha = 0
                 }
                 break
-        case 2: draw_text_transformed(180,200,"-"+options[2]+"-",2,2,0)
+        case 2: draw_text_transformed(180,140,"-"+options[2]+"-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4]){
                 warningZone=!warningZone
             }
             break;
-        case 3: draw_text_transformed(180,220,"-back-",2,2,0)
+        case 3: draw_text_transformed(180,160,"-"+options[3]+"-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+                quickEnd=!quickEnd
+            }
+            break;
+        case 4: draw_text_transformed(180,180,"-"+options[4]+"-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+                global.outline=!global.outline
+            }
+            break;
+        case 5: draw_text_transformed(180,200,"-"+options[5]+"-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+                difficulty++
+                if difficulty&gt;2
+                    difficulty=0
+            }
+            break;
+        case 6: draw_text_transformed(180,220,"-back-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4])
                 menu=0
@@ -3137,12 +3208,14 @@ for (var j=0;j&lt;ds_grid_width(moveAtkArea);j++)
                         if (inst=noone||inst.team!=c.team){
                             draw_set_colour(c_red)
                             draw_rectangle(xOff+c.x,yOff+c.y,xOff+c.x+13,yOff+c.y+13,false)
-                            //inst.shader=shaderAttack
+                            if inst!=noone
+                            inst.shader=shaderAttack
                         }
                     }
                     else{
                         if (inst=noone||inst.team == c.team){
-                            //inst.shader=shaderSupport
+                            if inst!=noone
+                            inst.shader=shaderSupport
                             draw_set_colour(c_lime)
                             draw_rectangle(xOff+c.x,yOff+c.y,xOff+c.x+13,yOff+c.y+13,false)
                         }
@@ -3289,7 +3362,7 @@ if selected!=noone
 if phase=3
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0{
 var c=selected
-var range=return_wep_range(c.unit)
+var range=c.range
 
 var atk_type = return_attack_type(c.unit)
 switch atk_type{
@@ -3302,38 +3375,46 @@ switch atk_type{
             range = 0
         break;
 }
+//setAtkRange(c)
+draw_set_alpha(0.7)
 //show where you can attack
-    for (var i=-range*15;i&lt;=range*15;i+=15){
-        for (var j=-range*15;j&lt;=range*15;j+=15){
-        if abs(i/15)+abs(j/15)&lt;=range
-        if i!=0||j!=0{
-            var inst=instance_place(i+c.x,j+c.y,oUnit)
-            if inst!=noone{
-                if !object_is_ancestor(inst.object_index,oBlock)
-                &amp;&amp; (inst.team!=c.team &amp;&amp; return_attack_target(c.unit) == 0
-                ||inst.team ==c.team &amp;&amp; return_attack_target(c.unit) == 1){
-                    if c.pow&gt;0{
+var aGridW=ceil(ds_grid_width(atkArea)/2)
+for (var j=0;j&lt;ds_grid_width(atkArea);j++)
+{
+    for (var i=0;i&lt;ds_grid_width(atkArea);i++){
+        var gridValue;
+        var xOff =(i-aGridW)*15
+        var yOff =(j-aGridW)*15
+        gridValue = ds_grid_get(atkArea,i,j)
+        if (gridValue &gt; 0)
+        {
+            var inst = instance_place(c.x+xOff,c.y+yOff,oUnit)
+            if !place_meeting(c.x+xOff,c.y+yOff,oBlock)
+            &amp;&amp;inst!=noone{
+                if c.pow&gt;0{
+                    if (inst.team!=c.team){
                         draw_set_colour(c_red)
+                        draw_rectangle(xOff+c.x,yOff+c.y,xOff+c.x+13,yOff+c.y+13,false)
+                        if inst!=noone
                         inst.shader=shaderAttack
                     }
-                    else{
+                }
+                else{
+                    if (inst.team == c.team){
                         inst.shader=shaderSupport
                         draw_set_colour(c_lime)
+                        draw_rectangle(xOff+c.x,yOff+c.y,xOff+c.x+13,yOff+c.y+13,false)
                     }
-                    draw_set_alpha(0.7)
-                    draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
-                    draw_set_alpha(1)
                 }
-            }else{
+            }
+            else{
                 draw_set_colour(c_orange)
-                draw_set_alpha(0.7)
-                draw_rectangle(i+c.x,j+c.y,i+c.x+13,j+c.y+13,false)
-                draw_set_alpha(1)
-                }
+                draw_rectangle(xOff+c.x,yOff+c.y,xOff+c.x+13,yOff+c.y+13,false)
             }
         }
     }
-
+}
+draw_set_alpha(1)
 }
 
 </string>
@@ -3465,13 +3546,17 @@ for (var j=0;j&lt;room_height/15;j++){
 if global.production=0
 {
 if keyboard_check_pressed(ord('1'))
-    global.colourSwitch[0] = !global.colourSwitch[0]
+    option_zoom = !option_zoom
 if keyboard_check_pressed(ord('2'))
-    global.colourSwitch[1] = !global.colourSwitch[1]
+    gridAlpha+=0.1
+if gridAlpha&gt;1
+    gridAlpha=0
 if keyboard_check_pressed(ord('3'))
-    global.colourSwitch[2] = !global.colourSwitch[2]
+    quickEnd = !quickEnd
 if keyboard_check_pressed(ord('4'))
-    global.colourSwitch[3] = !global.colourSwitch[3]
+    warningZone = !warningZone
+if keyboard_check_pressed(ord('5'))
+    global.outline = !global.outline
 
 if keyboard_check_pressed(ord('K'))
     randPos++
@@ -3518,6 +3603,16 @@ if keyboard_check_pressed(vk_backspace)
             instance_destroy()
         alarm[10]=1
     }
+}
+
+if keyboard_check_pressed(vk_tab){
+    inst = instance_place(x,y,oUnit)
+    if inst!=noone{
+        inst.team+=1
+        if inst.team&gt;3
+            inst.team=0
+        }
+        
 }
 
 //cnage grid apha
