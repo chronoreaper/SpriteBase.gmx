@@ -21,5 +21,9 @@
   <height>80</height>
   <frames>
     <frame index="0">images\bonusMenu_0.png</frame>
+    <frame index="1">images\bonusMenu_1.png</frame>
+    <frame index="2">images\bonusMenu_2.png</frame>
+    <frame index="3">images\bonusMenu_3.png</frame>
+    <frame index="4">images\bonusMenu_4.png</frame>
   </frames>
 </sprite>

@@ -1,26 +1,95 @@
 var arg_unit=argument0
 var arg_value = argument1
 /*
+-1 description
 0 hp
 1 pow
 2 range
 3 mov
+4 sight
 */
 switch arg_unit{
     case oFighter:
         switch arg_value{
+            case -1:return "";
             case 0:return 5;//Hp
             case 1:return 1;//pow
             case 2:return 1;//range
             case 3:return 3;//mov
+            case 4:return 6//sight
         }
-    case oArcher:return      "HP:4 POW:1 RANGE:3 MOV:3"
-    case oMage:return        "HP:3 POW:1 RANGE:2 MOV:3 CREATES FIRE ON ATTACK"
-    case oHealer:return      "HP:3 POW:1 RANGE:2 MOV:3 HEALS TARGET HP EQUAL TO POW"
-    case oHero:return        "HP:6 POW:2 RANGE:2 MOV:3"
-    case oDefender:return    "HP:6 POW:2 RANGE:1 MOV:2 PUSHES TARGET"
-    case oIceMage:return     "HP:3 POW:1 RANGE:2 MOV:3 CREATES ICE BLOCK ON ATTACK"
-    case oThunderMage:return "HP:3 POW:1 RANGE:2 MOV:3"  
+    case oArcher:
+        switch arg_value{
+            case -1:return "";
+            case 0:return 4;//Hp
+            case 1:return 1;//pow
+            case 2:return 3;//range
+            case 3:return 3;//mov
+            case 4:return 6//sight
+        }
+    case oMage:
+        switch arg_value{
+            case -1:return "IGNIGTES TARGET";
+            case 0:return 3;//Hp
+            case 1:return 1;//pow
+            case 2:return 2;//range
+            case 3:return 3;//mov
+            case 4:return 6//sight
+        }
+    case oHealer:
+        switch arg_value{
+            case -1:return "HEALS TARGET";
+            case 0:return 3;//Hp
+            case 1:return -1;//pow
+            case 2:return 2;//range
+            case 3:return 3;//mov
+            case 4:return 6//sight
+        }
+    case oHero:
+        switch arg_value{
+            case -1:return "";
+            case 0:return 6;//Hp
+            case 1:return 2;//pow
+            case 2:return 2;//range
+            case 3:return 3;//mov
+            case 4:return 6//sight
+        }
+    case oDefender:
+        switch arg_value{
+            case -1:return "PUSHES TARGET";
+            case 0:return 6;//Hp
+            case 1:return 2;//pow
+            case 2:return 1;//range
+            case 3:return 2;//mov
+            case 4:return 6//sight
+        }
+    case oIceMage:
+        switch arg_value{
+            case -1:return "FREEZES TARGET";
+            case 0:return 3;//Hp
+            case 1:return 1;//pow
+            case 2:return 2;//range
+            case 3:return 3;//mov
+            case 4:return 6//sight
+        }
+    case oThunderMage:
+        switch arg_value{
+            case -1:return "SHOCKS TARGET";
+            case 0:return 3;//Hp
+            case 1:return 1;//pow
+            case 2:return 2;//range
+            case 3:return 3;//mov
+            case 4:return 6//sight
+        } 
+    case oBarrier_Mage:
+        switch arg_value{
+            case -1:return "SHIELDS TARGET";
+            case 0:return 3;//Hp
+            case 1:return -2;//pow
+            case 2:return 2;//range
+            case 3:return 3;//mov
+            case 4:return 6//sight
+        }
     
     //monsters
     case oSlime:return       "HP:2 POW:1 RANGE:1 MOV:1"  

@@ -279,7 +279,7 @@ playerSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=1
+global.production=0
 global.mobile=0
 global.vertical = 0//(room == room3)
 debugging=0
@@ -2166,8 +2166,8 @@ switch phase{
     case 5: timePhase5++; break;
 }
 }
-warningTurn = 6 + floor(level/2) - difficulty*2
-dangerTurn = 9 + floor(level/2) - difficulty*2
+warningTurn = 6 + floor(level/5) - difficulty*3
+dangerTurn = 9 + floor(level/5) - difficulty*3
 </string>
           </argument>
         </arguments>

@@ -33,6 +33,7 @@ pow=1
 mov=1
 mmov=mov
 view=3
+mview = view
 unit=algertle001_0
 name="Algertle"
 

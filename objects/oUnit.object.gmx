@@ -72,6 +72,7 @@ idle=0
 combat=0
 
 view=0
+mview = view
 
 unit=0
 

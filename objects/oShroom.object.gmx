@@ -34,6 +34,7 @@ mRange = range
 mov=1
 mmov=mov
 view=4
+mview = view
 unit=shroom001_0
 name="Shroom"
 

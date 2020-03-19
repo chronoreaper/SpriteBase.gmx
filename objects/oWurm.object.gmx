@@ -34,6 +34,7 @@ pow=2
 mov=1
 mmov=mov
 view=5
+mview = view
 unit=wurm001_0
 name="Wurm"
 link=noone

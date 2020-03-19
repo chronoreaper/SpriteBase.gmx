@@ -2,10 +2,12 @@ var bonus = argument0
 var return_type = argument1
 /**
 -1- description
-0 - Effect
+0 - Effect before room creation
 1 - Name
 2 - Cost
 3 - sprite
+4 - eff after room creation
+5 - imageIndex of box
 */
 var tax = ds_list_size(oControler.unitList)-1
 
@@ -24,6 +26,8 @@ switch floor(bonus){
             return 1+floor(tax/2)
         case 3:
             return barrier_mage001_0
+        case 5:
+            return 0;
         }
     break;
     case -8: //add thunder mage to party
@@ -39,6 +43,8 @@ switch floor(bonus){
             return 1+floor(tax/2)
         case 3:
             return thunder_mage001_0
+        case 5:
+            return 0;
         }
     break;
     case -7: //add ice mage to party
@@ -54,6 +60,8 @@ switch floor(bonus){
             return 1+floor(tax/2)
         case 3:
             return ice_mage001_0
+        case 5:
+            return 0;
         }
     break;
     case -6: //add defender to party
@@ -69,6 +77,8 @@ switch floor(bonus){
             return 1+floor(tax/2)
         case 3:
             return defender001_0
+        case 5:
+            return 0;
         }
     break;
     case -5: //add hero to party
@@ -84,6 +94,8 @@ switch floor(bonus){
             return 3+floor(tax/2)
         case 3:
             return hero001_0
+        case 5:
+            return 0;
         }
     break;
     case -4: //add healer to party
@@ -99,6 +111,8 @@ switch floor(bonus){
             return 1+floor(tax/2)
         case 3:
             return healer001_0
+        case 5:
+            return 0;
         }
     break;
     case -3: //add mage to party
@@ -114,6 +128,8 @@ switch floor(bonus){
             return 1+floor(tax/2)
         case 3:
             return mage001_0
+        case 5:
+            return 0;
         }
     break;
     case -2: //add archer to party
@@ -129,6 +145,8 @@ switch floor(bonus){
             return 1+floor(tax/2)
         case 3:
             return archer001_0
+        case 5:
+            return 0;
         }
     break;
     case -1: //add fighter to party
@@ -144,6 +162,8 @@ switch floor(bonus){
             return 1+floor(tax/2)
         case 3:
             return fighter001_0
+        case 5:
+            return 0;
         }
     break;
     case 1: //heal party for 1
@@ -164,6 +184,8 @@ switch floor(bonus){
             return 1
         case 3:
             return multiHealSprite
+        case 5:
+            return 0;
         }
     break;
     case 2: //shield party for 2
@@ -187,6 +209,81 @@ switch floor(bonus){
                 }
             }
             break;
+        case 5:
+            return 0;
+        }
+    break;
+    case 3: //increase max hp for one unit
+        var index = floor(frac(bonus)*100)
+        switch return_type{
+        case -1: return "INCREASES max Hp"
+        case 0:   
+            var inst = ds_list_find_value(unitList,index);
+            inst.hp+=1
+            inst.mhp+=1        
+            break;
+        case 1:
+            return "Hp Up"
+        case 2:
+            return 2+floor(tax/2)
+        case 3:
+            return ds_list_find_value(unitList,index).unit
+        case 5:
+            return 2;
+        }
+    break;
+    case 4: //increase pow for one unit
+        var index = floor(frac(bonus)*100)
+        switch return_type{
+        case -1: return "INCREASES Pow"
+        case 0:   
+            var inst = ds_list_find_value(unitList,index);
+            inst.pow+=1     
+            break;
+        case 1:
+            return "Pow Up"
+        case 2:
+            return 2+floor(tax/2)
+        case 3:
+            return ds_list_find_value(unitList,index).unit
+        case 5:
+            return 1;
+        }
+    break;
+    case 5: //increase move for one unit
+        var index = floor(frac(bonus)*100)
+        switch return_type{
+        case -1: return "INCREASES move"
+        case 0:   
+            var inst = ds_list_find_value(unitList,index);
+            inst.mov+=1      
+            break;
+        case 1:
+            return "Move Up"
+        case 2:
+            return 2+floor(tax/2)
+        case 3:
+            return ds_list_find_value(unitList,index).unit
+        case 5:
+            return 3;
+        }
+    break;
+    case 6: //increase range for one unit
+        var index = floor(frac(bonus)*100)
+        switch return_type{
+        case -1: return "INCREASES RaNge"
+        case 0:   
+            var inst = ds_list_find_value(unitList,index);
+            inst.range+=1      
+            break;
+        case 1:
+            return "RANGE Up"
+        case 2:
+            return 2+floor(tax/2)
+        case 3:
+            return ds_list_find_value(unitList,index).unit
+        case 5:
+            return 4;
         }
     break;
     default: 

@@ -33,6 +33,7 @@ mhp=hp
 mov=2
 mmov=mov
 view=4
+mview = view
 unit=boar001_0
 name="Boar"
 

@@ -34,6 +34,7 @@ mRange = range
 mov=3
 mmov=mov
 view=6
+mview = view
 
 unit=archer001_0
 name="Archer"

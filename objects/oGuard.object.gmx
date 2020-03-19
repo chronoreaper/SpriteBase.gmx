@@ -33,6 +33,7 @@ mhp=hp
 mov=3
 mmov=mov
 view=6
+mview = view
 
 unit=guard001_0
 name="Guard"

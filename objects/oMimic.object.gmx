@@ -34,6 +34,7 @@ pow=2
 mov=1
 mmov=mov
 view=3
+mview = view
 unit=mimic001_0
 name="Mimic"
 

@@ -33,6 +33,7 @@ mhp=hp
 mov=2
 mmov=mov
 view=6
+mview = view
 pow = 2
 
 unit=defender001_0

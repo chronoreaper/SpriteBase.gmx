@@ -46,8 +46,41 @@ if oControler.playerGold[0]>=1+floor(tax/2){//cost 1
     }
 }
 
-if oControler.playerGold[0]>=2+tax{//cost 2
-
+if oControler.playerGold[0]>=2+floor(tax/2){//cost 2
+    var maxPos = (ds_list_size(oControler.unitList)-1)
+    var pos = (irandom(maxPos)*0.01)
+    var inst;
+    //HP Plus
+    inst = ds_list_find_value(oControler.unitList, pos*100)
+    if (inst.mhp - unit_default_values(inst.object_index,0) + 1
+    <= min(oControler.level/4,2 + (inst.range==1)))
+        if tryAdding(3+pos,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+            ds_list_add(rand_list,3+pos)
+        
+    //Atk Plus
+    pos = (irandom(maxPos)*0.01)
+    inst = ds_list_find_value(oControler.unitList, pos*100)
+    if (inst.mhp - unit_default_values(inst.object_index,1) +1
+    <= min(oControler.level/7,2 + (inst.range==1)))
+    if tryAdding(4+pos,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+        ds_list_add(rand_list,4+pos)
+        
+    //Move plus
+    pos = (irandom(maxPos)*0.01)
+    inst = ds_list_find_value(oControler.unitList, pos*100)
+    if (inst.mhp - unit_default_values(inst.object_index,2) +1
+    <= min(oControler.level/6,2))
+    if tryAdding(5+pos,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+        ds_list_add(rand_list,5+pos)
+        
+    //Range Plus
+    pos = (irandom(maxPos)*0.01)
+    inst = ds_list_find_value(oControler.unitList, pos*100)
+    if (inst.range>1)
+    if (inst.mhp - unit_default_values(inst.object_index,3) +1
+    <= min(oControler.level/6,2))
+    if tryAdding(6+pos,chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+        ds_list_add(rand_list,6+pos)
 }
 
 if oControler.playerGold[0]>=3+floor(tax/2){//cost 3

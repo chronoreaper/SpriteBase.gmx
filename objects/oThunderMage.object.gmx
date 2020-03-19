@@ -35,6 +35,7 @@ mRange = range
 mov=3
 mmov=mov
 view=6
+mview = view
 
 unit=thunder_mage001_0
 name="thunder mage"

@@ -33,6 +33,7 @@ mhp=hp
 mov=1
 mmov=mov
 view=3
+mview = view
 unit=turt001_0
 name="Turt"
 

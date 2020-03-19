@@ -34,6 +34,7 @@ pow=1
 mov=3
 mmov=mov
 view=6
+mview = view
 
 unit=fighter001_0
 name="Fighter"
