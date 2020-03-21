@@ -61,6 +61,7 @@ if fadeOut=0{
         alpha1+=0.2
     else if alpha1 = 5{//runs once
     
+        instance_activate_all()
         //destroy everything else
         with oObj{
             instance_destroy()

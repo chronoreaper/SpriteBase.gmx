@@ -27,9 +27,11 @@
             <kind>1</kind>
             <string>event_inherited()
 
-hp=3
+hp=5
 mhp=hp
-pow=2
+pow=1
+
+wepAOE=2
 
 mov=1
 mmov=mov

@@ -216,7 +216,7 @@ switch floor(bonus){
     case 3: //increase max hp for one unit
         var index = floor(frac(bonus)*100)
         switch return_type{
-        case -1: return "INCREASES max Hp"
+        case -1: return "INCREASES max Hp for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
             var inst = ds_list_find_value(unitList,index);
             inst.hp+=1
@@ -235,10 +235,10 @@ switch floor(bonus){
     case 4: //increase pow for one unit
         var index = floor(frac(bonus)*100)
         switch return_type{
-        case -1: return "INCREASES Pow"
+        case -1: return "INCREASES Pow for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
             var inst = ds_list_find_value(unitList,index);
-            inst.pow+=1     
+            inst.pow+=sign(inst.pow)   
             break;
         case 1:
             return "Pow Up"
@@ -253,7 +253,7 @@ switch floor(bonus){
     case 5: //increase move for one unit
         var index = floor(frac(bonus)*100)
         switch return_type{
-        case -1: return "INCREASES move"
+        case -1: return "INCREASES move for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
             var inst = ds_list_find_value(unitList,index);
             inst.mov+=1      
@@ -271,7 +271,7 @@ switch floor(bonus){
     case 6: //increase range for one unit
         var index = floor(frac(bonus)*100)
         switch return_type{
-        case -1: return "INCREASES RaNge"
+        case -1: return "INCREASES RaNge for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
             var inst = ds_list_find_value(unitList,index);
             inst.range+=1      

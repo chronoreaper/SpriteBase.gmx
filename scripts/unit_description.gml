@@ -1,44 +1,14 @@
-var arg_unit=argument0
-switch arg_unit{
-    case oFighter:return     "HP:5 POW:1 RANGE:1 MOV:3"
-    case oArcher:return      "HP:4 POW:1 RANGE:3 MOV:3"
-    case oMage:return        "HP:3 POW:1 RANGE:2 MOV:3 IGNITES TARGET"
-    case oHealer:return      "HP:3 POW:1 RANGE:2 MOV:3 HEALS TARGET HP EQUAL TO POW"
-    case oBarrier_Mage:return"HP:3 POW:2 RANGE:2 MOV:3 SHIELDS TARGET EQUAL TO POW"
-    case oHero:return        "HP:6 POW:2 RANGE:2 MOV:3"
-    case oDefender:return    "HP:6 POW:2 RANGE:1 MOV:2 PUSHES TARGET"
-    case oIceMage:return     "HP:3 POW:1 RANGE:2 MOV:3 FREEZES TARGET"
-    case oThunderMage:return "HP:3 POW:1 RANGE:2 MOV:3 SHOCKS TARGET"  
-    
-    //monsters
-    case oSlime:return       "HP:1 POW:1 RANGE:1 MOV:1"  
-    case oShroom:return      "HP:1 POW:1 RANGE:2 MOV:1"  
-    case oBoar:return        "HP:2 POW:1 RANGE:1 MOV:2"
-    case oFrog:return        "HP:2 POW:1 RANGE:1 MOV:2"  
-    case oTurt:return        "HP:3 POW:1 RANGE:1 MOV:1"  
-    case oCyclops:return     "HP:5 POW:2 RANGE:1 MOV:1"  
-    case oEyebat:return      "HP:2 POW:1 RANGE:2 MOV:1"  
-    case oMimic:return       "HP:6 POW:2 RANGE:1 MOV:1"  
-    case oPrant:return       "HP:2 POW:1 RANGE:1 MOV:1"  
-    case oAlgertle:return    "HP:8 POW:1 RANGE:1 MOV:1"  
-    
-    //Bosses
-    case oWurm:return        "HP:3 POW:2 RANGE:1 MOV:1"  
-    case oDragon1:
-        var hp = "";
-        if object_index = oControler
-            hp = string(3+level)   
-        else
-            hp = string(3+oControler.level) 
-        return "HP:"+hp+" POW:1 RANGE:2 MOV:1 BREATHS WATER ON ATTACK"    
-    
-    //objects
-    case oCoin:return       "USE TO SPEND ON BONUSES"
-    case oHealthPack:return "PICK UP TO HEAL 1 HP"
-    case oChest:return      "USE A KEY TO UNLOCK"
-    case oStairs:return     "END YOUR TURN ON THIS TO GO TO THE NEXT FLOOR"
-    case oFire:return       "UNITS ON THIS TAKES 1 DAMAGE AT START OF TURN"
-    case oIceBlock:return   "HP:1"
-    case oTeleporter:return "TELEPORTS UNITS ON THIS AT END OF TURN"
-    default: return " "
+var arg_object=argument0
+var String
+if !object_is_ancestor(arg_object,oObj){
+    String = string(unit_default_values(arg_object,-2))+ " - "
+       +"HP:"+string(unit_default_values(arg_object,0))
+       +" POW:"+string(abs(unit_default_values(arg_object,1)))
+       +" RANGE:"+string(unit_default_values(arg_object,2))
+       +" MOV:"+string(unit_default_values(arg_object,3))
+       +" "+string(unit_default_values(arg_object,-1))
 }
+else{
+    String = unit_default_values(arg_object,-1)
+}
+return String

@@ -35,6 +35,8 @@ mmov=mov
 view=6
 mview = view
 pow = 2
+range=1
+skillOnHit=2
 
 unit=defender001_0
 name="Defender"

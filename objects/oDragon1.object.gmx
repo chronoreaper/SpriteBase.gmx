@@ -36,6 +36,7 @@ mov=1
 mmov=mov
 view=5
 mview = view
+wepAOE = 1
 size=2
 unit=Dragon001_0
 name="Dragon"

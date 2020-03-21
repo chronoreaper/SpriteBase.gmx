@@ -36,6 +36,7 @@ mov=3
 mmov=mov
 view=6
 mview = view
+skillOnHit=4
 
 unit=barrier_mage001_0
 name="Barrier Mage"

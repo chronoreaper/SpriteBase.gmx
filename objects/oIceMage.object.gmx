@@ -36,6 +36,7 @@ mov=3
 mmov=mov
 view=6
 mview = view
+skillOnHit=3
 
 unit=ice_mage001_0
 name="ice mage"

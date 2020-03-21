@@ -26,12 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited()
-skill[0]=12
-str=0
-int=0
-tec=0
-luc=0
-mov=0
 team=0.1
 </string>
           </argument>

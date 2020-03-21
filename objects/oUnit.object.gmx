@@ -34,7 +34,6 @@ ax=0
 ay=0
 //bosses
 phase=0
-action=0
 
 //unit type
 summon=0
@@ -55,14 +54,19 @@ lastHitBy=noone;
 name=""
 
 hp=1
-mhp=1
+mhp=hp
 pow=1
 
-range=1
+range=0
 mRange = range
 
-mov=1
+mov=0
 mmov=mov
+
+view=0
+mview = view
+
+wepAOE = 0
 
 action=0
 
@@ -70,9 +74,6 @@ slowHP=0
 
 idle=0
 combat=0
-
-view=0
-mview = view
 
 unit=0
 
@@ -423,8 +424,10 @@ if hp&lt;=0{
             }
     instance_destroy()
     
-    if ds_map_find_value(oControler.aiTurns, team)&lt;0
+    if ds_map_find_value(oControler.aiTurns, team)&lt;0{
+        if oControler.turnsSurvive &lt; oControler.dangerTurn
         global.cur_score+=mhp+pow+mmov+mRange
+    }
     else
         global.cur_score-=mhp+pow+mmov+mRange
 }

@@ -4,7 +4,9 @@ var arg_eff = argument2
 /**
 1 - fire
 2 - push
-
+3 - freeze
+4 - shield
+5 - shock
 */
 
 switch arg_eff{
@@ -128,5 +130,6 @@ switch arg_eff{
             addStatus(1,arg_targ,5,2)
         }
         break;
+    default: break;
 }
 return 0

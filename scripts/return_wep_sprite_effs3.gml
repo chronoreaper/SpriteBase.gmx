@@ -1,5 +1,5 @@
-var c=argument0
-switch floor(c.unit){
+var arg_unit=argument0
+switch floor(arg_unit){
     case fighter001_0: return slashsweep;
     case archer001_0: return stab;
     case hero001_0: return windSlash;
@@ -10,10 +10,6 @@ switch floor(c.unit){
     case Dragon001_0: return water_breath;
     case eyebat001_0: return fluxEff;
     case shroom001_0: return poison_splash;
-    case wurm001_0:
-        if c.wepAOE=2
-            return laser_beam_full
-        else return blank
     default: return blank;//no wep
 }
 

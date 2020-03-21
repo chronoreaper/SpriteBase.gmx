@@ -3,7 +3,7 @@ var c = arg_selected
 //Start
 
 var range = c.range
-var wepAOE = return_wep_aoe(c.unit)
+var wepAOE = c.wepAOE
 //tempPath=path_add()
 
 var aGridW=ceil(ds_grid_width(atkArea)/2)

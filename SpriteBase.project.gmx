@@ -236,7 +236,7 @@
       <sprite>sprites\bite</sprite>
       <sprite>sprites\water_breath</sprite>
       <sprite>sprites\laser_beam</sprite>
-      <sprite>sprites\sprite226</sprite>
+      <sprite>sprites\laser_beam_full</sprite>
       <sprite>sprites\angelic</sprite>
       <sprite>sprites\dashSlash</sprite>
       <sprite>sprites\healEff</sprite>
@@ -251,6 +251,7 @@
       <sprite>sprites\fluxEff</sprite>
       <sprite>sprites\windEff</sprite>
       <sprite>sprites\buffEff</sprite>
+      <sprite>sprites\chargingEff</sprite>
       <sprite>sprites\teleportTile</sprite>
       <sprites name="status">
         <sprite>sprites\statuses</sprite>
@@ -318,6 +319,7 @@
       <sprite>sprites\AOE_range2</sprite>
       <sprite>sprites\AOE_range1s</sprite>
       <sprite>sprites\AOE_rangeBreath</sprite>
+      <sprite>sprites\AOE_laserBeam</sprite>
     </sprites>
     <sprites name="menu">
       <sprite>sprites\new_character_but</sprite>
@@ -374,6 +376,12 @@
       <script>scripts\clearAllyAndSelf.gml</script>
       <script>scripts\setMoveRangeNeg.gml</script>
     </scripts>
+    <scripts name="Damage Calc Eff">
+      <script>scripts\return_skill_onhit_eff.gml</script>
+      <script>scripts\return_skill_def_eff.gml</script>
+      <script>scripts\return_end_of_damage_eff.gml</script>
+      <script>scripts\get_eff.gml</script>
+    </scripts>
     <script>scripts\getMoveAndAttackRange.gml</script>
     <script>scripts\add_all_to_map.gml</script>
     <script>scripts\addStatus.gml</script>
@@ -382,18 +390,14 @@
     <script>scripts\unit_default_values.gml</script>
     <script>scripts\unit_description.gml</script>
     <script>scripts\return_max_faces.gml</script>
-    <script>scripts\return_face.gml</script>
+    <script>scripts\return_wep_aoe_depreciated.gml</script>
     <script>scripts\return_atk_name.gml</script>
-    <script>scripts\return_wep_aoe.gml</script>
     <script>scripts\return_wep_sound.gml</script>
     <script>scripts\return_wep_sprite_eff.gml</script>
     <script>scripts\check_wep_dmg.gml</script>
     <script>scripts\return_attack_type.gml</script>
     <script>scripts\return_attack_target.gml</script>
     <script>scripts\no_rotate_attack.gml</script>
-    <script>scripts\return_skill_onhit_eff.gml</script>
-    <script>scripts\return_skill_def_eff.gml</script>
-    <script>scripts\get_eff.gml</script>
     <script>scripts\draw_weapon.gml</script>
     <script>scripts\draw_weapon2.gml</script>
     <script>scripts\return_unit.gml</script>
