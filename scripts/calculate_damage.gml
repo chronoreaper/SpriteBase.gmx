@@ -17,7 +17,7 @@ var cp=2;
 
 var dmg=0;
 if arg_dmg = 0
-    dmg =arg_source.pow*check_wep_dmg(arg_source.unit);
+    dmg =arg_source.pow*check_wep_dmg(arg_source.skillOnHit);
 else
     dmg = arg_dmg
 var reducedDmg = 0

@@ -44,6 +44,7 @@ defPow = pow
 defRange = range
 defMov = mov
 defSight = view
+defAOE = wepAOE
 </string>
           </argument>
         </arguments>
@@ -99,6 +100,7 @@ defPow = pow
 defRange = range
 defMov = mov
 defSight = view
+defAOE = wepAOE
 </string>
           </argument>
         </arguments>

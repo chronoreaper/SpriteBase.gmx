@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>bossList = ds_list_create()
-//ds_list_add(bossList,oDragon1)
+ds_list_add(bossList,oDragon1)
 ds_list_add(bossList,oWurm)
 
 difficulty = 0//max 2
@@ -609,10 +609,15 @@ if selected!=noone{
     xx=x
     yy=y
     //move_camera(x,y)
-    }
     
     //end of turn effects
-    get_eff(selected,selected,selected.skillEnd)
+    var heal = get_eff(id,id,skillEnd)
+    if heal &lt; 0{
+        calculate_damage(id,id,heal)
+    }
+    
+    }
+    
     
     //events  
     var inst = instance_place(selected.x,selected.y,oKey)
@@ -647,7 +652,7 @@ if selected!=noone{
     if floor(selected.team)=0
     if place_meeting(selected.x,selected.y,oStairs){
         audio_play_sound(sStairs,50,false)
-        global.cur_score+=level
+        global.cur_score+=level * difficulty
         level++;
         menu = NEXTFLOORMENU;
         instance_create(x,y,oNextFloor)
@@ -661,7 +666,7 @@ if selected!=noone{
                 instance_activate_object(char)
                 if findStatus(char,2)&gt;=0{
                     playerGold[0]+=1
-                    global.cur_score += 5
+                    global.cur_score += 5 * difficulty
                 }
             }
         }
@@ -1867,7 +1872,6 @@ if menu=-1
             //end damage calc
             phase=5  
             actionFlag=false  
-            return_end_of_damage_eff(c)
             }
             else{
                 alarm[0]=2
@@ -2154,8 +2158,9 @@ switch phase{
     case 5: timePhase5++; break;
 }
 }
-warningTurn = 5 + floor(level/5) - difficulty*3
-dangerTurn = 8 + floor(level/5) - difficulty*3
+var turnLimit = 8 + floor(level/5)
+warningTurn = (turnLimit / 2) * (1 - difficulty)
+dangerTurn = (turnLimit) * (2 - difficulty)
 </string>
           </argument>
         </arguments>
@@ -2451,10 +2456,12 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        if object_is_ancestor(c.object_index,oChar){
         String = c.name + " - "
                 +"HP:"+string(c.hp)
-                +" POW:"+string(c.pow)
+                +" POW:"+string(abs(c.pow))
                 +" RANGE:"+string(c.range)
                 +" MOV:"+string(c.mov)
-                +" "+unit_default_values(c.object_index,-1)
+                +" "+eff_name_builder(0,c.skillOnHit)
+                +eff_name_builder(1,c.skillDef)
+                +eff_name_builder(2,c.skillEnd)
        }
        else if object_is_ancestor(c.object_index,oItem)
             String = c.name + " - " + string(unit_default_values(c.object_index,-1))
@@ -3446,6 +3453,7 @@ if selected.draw&gt;0
 if selected.visible{
 var c=selected
 var atk_area=c.wepAOE
+if c.alarm[0]==1
 switch atk_area{
     case 0:
         var inst = noone

@@ -58,86 +58,6 @@ lastSelected = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var chosen;
-chosen[0]=0
-chosen[1]=0
-chosen[2]=0
-chosen[3]=0
-chosen[4]=0
-if fadeOut=0{
-    if alpha1&lt;5
-        alpha1+=0.2
-    else if alpha1 = 5{//runs once
-    
-        //destroy everything else
-        with oObj{
-            instance_destroy()
-        }
-        with oItem{
-            instance_destroy()
-        }
-        with oEvent{
-            instance_destroy()
-        }
-    
-        for(i=0;i&lt;bonusChoices;i++){
-            bonus[i]=instance_create((view_wport/(2*(6-oControler.unitStarted)))*(1+i*2),view_hport/2,oBonusSelect);
-            bonus[i].selection = getBonusChoice(chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
-            bonus[i].image_index = get_bonus_eff(bonus[i].selection,5)
-            chosen[i] = bonus[i].selection
-            if bonus[i].selection = 0
-                with bonus[i]
-                    instance_destroy()
-        }
-        bonus[bonusChoices]=instance_create((view_wport/2),view_hport*(3/4)+20,oBonusSelect);
-        bonus[bonusChoices].selection = -99//does nothing
-        bonus[bonusChoices].sprite_index = skipBonus
-        alpha1++
-    }
-    if selection!=0
-    //if alpha1&gt;=5
-    {
-        with oBonusSelect
-            instance_destroy()
-        oControler.playerGold[0] -= get_bonus_eff(selection,2)
-        var k = get_bonus_eff(selection,0)
-        fadeOut = 1  
-        with (oControler){
-            next_floor()
-            add_all_to_map()
-            }
-        if (k&gt;0){
-            get_bonus_eff(selection,4)
-            }
-        }
-}
-else{
-    alpha1-=0.1
-    if alpha1&lt;=0{
-        oControler.menu=-1
-        instance_destroy()
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///menu options
 if oControler.controler=1{
     for (var i = 0; i &lt; bonusChoices; i++)
@@ -213,6 +133,86 @@ else if (keyboard_check_pressed(oControler.keys[3])){
             }
             count --;
         }    
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var chosen;
+chosen[0]=0
+chosen[1]=0
+chosen[2]=0
+chosen[3]=0
+chosen[4]=0
+if fadeOut=0{
+    if alpha1&lt;5
+        alpha1+=0.2
+    else if alpha1 = 5{//runs once
+    
+        //destroy everything else
+        with oObj{
+            instance_destroy()
+        }
+        with oItem{
+            instance_destroy()
+        }
+        with oEvent{
+            instance_destroy()
+        }
+    
+        for(i=0;i&lt;bonusChoices;i++){
+            bonus[i]=instance_create((view_wport/(2*(6-oControler.unitStarted)))*(1+i*2),view_hport/2,oBonusSelect);
+            bonus[i].selection = getBonusChoice(chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
+            bonus[i].image_index = get_bonus_eff(bonus[i].selection,5)
+            chosen[i] = bonus[i].selection
+            if bonus[i].selection = 0
+                with bonus[i]
+                    instance_destroy()
+        }
+        bonus[bonusChoices]=instance_create((view_wport/2),view_hport*(3/4)+20,oBonusSelect);
+        bonus[bonusChoices].selection = -99//does nothing
+        bonus[bonusChoices].sprite_index = skipBonus
+        alpha1++
+    }
+    if selection!=0
+    //if alpha1&gt;=5
+    {
+        with oBonusSelect
+            instance_destroy()
+        oControler.playerGold[0] -= get_bonus_eff(selection,2)
+        var k = get_bonus_eff(selection,0)
+        fadeOut = 1  
+        with (oControler){
+            next_floor()
+            add_all_to_map()
+            }
+        if (k&gt;0){
+            get_bonus_eff(selection,4)
+            }
+        }
+}
+else{
+    alpha1-=0.1
+    if alpha1&lt;=0{
+        oControler.menu=-1
+        instance_destroy()
     }
 }
 </string>

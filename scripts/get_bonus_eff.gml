@@ -214,7 +214,7 @@ switch floor(bonus){
         }
     break;
     case 3: //increase max hp for one unit
-        var index = floor(frac(bonus)*100)
+        var index = round(frac(bonus)*100)
         switch return_type{
         case -1: return "INCREASES max Hp for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
@@ -233,7 +233,7 @@ switch floor(bonus){
         }
     break;
     case 4: //increase pow for one unit
-        var index = floor(frac(bonus)*100)
+        var index = round(frac(bonus)*100)
         switch return_type{
         case -1: return "INCREASES Pow for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
@@ -251,7 +251,7 @@ switch floor(bonus){
         }
     break;
     case 5: //increase move for one unit
-        var index = floor(frac(bonus)*100)
+        var index = round(frac(bonus)*100)
         switch return_type{
         case -1: return "INCREASES move for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
@@ -269,7 +269,7 @@ switch floor(bonus){
         }
     break;
     case 6: //increase range for one unit
-        var index = floor(frac(bonus)*100)
+        var index = round(frac(bonus)*100)
         switch return_type{
         case -1: return "INCREASES RaNge for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   

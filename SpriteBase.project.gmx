@@ -44,12 +44,25 @@
         <sprite>sprites\sprite10</sprite>
         <sprite>sprites\sprite11</sprite>
         <sprite>sprites\sprite12</sprite>
+        <sprite>sprites\slimey</sprite>
+        <sprite>sprites\sprite267</sprite>
+        <sprite>sprites\sprite268</sprite>
+        <sprite>sprites\sprite269</sprite>
+        <sprite>sprites\aslimey</sprite>
+        <sprite>sprites\sprite271</sprite>
+        <sprite>sprites\sprite272</sprite>
+        <sprite>sprites\sprite273</sprite>
       </sprites>
       <sprites name="boar">
         <sprite>sprites\boar001_0</sprite>
         <sprite>sprites\boar001_1</sprite>
         <sprite>sprites\boar001_2</sprite>
         <sprite>sprites\boar001_3</sprite>
+        <sprite>sprites\boar002_0</sprite>
+        <sprite>sprites\boar002_1</sprite>
+        <sprite>sprites\boar002_2</sprite>
+        <sprite>sprites\boar002_3</sprite>
+        <sprite>sprites\boarior_0</sprite>
       </sprites>
       <sprites name="frog">
         <sprite>sprites\frog001_0</sprite>
@@ -381,6 +394,8 @@
       <script>scripts\return_skill_def_eff.gml</script>
       <script>scripts\return_end_of_damage_eff.gml</script>
       <script>scripts\get_eff.gml</script>
+      <script>scripts\eff_name_builder.gml</script>
+      <script>scripts\check_wep_dmg.gml</script>
     </scripts>
     <script>scripts\getMoveAndAttackRange.gml</script>
     <script>scripts\add_all_to_map.gml</script>
@@ -394,7 +409,6 @@
     <script>scripts\return_atk_name.gml</script>
     <script>scripts\return_wep_sound.gml</script>
     <script>scripts\return_wep_sprite_eff.gml</script>
-    <script>scripts\check_wep_dmg.gml</script>
     <script>scripts\return_attack_type.gml</script>
     <script>scripts\return_attack_target.gml</script>
     <script>scripts\no_rotate_attack.gml</script>
@@ -540,6 +554,7 @@
       <object>objects\oMimic</object>
       <object>objects\oAlgertle</object>
       <object>objects\oPrant</object>
+      <object>objects\oSlimey</object>
       <objects name="Boss">
         <object>objects\oWurm</object>
         <object>objects\oDragon1</object>

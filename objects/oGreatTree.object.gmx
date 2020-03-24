@@ -37,7 +37,7 @@ view=5
 size=2
 unit=greatTree001
 name="Great Tree"
-dmg=hpbar3
+dmg=hp
 
 </string>
           </argument>

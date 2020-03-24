@@ -1,4 +1,6 @@
 var arg_unit = argument0
-switch arg_unit{
-    default: break;
+with arg_unit{
+    switch object_index{
+        default: break;
+    }
 }

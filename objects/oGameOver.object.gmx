@@ -148,7 +148,7 @@ else{
     draw_text_transformed(view_wport/2,view_hport*(1/2)-2,"GAME OVER",2,2,0)
     draw_set_alpha(alpha1-3)
     draw_set_colour(c_white)
-    draw_text((view_wport/2),view_hport*(5/8)-2,"SCORE: "+string(global.cur_score))
+    draw_text((view_wport/2),view_hport*(5/8)-2,"SCORE: "+string(global.cur_score * (1 + oControler.difficulty)))
     draw_text((view_wport/2),view_hport*(3/4)-2,"PRESS ANY KEY TO CONTINUE")
 }
 </string>

@@ -202,6 +202,7 @@ image_blend=c_white
             <string>///reset attack position
 ax=0
 ay=0
+return_end_of_damage_eff(id)
 </string>
           </argument>
         </arguments>
@@ -426,6 +427,7 @@ if hp&lt;=0{
     
     if ds_map_find_value(oControler.aiTurns, team)&lt;0{
         if oControler.turnsSurvive &lt; oControler.dangerTurn
+        ||marker=1
         global.cur_score+=mhp+pow+mmov+mRange
     }
     else
@@ -484,7 +486,7 @@ if oControler.phase&lt;2||oControler.currentTurn&lt;0{
     }
     draw_set_halign(fa_center)
     draw_set_colour(col)
-    draw_set_font(pixelBlock);
+    draw_set_font(pixelSquish);
     draw_text_transformed(x+7-28*dsin(-view_angle),y+7-28*dcos(view_angle),txt,1,1,-view_angle)
     draw_sprite_ext(unit_marker,0,x+7+13*dsin(view_angle),y+7-13*dcos(view_angle),1,1,-view_angle,col,1)
     draw_set_halign(fa_left)

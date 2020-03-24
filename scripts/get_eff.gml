@@ -7,6 +7,7 @@ var arg_eff = argument2
 3 - freeze
 4 - shield
 5 - shock
+6 - heal
 */
 
 switch arg_eff{
@@ -130,6 +131,8 @@ switch arg_eff{
             addStatus(1,arg_targ,5,2)
         }
         break;
+    case 6:
+        return -abs(arg_source.pow)
     default: break;
 }
 return 0

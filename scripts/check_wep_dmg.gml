@@ -1,10 +1,9 @@
-var arg_unit = argument0
-switch arg_unit{
-    //case mage001_0: return 0
-    //case ice_mage001_0: return 0
-    //case thunder_mage001_0: return 0
-    case defender001_0: return 0
-    case barrier_mage001_0: return 0
+///linked to get eff
+var arg_skill = argument0
+switch arg_skill{
+    case 2: return 0//push
+    case 4: return 0//shield
+    case 6: return 0//heal
     default: return 1
 }
 return 1
