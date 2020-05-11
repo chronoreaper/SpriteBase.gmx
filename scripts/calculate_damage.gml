@@ -43,7 +43,8 @@ if arg_dmg=0
     dmg += return_skill_onhit_eff(arg_source,arg_targ)
 arg_targ.hp-=dmg
 arg_targ.hp=clamp(arg_targ.hp,0,arg_targ.mhp)
-return_skill_def_eff(arg_source,arg_targ)
+if arg_dmg>=0
+    return_skill_def_eff(arg_targ,arg_source)
 arg_targ.image_blend=c_red
 if dmg<0{
     arg_targ.image_blend=c_lime

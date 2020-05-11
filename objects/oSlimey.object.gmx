@@ -36,8 +36,8 @@ mov=1
 mmov=mov
 view=4
 mview = view
-unit=slime001
-name="Slime"
+unit=slimey
+name="Slimey"
 
 dmg=hp
 </string>

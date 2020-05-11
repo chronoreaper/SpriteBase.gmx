@@ -28,6 +28,12 @@
             <string>alpha1=0
 alpha2=0
 fadeOut=0
+
+var file = file_text_open_append("result.txt");
+file_text_write_string(file,"Game Result")
+file_text_write_string(file,"Score:"+string(global.cur_score * (1 + oControler.difficulty)))
+file_text_write_string(file,"Floors Cleared:"+string(oControler.level))
+file_text_close(file)
 </string>
           </argument>
         </arguments>
@@ -93,6 +99,7 @@ if fadeOut=0{
         oControler.y=0
         oControler.xx=0
         oControler.yy=0
+        oControler.level=1
     }
 }
 else{

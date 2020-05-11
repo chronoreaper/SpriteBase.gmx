@@ -62,7 +62,10 @@
         <sprite>sprites\boar002_1</sprite>
         <sprite>sprites\boar002_2</sprite>
         <sprite>sprites\boar002_3</sprite>
-        <sprite>sprites\boarior_0</sprite>
+        <sprite>sprites\boarrior_0</sprite>
+        <sprite>sprites\boarrior_1</sprite>
+        <sprite>sprites\boarrior_2</sprite>
+        <sprite>sprites\boarrior_3</sprite>
       </sprites>
       <sprites name="frog">
         <sprite>sprites\frog001_0</sprite>
@@ -166,6 +169,7 @@
         <sprite>sprites\algertle001_2</sprite>
         <sprite>sprites\algertle001_3</sprite>
       </sprites>
+      <sprite>sprites\randomUnit</sprite>
     </sprites>
     <sprites name="objects">
       <sprite>sprites\lamppost</sprite>
@@ -185,6 +189,7 @@
       <sprite>sprites\ruinWall</sprite>
       <sprite>sprites\tree</sprite>
       <sprite>sprites\tree2</sprite>
+      <sprite>sprites\stonePillar</sprite>
       <sprite>sprites\stone</sprite>
       <sprite>sprites\chest_r</sprite>
       <sprite>sprites\chest_u</sprite>
@@ -198,6 +203,7 @@
       <sprite>sprites\fence01</sprite>
       <sprite>sprites\ruinWall2</sprite>
       <sprite>sprites\ruinWall3</sprite>
+      <sprite>sprites\stoneWall</sprite>
       <sprite>sprites\stairs01_1</sprite>
       <sprite>sprites\stairs01_2</sprite>
       <sprite>sprites\stairs01_3</sprite>
@@ -235,6 +241,8 @@
       <sprite>sprites\herb</sprite>
       <sprite>sprites\key</sprite>
       <sprite>sprites\coin</sprite>
+      <sprite>sprites\jem</sprite>
+      <sprite>sprites\bonusCard</sprite>
       <sprite>sprites\healthPack</sprite>
     </sprites>
     <sprites name="eff">
@@ -343,11 +351,13 @@
     <sprite>sprites\blank</sprite>
     <sprite>sprites\cruser</sprite>
     <sprite>sprites\sprite63</sprite>
+    <sprite>sprites\selectedUnit</sprite>
     <sprite>sprites\healthBar</sprite>
     <sprite>sprites\marker1</sprite>
     <sprite>sprites\sprite62</sprite>
     <sprite>sprites\letters</sprite>
     <sprite>sprites\lettersBlock</sprite>
+    <sprite>sprites\icon</sprite>
     <sprite>sprites\Listofsprite</sprite>
     <sprite>sprites\ListOfItems</sprite>
     <sprite>sprites\hpbar3</sprite>
@@ -375,6 +385,7 @@
     <background>background\tilesprite</background>
     <background>background\cityruinsBackground</background>
     <background>background\tilesprite2</background>
+    <background>background\stoneBackground</background>
     <background>background\greenBackground</background>
     <background>background\background5</background>
   </backgrounds>
@@ -396,13 +407,16 @@
       <script>scripts\get_eff.gml</script>
       <script>scripts\eff_name_builder.gml</script>
       <script>scripts\check_wep_dmg.gml</script>
+      <script>scripts\aoe_name_builder.gml</script>
+    </scripts>
+    <scripts name="oControler Scripts">
+      <script>scripts\update_fog.gml</script>
     </scripts>
     <script>scripts\getMoveAndAttackRange.gml</script>
     <script>scripts\add_all_to_map.gml</script>
     <script>scripts\addStatus.gml</script>
     <script>scripts\findStatus.gml</script>
     <script>scripts\dispellStatus.gml</script>
-    <script>scripts\unit_default_values.gml</script>
     <script>scripts\unit_description.gml</script>
     <script>scripts\return_max_faces.gml</script>
     <script>scripts\return_wep_aoe_depreciated.gml</script>
@@ -418,7 +432,6 @@
     <script>scripts\return_unit_in_range.gml</script>
     <script>scripts\message_create.gml</script>
     <script>scripts\calculate_damage.gml</script>
-    <script>scripts\update_fog.gml</script>
     <script>scripts\check_turn_end.gml</script>
     <script>scripts\path_drawer.gml</script>
     <script>scripts\get_random.gml</script>
@@ -436,6 +449,7 @@
     <script>scripts\find_char_in_menu_list.gml</script>
     <script>scripts\get_bonus_eff.gml</script>
     <script>scripts\getBonusChoice.gml</script>
+    <script>scripts\end_turn.gml</script>
     <script>scripts\move_camera.gml</script>
   </scripts>
   <shaders name="shaders">
@@ -450,6 +464,7 @@
     <object>objects\oCamera</object>
     <object>objects\oControler</object>
     <objects name="menu">
+      <object>objects\oCharCreationSelection</object>
       <object>objects\oCharCreation</object>
       <object>objects\oBackButton</object>
       <object>objects\oBonusSelect</object>
@@ -519,6 +534,7 @@
       <object>objects\oTrafficLight_r</object>
       <object>objects\oTree</object>
       <object>objects\oStone</object>
+      <object>objects\oStonePillar</object>
       <object>objects\oAncientWall</object>
       <object>objects\oRecyclingBin</object>
       <object>objects\oBench</object>
@@ -531,6 +547,7 @@
       <object>objects\oBlockStop</object>
       <object>objects\oFence</object>
       <object>objects\oRuinWall</object>
+      <object>objects\oStoneWall</object>
     </objects>
     <objects name="units">
       <object>objects\oFighter</object>
@@ -545,6 +562,8 @@
       <object>objects\oThunderMage</object>
       <object>objects\oMerchant</object>
       <object>objects\oSlime</object>
+      <object>objects\oSlimey</object>
+      <object>objects\oAslimey</object>
       <object>objects\oShroom</object>
       <object>objects\oBoar</object>
       <object>objects\oFrog</object>
@@ -554,7 +573,6 @@
       <object>objects\oMimic</object>
       <object>objects\oAlgertle</object>
       <object>objects\oPrant</object>
-      <object>objects\oSlimey</object>
       <objects name="Boss">
         <object>objects\oWurm</object>
         <object>objects\oDragon1</object>

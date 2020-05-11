@@ -7,3 +7,5 @@ switch (arg_targ.unit){
         break
     default: break
 }
+
+return get_eff(arg_source,arg_targ,arg_source.skillDef)

@@ -94,13 +94,28 @@ with oControler{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//save default
-defHp = hp
-defPow = pow
-defRange = range
-defMov = mov
-defSight = view
-defAOE = wepAOE
+            <string>///set values from file if any or default values
+var list = ds_map_find_value(oControler.defUnits,object_index)
+name = list[|0]
+unit = list[|1]
+hp = list[|2]
+pow = list[|3]
+range = list[|4]
+mov = list[|5]
+view = list[|6]
+skillOnHit = list[|7]
+skillDef = list[|8]
+skillEnd = list[|9]
+wepAOE =  list[|10]
+
+
+//set max values
+mRange = range
+mhp = hp
+mmov =mov
+mview = view
+
+dmg = hp
 </string>
           </argument>
         </arguments>

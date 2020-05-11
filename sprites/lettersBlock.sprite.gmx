@@ -98,5 +98,7 @@
     <frame index="75">images\lettersBlock_75.png</frame>
     <frame index="76">images\lettersBlock_76.png</frame>
     <frame index="77">images\lettersBlock_77.png</frame>
+    <frame index="78">images\lettersBlock_78.png</frame>
+    <frame index="79">images\lettersBlock_79.png</frame>
   </frames>
 </sprite>

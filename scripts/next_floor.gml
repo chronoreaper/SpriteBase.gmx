@@ -10,6 +10,7 @@ for (var i=0;i<ds_list_size(unitList);i++){
             char.x = char.xx
             char.y = char.yy 
             char.wait=0
+            //if oControler.difficulty < 2
             char.hp=min(char.hp+1,char.mhp)
         }
 }
@@ -74,6 +75,14 @@ if ds_list_size(unitList)>0{
             oCamera.y = y
         }
     }
+}
+
+//switch env if needed
+if level%5=1
+if level>1{
+    env+=1
+    if env>1
+        env=0
 }
 
 //make next floor

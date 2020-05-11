@@ -39,7 +39,7 @@ mview = view
 skillOnHit=3
 
 unit=ice_mage001_0
-name="ice mage"
+name="Ice Mage"
 
 dmg=hp
 </string>

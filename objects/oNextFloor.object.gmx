@@ -33,7 +33,7 @@ des=""
 select=0
 bonusChoices = 6-oControler.unitStarted
 for (var i = 0 ;i &lt; bonusChoices + 1;i ++)
-    bonus[i] = noone
+    bonus[i] = 0
     
 lastSelected = 0
 </string>
@@ -59,6 +59,7 @@ lastSelected = 0
           <argument>
             <kind>1</kind>
             <string>///menu options
+if fadeOut=0{
 if oControler.controler=1{
     for (var i = 0; i &lt; bonusChoices; i++)
         if (bonus[i]!=noone &amp;&amp; instance_exists(bonus[i])){
@@ -135,6 +136,7 @@ else if (keyboard_check_pressed(oControler.keys[3])){
         }    
     }
 }
+}
 </string>
           </argument>
         </arguments>
@@ -176,8 +178,19 @@ if fadeOut=0{
         with oEvent{
             instance_destroy()
         }
-    
-        for(i=0;i&lt;bonusChoices;i++){
+        //Remove all summons
+        for (var i=0;i&lt;ds_list_size(oControler.unitList);i++){
+            var inst = ds_list_find_value(oControler.unitList,i)
+            if inst!=noone
+            if instance_exists(inst)
+            if inst.summon&gt;0{
+                with inst
+                    instance_destroy()
+                ds_list_insert(oControler.unitList,i,noone)
+                }           
+        }
+        
+        for(var i=0;i&lt;bonusChoices;i++){
             bonus[i]=instance_create((view_wport/(2*(6-oControler.unitStarted)))*(1+i*2),view_hport/2,oBonusSelect);
             bonus[i].selection = getBonusChoice(chosen[0],chosen[1],chosen[2],chosen[3],chosen[4])
             bonus[i].image_index = get_bonus_eff(bonus[i].selection,5)

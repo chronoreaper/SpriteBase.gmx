@@ -9,7 +9,7 @@ var return_type = argument1
 4 - eff after room creation
 5 - imageIndex of box
 */
-var tax = ds_list_size(oControler.unitList)-1
+var tax = ds_list_size(oControler.unitList)-1 + floor(oControler.level/10)
 
 with oControler
 switch floor(bonus){
@@ -91,7 +91,7 @@ switch floor(bonus){
         case 1:
             return "hero"
         case 2:
-            return 3+floor(tax/2)
+            return 5+floor(tax/2)
         case 3:
             return hero001_0
         case 5:
@@ -225,7 +225,7 @@ switch floor(bonus){
         case 1:
             return "Hp Up"
         case 2:
-            return 2+floor(tax/2)
+            return 0+ceil(tax/4)
         case 3:
             return ds_list_find_value(unitList,index).unit
         case 5:
@@ -243,7 +243,7 @@ switch floor(bonus){
         case 1:
             return "Pow Up"
         case 2:
-            return 2+floor(tax/2)
+            return 2+ceil(tax/4)
         case 3:
             return ds_list_find_value(unitList,index).unit
         case 5:
@@ -256,12 +256,13 @@ switch floor(bonus){
         case -1: return "INCREASES move for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
             var inst = ds_list_find_value(unitList,index);
-            inst.mov+=1      
+            inst.mov+=1     
+            inst.mmov+=1 
             break;
         case 1:
             return "Move Up"
         case 2:
-            return 2+floor(tax/2)
+            return 1+ceil(tax/4)
         case 3:
             return ds_list_find_value(unitList,index).unit
         case 5:
@@ -274,12 +275,13 @@ switch floor(bonus){
         case -1: return "INCREASES RaNge for "+string_upper(ds_list_find_value(unitList,index).name)
         case 0:   
             var inst = ds_list_find_value(unitList,index);
-            inst.range+=1      
+            inst.range+=1
+            inst.mRange+=1      
             break;
         case 1:
             return "RANGE Up"
         case 2:
-            return 2+floor(tax/2)
+            return 1+ceil(tax/4)
         case 3:
             return ds_list_find_value(unitList,index).unit
         case 5:

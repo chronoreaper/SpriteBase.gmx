@@ -24,7 +24,7 @@ switch index{
             case 0:return "Archer"
             case 1:return archer001_0
             case 2:
-                hp[playerIndex]=4
+                hp[playerIndex]=3
                 break;
             case 3:return oArcher break;
         }

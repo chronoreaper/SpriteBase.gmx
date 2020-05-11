@@ -428,6 +428,7 @@ if hp&lt;=0{
     if ds_map_find_value(oControler.aiTurns, team)&lt;0{
         if oControler.turnsSurvive &lt; oControler.dangerTurn
         ||marker=1
+        if summon=0
         global.cur_score+=mhp+pow+mmov+mRange
     }
     else
@@ -440,7 +441,7 @@ if dmg!=hp
    if image_blend=c_white
    {
        if abs(dmg-hp)&gt;0.5
-          dmg+=sign(hp-dmg)*0.2//0.5
+          dmg+=sign(hp-dmg)*0.1//0.5
        else dmg=hp
        }
    }

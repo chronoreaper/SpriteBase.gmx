@@ -39,7 +39,7 @@ mview = view
 skillOnHit=5
 
 unit=thunder_mage001_0
-name="thunder mage"
+name="Thunder Mage"
 
 dmg=hp
 </string>

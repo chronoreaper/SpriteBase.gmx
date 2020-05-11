@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>bossList = ds_list_create()
+            <string>defUnits = ds_map_create()
+
+bossList = ds_list_create()
 ds_list_add(bossList,oDragon1)
 ds_list_add(bossList,oWurm)
 
@@ -41,9 +43,14 @@ image_speed=0.1
 var width=room_width/15;
 var height=room_height/15;
 map=ds_grid_create(width,height)
-moveAtkArea=ds_grid_create(12*2+1,12*2+1)
-atkArea=ds_grid_create(6*2+1,6*2+1)
+var maxRange = 3 + 2 + 2;;
+var maxMovRange = maxRange + 4 + 2 + 2;
+moveAtkArea=ds_grid_create(maxMovRange*2+1,maxMovRange*2+1)
+atkArea=ds_grid_create(maxRange*2+1,maxRange*2+1)
+
 level = 1
+env = irandom(1)//what location to paly on
+
 playerColour[0]=make_colour_hsv(163, 240, 250);//close to blue
 playerColour[1]=c_lime
 playerColour[2]=c_red
@@ -51,6 +58,9 @@ playerColour[3]=c_yellow
 
 for (var i =0 ; i &lt;4;i++)
     playerGold[i]=0
+    
+for (var i =0 ; i &lt;9;i++)
+    playerCard[i]=0
 
 global.colourSwitch[0]=0
 global.colourSwitch[1]=0
@@ -99,9 +109,9 @@ timePhase8=0//using skill
 timePhase11=0//skill
 currentNumber=0
 globalvar pixelFont,pixelBlock,pixelSquish;
-pixelFont=font_add_sprite_ext(letters,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,1)
-pixelBlock=font_add_sprite_ext(lettersBlock,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,1)
-pixelSquish=font_add_sprite_ext(lettersBlock,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%",true,-1)
+pixelFont=font_add_sprite_ext(letters,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%|,",true,1)
+pixelBlock=font_add_sprite_ext(lettersBlock,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%|,",true,1)
+pixelSquish=font_add_sprite_ext(lettersBlock,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?![]()/\&lt;&gt;:-+'%|,",true,-1)
 unitList=ds_list_create()
 allUnits=ds_list_create()
 aiTurns=ds_map_create()
@@ -164,73 +174,7 @@ for (var i=0;i&lt;1000;i++){
 globalvar udg,ch;
 udg=1
 ch=0
-var inst,inst2;
-/*
-inst=instance_create(x,y,oFighter);
-ds_list_add(unitList,inst)
-xx=inst.xx
-yy=inst.yy
-view_xview=inst.xx-view_wview/2
-view_yview=inst.yy-view_hview/2
-//inst.xp=100
-inst=instance_create(x+15,y,oArcher);
-ds_list_add(unitList,inst)
-inst=instance_create(x+15,y+15,oHealer);
-ds_list_add(unitList,inst)
-inst=instance_create(x,y+15,oMage);
-ds_list_add(unitList,inst)*/
-//inst=instance_create(x,y,oCampfire);
-//inst.ai=0 
-var sx=15;
-var sy=15;
-/*inst=instance_create(x-15*sx,y+15*sy,oMerchant)
-inst.team=1
-inst.ai=5
-inst.xp=40
-inst.marker=2
-inst2=instance_create(x-15*(sx+1),y+15*sy,oHealer)
-inst2.team=1
-inst2.ai=3
-inst2.link=inst
-inst2.xp=40
-inst2=instance_create(x-15*(sx+2),y+15*sy,oFighter)
-inst2.team=1
-inst2.ai=4
-inst2.link=inst
-inst2.xp=40
-/*
-inst=instance_create(x+15*36,y-15*17,oDragon1)
-inst.team=2
-inst.marker=1
 
-create_boss_area(x-15*20,y-15*15,0,0)
-inst=instance_create(x-15*19,y-12*15,oWurm)
-inst.team=2
-inst.ai=1
-inst.marker=1
-inst.dir=3
-for(var i=1;i&lt;=2;i++){
-inst2=instance_create(x-(19)*15,y-(12+1)*15,oWurm)
-inst2.team=2
-inst2.ai=-1
-inst2.link=inst
-inst=inst2
-}
-for(var i=0;i&lt;=6;i++){
-inst2=instance_create(x-(19-i)*15,y-(14)*15,oWurm)
-inst2.team=2
-inst2.ai=-1
-inst2.link=inst
-inst=inst2
-}
-create_city_dungeon(x+15*12,y+15*10)
-add_all_to_map()
-show_debug_overlay(true)*/
-/*
-for (var i=0;i&lt;ds_list_size(unitList);i++){
-    selected=ds_list_find_value(unitList,i)
-    update_fog()
-}selected=noone*/
 alarm[9]=1//activation cycle
 //update_view_zone()
 </string>
@@ -279,12 +223,13 @@ playerSelect=0
             <kind>1</kind>
             <string>///debugging
 globalvar debugging;
-global.production=0
+global.production=1
 global.mobile=0
 global.vertical = 0//(room == room3)
 debugging=0
 debugObj=0
 debug1=0;
+mods=0
 if global.production=1
     randomize()
 else
@@ -332,8 +277,8 @@ gridAlpha=0.1
 // 2 -  same as 0, but also ends after you move if there are no further actions
 quickEnd = 1 &amp;&amp; global.mobile
 warningZone = false || !global.mobile
-global.outline = true
-global.musicVol=0
+global.outline = false
+global.musicVol=1
 </string>
           </argument>
         </arguments>
@@ -412,6 +357,7 @@ globalvar mapRatio;
 mapRatio = ratio/15;
 map_surface = surface_create(room_width*mapRatio+1,room_height*mapRatio+1)
 mapSize = 2
+//fog_surface = surface_create(
 </string>
           </argument>
         </arguments>
@@ -498,6 +444,112 @@ o = oObject
 2 - x...xo
 
 */
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///default unit values
+if mods
+{
+if file_exists("unitStats.txt"){//read from file
+    
+    var file =file_text_open_read("unitStats.txt")
+    var str = file_text_read_string(file)
+    newStats = json_decode(str)
+    file_text_close(file)
+    
+    //clean the json file
+    var size, k;
+    size = ds_map_size(newStats);
+    k = ds_map_find_first(newStats);
+    for (var i = 0; i &lt; size; i++;)
+    {
+        var objId = round(real(string_digits(k)))
+        //if not even in the object range, ignore it
+        //also ignore it if it is already in map
+        if objId &gt;= oFighter &amp;&amp; objId &lt; object47
+        &amp;&amp; is_undefined(ds_map_find_value(defUnits,objId)){
+        
+            var list = newStats[? k];
+            var newList = ds_list_create()
+            //there must be excatly the same ammount as above.
+            if ds_list_size(list) = 11{
+                ds_list_add(newList,list[|0])
+                //check through values and make sure they are correct
+                for (var j =1; j&lt;ds_list_size(list);j++){
+                    var int = round(real(list[|j]))
+                    if j==1//unit sprite
+                        int = floor(clamp(int,fighter001_0,randomUnit-1)/4)*4;
+                    if j ==4//range
+                        if int&gt;maxRange
+                            int=0
+                    if j == 5//mov
+                        if int&gt;maxMovRange-maxRange
+                            int=0
+                    if j ==6 //view
+                        if int&gt;100
+                            int = 0
+                    ds_list_add(newList,int)
+                }
+                ds_list_destroy(list)
+                ds_map_add_list(defUnits,objId,newList)
+            }
+        }
+        //find next
+        k = ds_map_find_next(newStats, k)
+    }
+    //removing the json also destroys the keys...
+    //ds_map_destroy(newStats)
+    show_debug_message(is_undefined(ds_map_find_value(defUnits,i)))
+}
+}
+// fill in default values
+{
+    for (var i=oFighter;i&lt;object47;i++){
+    //fill in missing values
+        if is_undefined(ds_map_find_value(defUnits,i)){
+        var inst = instance_create(0,0,i)
+        var stats = ds_list_create();
+        ds_list_add(stats,inst.name)//0
+        ds_list_add(stats,inst.unit)//1
+        ds_list_add(stats,inst.hp)//2
+        ds_list_add(stats,inst.pow)//3
+        ds_list_add(stats,inst.range)//4
+        ds_list_add(stats,inst.mov)//5
+        ds_list_add(stats,inst.view)//6
+        ds_list_add(stats,inst.skillOnHit)//7
+        ds_list_add(stats,inst.skillDef)//8
+        ds_list_add(stats,inst.skillEnd)//9
+        ds_list_add(stats,inst.wepAOE)//10
+        ds_map_add_list(defUnits,i,stats)
+        with inst
+            instance_destroy()
+        }
+    }
+    
+    if mods{
+    var str = json_encode(defUnits)
+    var file =file_text_open_write("unitStats.txt")
+    file_text_write_string(file,str)
+    file_text_close(file)
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -600,100 +652,8 @@ instance_activate_object(oBackButton)
             <string>///end turn
 
 if selected!=noone{
-    //instance_activate_all()
-    //alarm[9]=3
-    //alarm[4]=2
-    with selected{
-    wait=1
-
-    xx=x
-    yy=y
-    //move_camera(x,y)
     
-    //end of turn effects
-    var heal = get_eff(id,id,skillEnd)
-    if heal &lt; 0{
-        calculate_damage(id,id,heal)
-    }
-    
-    }
-    
-    
-    //events  
-    var inst = instance_place(selected.x,selected.y,oKey)
-    if inst!=noone
-    if findStatus(selected,1)&lt;0{
-        with inst
-            instance_destroy()
-        addStatus(1,selected,1,1)
-    }
-    
-    inst = instance_place(selected.x,selected.y,oCoin)
-    if inst!=noone
-    if findStatus(selected,2)&lt;0{
-        with inst
-            instance_destroy()
-            audio_play_sound(sCoin,50,false)
-        addStatus(1,selected,2,1)
-    }
-    
-    inst = instance_place(selected.x,selected.y,oHealthPack)
-    if inst!=noone{
-        with inst
-            instance_destroy()
-            audio_play_sound(sHeal,50,false)
-        selected.hp=min(selected.hp+1,selected.mhp)
-        var txt=instance_create(selected.x+7-23*dsin(-view_angle),selected.y+7-23*dcos(-view_angle),DmgWord);
-        txt.text="1"
-        txt.colour=c_lime
-    }
-    
-    //stairs
-    if floor(selected.team)=0
-    if place_meeting(selected.x,selected.y,oStairs){
-        audio_play_sound(sStairs,50,false)
-        global.cur_score+=level * difficulty
-        level++;
-        menu = NEXTFLOORMENU;
-        instance_create(x,y,oNextFloor)
-        x=0
-        y=0
-        xx=0
-        yy=0
-        for (var i=0;i&lt;ds_list_size(unitList);i++){
-            var char=ds_list_find_value(unitList,i)
-            if instance_exists(char){
-                instance_activate_object(char)
-                if findStatus(char,2)&gt;=0{
-                    playerGold[0]+=1
-                    global.cur_score += 5 * difficulty
-                }
-            }
-        }
-    }
-    
-    inst = instance_place(selected.x,selected.y,oTeleporter)
-    var c = selected
-    if inst!=noone{
-        with (oTeleporter){
-            if id != inst
-            if !place_meeting(x,y,oUnit)
-            if colourId = inst.colourId{
-                audio_play_sound(sHeal,50,false)
-                c.x = x
-                c.y = y
-                c.xx=c.x
-                c.yy=c.y
-                if c.draw&gt;0
-                    move_camera(c.xx,c.yy)
-                oControler.x = c.x
-                oControler.y = c.y
-                oControler.xx = c.x
-                oControler.yy =c.y
-            }
-        }
-    }
-       
+    end_turn()      
     
     phase=0
     if menu =-1{
@@ -1210,13 +1170,13 @@ if oCamera.idle&gt;5
         alarm[9]=2
         if selected!=noone{
             var c=selected
-            if !debugging{
+            /*if !debugging{
             if selected.draw=0
                 room_speed=1000
             else
                 room_speed=30
             }
-            else room_speed=30
+            else room_speed=30*/
             
             if selected.mov&gt;0
             phase=0
@@ -1249,13 +1209,13 @@ if oCamera.idle&gt;5
     {
     
     //speed up the room
-    if !debugging{
+    /*if !debugging{
     if selected.draw=0
         room_speed=1000
     else
         room_speed=30
     }
-    else room_speed=30
+    else room_speed=30*/
     
     instance_activate_region(view_xview-15,view_yview+view_hview/2-view_wview/2-15,view_wview+30,view_wview+30,true)
     instance_activate_region(selected.x-15-view_wview/2,selected.y+view_hview/2-view_wview/2-15,view_wview+30,view_wview+30,true)
@@ -1298,7 +1258,7 @@ if oCamera.idle&gt;5
         //follow linked 
         case -1:{
             if instance_exists(c.link) 
-            &amp;&amp; (abs(c.link.x - c.x) + abs(c.link.y - c.y))/15 &lt;= 2
+            &amp;&amp; (abs(c.link.x - c.x) + abs(c.link.y - c.y))/15 &lt;= 3
                 close=c.link  
             else{
                 c.link=noone
@@ -1842,13 +1802,14 @@ if menu=-1
             while (targ!=noone){
                 //path_clear_points(path2)
                 if (targ!=c)
+                if (targ.speed=0)//so that it can't be hit when spawned by skill
                 if calculate_damage(c,targ,0)&gt;0||true
                 {
                     //create eff
                     if (!(c.draw=0
                     &amp;&amp; ds_grid_get(gridF1,targ.x/15,targ.y/15)&lt;0.2)
                     ||debugging)
-                    if c.wepAOE=0{
+                    if c.wepAOE&lt;=0{
                         var eff=instance_create(targ.x+7,targ.y+7,oEff);
                         eff.sprite_index=return_wep_sprite_eff(c)
                         eff.image_angle=point_direction(c.x,c.y,
@@ -2041,7 +2002,7 @@ if floor(menu)=99{
     if unitSelect[i]&gt;=0{
         unitStarted++
         inst=instance_create((rx+(i%2))*15,(ry+floor(i/2))*15,
-            return_unit(unitSelect[i],3,i));
+            unitSelect[i]);
         ds_list_add(unitList,inst)
         }
     }
@@ -2081,8 +2042,10 @@ if psudoRight=30{
         var char=ds_list_find_value(unitList,i)
             if instance_exists(char){
             instance_activate_object(char)
-            if char.hp&gt;0
-                char.wait=1
+            if char.hp&gt;0{
+                selected = char
+                end_turn()
+                }
             }
         }
         instance_activate_all()
@@ -2159,8 +2122,52 @@ switch phase{
 }
 }
 var turnLimit = 8 + floor(level/5)
+
 warningTurn = (turnLimit / 2) * (1 - difficulty)
-dangerTurn = (turnLimit) * (2 - difficulty)
+dangerTurn = (turnLimit) * (1 - difficulty)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///12 When not selecting any unit
+if menu=-1
+if ds_map_find_value(aiTurns, currentTurn)&gt;=0
+if selected=noone
+if warningZone{
+    add_all_to_map()
+    selected=instance_place(xx,yy,oUnit);
+    if selected!=noone
+    if selected.draw&gt;0{
+        var c=selected
+        
+        mp_grid_clear_cell(grid,c.x/15,c.y/15)
+        
+        for (var i=0;i&lt;ds_list_size(unitList);i++){
+            var char=ds_list_find_value(unitList,i)
+                if instance_exists(char){
+                    mp_grid_clear_cell(grid,char.x/15,char.y/15)
+                }
+        }
+        getMoveAndAttackRange(c)
+    }
+    selected=noone
+}
 </string>
           </argument>
         </arguments>
@@ -2183,7 +2190,10 @@ dangerTurn = (turnLimit) * (2 - difficulty)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ds_list_destroy(unitList)
+            <string>if mods
+    ds_map_destroy(newStats)
+ds_map_destroy(defUnits)
+ds_list_destroy(unitList)
 ds_list_destroy(bossList)
 ds_list_destroy(allUnits)
 mp_grid_destroy(grid)
@@ -2389,7 +2399,14 @@ if ix!=-1&amp;&amp;iy!=-1
           <argument>
             <kind>1</kind>
             <string>///#1background
-draw_background_stretched(greenBackground,0,0,room_width,room_height)
+switch env{
+    case 0:
+        draw_background_stretched(greenBackground,0,0,room_width,room_height)
+        break;
+    case 1:
+        draw_background_tiled(stoneBackground,0,0)
+        break
+}
 </string>
           </argument>
         </arguments>
@@ -2454,21 +2471,21 @@ if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging=1
        draw_set_colour(c_dkgray)
        var String = ""
        if object_is_ancestor(c.object_index,oChar){
-        String = c.name + " - "
+        String = string_upper(c.name) + " - "
                 +"HP:"+string(c.hp)
                 +" POW:"+string(abs(c.pow))
                 +" RANGE:"+string(c.range)
                 +" MOV:"+string(c.mov)
-                +" "+eff_name_builder(0,c.skillOnHit)
+                +eff_name_builder(0,c.skillOnHit)
                 +eff_name_builder(1,c.skillDef)
                 +eff_name_builder(2,c.skillEnd)
        }
        else if object_is_ancestor(c.object_index,oItem)
-            String = c.name + " - " + string(unit_default_values(c.object_index,-1))
+            String = string_upper(c.name) + " - " + string(unit_description(c.object_index))
        else
         String = c.name
        draw_rectangle(2,view_hport-14-count*11,
-            string_width(String)+5,view_hport-3-count*11,false)
+            string_width(String)+7,view_hport-3-count*11,false)
        draw_set_colour(c_white)
        draw_text_transformed(3,view_hport-11-count*11,string_upper(String),1,1,0)
        
@@ -2657,6 +2674,16 @@ draw_text(2,10,"Floor: "+string(level))
 draw_text(2,20,"TURN: "+string(turnsSurvive))
 draw_sprite(coin,0,5,32)
 draw_text(13,30,string(playerGold[0]))
+var xpos = 24 + string_length(playerGold[0])
+for (var i =0 ; i &lt;9;i++){
+    if playerCard[i] &gt;0
+    {
+        draw_sprite(bonusCard,i,xpos,32)
+        draw_text(xpos+8,30,string(playerCard[i]))
+        xpos += 18 + string_length(playerCard[i])
+    }
+}
+    
 draw_text(2,50,"uNit to move: "+string(unitLeft)+"/"+string(ds_list_size(unitList)))
 if global.production=0{
 draw_set_colour(c_fuchsia)
@@ -2682,6 +2709,7 @@ draw_text(display_get_gui_width()-3,60,"quickEnd: "+string(quickEnd))
 draw_text(display_get_gui_width()-3,70,"warningZone: "+string(warningZone))
 draw_text(display_get_gui_width()-3,80,"outline: "+string(global.outline))
 draw_text(display_get_gui_width()-3,90,"difficulty: "+string(difficulty))
+draw_text(display_get_gui_width()-3,100,"volume: "+string(global.musicVol))
 
 }
 draw_set_halign(fa_right)
@@ -2782,15 +2810,21 @@ if menu=0{
         case 0: draw_text_transformed(view_wview/2,view_hview-80,"-New game-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4]){
-            //instance_create((1+0)*(view_wview/5),
-            //    view_hview-30,oCharCreation)
+            instance_create(0,0,oCharCreation)
             menu=1
             }
             break;
-        case 1: draw_text_transformed(view_wview/2,view_hview-60,"-stats-",2,2,0)break;
+        case 1: draw_text_transformed(view_wview/2,view_hview-60,"-stats-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+            menuSelect = 0
+            menu=3
+            }
+            break;
         case 2: draw_text_transformed(view_wview/2,view_hview-40,"-optioNs-",2,2,0)
             if mouse_check_button_released(mb_left)
             ||keyboard_check_pressed(keys[4]){
+            menuSelect = 0
             menu=2
             }
             break;
@@ -2801,145 +2835,6 @@ if menu=0{
             break;
     }
     draw_set_halign(fa_left)
-}
-else if menu=1{
- draw_set_halign(fa_center)
- draw_set_font(pixelFont)
-     var j=playerSelect
-     var m=0;
-     var p=0
-     var cc=maxChar
-     if keyboard_check_pressed(keys[1])
-        playerSelect--
-    else if keyboard_check_pressed(keys[3])
-        playerSelect++    
-    if controler=0
-        playerSelect = round((mouse_x-view_xview-50) /(view_wview/5))
-    playerSelect = clamp(playerSelect,0,3)  
-     if unitSelect[j]&gt;=0
-         {
-         if controler=0
-         if mouse_x-view_xview&gt;(1+j)*(view_wview/5)-31
-         if mouse_x-view_xview&lt;(1+j)*(view_wview/5)+30
-         if mouse_y-view_yview&gt;view_hview-170
-            menuSelect=floor((mouse_y-view_yview-090)/42)
-         menuSelect=clamp(menuSelect,0,3)  
-         if keyboard_check_pressed(keys[2]){
-            menuSelect=menuSelect+1
-            }
-        else if keyboard_check_pressed(keys[0]){
-            menuSelect=menuSelect-1
-            }
-        if menuSelect&gt;3
-            menuSelect=0
-        else if menuSelect&lt;0
-            menuSelect=3
-         switch menuSelect{
-            case 0: 
-                if mouse_check_button_released(mb_left)
-                ||keyboard_check_pressed(keys[4])
-                ||keyboard_check_pressed(keys[6]){
-                    unitSelect[j]++
-                    while find_char_in_menu_list(return_unit(unitSelect[j],1,0),j)
-                        &amp;&amp;unitSelect[j]&lt;cc
-                        unitSelect[j]++
-                    if unitSelect[j]&gt;=cc
-                        unitSelect[j]=0
-                    while find_char_in_menu_list(return_unit(unitSelect[j],1,0),j)
-                        &amp;&amp;unitSelect[j]&lt;cc
-                        unitSelect[j]++
-                }
-               /* else if keyboard_check_pressed(keys[7]){
-                    unitSelect[j]--
-                }*/
-                
-                //set limit
-                if unitSelect[j]&gt;=cc
-                    unitSelect[j]=0
-                else if unitSelect[j]&lt;0
-                    unitSelect[j]=cc-1
-                
-                break;
-            case 2:
-                if mouse_check_button_released(mb_left)
-                ||keyboard_check_pressed(keys[4])
-                    unitSelect[j]=-1
-                break;
-            case 3:
-                if mouse_check_button_released(mb_left)
-                ||keyboard_check_pressed(keys[4]){
-                    menu=99//generate map
-                    with(oCharCreation)
-                        instance_destroy()
-                    if global.mobile{
-                        if global.vertical = 1{
-                            view_wview[0] = 120
-                            view_hview[0] = 180
-                        }else{
-                            view_wview[0] = 180
-                            view_hview[0] = 120
-                            //view_wport=view_wview[0]
-                            //view_hport =view_hport[0]
-                        }
-                        }
-                    }
-                break;
-        } 
-     }else{//no unit yet
-        if mouse_check_button_released(mb_left)
-        ||keyboard_check_pressed(keys[4]){
-            unitSelect[j]=0
-            while find_char_in_menu_list(return_unit(unitSelect[j],1,0),j)
-                &amp;&amp;unitSelect[j]&lt;cc
-                unitSelect[j]++
-        }
-     }
-     
-     //visuals
-      for (var i = 0;i&lt;playerMax;i++)
-      {  
-        if unitSelect[i]&gt;=0
-        {
-         draw_set_colour(c_dkgray)
-         draw_rectangle((1+i)*(view_wview/5)-31,10,(1+i)*(view_wview/5)+30,view_hview-10,false)
-         draw_set_colour(c_ltgray)
-         draw_rectangle((1+i)*(view_wview/5)-27,15,(1+i)*(view_wview/5)+26,65,false)
-         draw_sprite_ext(return_unit(unitSelect[i],1,0),0,(1+i)*(view_wview/5),60,2,2,0,-1,1)
-         draw_set_colour(c_orange)
-         draw_text_transformed((1+i)*(view_wview/5)+6,view_hview-170,"CLASS ",2,2,0)
-         draw_set_colour(c_ltgray)
-         draw_text_ext((1+i)*(view_wview/5),view_hview-120,unit_description(return_unit(unitSelect[i],3,i)),7,40)
-         if menuSelect!=0
-         ||i!=j
-         draw_text_transformed((1+i)*(view_wview/5),view_hview-158,return_unit(unitSelect[i],0,0),1,1,0)
-         draw_text((1+i)*(view_wview/5),view_hview-151,string(unitSelect[i]+1)+"/"+string(cc))
-         draw_text_transformed((1+i)*(view_wview/5),view_hview-45,"REMOVE",2,2,0)
-         draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"START",2,2,0)
-         draw_set_colour(c_white)
-         return_unit(unitSelect[i],2,i)
-         //draw stats
-         draw_text((1+i)*(view_wview/5),view_hview-143,"HP:"+string(hp[i]));
-         if i  == j
-         switch menuSelect{
-             case 0: draw_text((1+i)*(view_wview/5),view_hview-158,"-"+return_unit(unitSelect[i],0,0)+"-")break;
-             //case 1: draw_text((1+i)*(view_wview/5),view_hview-90,"-"+returnSkill(unitSkill[i],0,0,unitSelect[i])+"-")break;
-             case 2: draw_text_transformed((1+i)*(view_wview/5),view_hview-45,"-REMOVE-",2,2,0)break;
-             case 3: draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"-START-",2,2,0)break;
-         }
-       }else{// no unit yet
-         draw_set_colour(c_dkgray)
-         draw_rectangle((1+i)*(view_wview/5)-31,view_hview-40,(1+i)*(view_wview/5)+30,view_hview-10,false)
-         if j = i{
-            draw_set_colour(c_white)
-            draw_text_transformed((1+i)*(view_wview/5),view_hview-25,"+UNIT",2,2,0)
-            }
-         else{
-            draw_set_colour(c_ltgray)
-            draw_text_transformed((1+i)*(view_wview/5),view_hview-25," UNIT",2,2,0)
-            }
-       } 
-     
-    }
 }
 else if menu=2{
 
@@ -2992,6 +2887,7 @@ else if menu=2{
     draw_text_transformed(180,200,options[5],2,2,0)
     draw_text_transformed(180,220,"Back",2,2,0)
     draw_set_colour(c_white)
+    draw_text_transformed(view_wview/2,5,"Options",2,2,0)
     switch menuSelect{
         case 0: draw_text_transformed(180,100,"-"+options[0]+"-",2,2,0)
             if mouse_check_button_released(mb_left)
@@ -3040,6 +2936,56 @@ else if menu=2{
                 }
             break;
     }
+    if mouse_check_button_released(mb_right)
+    ||keyboard_check_pressed(keys[5]){
+        menu=0
+        menuSelect=2
+        }
+    draw_set_halign(fa_left)
+}
+else if menu=3{
+
+    draw_set_font(pixelFont)
+    draw_set_halign(fa_center)
+    draw_set_color(c_ltgray)
+    if controler=0
+    if mouse_x-view_xview&gt;120
+    if mouse_x-view_xview&lt;240
+    if mouse_y-view_yview&gt;100
+        menuSelect=floor((mouse_y-view_yview-100)/20)
+    else menuSelect=-1
+    if keyboard_check_pressed(keys[2]){
+        menuSelect=min(0,menuSelect+1)
+        }
+    else if keyboard_check_pressed(keys[0]){
+        menuSelect=max(0,menuSelect-1)
+        }
+        
+    draw_set_colour(c_white)
+    draw_text_transformed(view_wview/2,5,"Stats",2,2,0)
+    
+    if file_exists("result.txt"){
+        var file = file_text_open_read("result.txt");
+        file_text_close(file)
+    }else{
+        
+    }
+    
+    switch menuSelect{
+        case 0: draw_text_transformed(180,220,"-Back-",2,2,0)
+            if mouse_check_button_released(mb_left)
+            ||keyboard_check_pressed(keys[4]){
+                menu=0
+                menuSelect=1
+                }
+            break;
+    }
+    
+    if mouse_check_button_released(mb_right)
+    ||keyboard_check_pressed(keys[5]){
+        menu=0
+        menuSelect=1
+    }
     draw_set_halign(fa_left)
 }
 </string>
@@ -3066,14 +3012,15 @@ else if menu=2{
 var message = ""
 if menu=-1{
     if global.tutSel = 1{
-        message= "Click a UNIT to select it."
+        message= "Click a UNIT to select it. Use The mouse or WASD To Move. "+
+            "Left click or push F to Select. G or right click to go back."
         if (selected!=noone){
             global.tutSel = 2
             global.tutMov = 1
         }
     }else if global.tutMov = 1{
         message="Click a BLUE tile to move."
-        if (phase = 3){
+        if (phase = 3||phase=2.1){
             global.tutMov = 2
             global.tutAct = 1
         }
@@ -3096,10 +3043,11 @@ if menu=-1{
 if message != ""{
     draw_set_colour(c_dkgray)
     draw_set_font(pixelFont)
-    draw_rectangle(view_wview-105,5,view_wview-5,7+string_height_ext(message,7,95),false)
+    var boxLen = 95
+    draw_rectangle(display_get_gui_width()-10-boxLen,5,view_wport-5,7+string_height_ext(message,7,boxLen),false)
     draw_set_colour(c_white)
-    draw_text_ext(view_wview-103,7,message
-    ,7,95)
+    draw_text_ext_transformed(display_get_gui_width()-103,7,message
+    ,7,boxLen,1,1,0)
 }
 </string>
           </argument>
@@ -3117,7 +3065,7 @@ if message != ""{
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
-        <whoName>self</whoName>
+        <whoName>other</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
@@ -3177,11 +3125,13 @@ for (var i=floor(view_xview/15)*15-15;i&lt;floor(view_xview/15)*15+view_wview+15
     draw_line(i-1,0,i-1,room_height)
 draw_set_alpha(1)
 //draw selected path
-if selected!=noone{
+if selected!=noone
+if instance_exists(selected){
 path_drawer(selected.path)
 }
 
 if selected!=noone
+if instance_exists(selected)
 if phase=0
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0||debugging==1
 {
@@ -3286,20 +3236,11 @@ if menu=-1
 if ds_map_find_value(aiTurns, currentTurn)&gt;=0
 if selected=noone
 if warningZone{
-    add_all_to_map()
+
     selected=instance_place(xx,yy,oUnit);
     if selected!=noone
     if selected.draw&gt;0{
         var c=selected
-        getMoveAndAttackRange(c)
-        mp_grid_clear_cell(grid,c.x/15,c.y/15)
-        
-        for (var i=0;i&lt;ds_list_size(unitList);i++){
-            var char=ds_list_find_value(unitList,i)
-                if instance_exists(char){
-                    mp_grid_clear_cell(grid,char.x/15,char.y/15)
-                }
-            }
           
         draw_set_alpha(0.7)
         //show where you can move
@@ -3446,8 +3387,9 @@ draw_set_alpha(1)
           <argument>
             <kind>1</kind>
             <string>///draw Area Of Attack Effect
-var fadeTime=5
+var fadeTime=10
 if selected!=noone
+if instance_exists(selected)
 if phase = 4 || phase = 5
 if selected.draw&gt;0
 if selected.visible{
@@ -3520,132 +3462,27 @@ switch atk_area{
 0 visited
 0&lt;; visable
 */
+
 var px=x/15
 var py=y/15
 var p=0
+var vh=view_hview[p]/15,vw=view_wview[p]/15//0
 var vx=view_xview[p]/15,vy=view_yview[p]/15;
-var fx=floor(view_xview[p]/15),fy=floor(view_yview[p]/15);
-var vh=view_hview[p]/15,vw=view_wview[p]/15-16//0
-for (var i=0;i&lt;room_width/15;i++)
-for (var j=0;j&lt;room_height/15;j++){
-        if ds_grid_get(gridF1,clamp(i,0,room_width/15),clamp(j,0,room_height/15))&lt;1
+var rx=round(view_xview[p]/15),ry=round(view_yview[p]/15);
+
+var px=round(vx+vw/2 - max(vw/2,vh/2))
+var py=round(vy+vh/2 - max(vw/2,vh/2))
+var len = max(vw,vh)
+
+for (var i=px - 3;i&lt;px + len + 3;i++)
+for (var j=py - 3;j&lt;py + len + 3;j++){
+        if i = clamp(i,0,room_width/15)
+        if j = clamp(j,0,room_height/15)
+        if ds_grid_get(gridF1,i,j)&lt;1
         if debugging=0
         {
           draw_sprite_ext(hitbox,0,(i)*15,(j)*15,1,1,0,0,0.5-ds_grid_get(gridF1,i,j))
         }
-        /*if ds_grid_get(gridF1,i,j)&amp;gt;0{
-           ds_grid_multiply(gridF1,i,j,0.70)
-           }
-        else{
-            //mp_grid_add_cell(grid,i,j)
-        }*/
-
-//ds_grid_multiply_region(gridF1,0,0,100,100,min(-1,0.95))
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///debugging, make objects
-if global.production=0
-{
-if keyboard_check_pressed(ord('1'))
-    option_zoom = !option_zoom
-if keyboard_check_pressed(ord('2'))
-    gridAlpha+=0.1
-if gridAlpha&gt;1
-    gridAlpha=0
-if keyboard_check_pressed(ord('3'))
-    quickEnd = !quickEnd
-if keyboard_check_pressed(ord('4'))
-    warningZone = !warningZone
-if keyboard_check_pressed(ord('5'))
-    global.outline = !global.outline
-if keyboard_check_pressed(ord('6'))
-    difficulty++
-if difficulty&gt;2
-    difficulty=0
-
-if keyboard_check_pressed(ord('K'))
-    randPos++
-else if keyboard_check_pressed(ord('L'))
-    randPos--
-if randPos&gt;999
-    randPos=0
-if randPos&lt;0
-    randPos=999
-if keyboard_check(vk_up)
-    debugObj++
-if keyboard_check_pressed(vk_down)
-    debugObj--
-if debugObj &gt; object47-oUnit-1
-    debugObj = 0
-debugObj=clamp(debugObj,0,object47-oUnit-1)
-var obj=noone
-if debugObj&gt;0
-    obj=oUnit-1+debugObj
-if obj!=noone{
-draw_sprite_ext(object_get_sprite(obj),0,x+7,y+7,1,1,-view_angle,-1,0.5)
-if keyboard_check_pressed(vk_enter)
-if !place_meeting(x,y,oUnit){
-    var inst=instance_create(floor(x/15)*15,floor(y/15)*15,obj);
-    inst.team=currentTurn
-    var temp=instance_create(x+7,y+7,oEff);
-    temp.sprite_index=spawn_eff
-    }
-}
-if keyboard_check(ord('I'))//&amp;&amp;selected=noone
-    eventScene=true
-else
-    eventScene=false
-if selected=noone
-if keyboard_check_pressed(vk_backspace)
-{
-    var inst=instance_place(x,y,oUnit)
-    if inst=noone
-        inst=instance_place(x,y,oItem)
-    if inst=noone
-        inst=instance_place(x,y,oEvent)
-    if inst!=noone{
-        with inst
-            instance_destroy()
-        alarm[10]=1
-    }
-}
-
-if keyboard_check_pressed(vk_tab){
-    inst = instance_place(x,y,oUnit)
-    if inst!=noone{
-        inst.team+=1
-        if inst.team&gt;3
-            inst.team=0
-        }
-        
-}
-
-//cnage grid apha
-if keyboard_check(ord('O'))
-if gridAlpha&gt;0
-    gridAlpha-=0.1
-if keyboard_check_pressed(ord('P'))
-if gridAlpha&lt;1
-    gridAlpha+=0.1
 }
 </string>
           </argument>

@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>event_inherited()
 
-hp=3 + floor(oControler.level/3)
+hp=3
 mhp=hp
 pow=1
 
@@ -35,6 +35,10 @@ wepAOE=2
 
 mov=1
 mmov=mov
+
+range=2
+mRange = range
+
 view=5
 mview = view
 unit=wurm001_0
@@ -68,8 +72,41 @@ effPos=0
             <kind>1</kind>
             <string>event_inherited()
 if marker=1
-if instance_number(oWurm) &lt;=1
+{
+var alive = 0
+with (oWurm){
+    if hp &gt; 0
+        alive =1
+}
+if alive=0
     instance_create(floor(x/15)*15,floor(y/15)*15,oStairs)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_inherited()
+hp += ceil(oControler.level*0.2) + oControler.difficulty*2
+mhp = hp
+dmg = hp
 </string>
           </argument>
         </arguments>
@@ -123,7 +160,8 @@ if ai=-1{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var dir2=abs(dir+round(view_angle/90))
+            <string>event_inherited()
+/*var dir2=abs(dir+round(view_angle/90))
 if dir2&gt;=4
     dir2-=4    
 if wepAOE=2

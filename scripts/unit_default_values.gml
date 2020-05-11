@@ -31,7 +31,7 @@ switch arg_unit{
         switch arg_value{
             case -2:return "Archer"
             case -1:return "";
-            case 0:return 4;//Hp
+            case 0:return 3;//Hp
             case 1:return 1;//pow
             case 2:return 3;//range
             case 3:return 3;//mov
